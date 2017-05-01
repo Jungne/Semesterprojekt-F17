@@ -1,7 +1,6 @@
 package Webshop;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class ShoppingBasket {
 
@@ -17,11 +16,7 @@ public class ShoppingBasket {
 	 * @return returns the current content of the basket.
 	 */
 	public HashMap<Product, Integer> getBasketContent() {
-		HashMap<Product, Integer> basketContent = new HashMap<>();
-		for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-			basketContent.put(entry.getKey(), entry.getValue());
-		}
-		return basketContent;
+		return (HashMap<Product, Integer>) products.clone();
 	}
 
 	/**
