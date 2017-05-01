@@ -11,19 +11,20 @@ import javafx.stage.Stage;
 
 public class SemesterprojektF17 extends Application {
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+	@Override
+	public void start(Stage stage) throws Exception {
+		Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
 
-        Scene scene = new Scene(root);
+		Scene scene = new Scene(root);
 
-        stage.setScene(scene);
-        stage.show();
-    }
+		stage.setScene(scene);
+		stage.show();
+	}
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-//		launch(args);
-        //Test of Catalog class.
-        Catalog catalog = new Catalog();
-    }
+	public static void main(String[] args) throws FileNotFoundException, IOException {
+		//launch(args);
+
+		//Test of Catalog class.
+		Catalog catalog = new Catalog();
+	}
 }

@@ -13,24 +13,24 @@ import javafx.scene.control.Label;
 
 public class FXMLDocumentController implements Initializable {
 
-    private WebshopController webshopController;
-    
-    @FXML
-    private Label label;
+	private WebshopController webshopController;
 
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+	@FXML
+	private Label label;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        try {
-            webshopController = new WebshopController();
-        } catch (IOException ex) {
-            //Do something about this.
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	@FXML
+	private void handleButtonAction(ActionEvent event) {
+		System.out.println("You clicked me!");
+		label.setText("Hello World!");
+	}
+
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		try {
+			webshopController = new WebshopController();
+		} catch (IOException ex) {
+			//Do something about this.
+			Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 }
