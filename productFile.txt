@@ -3,8 +3,10 @@ testproduct
 testcategory
 test of fileSearcher.
 100.00
+images/test.jpg
 blender
 2
 appliances
 Blender from Electrolux. Blends stuff into smaller pieces.
 299.00
+images/blender.jpg
