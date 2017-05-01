@@ -1,0 +1,4 @@
+testproduct
+1
+testcategory
+test of fileSearcher.

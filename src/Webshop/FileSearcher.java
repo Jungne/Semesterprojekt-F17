@@ -12,7 +12,7 @@ public class FileSearcher {
     
     public static TreeSet<Product> findProduct(String query) {
         TreeSet<Product> productSet = new TreeSet<>();
-        Scanner scanner = new Scanner("productFile.txt");
+        
         
         return productSet;
     }
