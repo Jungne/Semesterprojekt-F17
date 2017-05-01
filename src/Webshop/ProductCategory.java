@@ -5,6 +5,6 @@
  */
 package Webshop;
 
-public class ProductCategory {
-    
+public enum ProductCategory {
+    APPLIANCES, TOYS, TOOLS, COMPUTERS, TESTCATEGORY
 }

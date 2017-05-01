@@ -2,3 +2,9 @@ testproduct
 1
 testcategory
 test of fileSearcher.
+100.00
+blender
+2
+appliances
+Blender from Electrolux. Blends stuff into smaller pieces.
+299.00

@@ -3,7 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="Semesterprojekt">
-            <file>file:/C:/Users/jungn/Documents/NetBeansProjects/Semesterprojekt-F17/src/semesterprojekt/f17/SemesterprojektF17.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/ShoppingBasket.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/FileSearcher.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/Customer.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/Product.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/Order.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/Payment.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/WebshopController.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/Catalog.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/ProductCategory.java</file>
         </group>
     </open-files>
 </project-private>
