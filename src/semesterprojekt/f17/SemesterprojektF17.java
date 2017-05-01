@@ -2,6 +2,7 @@ package semesterprojekt.f17;
 
 import Webshop.Catalog;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +21,7 @@ public class SemesterprojektF17 extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
 //		launch(args);
         //Test of Catalog class.
         Catalog catalog = new Catalog();
