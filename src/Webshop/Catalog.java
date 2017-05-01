@@ -5,6 +5,10 @@
  */
 package Webshop;
 
+import java.util.List;
+
 public class Catalog {
+    
+    private List list;
     
 }
