@@ -4,16 +4,26 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="semesterprojekt.f17.FXMLDocumentController">
 	<tabs>
-		<Tab text="CatalogTest">
+		<Tab fx:id="catalogTestTab" text="CatalogTest">
 			<content>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+				<AnchorPane fx:id="catalogTestAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="396.0" prefWidth="600.0">
 					<children>
-						<Button layoutX="57.0" layoutY="297.0" mnemonicParsing="false" text="Show product list" />
-						<ListView layoutX="25.0" layoutY="25.0" prefHeight="200.0" prefWidth="200.0" />
+						<Button fx:id="CatalogTestShowProductsButton" layoutX="14.0" layoutY="316.0" mnemonicParsing="false" onAction="#handleCatalogTestShowProductsButton" text="Show product list" />
+						<ListView fx:id="catalogTestListView" layoutX="25.0" layoutY="25.0" prefHeight="284.0" prefWidth="388.0" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="212.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="catalogTestShowInfoButton" layoutX="176.0" layoutY="316.0" mnemonicParsing="false" onAction="#handleCatalogTestShowInfoButton" text="Show info" />
+                  <ImageView fx:id="catalogTestImageView" fitHeight="144.0" fitWidth="189.0" layoutX="399.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/test.jpeg" />
+                     </image>
+                  </ImageView>
+                  <TextArea fx:id="catalogTestTextArea" layoutX="397.0" layoutY="165.0" prefHeight="196.0" prefWidth="193.0" />
 					</children>
 				</AnchorPane>
 			</content>

@@ -22,7 +22,7 @@ public class SemesterprojektF17 extends Application {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		//launch(args);
+		launch(args);
 
 		//Test of Catalog class.
 		Catalog catalog = new Catalog();

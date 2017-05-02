@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
-public class WebshopController {
+public class WebshopController implements WebshopInterface{
 
 	private Catalog catalog;
 	private Customer customer;
