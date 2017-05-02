@@ -1,5 +1,6 @@
 package Webshop;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
@@ -9,10 +10,11 @@ public class Order {
 	private Enum OrderStatus;
 	private boolean complete;
 	private Customer customer;
-	//List of products and amount 
+	private ArrayList<OrderLine> products;
 
-	public Order(Customer customer) {
+	public Order(Customer customer, ArrayList<OrderLine> products) {
 		this.customer = customer;
+		this.products = products;
 	}
 
 	/**
@@ -48,5 +50,12 @@ public class Order {
 	 */
 	public Customer getCustomer() {
 		return customer;
+	}
+
+	/**
+	 * @return the products
+	 */
+	public ArrayList<OrderLine> getProducts() {
+		return products;
 	}
 }
