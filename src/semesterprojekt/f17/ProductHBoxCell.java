@@ -16,27 +16,26 @@ import javafx.scene.layout.HBox;
 
 public class ProductHBoxCell extends HBox {
 
-    ImageView imageView = new ImageView();
-    Label name = new Label();
-    Label price = new Label();
-    private int id;
+	ImageView imageView = new ImageView();
+	Label name = new Label();
+	Label price = new Label();
+	private int id;
 
-    public ProductHBoxCell(Product product) {
-        super(100);
-        id = product.getId();
+	public ProductHBoxCell(Product product) {
+		super(100);
+		id = product.getId();
 
-        imageView.setImage(new Image("images/" + product.getImagePath()));
-        name.setText(product.getName());
-        price.setText(Double.toString(product.getPrice()) + "kr");
+		imageView.setImage(new Image("images/" + product.getImagePath()));
+		name.setText(product.getName());
+		price.setText(Double.toString(product.getPrice()) + "kr");
 
-        imageView.setFitWidth(100);
-        imageView.setPreserveRatio(true);
+		imageView.setFitWidth(100);
+		imageView.setPreserveRatio(true);
 
-        this.getChildren().addAll(imageView, name, price);
-    }
+		this.getChildren().addAll(imageView, name, price);
+	}
 
-    public int getProductId() {
-        return id;
-    }
-
+	public int getProductId() {
+		return id;
+	}
 }

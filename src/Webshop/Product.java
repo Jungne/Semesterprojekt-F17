@@ -50,6 +50,10 @@ public class Product {
 		return price;
 	}
 
+	public String getImagePath() {
+		return imagePath;
+	}
+
 	@Override
 	public String toString() {
 		return "Product{" + "name=" + name + ", id=" + id + ", category=" + category + ", description=" + description + ", price=" + price + '}';
