@@ -54,4 +54,8 @@ public class Product {
 	public String toString() {
 		return "Product{" + "name=" + name + ", id=" + id + ", category=" + category + ", description=" + description + ", price=" + price + '}';
 	}
+
+	public boolean equals(Product product) {
+		return this.id == product.id;
+	}
 }
