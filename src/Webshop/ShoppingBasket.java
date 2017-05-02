@@ -1,22 +1,42 @@
 package Webshop;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class ShoppingBasket {
 
-	private HashMap<Product, Integer> products;
+	private ArrayList<OrderLine> basket;
 
 	public ShoppingBasket() {
-		products = new HashMap<>();
+		basket = new ArrayList<>();
 	}
 
 	/**
-	 * Creates a map of the current content of the basket.
+	 * Finds and return an existing OrderLine in the basket, that contains the
+	 * given product. Null is returned if the OrderLine does not exist.
+	 *
+	 * @param product
+	 * @return
+	 */
+	private OrderLine getExistingOrderLine(Product product) {
+		for (OrderLine orderLine : basket) {
+			if (orderLine.getProduct().equals(product)) {
+				return orderLine;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Creates a ArrayList of the current content of the basket.
 	 *
 	 * @return returns the current content of the basket.
 	 */
-	public HashMap<Product, Integer> getBasketContent() {
-		return (HashMap<Product, Integer>) products.clone();
+	public ArrayList<OrderLine> getBasketContent() {
+		ArrayList<OrderLine> returnBasket = new ArrayList<>();
+		for (OrderLine orderLine : basket) {
+			returnBasket.add(new OrderLine(orderLine));
+		}
+		return returnBasket;
 	}
 
 	/**
@@ -28,48 +48,40 @@ public class ShoppingBasket {
 	 * @return returns true if the product was added or updated succesfully.
 	 */
 	public boolean addProduct(Product product, int amount) {
-		return changeProductAmount(product, amount);
-	}
-
-	/**
-	 * Adds one product to the basket. If the basket already contains the product,
-	 * then increment the existing amount.
-	 *
-	 * @param product
-	 * @param amount
-	 * @return returns true if the product was added or updated succesfully.
-	 */
-	public boolean addProduct(Product product) {
-		return this.addProduct(product, 1);
-	}
-
-	/**
-	 * Subtracts the given amount from the existing amount of the given product.
-	 * If the new amount is zero or less, the product is removed from the basket.
-	 *
-	 * @param product
-	 * @param amount
-	 * @return returns true if the product amount was subtracted or the product
-	 * was fully removed succesfully. Returns false if the given amount was
-	 * negative.
-	 */
-	public boolean subtractProductAmount(Product product, int amount) {
-		return this.changeProductAmount(product, -amount);
-	}
-
-	private boolean changeProductAmount(Product product, int amount) {
-		boolean productsContainsProduct = products.containsKey(product);
-		if (amount < 0 && !productsContainsProduct) {
+		if (amount <= 0) {
 			return false;
 		}
-		if (productsContainsProduct) {
-			amount += products.get(product);
-			if (amount <= 0) {
-				products.remove(product);
-			}
-			products.replace(product, amount);
+		OrderLine existingOrderLine = getExistingOrderLine(product);
+		if (existingOrderLine == null) {
+			basket.add(new OrderLine(product, amount));
 		} else {
-			products.put(product, amount);
+			int currentAmount = existingOrderLine.getAmount();
+			existingOrderLine.setAmount(currentAmount + amount);
+		}
+		return true;
+	}
+
+	/**
+	 * Adds OrderLine to basket. If the basket already contains the product that
+	 * that OrderLine contains, then add the new amount in the OrderLine to the
+	 * previous amount.
+	 *
+	 * @param orderLine
+	 * @return
+	 */
+	public boolean addProduct(OrderLine orderLine) {
+		return addProduct(orderLine.getProduct(), orderLine.getAmount());
+	}
+
+	public boolean setProductAmount(Product product, int amount) {
+		OrderLine existingOrderLine = getExistingOrderLine(product);
+		if (existingOrderLine == null) {
+			return false;
+		}
+		if (amount <= 0) {
+			basket.remove(existingOrderLine);
+		} else {
+			existingOrderLine.setAmount(amount);
 		}
 		return true;
 	}
@@ -80,6 +92,6 @@ public class ShoppingBasket {
 	 * @param product
 	 */
 	public void removeProduct(Product product) {
-		products.remove(product);
+		basket.remove(getExistingOrderLine(product));
 	}
 }
