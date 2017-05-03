@@ -6,9 +6,7 @@
 package semesterprojekt.f17;
 
 import Webshop.Product;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,26 +14,30 @@ import javafx.scene.layout.HBox;
 
 public class ProductHBoxCell extends HBox {
 
-	ImageView imageView = new ImageView();
-	Label name = new Label();
-	Label price = new Label();
-	private int id;
+    ImageView imageView = new ImageView();
+    Label name = new Label();
+    Label price = new Label();
+    private int id;
 
-	public ProductHBoxCell(Product product) {
-		super(100);
-		id = product.getId();
+    public ProductHBoxCell(Product product) {
+        //Sets the padding and spacing.
+        super();
+        this.setSpacing(10);
 
-		imageView.setImage(new Image("images/" + product.getImagePath()));
-		name.setText(product.getName());
-		price.setText(Double.toString(product.getPrice()) + "kr");
+        id = product.getId();
 
-		imageView.setFitWidth(100);
-		imageView.setPreserveRatio(true);
+        imageView.setImage(new Image("images/" + product.getImagePath()));
+        name.setText(product.getName());
+        name.setPrefWidth(150);
+        price.setText(Double.toString(product.getPrice()) + "kr");
 
-		this.getChildren().addAll(imageView, name, price);
-	}
+        imageView.setFitWidth(100);
+        imageView.setPreserveRatio(true);
 
-	public int getProductId() {
-		return id;
-	}
+        this.getChildren().addAll(imageView, name, price);
+    }
+
+    public int getProductId() {
+        return id;
+    }
 }
