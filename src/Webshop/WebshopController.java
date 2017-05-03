@@ -2,7 +2,6 @@ package Webshop;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeSet;
 
 public class WebshopController implements WebshopInterface {
@@ -12,17 +11,22 @@ public class WebshopController implements WebshopInterface {
 
 	public WebshopController() throws IOException {
 		this.catalog = new Catalog();
-                this.customer = new Customer("Test Testerson", "test@test.com", 12345678);
+		this.customer = new Customer("Test Testerson", "test@test.com", 12345678);
 	}
 
+	@Override
 	public ArrayList<Product> findProduct(String query) {
-
 		return catalog.searchProduct(query);
 	}
 
 	@Override
 	public TreeSet<String> getCategories() {
 		return catalog.getCategories();
+	}
+
+	@Override
+	public ArrayList<Product> getCategory(String category) {
+		return catalog.getCategory(category);
 	}
 
 	@Override
@@ -35,28 +39,29 @@ public class WebshopController implements WebshopInterface {
 		return catalog.getProductList();
 	}
 
-        public ArrayList<Product> getCategory(String category) {
-            return catalog.getCategory(category);
-        }
-
 	@Override
 	public Order checkOut() {
 		return customer.checkOut();
 	}
-        
-        public void addProductToBasket(Product product, int amount) {
-            customer.addProductToBasket(product, amount);
-        }
-        
-        public void removeProduct(Product product) {
-            customer.removeProduct(product);
-        }
-        
-        public void setProductAmount(Product product, int amount) {
-            customer.setProductAmount(product, amount);
-        }
-        
-        public ShoppingBasket getShoppingBasket() {
-            return customer.getShoppingBasket();
-        }
+
+	@Override
+	public void addProductToBasket(int productId, int amount) {
+		customer.addProductToBasket(getProduct(productId), amount);
+	}
+
+	@Override
+	public void removeProduct(int productId) {
+		customer.removeProduct(getProduct(productId));
+	}
+
+	@Override
+	public void setProductAmount(int productId, int amount) {
+		customer.setProductAmount(getProduct(productId), amount);
+	}
+
+	@Override
+	public ShoppingBasket getShoppingBasket() {
+		return customer.getShoppingBasket();
+	}
+
 }
