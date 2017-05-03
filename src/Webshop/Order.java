@@ -1,6 +1,5 @@
 package Webshop;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
@@ -10,11 +9,12 @@ public class Order {
 	private Enum OrderStatus;
 	private boolean complete;
 	private Customer customer;
-	private ArrayList<OrderLine> products;
+	private ShoppingBasket basket;
 
-	public Order(Customer customer, ArrayList<OrderLine> products) {
+	public Order(Customer customer, ShoppingBasket basket) {
 		this.customer = customer;
-		this.products = products;
+		this.basket = basket;
+		this.dato = new Date();
 	}
 
 	/**
@@ -53,9 +53,9 @@ public class Order {
 	}
 
 	/**
-	 * @return the products
+	 * @return the basket
 	 */
-	public ArrayList<OrderLine> getProducts() {
-		return products;
+	public ShoppingBasket getBasket() {
+		return basket;
 	}
 }
