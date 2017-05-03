@@ -14,7 +14,7 @@ public class WebshopController implements WebshopInterface{
 		this.catalog = new Catalog();
 	}
 
-	public List<Product> findProduct(String query) {
+	public ArrayList<Product> findProduct(String query) {
 		return catalog.searchProduct(query);
 	}
 
@@ -29,4 +29,8 @@ public class WebshopController implements WebshopInterface{
 	public ArrayList<Product> getProductList() {
 		return catalog.getProductList();
 	}
+        
+        public ArrayList<Product> getCategory(String category) {
+            return catalog.getCategory(category);
+        }
 }

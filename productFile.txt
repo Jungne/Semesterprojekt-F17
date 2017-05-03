@@ -1,7 +1,7 @@
 testproduct
 1
 testcategory
-test of fileSearcher.
+Description of testproduct to showcase the "Show info" button, as well as text wrapping. The length of this description is known in the state of California to cause cancer. Viewer discretion is advised.
 100.00
 test.jpeg
 blender
@@ -12,19 +12,25 @@ Blender from Electrolux. Blends stuff into smaller pieces.
 blender.jpeg
 computer
 3
-computer
+pc
 A computer.
 999.99
 test.jpeg
-computer
+sony tv
 4
-computer
-A computer.
-999.99
+tv
+A sony television.
+3999.99
 test.jpeg
-computer
+lg tv
 5
-computer
-A computer.
-999.99
+tv
+An LG tv.
+2499.99
+test.jpeg
+samsung galaxy s9
+6
+mobilephone
+The newest member in the galaxy family.
+5999.99
 test.jpeg
