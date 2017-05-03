@@ -94,4 +94,16 @@ public class ShoppingBasket {
 	public void removeProduct(Product product) {
 		basket.remove(getExistingOrderLine(product));
 	}
+
+	public double getTotalPrice() {
+		double totalPrice = 0;
+		double productPrice = 0;
+		double productAmount = 0;
+		for (OrderLine orderLine : basket) {
+			productPrice = orderLine.getProduct().getPrice();
+			productAmount = orderLine.getAmount();
+			totalPrice += productPrice * productAmount;
+		}
+		return totalPrice;
+	}
 }
