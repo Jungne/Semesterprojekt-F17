@@ -62,6 +62,8 @@ public class FXMLDocumentController implements Initializable {
     private Button deleteButton;
     @FXML
     private TextField amountTextField;
+    @FXML
+    private TextField totalPriceTextField;
 
     @FXML
     private void handleCatalogTestShowProductsButton(ActionEvent e) {
@@ -156,12 +158,16 @@ public class FXMLDocumentController implements Initializable {
 
     private void updateShoppingBasket() {
         ArrayList<OrderLine> orderLines = webshopController.getShoppingBasket().getBasketContent();
+        
+        double totalPrice = 0;
 
         List<ProductHBoxCell> list = new ArrayList<>();
         for (OrderLine orderLine : orderLines) {
             list.add(new ProductHBoxCell(orderLine));
+            totalPrice += (orderLine.getProduct().getPrice() * orderLine.getAmount());
         }
         ObservableList observableList = FXCollections.observableArrayList(list);
         shoppingBasketListView.setItems(observableList);
+        totalPriceTextField.setText(Double.toString(totalPrice));
     }
 }
