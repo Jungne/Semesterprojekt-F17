@@ -2,7 +2,6 @@ package Webshop;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeSet;
 
 public class WebshopController implements WebshopInterface {
@@ -34,9 +33,15 @@ public class WebshopController implements WebshopInterface {
 		return catalog.getProductList();
 	}
 
-        public ArrayList<Product> getCategory(String category) {
-            return catalog.getCategory(category);
-        }
+	@Override
+	public ArrayList<Product> getCategory(String category) {
+		return catalog.getCategory(category);
+	}
+
+	@Override
+	public boolean addProduct(int productId, int amount) {
+		return customer.getShoppingBasket().addProduct(getProduct(productId), amount);
+	}
 
 	@Override
 	public Order checkOut() {

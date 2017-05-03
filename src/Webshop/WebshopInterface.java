@@ -13,7 +13,11 @@ public interface WebshopInterface {
 	public Product getProduct(int id);
 
 	public ArrayList<Product> getProductList();
-	
+
+	public ArrayList<Product> getCategory(String category);
+
+	public boolean addProduct(int productId, int amount);
+
 	public Order checkOut();
 
 }

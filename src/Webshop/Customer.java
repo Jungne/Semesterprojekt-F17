@@ -12,6 +12,7 @@ public class Customer {
 		this.name = name;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+		this.shoppingBasket = new ShoppingBasket();
 	}
 
 	public int getId() {
@@ -47,9 +48,13 @@ public class Customer {
 	}
 
 	/**
-	 * @return An order for this customer consisting this customer's current shopping basket. 
+	 * @return An order for this customer consisting this customer's current
+	 * shopping basket.
 	 */
 	public Order checkOut() {
+		if (shoppingBasket == null && shoppingBasket.isEmpty()) {
+			return null;
+		}
 		return new Order(this, shoppingBasket);
 	}
 }
