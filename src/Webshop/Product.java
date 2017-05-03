@@ -27,7 +27,7 @@ public class Product {
 	}
 
 	public void loadImage() throws IOException {
-		imageList.add(ImageIO.read(new File(imagePath)));
+		imageList.add(ImageIO.read(new File("src/images/" + imagePath)));
 	}
 
 	public String getName() {
