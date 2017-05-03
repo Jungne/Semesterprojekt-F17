@@ -52,21 +52,21 @@ public class Customer {
 	 * shopping basket.
 	 */
 	public Order checkOut() {
-		if (shoppingBasket == null && shoppingBasket.isEmpty()) {
+		if (shoppingBasket.isEmpty()) {
 			return null;
 		}
 		return new Order(this, shoppingBasket);
 	}
-        
-        public void addProductToBasket(Product product, int amount) {
-            shoppingBasket.addProduct(product, amount);
-        }
-        
-        public void removeProduct(Product product) {
-            shoppingBasket.removeProduct(product);
-        }
-        
-        public void setProductAmount(Product product, int amount) {
-            shoppingBasket.setProductAmount(product, amount);
-        }
+
+	public void addProductToBasket(Product product, int amount) {
+		shoppingBasket.addProduct(product, amount);
+	}
+
+	public void removeProduct(Product product) {
+		shoppingBasket.removeProduct(product);
+	}
+
+	public void setProductAmount(Product product, int amount) {
+		shoppingBasket.setProductAmount(product, amount);
+	}
 }
