@@ -18,27 +18,38 @@
 			<content>
 				<AnchorPane fx:id="catalogTestAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="467.0" prefWidth="600.0">
 					<children>
-						<Button fx:id="CatalogTestShowProductsButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCatalogTestShowProductsButton" prefHeight="25.0" prefWidth="136.0" text="Show all products" />
+						<Button fx:id="CatalogTestShowProductsButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCatalogTestShowProductsButton" prefHeight="25.0" prefWidth="121.0" text="Show all products" />
 						<ListView fx:id="catalogTestListView" layoutX="14.0" layoutY="81.0" prefHeight="477.0" prefWidth="568.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="218.0" AnchorPane.topAnchor="81.0" />
-                  <Button fx:id="catalogTestShowInfoButton" layoutX="156.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCatalogTestShowInfoButton" prefHeight="25.0" prefWidth="78.0" text="Show info" />
+                  <Button fx:id="catalogTestShowInfoButton" layoutX="147.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCatalogTestShowInfoButton" prefHeight="25.0" prefWidth="71.0" text="Show info" />
                   <ImageView fx:id="catalogTestImageView" fitHeight="144.0" fitWidth="189.0" layoutX="597.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/test.jpeg" />
                      </image>
                   </ImageView>
                   <TextArea fx:id="catalogTestTextArea" layoutX="595.0" layoutY="166.0" prefHeight="393.0" prefWidth="193.0" wrapText="true" />
-                  <TextField fx:id="searchTextField" layoutX="14.0" layoutY="48.0" prefHeight="25.0" prefWidth="163.0" />
-                  <Button fx:id="searchButton" layoutX="182.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleSearchButton" text="Search" />
-                  <ChoiceBox fx:id="categoriesChoiceBox" layoutX="361.0" layoutY="14.0" prefWidth="150.0" />
-                  <Label layoutX="289.0" layoutY="18.0" text="Categories:" />
-                  <Button layoutX="361.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleFilterButton" prefHeight="25.0" prefWidth="150.0" text="Filter" />
+                  <TextField fx:id="searchTextField" layoutX="14.0" layoutY="48.0" prefHeight="25.0" prefWidth="246.0" />
+                  <Button fx:id="searchButton" layoutX="265.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleSearchButton" text="Search" />
+                  <ChoiceBox fx:id="categoriesChoiceBox" layoutX="432.0" layoutY="14.0" prefWidth="150.0" />
+                  <Label layoutX="359.0" layoutY="18.0" text="Categories:" />
+                  <Button layoutX="432.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleFilterButton" prefHeight="25.0" prefWidth="150.0" text="Filter" />
+                  <Button fx:id="addToBasketButton" layoutX="226.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAddToBasketButton" text="Add to basket" />
 					</children>
 				</AnchorPane>
 			</content>
 		</Tab>
-		<Tab text="Untitled Tab 2">
+		<Tab text="ShoppingBasket">
 			<content>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ListView fx:id="shoppingBasketListView" layoutX="14.0" layoutY="100.0" prefHeight="457.0" prefWidth="773.0" />
+                  <Label layoutX="14.0" layoutY="83.0" text="Product" />
+                  <Label layoutX="291.0" layoutY="83.0" text="Price" />
+                  <Label layoutX="379.0" layoutY="83.0" text="Amount" />
+                  <Label layoutX="515.0" layoutY="83.0" text="Total" />
+                  <Button fx:id="setAmountButton" layoutX="128.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleSetAmountButton" text="Set amount" />
+                  <Button fx:id="deleteButton" layoutX="240.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleDeleteButton" text="Delete" />
+                  <TextField fx:id="amountTextField" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="34.0" prefHeight="25.0" prefWidth="87.0" text="1" />
+               </children></AnchorPane>
 			</content>
 		</Tab>
 	</tabs>

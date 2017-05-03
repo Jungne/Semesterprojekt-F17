@@ -12,6 +12,7 @@ public class Customer {
 		this.name = name;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+                shoppingBasket = new ShoppingBasket();
 	}
 
 	public int getId() {
@@ -52,4 +53,16 @@ public class Customer {
 	public Order checkOut() {
 		return new Order(this, shoppingBasket);
 	}
+        
+        public void addProductToBasket(Product product, int amount) {
+            shoppingBasket.addProduct(product, amount);
+        }
+        
+        public void removeProduct(Product product) {
+            shoppingBasket.removeProduct(product);
+        }
+        
+        public void setProductAmount(Product product, int amount) {
+            shoppingBasket.setProductAmount(product, amount);
+        }
 }

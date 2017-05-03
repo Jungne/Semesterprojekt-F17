@@ -12,6 +12,7 @@ public class WebshopController implements WebshopInterface {
 
 	public WebshopController() throws IOException {
 		this.catalog = new Catalog();
+                this.customer = new Customer("Test Testerson", "test@test.com", 12345678);
 	}
 
 	public ArrayList<Product> findProduct(String query) {
@@ -42,4 +43,20 @@ public class WebshopController implements WebshopInterface {
 	public Order checkOut() {
 		return customer.checkOut();
 	}
+        
+        public void addProductToBasket(Product product, int amount) {
+            customer.addProductToBasket(product, amount);
+        }
+        
+        public void removeProduct(Product product) {
+            customer.removeProduct(product);
+        }
+        
+        public void setProductAmount(Product product, int amount) {
+            customer.setProductAmount(product, amount);
+        }
+        
+        public ShoppingBasket getShoppingBasket() {
+            return customer.getShoppingBasket();
+        }
 }
