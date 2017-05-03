@@ -76,18 +76,15 @@ public class FXMLDocumentController implements Initializable {
         int id = catalogTestListView.getSelectionModel().getSelectedItem().getProductId();
         Product product = webshopController.getProduct(id);
 
-        String text = "";
-
         catalogTestImageView.setImage(new Image("images/" + product.getImagePath()));
-
+        
+        String text = "";
         text = "Name: " + product.getName() + "\n";
         text += "Category: " + product.getCategory() + "\n";
         text += "Price: " + Double.toString(product.getPrice()) + "\n";
         text += "Description: " + product.getDescription();
 
         catalogTestTextArea.setText(text);
-
-        System.out.println(product.getId());
     }
 
     @FXML
@@ -112,7 +109,6 @@ public class FXMLDocumentController implements Initializable {
 
     private void showProducts(ArrayList<Product> products, ListView listview) {
         List<ProductHBoxCell> list = new ArrayList<>();
-
         for (Product product : products) {
             list.add(new ProductHBoxCell(product));
         }
@@ -147,20 +143,17 @@ public class FXMLDocumentController implements Initializable {
         try {
             int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
             webshopController.setProductAmount(webshopController.getProduct(id), Integer.parseInt(amountTextField.getText()));
-            
+
             updateShoppingBasket();
-        } 
-        catch(Exception ex) {
+        } catch (Exception ex) {
             amountTextField.setText("1");
         }
-
     }
 
     private void updateShoppingBasket() {
-        ArrayList<OrderLine> orderLines = webshopController.getShoppingBasket().getBasketContent();
-        
         double totalPrice = 0;
 
+        ArrayList<OrderLine> orderLines = webshopController.getShoppingBasket().getBasketContent();
         List<ProductHBoxCell> list = new ArrayList<>();
         for (OrderLine orderLine : orderLines) {
             list.add(new ProductHBoxCell(orderLine));
