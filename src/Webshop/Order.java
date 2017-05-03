@@ -1,6 +1,5 @@
 package Webshop;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
@@ -11,10 +10,11 @@ public class Order {
 	private boolean complete;
 	private Customer customer;
 	private ShoppingBasket basket;
-	
+
 	public Order(Customer customer, ShoppingBasket basket) {
 		this.customer = customer;
 		this.basket = basket;
+		this.dato = new Date();
 	}
 
 	/**
