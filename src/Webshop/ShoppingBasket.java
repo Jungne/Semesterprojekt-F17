@@ -95,6 +95,10 @@ public class ShoppingBasket {
 		basket.remove(getExistingOrderLine(product));
 	}
 
+	public boolean isEmpty() {
+		return basket.isEmpty();
+	}
+
 	public double getTotalPrice() {
 		double totalPrice = 0;
 		double productPrice = 0;
