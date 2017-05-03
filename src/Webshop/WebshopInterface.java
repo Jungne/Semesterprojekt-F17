@@ -13,5 +13,7 @@ public interface WebshopInterface {
 	public Product getProduct(int id);
 
 	public ArrayList<Product> getProductList();
+	
+	public Order checkOut();
 
 }

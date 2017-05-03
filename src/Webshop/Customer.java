@@ -45,4 +45,11 @@ public class Customer {
 	public ShoppingBasket getShoppingBasket() {
 		return this.shoppingBasket;
 	}
+
+	/**
+	 * @return An order for this customer consisting this customer's current shopping basket. 
+	 */
+	public Order checkOut() {
+		return new Order(this, shoppingBasket.getBasketContent());
+	}
 }
