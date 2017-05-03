@@ -50,6 +50,6 @@ public class Customer {
 	 * @return An order for this customer consisting this customer's current shopping basket. 
 	 */
 	public Order checkOut() {
-		return new Order(this, shoppingBasket.getBasketContent());
+		return new Order(this, shoppingBasket);
 	}
 }
