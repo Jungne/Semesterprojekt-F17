@@ -52,11 +52,23 @@ public class FXMLDocumentController implements Initializable {
     private Button searchButton;
     @FXML
     private ChoiceBox<String> categoriesChoiceBox;
+    @FXML
+    private Button addToBasketButton;
+    @FXML
+    private ListView<ProductHBoxCell> shoppingBasketListView;
+    @FXML
+    private Button setAmountButton;
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private TextField amountTextField;
+    @FXML
+    private TextField totalPriceTextField;
 
     @FXML
     private void handleCatalogTestShowProductsButton(ActionEvent e) {
         ArrayList<Product> products = webshopController.getProductList();
-        showProducts(products);
+        showProducts(products, catalogTestListView);
     }
 
     @FXML
@@ -77,13 +89,12 @@ public class FXMLDocumentController implements Initializable {
 
         System.out.println(product.getId());
     }
-    
+
     @FXML
     private void handleSearchButton(ActionEvent e) {
         ArrayList<Product> products = webshopController.findProduct(searchTextField.getText());
-        showProducts(products);
+        showProducts(products, catalogTestListView);
     }
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -93,25 +104,70 @@ public class FXMLDocumentController implements Initializable {
             //Do something about this.
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         //populates categoriesChoiceBox.
         categoriesChoiceBox.setItems(FXCollections.observableArrayList(webshopController.getCategories()));
         categoriesChoiceBox.setValue(categoriesChoiceBox.getItems().get(0));
     }
 
-    private void showProducts(ArrayList<Product> products) {
+    private void showProducts(ArrayList<Product> products, ListView listview) {
         List<ProductHBoxCell> list = new ArrayList<>();
 
         for (Product product : products) {
             list.add(new ProductHBoxCell(product));
         }
         ObservableList observableList = FXCollections.observableArrayList(list);
-        catalogTestListView.setItems(observableList);
+        listview.setItems(observableList);
     }
 
     @FXML
     private void handleFilterButton(ActionEvent event) {
         ArrayList<Product> products = webshopController.getCategory(categoriesChoiceBox.getValue());
-        showProducts(products);
+        showProducts(products, catalogTestListView);
+    }
+
+    @FXML
+    private void handleAddToBasketButton(ActionEvent e) {
+        int id = catalogTestListView.getSelectionModel().getSelectedItem().getProductId();
+        webshopController.addProductToBasket(webshopController.getProduct(id), 1);
+
+        updateShoppingBasket();
+    }
+
+    @FXML
+    private void handleDeleteButton(ActionEvent e) {
+        int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
+        webshopController.removeProduct(webshopController.getProduct(id));
+
+        updateShoppingBasket();
+    }
+
+    @FXML
+    private void handleSetAmountButton(ActionEvent e) {
+        try {
+            int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
+            webshopController.setProductAmount(webshopController.getProduct(id), Integer.parseInt(amountTextField.getText()));
+            
+            updateShoppingBasket();
+        } 
+        catch(Exception ex) {
+            amountTextField.setText("1");
+        }
+
+    }
+
+    private void updateShoppingBasket() {
+        ArrayList<OrderLine> orderLines = webshopController.getShoppingBasket().getBasketContent();
+        
+        double totalPrice = 0;
+
+        List<ProductHBoxCell> list = new ArrayList<>();
+        for (OrderLine orderLine : orderLines) {
+            list.add(new ProductHBoxCell(orderLine));
+            totalPrice += (orderLine.getProduct().getPrice() * orderLine.getAmount());
+        }
+        ObservableList observableList = FXCollections.observableArrayList(list);
+        shoppingBasketListView.setItems(observableList);
+        totalPriceTextField.setText(Double.toString(totalPrice));
     }
 }
