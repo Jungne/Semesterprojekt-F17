@@ -5,7 +5,7 @@ import java.util.TreeSet;
 
 public interface WebshopInterface {
 
-	public ArrayList<Product> findProduct(String query);
+	public ArrayList<Product> findProducts(String query);
 
 	public TreeSet<String> getCategories();
 
@@ -13,7 +13,7 @@ public interface WebshopInterface {
 
 	public Product getProduct(int id);
 
-	public ArrayList<Product> getProductList();
+	public ArrayList<Product> getAllProduct();
 
 	public Order checkOut();
 

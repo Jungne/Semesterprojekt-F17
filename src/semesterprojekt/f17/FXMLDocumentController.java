@@ -65,7 +65,7 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void handleCatalogTestShowProductsButton(ActionEvent e) {
-		ArrayList<Product> products = webshopController.getProductList();
+		ArrayList<Product> products = webshopController.getAllProduct();
 		showProducts(products, catalogTestListView);
 	}
 
@@ -87,7 +87,7 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void handleSearchButton(ActionEvent e) {
-		ArrayList<Product> products = webshopController.findProduct(searchTextField.getText());
+		ArrayList<Product> products = webshopController.findProducts(searchTextField.getText());
 		showProducts(products, catalogTestListView);
 	}
 

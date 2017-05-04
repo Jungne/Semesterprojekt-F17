@@ -3,6 +3,7 @@ package Webshop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeSet;
 import java.util.logging.Level;
@@ -10,13 +11,20 @@ import java.util.logging.Logger;
 
 public class FileSearcher implements DatabaseInterface {
 
-	public static TreeSet<Product> findProduct(String query) {
-		TreeSet<Product> productSet = new TreeSet<>();
+	private ArrayList<Product> products;
+	private TreeSet<String> categories;
 
-		return productSet;
+	public FileSearcher() {
+		products = new ArrayList<Product>();
+		categories = new TreeSet<String>();
+		loadFile();
 	}
 
-	public static void loadEntireCatalog(Catalog catalog) {
+	/**
+	 * Loads all products from productFile.txt into productList, if it has not
+	 * been done yet
+	 */
+	private void loadFile() {
 		try {
 			Scanner scanner = new Scanner(new File("productFile.txt"));
 
@@ -36,12 +44,11 @@ public class FileSearcher implements DatabaseInterface {
 				imagePath = scanner.nextLine();
 
 				try {
-					catalog.getProductList().add(new Product(name, id, category, description, price, imagePath));
+					products.add(new Product(name, id, category, description, price, imagePath));
+					categories.add(category);
 				} catch (IOException ex) {
 					Logger.getLogger(FileSearcher.class.getName()).log(Level.SEVERE, null, ex);
 				}
-
-				catalog.getCategories().add(category);
 			}
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(FileSearcher.class.getName()).log(Level.SEVERE, null, ex);
@@ -50,65 +57,45 @@ public class FileSearcher implements DatabaseInterface {
 
 	@Override
 	public Product getProduct(int productId) {
-		try {
-			Scanner scanner = new Scanner(new File("productFile.txt"));
-
-			int lineNumber = 0;
-			int id;
-			String line = "";
-			String previousLine = "";
-
-			while (scanner.hasNext()) {
-				lineNumber++;
-				previousLine = line;
-				line = scanner.nextLine();
-
-				//Checks all lines where the id is.
-				if (lineNumber % 6 == 2) {
-					id = Integer.parseInt(line);
-
-					//If the id on the current line is equal to the given id, then product is created and returned.
-					if (productId == id) {
-						String name = previousLine;
-						String category = scanner.nextLine();
-						String description = scanner.nextLine();
-						double price = Double.parseDouble(scanner.nextLine());
-						String imagePath = scanner.nextLine();
-						try {
-							return new Product(name, id, category, description, price, imagePath);
-						} catch (IOException ex) {
-							Logger.getLogger(FileSearcher.class.getName()).log(Level.SEVERE, null, ex);
-						}
-					}
-				}
+		for (Product product : products) {
+			if (product.getId() == productId) {
+				return product;
 			}
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(FileSearcher.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return null;
 	}
 
 	@Override
-	public TreeSet<String> getCategories() {
-		try {
-			Scanner scanner = new Scanner(new File("productFile.txt"));
+	public ArrayList<Product> getAllProducts() {
+		return (ArrayList<Product>) products.clone();
+	}
 
-			TreeSet<String> categories = new TreeSet<>();
-			String line = "";
-			int lineNumber = 0;
+	@Override
+	public ArrayList<Product> findProducts(String query) {
+		ArrayList<Product> searchResult = new ArrayList<>();
 
-			while (scanner.hasNext()) {
-				lineNumber++;
-				line = scanner.nextLine();
-				if (lineNumber % 6 == 3) {
-					categories.add(line);
-				}
+		for (Product product : products) {
+			if (product.getName().matches("(.*)" + query.toLowerCase() + "(.*)")) {
+				searchResult.add(product);
 			}
-			return categories;
-
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(FileSearcher.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return null;
+
+		return searchResult;
+	}
+
+	@Override
+	public TreeSet<String> getCategories() {
+		return (TreeSet<String>) categories.clone();
+	}
+
+	@Override
+	public ArrayList<Product> getCategory(String category) {
+		ArrayList<Product> products = new ArrayList<>();
+		for (Product product : this.products) {
+			if (product.getCategory().equals(category)) {
+				products.add(product);
+			}
+		}
+		return products;
 	}
 }
