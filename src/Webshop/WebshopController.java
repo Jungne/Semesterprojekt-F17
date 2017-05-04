@@ -11,14 +11,16 @@ public class WebshopController implements WebshopInterface {
 
 	public WebshopController() throws IOException {
 		this.catalog = new Catalog();
-		FileSearcher.loadEntireCatalog(this.catalog);
 		this.customer = new Customer("Test Testerson", "test@test.com", 12345678);
 	}
-	
+
 	/**
-	 * Returns an ArrayList containing the results of the search with the input String as query.
+	 * Returns an ArrayList containing the results of the search with the input
+	 * String as query.
+	 *
 	 * @param query a String to be compared to the names of the products.
-	 * @return arraylist containing all products with part of the query in the name.
+	 * @return arraylist containing all products with part of the query in the
+	 * name.
 	 */
 	@Override
 	public ArrayList<Product> findProduct(String query) {
@@ -27,6 +29,7 @@ public class WebshopController implements WebshopInterface {
 
 	/**
 	 * Returns a treeSet containing all the product categories as strings.
+	 *
 	 * @return a treeset containing all the product categories as strings.
 	 */
 	@Override
@@ -36,6 +39,7 @@ public class WebshopController implements WebshopInterface {
 
 	/**
 	 * Returns an arraylist containing all products in the specified categories.
+	 *
 	 * @param category the category of which all products wil be returned.
 	 * @return an arraylist containing all the products in the specified category.
 	 */
@@ -46,16 +50,18 @@ public class WebshopController implements WebshopInterface {
 
 	/**
 	 * Returns the product with the specified id.
-	 * @param id the id of the product to be returned.
+	 *
+	 * @param productId the id of the product to be returned.
 	 * @return the product with the specified id.
 	 */
 	@Override
-	public Product getProduct(int id) {
-		return catalog.getProduct(id);
+	public Product getProduct(int productId) {
+		return catalog.getProduct(productId);
 	}
 
 	/**
 	 * Returns an arraylist containing all products in the catalog.
+	 *
 	 * @return an arraylist containing all products in the catalog.
 	 */
 	@Override
@@ -65,6 +71,7 @@ public class WebshopController implements WebshopInterface {
 
 	/**
 	 * Returns an order created from the shoppingbasket of the customer.
+	 *
 	 * @return an order with the products in the customers shoppingbasket.
 	 */
 	@Override
@@ -74,6 +81,7 @@ public class WebshopController implements WebshopInterface {
 
 	/**
 	 * Adds a product to the customers shoppingbasket.
+	 *
 	 * @param productId the id of the product to be added.
 	 * @param amount the amount to be added.
 	 */
@@ -84,6 +92,7 @@ public class WebshopController implements WebshopInterface {
 
 	/**
 	 * Removes the product with the specified id from the shoppingbasket.
+	 *
 	 * @param productId the id of the product to be removed.
 	 */
 	@Override
@@ -93,6 +102,7 @@ public class WebshopController implements WebshopInterface {
 
 	/**
 	 * Sets the amount of a product in the basket.
+	 *
 	 * @param productId the id of the product to be set.
 	 * @param amount the amount to be set.
 	 */
@@ -103,6 +113,7 @@ public class WebshopController implements WebshopInterface {
 
 	/**
 	 * Returns the customers shoppingbasket.
+	 *
 	 * @return the shoppingbasket of the customer.
 	 */
 	@Override
