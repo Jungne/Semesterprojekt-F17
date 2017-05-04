@@ -17,11 +17,11 @@ public interface WebshopInterface {
 
 	public Order checkOut();
 
-	public void addProductToBasket(int productId, int amount);
+	public boolean addProductToBasket(int productId, int amount);
 
 	public void removeProduct(int productId);
 
-	public void setProductAmount(int productId, int amount);
+	public boolean setProductAmount(int productId, int amount);
 
 	public ShoppingBasket getShoppingBasket();
 

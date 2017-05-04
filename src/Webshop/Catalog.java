@@ -74,14 +74,14 @@ public class Catalog {
 	public ArrayList<Product> getProductList() {
 		return productList;
 	}
-        
-        public ArrayList<Product> getCategory(String category) {
-            ArrayList<Product> products = new ArrayList<>();
-            for(Product product : productList) {
-                if (product.getCategory().equals(category)) {
-                    products.add(product);
-                }
-            }
-            return products;
-        }
+
+	public ArrayList<Product> getCategory(String category) {
+		ArrayList<Product> products = new ArrayList<>();
+		for (Product product : productList) {
+			if (product.getCategory().equals(category)) {
+				products.add(product);
+			}
+		}
+		return products;
+	}
 }

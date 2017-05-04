@@ -45,23 +45,22 @@ public class WebshopController implements WebshopInterface {
 	}
 
 	@Override
-	public void addProductToBasket(int productId, int amount) {
-		customer.addProductToBasket(getProduct(productId), amount);
+	public boolean addProductToBasket(int productId, int amount) {
+		return customer.getShoppingBasket().addProduct(getProduct(productId), amount);
 	}
 
 	@Override
 	public void removeProduct(int productId) {
-		customer.removeProduct(getProduct(productId));
+		customer.getShoppingBasket().removeProduct(getProduct(productId));
 	}
 
 	@Override
-	public void setProductAmount(int productId, int amount) {
-		customer.setProductAmount(getProduct(productId), amount);
+	public boolean setProductAmount(int productId, int amount) {
+		return customer.getShoppingBasket().setProductAmount(getProduct(productId), amount);
 	}
 
 	@Override
 	public ShoppingBasket getShoppingBasket() {
 		return customer.getShoppingBasket();
 	}
-
 }
