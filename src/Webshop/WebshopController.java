@@ -11,6 +11,7 @@ public class WebshopController implements WebshopInterface {
 
 	public WebshopController() throws IOException {
 		this.catalog = new Catalog();
+		FileSearcher.loadEntireCatalog(this.catalog);
 		this.customer = new Customer("Test Testerson", "test@test.com", 12345678);
 	}
 
