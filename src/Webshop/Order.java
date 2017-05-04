@@ -11,9 +11,9 @@ public class Order {
 	private Customer customer;
 	private ShoppingBasket basket;
 
-	public Order(Customer customer, ShoppingBasket basket) {
+	public Order(Customer customer) {
 		this.customer = customer;
-		this.basket = basket;
+		this.basket = customer.getShoppingBasket();
 		this.dato = new Date();
 	}
 

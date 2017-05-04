@@ -55,6 +55,6 @@ public class Customer {
 		if (shoppingBasket.isEmpty()) {
 			return null;
 		}
-		return new Order(this, shoppingBasket);
+		return new Order(this);
 	}
 }
