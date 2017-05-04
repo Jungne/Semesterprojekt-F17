@@ -31,6 +31,7 @@ public class FXMLDocumentController implements Initializable {
 	private WebshopController webshopController;
 
 	private boolean isLoggedIn = false;
+	private ShoppingBasket guestBasket = new ShoppingBasket();
 
 	@FXML
 	private Button CatalogTestShowProductsButton;
@@ -145,7 +146,11 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private void handleAddToBasketButton(ActionEvent e) {
 		int id = catalogTestListView.getSelectionModel().getSelectedItem().getProductId();
-		webshopController.addProductToBasket(id, 1);
+		if (isLoggedIn) {
+			webshopController.addProductToBasket(id, 1);
+		} else {
+			guestBasket.addProduct(webshopController.getProduct(id), 1);
+		}
 
 		updateShoppingBasket();
 	}
@@ -153,7 +158,11 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private void handleDeleteButton(ActionEvent e) {
 		int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
-		webshopController.removeProduct(id);
+		if (isLoggedIn) {
+			webshopController.removeProduct(id);
+		} else {
+			guestBasket.removeProduct(webshopController.getProduct(id));
+		}
 
 		updateShoppingBasket();
 	}
@@ -162,7 +171,12 @@ public class FXMLDocumentController implements Initializable {
 	private void handleSetAmountButton(ActionEvent e) {
 		try {
 			int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
-			webshopController.setProductAmount(id, Integer.parseInt(amountTextField.getText()));
+			int amount = Integer.parseInt(amountTextField.getText());
+			if (isLoggedIn) {
+				webshopController.setProductAmount(id, amount);
+			} else {
+				guestBasket.setProductAmount(webshopController.getProduct(id), amount);
+			}
 
 			updateShoppingBasket();
 		} catch (Exception ex) {
@@ -173,7 +187,7 @@ public class FXMLDocumentController implements Initializable {
 	private void updateShoppingBasket() {
 		double totalPrice = 0;
 
-		ArrayList<OrderLine> orderLines = webshopController.getShoppingBasket().getBasketContent();
+		ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBasket().getBasketContent() : guestBasket.getBasketContent();
 		List<ProductHBoxCell> list = new ArrayList<>();
 		for (OrderLine orderLine : orderLines) {
 			list.add(new ProductHBoxCell(orderLine));
@@ -192,6 +206,7 @@ public class FXMLDocumentController implements Initializable {
 			testLogInOutButton.setText("Log In");
 		}
 		isLoggedIn = !isLoggedIn;
+		updateShoppingBasket();
 	}
 
 	@FXML

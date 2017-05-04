@@ -83,7 +83,7 @@
                         </Pane>
                         <Pane fx:id="CheckOut_EndPane" prefHeight="571.0" prefWidth="800.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label layoutX="250.0" layoutY="200.0" text="Her ordnes betaling">
+                              <Label layoutX="250.0" layoutY="200.0" text="Kvittering">
                                  <font>
                                     <Font size="36.0" />
                                  </font>
