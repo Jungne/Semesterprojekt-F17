@@ -1,7 +1,10 @@
 package Webshop;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -97,5 +100,17 @@ public class FileSearcher implements DatabaseInterface {
 			}
 		}
 		return products;
+	}
+
+	@Override
+	public boolean saveOrder(Customer customer, Order order) {
+		try {
+			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("orderHistory.txt"));
+			//TODO - Save the order into orderHistory.txt
+			bufferedWriter.close();
+		} catch (IOException ex) {
+			Logger.getLogger(FileSearcher.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return true;
 	}
 }

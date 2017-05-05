@@ -5,6 +5,7 @@ import java.util.TreeSet;
 
 public interface DatabaseInterface {
 
+	//Methods for Catalog:
 	public Product getProduct(int productId);
 
 	public ArrayList<Product> getAllProducts();
@@ -14,5 +15,8 @@ public interface DatabaseInterface {
 	public TreeSet<String> getCategories();
 
 	public ArrayList<Product> getCategory(String category);
+
+	//Methods for OrderHistory:
+	public boolean saveOrder(Customer customer, Order order);
 
 }

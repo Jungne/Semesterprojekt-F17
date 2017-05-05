@@ -7,10 +7,13 @@ import java.util.TreeSet;
 public class WebshopController implements WebshopInterface {
 
 	private Catalog catalog;
+	private OrderHistory orderHistory;
 	private Customer customer;
 
 	public WebshopController() throws IOException {
-		this.catalog = new Catalog();
+		DatabaseInterface databaseInterface = new FileSearcher();
+		this.catalog = new Catalog(databaseInterface);
+		this.orderHistory = new OrderHistory(databaseInterface);
 		this.customer = new Customer("Test Testerson", "test@test.com", 12345678);
 	}
 

@@ -7,8 +7,8 @@ public class Catalog {
 
 	private DatabaseInterface databaseInterface;
 
-	public Catalog() {
-		this.databaseInterface = new FileSearcher();
+	public Catalog(DatabaseInterface databaseInterface) {
+		this.databaseInterface = databaseInterface;
 	}
 
 	public ArrayList<Product> getAllProducts() {
