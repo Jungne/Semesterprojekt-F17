@@ -58,4 +58,8 @@ public class Order {
 	public ShoppingBasket getBasket() {
 		return basket;
 	}
+
+	public double getTotalPrice() {
+		return basket.getTotalPrice();
+	}
 }

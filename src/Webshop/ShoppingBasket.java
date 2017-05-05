@@ -99,6 +99,10 @@ public class ShoppingBasket {
 		return basket.isEmpty();
 	}
 
+	public void empty() {
+		basket = new ArrayList<>();;
+	}
+
 	public double getTotalPrice() {
 		double totalPrice = 0;
 		double productPrice = 0;

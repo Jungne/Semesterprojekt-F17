@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -85,6 +86,16 @@ public class FXMLDocumentController implements Initializable {
 	private Button CheckOut_DoneButton;
 	@FXML
 	private Pane CheckOut_EndPane;
+	@FXML
+	private TextField CheckOut_URCPane_FirstnameTextField;
+	@FXML
+	private TextField CheckOut_URCPane_LastnameTextField;
+	@FXML
+	private TextField CheckOut_URCPane_EmailTextField;
+	@FXML
+	private TextField CheckOut_URCPane_PhoneTextField;
+	@FXML
+	private Label CheckOut_EndPane_Receipt;
 
 	@FXML
 	private void handleCatalogTestShowProductsButton(ActionEvent e) {
@@ -202,6 +213,7 @@ public class FXMLDocumentController implements Initializable {
 	private void handleTestLogInOutButton(ActionEvent event) {
 		if (!isLoggedIn) {
 			testLogInOutButton.setText("Log Out");
+			guestBasket.empty();
 		} else {
 			testLogInOutButton.setText("Log In");
 		}
@@ -215,8 +227,9 @@ public class FXMLDocumentController implements Initializable {
 		tabPane.getSelectionModel().select(CheckOut_Tab);
 		ShoppingBasket_CheckOutButton.setDisable(true);
 		if (isLoggedIn) {
-			CheckOut_PaymentPane.setVisible(true);
-			CheckOut_InformationPane.setVisible(false);
+			//CheckOut_PaymentPane.setVisible(true);
+			//CheckOut_InformationPane.setVisible(false);
+			handleCheckOut_ConfirmOrderButton(null);
 		} else {
 			CheckOut_PaymentPane.setVisible(false);
 			CheckOut_InformationPane.setVisible(true);
@@ -227,6 +240,24 @@ public class FXMLDocumentController implements Initializable {
 	private void handleCheckOut_ConfirmOrderButton(ActionEvent event) {
 		CheckOut_PaymentPane.setVisible(true);
 		CheckOut_InformationPane.setVisible(false);
+		Order order = isLoggedIn ? webshopController.checkOut() : webshopController.checkOut(
+						CheckOut_URCPane_FirstnameTextField.getText()
+						+ CheckOut_URCPane_FirstnameTextField.getText(),
+						CheckOut_URCPane_EmailTextField.getText(),
+						Integer.parseInt(CheckOut_URCPane_PhoneTextField.getText()),
+						guestBasket);
+		String text = "Order Receipt\n"
+						+ "---------------------------------------\n"
+						+ "\n";
+		for (OrderLine item : order.getBasket().getBasketContent()) {
+			text += "" + item.getAmount() + "x " + item.getProduct().getName() + " : " + item.getProduct().getPrice() + "kr\n";
+		}
+		text += "Total Price: " + order.getTotalPrice() + "kr.\n"
+						+ "Have a nice day!";
+		CheckOut_EndPane_Receipt.setText(text);
+		guestBasket.empty();
+		webshopController.emptyShoppingBasket();
+		updateShoppingBasket();
 	}
 
 	@FXML
@@ -241,5 +272,6 @@ public class FXMLDocumentController implements Initializable {
 		CheckOut_EndPane.setVisible(false);
 		tabPane.getSelectionModel().select(catalogTestTab);
 		ShoppingBasket_CheckOutButton.setDisable(false);
+		CheckOut_EndPane_Receipt.setText("");
 	}
 }
