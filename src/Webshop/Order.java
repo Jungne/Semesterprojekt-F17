@@ -5,16 +5,17 @@ import java.util.Date;
 public class Order {
 
 	private int id;
-	private Date dato;
-	private Enum OrderStatus;
-	private boolean complete;
 	private Customer customer;
+	private Date date;
+	private OrderStatus orderStatus;
 	private ShoppingBasket basket;
 
 	public Order(Customer customer, ShoppingBasket basket) {
+		this.id = 0; //TODO - set id to something unique
 		this.customer = customer;
+		this.date = new Date();
+		this.orderStatus = OrderStatus.CREATED;
 		this.basket = basket;
-		this.dato = new Date();
 	}
 
 	/**
@@ -27,22 +28,15 @@ public class Order {
 	/**
 	 * @return the dato
 	 */
-	public Date getDato() {
-		return dato;
+	public Date getDate() {
+		return date;
 	}
 
 	/**
 	 * @return the OrderStatus
 	 */
-	public Enum getOrderStatus() {
-		return OrderStatus;
-	}
-
-	/**
-	 * @return the complete
-	 */
-	public boolean isComplete() {
-		return complete;
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
 	}
 
 	/**

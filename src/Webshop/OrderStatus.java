@@ -1,5 +1,18 @@
 package Webshop;
 
 public enum OrderStatus {
-	INPROGRESS, SENT, DELIVERED
+
+	CREATED("Created"), INPROGRESS("In progress"), PAID("Paid"), SENT("Sent"), DELIVERED("Delivered");
+
+	private String statusString;
+
+	OrderStatus(String statusString) {
+		this.statusString = statusString;
+	}
+
+	@Override
+	public String toString() {
+		return statusString;
+	}
+
 }

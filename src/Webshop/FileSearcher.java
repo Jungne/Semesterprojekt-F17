@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeSet;
@@ -103,13 +104,49 @@ public class FileSearcher implements DatabaseInterface {
 	}
 
 	@Override
-	public boolean saveOrder(Customer customer, Order order) {
+	public boolean saveOrder(Order order) {
+		FileWriter fileWriter = null;
+		BufferedWriter bufferedWriter = null;
+
 		try {
-			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("orderHistory.txt"));
-			//TODO - Save the order into orderHistory.txt
-			bufferedWriter.close();
+			fileWriter = new FileWriter("orderHistory.txt", true);
+			bufferedWriter = new BufferedWriter(fileWriter);
+
+			//TODO - Should return false if any of the values are invalid.
+			String textToFile = "";
+			textToFile += order.getId() + "\n";
+			textToFile += order.getCustomer().getId() + "\n";
+			textToFile += order.getDate().toString() + "\n";
+			textToFile += order.getOrderStatus() + "\n";
+			String basketLine = "";
+			for (OrderLine orderLine : order.getBasket().getBasketContent()) {
+				basketLine += orderLine.getProduct().getId() + "." + orderLine.getAmount() + ",";
+			}
+			if (basketLine.equals("")) {
+				basketLine = "empty\n";
+			} else {
+				basketLine = basketLine.substring(0, basketLine.length() - 1) + "\n";
+			}
+			textToFile += basketLine;
+
+			bufferedWriter.write(textToFile);
 		} catch (IOException ex) {
 			Logger.getLogger(FileSearcher.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			try {
+				if (bufferedWriter != null) {
+					bufferedWriter.close();
+				}
+			} catch (IOException e) {
+				//exception handling left as an exercise for the reader
+			}
+			try {
+				if (fileWriter != null) {
+					fileWriter.close();
+				}
+			} catch (IOException e) {
+				//exception handling left as an exercise for the reader
+			}
 		}
 		return true;
 	}

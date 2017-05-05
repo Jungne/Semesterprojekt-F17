@@ -17,6 +17,6 @@ public interface DatabaseInterface {
 	public ArrayList<Product> getCategory(String category);
 
 	//Methods for OrderHistory:
-	public boolean saveOrder(Customer customer, Order order);
+	public boolean saveOrder(Order order);
 
 }
