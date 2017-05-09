@@ -1,7 +1,7 @@
 package semesterprojekt.f17;
 
 import Webshop.Customer;
-import Webshop.FileSearcher;
+import Webshop.DBManager;
 import Webshop.Order;
 import Webshop.Product;
 import Webshop.ShoppingBasket;

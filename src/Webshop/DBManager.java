@@ -3,24 +3,22 @@ package Webshop;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FileSearcher implements DatabaseInterface {
+public class DBManager implements DatabaseInterface {
 
 	private ArrayList<Product> products;
 	private TreeSet<String> categories;
 
-	public FileSearcher() {
-		products = new ArrayList<Product>();
-		categories = new TreeSet<String>();
+	public DBManager() {
+		products = new ArrayList<>();
+		categories = new TreeSet<>();
 		loadFile();
 	}
 
@@ -51,11 +49,11 @@ public class FileSearcher implements DatabaseInterface {
 					products.add(new Product(name, id, category, description, price, imagePath));
 					categories.add(category);
 				} catch (IOException ex) {
-					Logger.getLogger(FileSearcher.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
 		} catch (FileNotFoundException ex) {
-			Logger.getLogger(FileSearcher.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
@@ -94,13 +92,13 @@ public class FileSearcher implements DatabaseInterface {
 
 	@Override
 	public ArrayList<Product> getCategory(String category) {
-		ArrayList<Product> products = new ArrayList<>();
+		ArrayList<Product> returnProducts = new ArrayList<>();
 		for (Product product : this.products) {
 			if (product.getCategory().equals(category)) {
-				products.add(product);
+				returnProducts.add(product);
 			}
 		}
-		return products;
+		return returnProducts;
 	}
 
 	@Override
@@ -131,7 +129,7 @@ public class FileSearcher implements DatabaseInterface {
 
 			bufferedWriter.write(textToFile);
 		} catch (IOException ex) {
-			Logger.getLogger(FileSearcher.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			try {
 				if (bufferedWriter != null) {
