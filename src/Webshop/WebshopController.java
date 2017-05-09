@@ -7,11 +7,35 @@ import java.util.TreeSet;
 public class WebshopController implements WebshopInterface {
 
 	private Catalog catalog;
+	private OrderHistory orderHistory;
 	private Customer customer;
 
 	public WebshopController() throws IOException {
-		this.catalog = new Catalog();
+		DatabaseInterface databaseInterface = new FileSearcher();
+		this.catalog = new Catalog(databaseInterface);
+		this.orderHistory = new OrderHistory(databaseInterface);
 		this.customer = new Customer("Test Testerson", "test@test.com", 12345678);
+	}
+
+	/**
+	 * Returns the product with the specified id.
+	 *
+	 * @param productId the id of the product to be returned.
+	 * @return the product with the specified id.
+	 */
+	@Override
+	public Product getProduct(int productId) {
+		return catalog.getProduct(productId);
+	}
+
+	/**
+	 * Returns an arraylist containing all products in the catalog.
+	 *
+	 * @return an arraylist containing all products in the catalog.
+	 */
+	@Override
+	public ArrayList<Product> getAllProduct() {
+		return catalog.getAllProducts();
 	}
 
 	/**
@@ -23,8 +47,8 @@ public class WebshopController implements WebshopInterface {
 	 * name.
 	 */
 	@Override
-	public ArrayList<Product> findProduct(String query) {
-		return catalog.searchProduct(query);
+	public ArrayList<Product> findProducts(String query) {
+		return catalog.findProducts(query);
 	}
 
 	/**
@@ -38,7 +62,7 @@ public class WebshopController implements WebshopInterface {
 	}
 
 	/**
-	 * Returns an arraylist containing all products in the specified categories.
+	 * Returns an arraylist containing all products in the specified category.
 	 *
 	 * @param category the category of which all products wil be returned.
 	 * @return an arraylist containing all the products in the specified category.
@@ -46,27 +70,6 @@ public class WebshopController implements WebshopInterface {
 	@Override
 	public ArrayList<Product> getCategory(String category) {
 		return catalog.getCategory(category);
-	}
-
-	/**
-	 * Returns the product with the specified id.
-	 *
-	 * @param id the id of the product to be returned.
-	 * @return the product with the specified id.
-	 */
-	@Override
-	public Product getProduct(int id) {
-		return catalog.getProduct(id);
-	}
-
-	/**
-	 * Returns an arraylist containing all products in the catalog.
-	 *
-	 * @return an arraylist containing all products in the catalog.
-	 */
-	@Override
-	public ArrayList<Product> getProductList() {
-		return catalog.getProductList();
 	}
 
 	/**

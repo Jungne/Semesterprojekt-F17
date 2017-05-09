@@ -29,7 +29,7 @@ import javafx.scene.layout.Pane;
 
 public class FXMLDocumentController implements Initializable {
 
-	private WebshopController webshopController;
+	private WebshopInterface webshopController;
 
 	private boolean isLoggedIn = false;
 	private ShoppingBasket guestBasket = new ShoppingBasket();
@@ -99,7 +99,7 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void handleCatalogTestShowProductsButton(ActionEvent e) {
-		ArrayList<Product> products = webshopController.getProductList();
+		ArrayList<Product> products = webshopController.getAllProduct();
 		showProducts(products, catalogTestListView);
 	}
 
@@ -121,7 +121,7 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void handleSearchButton(ActionEvent e) {
-		ArrayList<Product> products = webshopController.findProduct(searchTextField.getText());
+		ArrayList<Product> products = webshopController.findProducts(searchTextField.getText());
 		showProducts(products, catalogTestListView);
 	}
 
@@ -198,7 +198,7 @@ public class FXMLDocumentController implements Initializable {
 	private void updateShoppingBasket() {
 		double totalPrice = 0;
 
-		ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBasket().getBasketContent() : guestBasket.getBasketContent();
+ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBasket().getBasketContent() : guestBasket.getBasketContent();
 		List<ProductHBoxCell> list = new ArrayList<>();
 		for (OrderLine orderLine : orderLines) {
 			list.add(new ProductHBoxCell(orderLine));

@@ -9,6 +9,7 @@ public class Customer {
 	private ShoppingBasket shoppingBasket;
 
 	public Customer(String name, String email, int phoneNumber) {
+		this.id = 0; //TODO - set id to something unique
 		this.name = name;
 		this.email = email;
 		this.phoneNumber = phoneNumber;

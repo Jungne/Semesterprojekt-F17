@@ -1,6 +1,10 @@
 package semesterprojekt.f17;
 
-import Webshop.Catalog;
+import Webshop.Customer;
+import Webshop.FileSearcher;
+import Webshop.Order;
+import Webshop.Product;
+import Webshop.ShoppingBasket;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.application.Application;
@@ -23,8 +27,5 @@ public class SemesterprojektF17 extends Application {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		launch(args);
-
-		//Test of Catalog class.
-		Catalog catalog = new Catalog();
 	}
 }
