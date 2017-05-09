@@ -198,7 +198,7 @@ public class FXMLDocumentController implements Initializable {
 	private void updateShoppingBasket() {
 		double totalPrice = 0;
 
-ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBasket().getBasketContent() : guestBasket.getBasketContent();
+		ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBasket().getBasketContent() : guestBasket.getBasketContent();
 		List<ProductHBoxCell> list = new ArrayList<>();
 		for (OrderLine orderLine : orderLines) {
 			list.add(new ProductHBoxCell(orderLine));
@@ -207,6 +207,11 @@ ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBask
 		ObservableList observableList = FXCollections.observableArrayList(list);
 		shoppingBasketListView.setItems(observableList);
 		totalPriceTextField.setText(Double.toString(totalPrice));
+		if (orderLines.size() == 0) {
+			ShoppingBasket_CheckOutButton.setDisable(true);
+		} else {
+			ShoppingBasket_CheckOutButton.setDisable(false);
+		}
 	}
 
 	@FXML
@@ -216,6 +221,7 @@ ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBask
 			guestBasket.empty();
 		} else {
 			testLogInOutButton.setText("Log In");
+			reset();
 		}
 		isLoggedIn = !isLoggedIn;
 		updateShoppingBasket();
@@ -227,8 +233,6 @@ ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBask
 		tabPane.getSelectionModel().select(CheckOut_Tab);
 		ShoppingBasket_CheckOutButton.setDisable(true);
 		if (isLoggedIn) {
-			//CheckOut_PaymentPane.setVisible(true);
-			//CheckOut_InformationPane.setVisible(false);
 			handleCheckOut_ConfirmOrderButton(null);
 		} else {
 			CheckOut_PaymentPane.setVisible(false);
@@ -242,10 +246,15 @@ ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBask
 		CheckOut_InformationPane.setVisible(false);
 		Order order = isLoggedIn ? webshopController.checkOut() : webshopController.checkOut(
 						CheckOut_URCPane_FirstnameTextField.getText()
-						+ CheckOut_URCPane_FirstnameTextField.getText(),
+						+ CheckOut_URCPane_LastnameTextField.getText(),
 						CheckOut_URCPane_EmailTextField.getText(),
 						Integer.parseInt(CheckOut_URCPane_PhoneTextField.getText()),
 						guestBasket);
+
+		CheckOut_URCPane_FirstnameTextField.setText("");
+		CheckOut_URCPane_LastnameTextField.setText("");
+		CheckOut_URCPane_EmailTextField.setText("");
+		CheckOut_URCPane_PhoneTextField.setText("");
 		String text = "Order Receipt\n"
 						+ "---------------------------------------\n"
 						+ "\n";
@@ -268,6 +277,10 @@ ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBask
 
 	@FXML
 	private void handleCheckOut_DoneButton(ActionEvent event) {
+		reset();
+	}
+
+	private void reset() {
 		CheckOut_Tab.setDisable(true);
 		CheckOut_EndPane.setVisible(false);
 		tabPane.getSelectionModel().select(catalogTestTab);
