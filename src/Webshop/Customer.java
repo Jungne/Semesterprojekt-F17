@@ -16,6 +16,13 @@ public class Customer {
 		this.shoppingBasket = new ShoppingBasket();
 	}
 
+	public Customer(String name, String email, int phoneNumber, ShoppingBasket shoppingBasket) {
+		this.name = name;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.shoppingBasket = shoppingBasket;
+	}
+
 	public int getId() {
 		return this.id;
 	}
@@ -56,6 +63,6 @@ public class Customer {
 		if (shoppingBasket.isEmpty()) {
 			return null;
 		}
-		return new Order(this, shoppingBasket);
+		return new Order(this);
 	}
 }

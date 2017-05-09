@@ -15,18 +15,24 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 public class FXMLDocumentController implements Initializable {
 
 	private WebshopInterface webshopController;
+
+	private boolean isLoggedIn = false;
+	private ShoppingBasket guestBasket = new ShoppingBasket();
 
 	@FXML
 	private Button CatalogTestShowProductsButton;
@@ -62,6 +68,34 @@ public class FXMLDocumentController implements Initializable {
 	private TextField amountTextField;
 	@FXML
 	private TextField totalPriceTextField;
+	@FXML
+	private ToggleButton testLogInOutButton;
+	@FXML
+	private Button ShoppingBasket_CheckOutButton;
+	@FXML
+	private Tab CheckOut_Tab;
+	@FXML
+	private Pane CheckOut_InformationPane;
+	@FXML
+	private Pane CheckOut_PaymentPane;
+	@FXML
+	private Button CheckOut_ConfirmOrderButton;
+	@FXML
+	private Button CheckOut_PayButton;
+	@FXML
+	private Button CheckOut_DoneButton;
+	@FXML
+	private Pane CheckOut_EndPane;
+	@FXML
+	private TextField CheckOut_URCPane_FirstnameTextField;
+	@FXML
+	private TextField CheckOut_URCPane_LastnameTextField;
+	@FXML
+	private TextField CheckOut_URCPane_EmailTextField;
+	@FXML
+	private TextField CheckOut_URCPane_PhoneTextField;
+	@FXML
+	private Label CheckOut_EndPane_Receipt;
 
 	@FXML
 	private void handleCatalogTestShowProductsButton(ActionEvent e) {
@@ -123,7 +157,11 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private void handleAddToBasketButton(ActionEvent e) {
 		int id = catalogTestListView.getSelectionModel().getSelectedItem().getProductId();
-		webshopController.addProductToBasket(id, 1);
+		if (isLoggedIn) {
+			webshopController.addProductToBasket(id, 1);
+		} else {
+			guestBasket.addProduct(webshopController.getProduct(id), 1);
+		}
 
 		updateShoppingBasket();
 	}
@@ -131,7 +169,11 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private void handleDeleteButton(ActionEvent e) {
 		int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
-		webshopController.removeProduct(id);
+		if (isLoggedIn) {
+			webshopController.removeProduct(id);
+		} else {
+			guestBasket.removeProduct(webshopController.getProduct(id));
+		}
 
 		updateShoppingBasket();
 	}
@@ -140,7 +182,12 @@ public class FXMLDocumentController implements Initializable {
 	private void handleSetAmountButton(ActionEvent e) {
 		try {
 			int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
-			webshopController.setProductAmount(id, Integer.parseInt(amountTextField.getText()));
+			int amount = Integer.parseInt(amountTextField.getText());
+			if (isLoggedIn) {
+				webshopController.setProductAmount(id, amount);
+			} else {
+				guestBasket.setProductAmount(webshopController.getProduct(id), amount);
+			}
 
 			updateShoppingBasket();
 		} catch (Exception ex) {
@@ -151,7 +198,7 @@ public class FXMLDocumentController implements Initializable {
 	private void updateShoppingBasket() {
 		double totalPrice = 0;
 
-		ArrayList<OrderLine> orderLines = webshopController.getShoppingBasket().getBasketContent();
+ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBasket().getBasketContent() : guestBasket.getBasketContent();
 		List<ProductHBoxCell> list = new ArrayList<>();
 		for (OrderLine orderLine : orderLines) {
 			list.add(new ProductHBoxCell(orderLine));
@@ -160,5 +207,71 @@ public class FXMLDocumentController implements Initializable {
 		ObservableList observableList = FXCollections.observableArrayList(list);
 		shoppingBasketListView.setItems(observableList);
 		totalPriceTextField.setText(Double.toString(totalPrice));
+	}
+
+	@FXML
+	private void handleTestLogInOutButton(ActionEvent event) {
+		if (!isLoggedIn) {
+			testLogInOutButton.setText("Log Out");
+			guestBasket.empty();
+		} else {
+			testLogInOutButton.setText("Log In");
+		}
+		isLoggedIn = !isLoggedIn;
+		updateShoppingBasket();
+	}
+
+	@FXML
+	private void handleShoppingBasket_CheckOutButton(ActionEvent event) {
+		CheckOut_Tab.setDisable(false);
+		tabPane.getSelectionModel().select(CheckOut_Tab);
+		ShoppingBasket_CheckOutButton.setDisable(true);
+		if (isLoggedIn) {
+			//CheckOut_PaymentPane.setVisible(true);
+			//CheckOut_InformationPane.setVisible(false);
+			handleCheckOut_ConfirmOrderButton(null);
+		} else {
+			CheckOut_PaymentPane.setVisible(false);
+			CheckOut_InformationPane.setVisible(true);
+		}
+	}
+
+	@FXML
+	private void handleCheckOut_ConfirmOrderButton(ActionEvent event) {
+		CheckOut_PaymentPane.setVisible(true);
+		CheckOut_InformationPane.setVisible(false);
+		Order order = isLoggedIn ? webshopController.checkOut() : webshopController.checkOut(
+						CheckOut_URCPane_FirstnameTextField.getText()
+						+ CheckOut_URCPane_FirstnameTextField.getText(),
+						CheckOut_URCPane_EmailTextField.getText(),
+						Integer.parseInt(CheckOut_URCPane_PhoneTextField.getText()),
+						guestBasket);
+		String text = "Order Receipt\n"
+						+ "---------------------------------------\n"
+						+ "\n";
+		for (OrderLine item : order.getBasket().getBasketContent()) {
+			text += "" + item.getAmount() + "x " + item.getProduct().getName() + " : " + item.getProduct().getPrice() + "kr\n";
+		}
+		text += "Total Price: " + order.getTotalPrice() + "kr.\n"
+						+ "Have a nice day!";
+		CheckOut_EndPane_Receipt.setText(text);
+		guestBasket.empty();
+		webshopController.emptyShoppingBasket();
+		updateShoppingBasket();
+	}
+
+	@FXML
+	private void handleCheckOut_PayButton(ActionEvent event) {
+		CheckOut_PaymentPane.setVisible(false);
+		CheckOut_EndPane.setVisible(true);
+	}
+
+	@FXML
+	private void handleCheckOut_DoneButton(ActionEvent event) {
+		CheckOut_Tab.setDisable(true);
+		CheckOut_EndPane.setVisible(false);
+		tabPane.getSelectionModel().select(catalogTestTab);
+		ShoppingBasket_CheckOutButton.setDisable(false);
+		CheckOut_EndPane_Receipt.setText("");
 	}
 }

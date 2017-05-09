@@ -62,7 +62,7 @@ public class WebshopController implements WebshopInterface {
 	}
 
 	/**
-	 * Returns an arraylist containing all products in the specified categories.
+	 * Returns an arraylist containing all products in the specified category.
 	 *
 	 * @param category the category of which all products wil be returned.
 	 * @return an arraylist containing all the products in the specified category.
@@ -122,5 +122,15 @@ public class WebshopController implements WebshopInterface {
 	@Override
 	public ShoppingBasket getShoppingBasket() {
 		return customer.getShoppingBasket();
+	}
+
+	@Override
+	public Order checkOut(String name, String email, int phoneNumber, ShoppingBasket shoppingBasket) {
+		return new Customer(name, email, phoneNumber, shoppingBasket).checkOut();
+	}
+
+	@Override
+	public void emptyShoppingBasket() {
+		customer.getShoppingBasket().empty();
 	}
 }

@@ -10,12 +10,12 @@ public class Order {
 	private OrderStatus orderStatus;
 	private ShoppingBasket basket;
 
-	public Order(Customer customer, ShoppingBasket basket) {
-		this.id = 0; //TODO - set id to something unique
+	public Order(Customer customer) {
+ 		this.id = 0; //TODO - set id to something unique
 		this.customer = customer;
 		this.date = new Date();
+		this.basket = customer.getShoppingBasket();
 		this.orderStatus = OrderStatus.CREATED;
-		this.basket = basket;
 	}
 
 	/**
@@ -51,5 +51,9 @@ public class Order {
 	 */
 	public ShoppingBasket getBasket() {
 		return basket;
+	}
+
+	public double getTotalPrice() {
+		return basket.getTotalPrice();
 	}
 }
