@@ -50,10 +50,7 @@ public class ShoppingBasketTest {
 		ArrayList<OrderLine> expResult = new ArrayList<OrderLine>();
 		expResult.add(testOrderLine);
 		ArrayList<OrderLine> result = basket.getBasketContent();
-		assertEquals(expResult.size(), result.size());
-		for (int i = 0; i < result.size(); i++) {
-			assertEquals(expResult.get(i), result.get(i));
-		}
+		assertEquals(expResult, result);
 	}
 
 	/**
