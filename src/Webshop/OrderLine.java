@@ -37,4 +37,9 @@ public class OrderLine {
 	public void setAmount(int amount) {
 		this.amount = amount < 0 ? 0 : amount;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		return this.product.equals(((OrderLine) o).product) && this.amount == ((OrderLine) o).amount;
+	}
 }

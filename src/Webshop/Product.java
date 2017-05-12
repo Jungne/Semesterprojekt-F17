@@ -26,6 +26,15 @@ public class Product {
 		loadImage();
 	}
 
+	public Product(String name, int id, String category, String description, double price) {
+		this.name = name;
+		this.id = id;
+		this.category = category;
+		this.description = description;
+		this.price = price;
+		this.imagePath = "";
+	}
+
 	public void loadImage() throws IOException {
 		imageList.add(ImageIO.read(new File("src/images/" + imagePath)));
 	}
@@ -59,7 +68,8 @@ public class Product {
 		return "Product{" + "name=" + name + ", id=" + id + ", category=" + category + ", description=" + description + ", price=" + price + '}';
 	}
 
-	public boolean equals(Product product) {
-		return this.id == product.id;
+	@Override
+	public boolean equals(Object o) {
+		return this.id == ((Product) o).id;
 	}
 }

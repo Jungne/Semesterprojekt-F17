@@ -18,22 +18,22 @@ import static org.junit.Assert.*;
  * @author Daniel
  */
 public class ShoppingBasketTest {
-	
+
 	public ShoppingBasketTest() {
 	}
-	
+
 	@BeforeClass
 	public static void setUpClass() {
 	}
-	
+
 	@AfterClass
 	public static void tearDownClass() {
 	}
-	
+
 	@Before
 	public void setUp() {
 	}
-	
+
 	@After
 	public void tearDown() {
 	}
@@ -44,12 +44,16 @@ public class ShoppingBasketTest {
 	@Test
 	public void testGetBasketContent() {
 		System.out.println("getBasketContent");
-		ShoppingBasket instance = new ShoppingBasket();
-		ArrayList<OrderLine> expResult = null;
-		ArrayList<OrderLine> result = instance.getBasketContent();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		ShoppingBasket basket = new ShoppingBasket();
+		OrderLine testOrderLine = new OrderLine(new Product("Test", 100, "TestCat", "Yo mamma so fat...", 0), 1);
+		basket.addProduct(testOrderLine);
+		ArrayList<OrderLine> expResult = new ArrayList<OrderLine>();
+		expResult.add(testOrderLine);
+		ArrayList<OrderLine> result = basket.getBasketContent();
+		assertEquals(expResult.size(), result.size());
+		for (int i = 0; i < result.size(); i++) {
+			assertEquals(expResult.get(i), result.get(i));
+		}
 	}
 
 	/**
@@ -151,5 +155,5 @@ public class ShoppingBasketTest {
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
-	
+
 }
