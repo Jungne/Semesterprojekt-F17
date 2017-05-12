@@ -217,10 +217,10 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private void handleTestLogInOutButton(ActionEvent event) {
 		if (!isLoggedIn) {
-			testLogInOutButton.setText("Log Out");
+			testLogInOutButton.setText("Log ud");
 			guestBasket.empty();
 		} else {
-			testLogInOutButton.setText("Log In");
+			testLogInOutButton.setText("Log ind");
 			reset();
 		}
 		isLoggedIn = !isLoggedIn;
@@ -255,14 +255,15 @@ public class FXMLDocumentController implements Initializable {
 		CheckOut_URCPane_LastnameTextField.setText("");
 		CheckOut_URCPane_EmailTextField.setText("");
 		CheckOut_URCPane_PhoneTextField.setText("");
-		String text = "Order Receipt\n"
-						+ "---------------------------------------\n"
+		String text = "Ordrekvittering\n"
+						+ "-------------------------------\n"
 						+ "\n";
 		for (OrderLine item : order.getBasket().getBasketContent()) {
 			text += "" + item.getAmount() + "x " + item.getProduct().getName() + " : " + item.getProduct().getPrice() + "kr\n";
 		}
-		text += "Total Price: " + order.getTotalPrice() + "kr.\n"
-						+ "Have a nice day!";
+		text += "Total Pris: " + order.getTotalPrice() + "kr.\n"
+						+ "-------------------------------\n"
+						+ "Ha' en god dag!";
 		CheckOut_EndPane_Receipt.setText(text);
 		guestBasket.empty();
 		webshopController.emptyShoppingBasket();
