@@ -8,8 +8,13 @@ public class Customer {
 	private int phoneNumber;
 	private ShoppingBasket shoppingBasket;
 
+	public Customer() {
+		this.id = 0; // TODO - set id to something unique
+		this.shoppingBasket = new ShoppingBasket();
+	}
+
 	public Customer(String name, String email, int phoneNumber) {
-		this.id = 0; //TODO - set id to something unique
+		this.id = 0; // TODO - set id to something unique
 		this.name = name;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
@@ -17,6 +22,7 @@ public class Customer {
 	}
 
 	public Customer(String name, String email, int phoneNumber, ShoppingBasket shoppingBasket) {
+		this.id = 0; // TODO - set id to something unique
 		this.name = name;
 		this.email = email;
 		this.phoneNumber = phoneNumber;

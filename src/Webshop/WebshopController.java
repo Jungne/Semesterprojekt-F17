@@ -14,7 +14,7 @@ public class WebshopController implements WebshopInterface {
 		DatabaseInterface databaseInterface = new DBManager();
 		this.catalog = new Catalog(databaseInterface);
 		this.orderHistory = new OrderHistory(databaseInterface);
-		this.customer = new Customer("Test Testerson", "test@test.com", 12345678);
+		this.customer = new Customer();
 	}
 
 	/**
@@ -73,20 +73,11 @@ public class WebshopController implements WebshopInterface {
 	}
 
 	/**
-	 * Returns an order created from the shoppingbasket of the customer.
-	 *
-	 * @return an order with the products in the customers shoppingbasket.
-	 */
-	@Override
-	public Order checkOut() {
-		return customer.checkOut();
-	}
-
-	/**
 	 * Adds a product to the customers shoppingbasket.
 	 *
 	 * @param productId the id of the product to be added.
 	 * @param amount the amount to be added.
+	 * @return
 	 */
 	@Override
 	public boolean addProductToBasket(int productId, int amount) {
@@ -108,6 +99,7 @@ public class WebshopController implements WebshopInterface {
 	 *
 	 * @param productId the id of the product to be set.
 	 * @param amount the amount to be set.
+	 * @return
 	 */
 	@Override
 	public boolean setProductAmount(int productId, int amount) {
@@ -124,9 +116,23 @@ public class WebshopController implements WebshopInterface {
 		return customer.getShoppingBasket();
 	}
 
+	/**
+	 * Returns an order created from the shoppingbasket of the customer.
+	 *
+	 * @return an order with the products in the customers shoppingbasket.
+	 */
+	@Override
+	public Order checkOut() {
+		Order order = customer.checkOut();
+		orderHistory.saveOrder(customer, order);
+		return order;
+	}
+
 	@Override
 	public Order checkOut(String name, String email, int phoneNumber, ShoppingBasket shoppingBasket) {
-		return new Customer(name, email, phoneNumber, shoppingBasket).checkOut();
+		customer = new Customer(name, email, phoneNumber, shoppingBasket);
+		// TODO - Save customer
+		return checkOut();
 	}
 
 	@Override
