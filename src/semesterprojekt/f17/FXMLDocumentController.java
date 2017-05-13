@@ -105,7 +105,11 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void handleCatalogTestShowInfoButton(ActionEvent e) {
-		int id = catalogTestListView.getSelectionModel().getSelectedItem().getProductId();
+		ProductHBoxCell productHBoxCell = catalogTestListView.getSelectionModel().getSelectedItem();
+		if (productHBoxCell == null) {
+			return;
+		}
+		int id = productHBoxCell.getProductId();
 		Product product = webshopController.getProduct(id);
 
 		catalogTestImageView.setImage(new Image("images/" + product.getImagePath()));
