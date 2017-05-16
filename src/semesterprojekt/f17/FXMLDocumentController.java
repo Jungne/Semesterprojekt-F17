@@ -139,8 +139,8 @@ public class FXMLDocumentController implements Initializable {
 		}
 
 		//populates categoriesChoiceBox.
-		categoriesChoiceBox.setItems(FXCollections.observableArrayList(webshopController.getCategories()));
-		categoriesChoiceBox.setValue(categoriesChoiceBox.getItems().get(0));
+		//categoriesChoiceBox.setItems(FXCollections.observableArrayList(webshopController.getCategories()));
+		//categoriesChoiceBox.setValue(categoriesChoiceBox.getItems().get(0));
 	}
 
 	private void showProducts(ArrayList<Product> products, ListView listview) {

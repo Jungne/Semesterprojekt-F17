@@ -3,6 +3,7 @@ package Webshop;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeSet;
+import DBManager.DBManager;
 
 public class WebshopController implements WebshopInterface {
 

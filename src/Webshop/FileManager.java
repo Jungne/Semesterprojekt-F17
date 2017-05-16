@@ -11,12 +11,12 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DBManager implements DatabaseInterface {
+public class FileManager implements DatabaseInterface {
 
 	private ArrayList<Product> products;
 	private TreeSet<String> categories;
 
-	public DBManager() {
+	public FileManager() {
 		products = new ArrayList<>();
 		categories = new TreeSet<>();
 		loadFile();
@@ -49,11 +49,11 @@ public class DBManager implements DatabaseInterface {
 					products.add(new Product(name, id, category, description, price, imagePath));
 					categories.add(category);
 				} catch (IOException ex) {
-					Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
 		} catch (FileNotFoundException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
@@ -129,7 +129,7 @@ public class DBManager implements DatabaseInterface {
 
 			bufferedWriter.write(textToFile);
 		} catch (IOException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			try {
 				if (bufferedWriter != null) {
