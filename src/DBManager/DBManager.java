@@ -75,7 +75,18 @@ public class DBManager implements DatabaseInterface{
 
     @Override
     public ArrayList<Product> findProducts(String query) {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	ArrayList<Product> products = null;
+	try {
+	    PreparedStatement ps = con.prepareStatement("SELECT * FROM Products WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
+	    ResultSet components = ps.executeQuery();
+	    products = productHandler.findProducts(components);
+	    
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	} catch (IOException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	return products;
     }
 
     @Override

@@ -36,4 +36,14 @@ public class ProductHandler {
 	
 	return categories;
     }
+    
+    public ArrayList<Product> findProducts(ResultSet components) throws SQLException, IOException {
+	ArrayList<Product> products = new ArrayList<>();
+	
+	while (components.next()) {
+	    products.add(new Product(components.getString(2), components.getInt(1), components.getString(4), components.getString(5), components.getDouble(3), components.getString(6)));
+	}
+	
+	return products;
+    }
 }
