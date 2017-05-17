@@ -23,43 +23,44 @@ import java.util.logging.Logger;
  *
  * @author jungn
  */
-public class DBManager implements DatabaseInterface{
+public class DBManager implements DatabaseInterface {
+
     private Connection con;
     private ProductHandler productHandler;
 
     public DBManager() {
 	productHandler = new ProductHandler();
-	
-	
+
 	String url = "jdbc:postgresql://localhost:5432/semesterprojekt";
-        String user = "postgres";
-        String password = "1234";
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+	String user = "postgres";
+	String password = "1234";
+	try {
+	    Class.forName("org.postgresql.Driver");
+	} catch (ClassNotFoundException e) {
+	    e.printStackTrace();
 	    return;
-        }
+	}
 
-        con = null;
-        try {
-            con = DriverManager.getConnection(url, user, password);
-            System.out.println("Connection to database successful!");
+	con = null;
+	try {
+	    con = DriverManager.getConnection(url, user, password);
+	    System.out.println("Connection to database successful!");
 
-        } catch (SQLException ex) {
-            System.out.println("Connection to database failed.");
-        }
+	} catch (SQLException ex) {
+	    System.out.println("Connection to database failed.");
+	}
     }
-    
 
     @Override
     public Product getProduct(int productId) {
 	Product product = null;
 	try {
-	    PreparedStatement ps = con.prepareStatement("SELECT * FROM Products WHERE id = " + productId);
+	    PreparedStatement ps = con.prepareStatement("SELECT product.name, product.id, category.name, description, price\n"
+		    + "FROM product, category\n"
+		    + "WHERE category.id = categoryid AND product.id = " + productId);
 	    ResultSet components = ps.executeQuery();
 	    product = productHandler.getProduct(components);
-	    
+
 	} catch (SQLException ex) {
 	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 	} catch (IOException ex) {
@@ -69,13 +70,15 @@ public class DBManager implements DatabaseInterface{
     }
 
     @Override
-    public ArrayList<Product> getAllProducts(){
+    public ArrayList<Product> getAllProducts() {
 	ArrayList<Product> products = null;
 	try {
-	    PreparedStatement ps = con.prepareStatement("SELECT * FROM Products");
+	    PreparedStatement ps = con.prepareStatement("SELECT product.name, product.id, category.name, description, price\n"
+		    + "FROM product, category\n"
+		    + "WHERE category.id = categoryid");
 	    ResultSet components = ps.executeQuery();
 	    products = productHandler.getProducts(components);
-	    
+
 	} catch (SQLException ex) {
 	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 	} catch (IOException ex) {
@@ -88,10 +91,12 @@ public class DBManager implements DatabaseInterface{
     public ArrayList<Product> findProducts(String query) {
 	ArrayList<Product> products = null;
 	try {
-	    PreparedStatement ps = con.prepareStatement("SELECT * FROM Products WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
+	    PreparedStatement ps = con.prepareStatement("SELECT product.name, product.id, category.name, description, price\n"
+		    + "FROM Products\n"
+		    + "WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
 	    ResultSet components = ps.executeQuery();
 	    products = productHandler.getProducts(components);
-	    
+
 	} catch (SQLException ex) {
 	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 	} catch (IOException ex) {
@@ -107,7 +112,7 @@ public class DBManager implements DatabaseInterface{
 	    PreparedStatement ps = con.prepareStatement("SELECT category FROM Products");
 	    ResultSet components = ps.executeQuery();
 	    categories = productHandler.getCategories(components);
-	    
+
 	} catch (SQLException ex) {
 	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 	    System.out.println("Error");
@@ -122,7 +127,7 @@ public class DBManager implements DatabaseInterface{
 	    PreparedStatement ps = con.prepareStatement("SELECT * FROM Products WHERE LOWER(category) = '" + category.toLowerCase() + "'");
 	    ResultSet components = ps.executeQuery();
 	    products = productHandler.getProducts(components);
-	    
+
 	} catch (SQLException ex) {
 	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 	    System.out.println("error");
@@ -136,5 +141,5 @@ public class DBManager implements DatabaseInterface{
     public boolean saveOrder(Order order) {
 	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

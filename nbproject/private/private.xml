@@ -2,10 +2,18 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group/>
         <group name="Semesterprojekt">
             <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/semesterprojekt/f17/FXMLDocumentController.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/nbproject/jfx-impl.xml</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/DatabaseInterface.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/semesterprojekt/f17/ProductHBoxCell.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/Customer.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/Product.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/DBManager/ProductHandler.java</file>
             <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/WebshopController.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/DBManager/DBManager.java</file>
+            <file>file:/C:/Users/jungn/Documents/GitHub/Semesterprojekt-F17/src/Webshop/Catalog.java</file>
         </group>
-        <group/>
     </open-files>
 </project-private>
