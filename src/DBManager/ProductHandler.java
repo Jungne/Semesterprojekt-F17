@@ -20,6 +20,7 @@ public class ProductHandler {
     
     
     public Product getProduct(ResultSet components) throws SQLException, IOException {
+	components.next();
 	return new Product(components.getString(2), components.getInt(1), components.getString(4), components.getString(5), components.getDouble(3), components.getString(6));
     }
     
