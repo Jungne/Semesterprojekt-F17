@@ -40,13 +40,13 @@ public class DBManagerTest {
 	}
 
 	/**
-	 * Test of getProduct method, of class DBManager.
+	 * Test of getProduct method, of class FileManager.
 	 */
 	@Test
 	public void testGetProduct() {
 		System.out.println("getProduct");
 		int productId = 0;
-		DBManager instance = new DBManager();
+		FileManager instance = new FileManager();
 		Product expResult = null;
 		Product result = instance.getProduct(productId);
 		assertEquals(expResult, result);
@@ -55,12 +55,12 @@ public class DBManagerTest {
 	}
 
 	/**
-	 * Test of getAllProducts method, of class DBManager.
+	 * Test of getAllProducts method, of class FileManager.
 	 */
 	@Test
 	public void testGetAllProducts() {
 		System.out.println("getAllProducts");
-		DBManager instance = new DBManager();
+		FileManager instance = new FileManager();
 		ArrayList<Product> expResult = null;
 		ArrayList<Product> result = instance.getAllProducts();
 		assertEquals(expResult, result);
@@ -69,13 +69,13 @@ public class DBManagerTest {
 	}
 
 	/**
-	 * Test of findProducts method, of class DBManager.
+	 * Test of findProducts method, of class FileManager.
 	 */
 	@Test
 	public void testFindProducts() {
 		System.out.println("findProducts");
 		String query = "";
-		DBManager instance = new DBManager();
+		FileManager instance = new FileManager();
 		ArrayList<Product> expResult = null;
 		ArrayList<Product> result = instance.findProducts(query);
 		assertEquals(expResult, result);
@@ -84,12 +84,12 @@ public class DBManagerTest {
 	}
 
 	/**
-	 * Test of getCategories method, of class DBManager.
+	 * Test of getCategories method, of class FileManager.
 	 */
 	@Test
 	public void testGetCategories() {
 		System.out.println("getCategories");
-		DBManager instance = new DBManager();
+		FileManager instance = new FileManager();
 		TreeSet<String> expResult = null;
 		TreeSet<String> result = instance.getCategories();
 		assertEquals(expResult, result);
@@ -98,13 +98,13 @@ public class DBManagerTest {
 	}
 
 	/**
-	 * Test of getCategory method, of class DBManager.
+	 * Test of getCategory method, of class FileManager.
 	 */
 	@Test
 	public void testGetCategory() {
 		System.out.println("getCategory");
 		String category = "";
-		DBManager instance = new DBManager();
+		FileManager instance = new FileManager();
 		ArrayList<Product> expResult = null;
 		ArrayList<Product> result = instance.getCategory(category);
 		assertEquals(expResult, result);
@@ -113,13 +113,13 @@ public class DBManagerTest {
 	}
 
 	/**
-	 * Test of saveOrder method, of class DBManager.
+	 * Test of saveOrder method, of class FileManager.
 	 */
 	@Test
 	public void testSaveOrder() {
 		System.out.println("saveOrder");
 		Order order = null;
-		DBManager instance = new DBManager();
+		FileManager instance = new FileManager();
 		boolean expResult = false;
 		boolean result = instance.saveOrder(order);
 		assertEquals(expResult, result);
