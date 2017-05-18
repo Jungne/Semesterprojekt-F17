@@ -16,8 +16,8 @@ import org.junit.runners.Suite;
  *
  * @author Daniel
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({semesterprojekt.f17.SemesterprojektF17Test.class, semesterprojekt.f17.ProductHBoxCellTest.class, semesterprojekt.f17.FXMLDocumentControllerTest.class})
+@org.junit.runner.RunWith(org.junit.runners.Suite.class)
+@org.junit.runners.Suite.SuiteClasses({SemesterprojektF17Test.class, ProductHBoxCellTest.class, FXMLDocumentControllerTest.class})
 public class F17Suite {
 
 	@BeforeClass

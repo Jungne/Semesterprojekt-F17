@@ -1,10 +1,5 @@
 package semesterprojekt.f17;
 
-import Webshop.Customer;
-import Webshop.FileManager;
-import Webshop.Order;
-import Webshop.Product;
-import Webshop.ShoppingBasket;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.application.Application;
