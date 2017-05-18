@@ -25,10 +25,12 @@ import java.util.logging.Logger;
  */
 public class DBManager implements DatabaseInterface {
 
+    private static DBManager dbManager = null;
+    
     private Connection con;
     private ProductHandler productHandler;
 
-    public DBManager() {
+    private DBManager() {
 	productHandler = new ProductHandler();
 
 	String url = "jdbc:postgresql://localhost:5432/semesterprojekt";
@@ -51,6 +53,13 @@ public class DBManager implements DatabaseInterface {
 	}
     }
 
+    public static DBManager getInstance() {
+	if (dbManager == null) {
+	    dbManager = new DBManager();
+	}
+	return dbManager;
+    }
+    
     @Override
     public Product getProduct(int productId) {
 	Product product = null;
