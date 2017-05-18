@@ -12,7 +12,7 @@ public class WebshopController implements WebshopInterface {
 	private Customer customer;
 
 	public WebshopController() throws IOException {
-		DatabaseInterface databaseInterface = new DBManager();
+		DatabaseInterface databaseInterface = DBManager.getInstance();
 		this.catalog = new Catalog(databaseInterface);
 		this.orderHistory = new OrderHistory(databaseInterface);
 		this.customer = new Customer();

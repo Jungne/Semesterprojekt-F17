@@ -26,8 +26,10 @@ import java.util.logging.Logger;
 public class DBManager implements DatabaseInterface{
     private Connection con;
     private ProductHandler productHandler;
+    
+    private static DBManager dbManager = null;
 
-    public DBManager() {
+    private DBManager() {
 	productHandler = new ProductHandler();
 	
 	
@@ -49,6 +51,13 @@ public class DBManager implements DatabaseInterface{
         } catch (SQLException ex) {
             System.out.println("Connection to database failed.");
         }
+    }
+    
+    public static DBManager getInstance() {
+	if (dbManager == null) {
+	    dbManager = new DBManager();
+	}
+	return dbManager;
     }
     
 
