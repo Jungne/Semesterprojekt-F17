@@ -77,5 +77,20 @@ public class OrderLineTest {
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
+
+	/**
+	 * Test of equals method, of class OrderLine.
+	 */
+	@org.junit.Test
+	public void testEquals() {
+		System.out.println("equals");
+		Object o = null;
+		OrderLine instance = null;
+		boolean expResult = false;
+		boolean result = instance.equals(o);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
 	
 }

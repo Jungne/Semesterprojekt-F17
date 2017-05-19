@@ -16,8 +16,8 @@ import org.junit.runners.Suite;
  *
  * @author Daniel
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({Webshop.OrderLineTest.class, Webshop.ProductTest.class, Webshop.PaymentTest.class, Webshop.OrderTest.class, Webshop.WebshopInterfaceTest.class, Webshop.OrderHistoryTest.class, Webshop.CustomerTest.class, Webshop.ShoppingBasketTest.class, Webshop.CatalogTest.class, Webshop.DatabaseInterfaceTest.class, Webshop.OrderStatusTest.class, Webshop.DBManagerTest.class, Webshop.ProductCategoryTest.class, Webshop.WebshopControllerTest.class})
+@org.junit.runner.RunWith(org.junit.runners.Suite.class)
+@org.junit.runners.Suite.SuiteClasses({CustomerTest.class, DBManagerTest.class, OrderStatusTest.class, ProductTest.class, OrderHistoryTest.class, ProductCategoryTest.class, OrderTest.class, CatalogTest.class, ShoppingBasketTest.class, WebshopInterfaceTest.class, OrderLineTest.class, PaymentTest.class, DatabaseInterfaceTest.class, WebshopControllerTest.class})
 public class WebshopSuite {
 
 	@BeforeClass

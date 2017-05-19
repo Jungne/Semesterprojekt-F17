@@ -1,23 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DBManager;
 
 import Webshop.DatabaseInterface;
 import Webshop.Order;
 import Webshop.Product;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -151,4 +152,72 @@ public class DBManager implements DatabaseInterface {
 	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+	/**
+	 * This method is made for testing. To save images in a relationel database.
+	 *
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		DBManager manager = DBManager.getInstance();
+
+		//manager.setUpImageTable();
+		//manager.deleteImageTable();
+		//manager.addImage("src/images/blender.jpeg");
+	}
+
+	public void setUpImageTable() {
+		try {
+			Statement statement = con.createStatement();
+			String sql = "CREATE TABLE IF NOT EXISTS imageTest ("
+							+ "name varchar(15),"
+							+ "image bytea"
+							+ ");";
+			statement.execute(sql);
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	public void deleteImageTable() {
+		try {
+			Statement statement = con.createStatement();
+			String sql = "DROP TABLE imageTest;";
+			statement.execute(sql);
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	public void addImage(String imagePath) {
+		try {
+			String sql = "INSERT INTO imageTest VALUES (?, ?);";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, "someName");
+
+			InputStream input = new FileInputStream(new File(imagePath));
+			ps.setBinaryStream(2, input);
+			ps.executeUpdate();
+
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (FileNotFoundException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	public Image getImage() {
+		Image image = null;
+		try {
+			String sql = "SELECT image FROM imageTest WHERE name='someName'";
+			Statement s = con.createStatement();
+			ResultSet resulstSet = s.executeQuery(sql);
+			resulstSet.next();
+			InputStream x = resulstSet.getBinaryStream("image");
+			image = new Image(x);
+
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return image;
+	}
 }

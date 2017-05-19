@@ -11,13 +11,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import semesterprojekt.f17.F17Suite;
 
 /**
  *
  * @author Daniel
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({semesterprojekt.f17.F17Suite.class})
+@org.junit.runner.RunWith(org.junit.runners.Suite.class)
+@org.junit.runners.Suite.SuiteClasses({F17Suite.class})
 public class SemesterprojektSuite {
 
 	@BeforeClass
