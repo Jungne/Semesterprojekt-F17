@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Semesterprojekt-F17.jnlp">
+  <information>
+    <title>Semesterprojekt-F17</title>
+    <vendor>jungn</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Semesterprojekt-F17.jar" size="99264" download="eager" />
+    <jar href="lib\postgresql-42.0.0.jar" size="707261" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Semesterprojekt-F17" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="semesterprojekt.f17.SemesterprojektF17"  name="Semesterprojekt-F17" />
+  <update check="always"/>
+</jnlp>
