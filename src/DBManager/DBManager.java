@@ -1,5 +1,6 @@
 package DBManager;
 
+import DBManager.Data.TestData;
 import Webshop.DatabaseInterface;
 import Webshop.Order;
 import Webshop.Product;
@@ -156,7 +157,7 @@ public class DBManager implements DatabaseInterface {
 
 	public void setUpTables() {
 		try {
-			executeUpdates(Data.createTableQueries);
+			executeUpdates(TestData.createTableQueries);
 		} catch (SQLException ex) {
 			System.out.println("Failed creating tables: " + ex);
 		}
@@ -164,7 +165,7 @@ public class DBManager implements DatabaseInterface {
 
 	public void dropTables() {
 		try {
-			executeUpdates(Data.dropTableQueries);
+			executeUpdates(TestData.dropTableQueries);
 		} catch (SQLException ex) {
 			System.out.println("Failed dropping tables: " + ex);
 		}
