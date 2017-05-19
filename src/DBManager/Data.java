@@ -18,6 +18,7 @@ public class Data {
 					+ ");";
 
 	private static String productsTable = "CREATE TABLE IF NOT EXISTS Products ("
+					+ ""
 					+ ");";
 
 	private static String ordersTable = "CREATE TABLE IF NOT EXISTS Orders ("
