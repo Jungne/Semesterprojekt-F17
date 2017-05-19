@@ -1,6 +1,6 @@
 package DBManager;
 
-import DBManager.Data.TestData;
+import DBManager.Data2.TestData;
 import Webshop.DatabaseInterface;
 import Webshop.Order;
 import Webshop.Product;
