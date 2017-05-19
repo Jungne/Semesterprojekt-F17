@@ -149,7 +149,18 @@ public class DBManager implements DatabaseInterface {
 
     @Override
     public boolean saveOrder(Order order) {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	try {
+	    PreparedStatement ps = con.prepareStatement(
+		    "INSERT INTO order"
+			    + "VALUES (?,?,TIMESTAMP,?)");
+	    ps.setInt(1, order.getId());
+	    ps.setInt(2, order.getCustomer().getId());
+	    ps.setString(4, order.getOrderStatus().toString());
+	    System.out.println(order.getOrderStatus().toString());
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	return true;
     }
 
 	/**
