@@ -142,34 +142,36 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	/**
-	 * This method is made for testing. To save images in a relationel database.
-	 *
-	 * @param args
+	 * Sets up all tables in the database if they not already exists.
 	 */
-	public static void main(String[] args) {
-		DBManager manager = DBManager.getInstance();
-
-		//manager.setUpImageTable();
-		//manager.deleteImageTable();
-		//manager.addImage("src/images/blender.jpeg");
-	}
-
-	public void setUpTables() {
+	private void setUpTables() {
 		try {
-			executeUpdates(Data.createTableQueries);
+			for (String query : Data.createTableQueries) {
+				execute(query);
+			}
 		} catch (SQLException ex) {
 			System.out.println("Failed creating tables: " + ex);
 		}
 	}
 
-	public void dropTables() {
+	/**
+	 * Drops all tables in the database.
+	 */
+	private void dropTables() {
 		try {
-			executeUpdates(Data.dropTableQueries);
+			for (String query : Data.dropTableQueries) {
+				execute(query);
+			}
 		} catch (SQLException ex) {
 			System.out.println("Failed dropping tables: " + ex);
 		}
 	}
 
+	/**
+	 * Temporary method for testing
+	 *
+	 * @param imagePath
+	 */
 	public void addImage(String imagePath) {
 		try {
 			String sql = "INSERT INTO imageTest VALUES (?, ?);";
@@ -187,6 +189,11 @@ public class DBManager implements DatabaseInterface {
 		}
 	}
 
+	/**
+	 * Temporary method for testing
+	 *
+	 * @return
+	 */
 	public Image getImage() {
 		Image image = null;
 		try {
@@ -203,21 +210,13 @@ public class DBManager implements DatabaseInterface {
 		return image;
 	}
 
-	private void executeUpdate(String query) throws SQLException {
+	private void execute(String query) throws SQLException {
 		try (Statement statement = connection.createStatement()) {
-			statement.executeUpdate(query);
+			statement.execute(query);
 		}
 	}
 
 	private ResultSet executeQuery(String query) throws SQLException {
 		return connection.createStatement().executeQuery(query);
-	}
-
-	private void executeUpdates(String[] queries) throws SQLException {
-		try (Statement statement = connection.createStatement()) {
-			for (String query : queries) {
-				statement.executeUpdate(query);
-			}
-		}
 	}
 }
