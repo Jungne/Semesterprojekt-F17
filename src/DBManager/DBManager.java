@@ -1,5 +1,6 @@
 package DBManager;
 
+import DBManager.Data.TestData;
 import Webshop.DatabaseInterface;
 import Webshop.Order;
 import Webshop.Product;
@@ -22,7 +23,7 @@ import javafx.scene.image.Image;
 
 public class DBManager implements DatabaseInterface {
 
-	private Connection con;
+	private Connection connection;
 	private ProductHandler productHandler;
 	private static DBManager dbManager = null;
 
@@ -39,9 +40,9 @@ public class DBManager implements DatabaseInterface {
 			return;
 		}
 
-		con = null;
+		connection = null;
 		try {
-			con = DriverManager.getConnection(url, user, password);
+			connection = DriverManager.getConnection(url, user, password);
 			System.out.println("Connection to database successful!");
 
 		} catch (SQLException ex) {
@@ -60,7 +61,7 @@ public class DBManager implements DatabaseInterface {
 	public Product getProduct(int productId) {
 		Product product = null;
 		try {
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM Products WHERE id = " + productId);
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE id = " + productId);
 			ResultSet components = ps.executeQuery();
 			product = productHandler.getProduct(components);
 
@@ -76,7 +77,7 @@ public class DBManager implements DatabaseInterface {
 	public ArrayList<Product> getAllProducts() {
 		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM Products");
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products");
 			ResultSet components = ps.executeQuery();
 			products = productHandler.getProducts(components);
 
@@ -92,7 +93,7 @@ public class DBManager implements DatabaseInterface {
 	public ArrayList<Product> findProducts(String query) {
 		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM Products WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
 			ResultSet components = ps.executeQuery();
 			products = productHandler.getProducts(components);
 
@@ -108,7 +109,7 @@ public class DBManager implements DatabaseInterface {
 	public TreeSet<String> getCategories() {
 		TreeSet<String> categories = null;
 		try {
-			PreparedStatement ps = con.prepareStatement("SELECT category FROM Products");
+			PreparedStatement ps = connection.prepareStatement("SELECT category FROM Products");
 			ResultSet components = ps.executeQuery();
 			categories = productHandler.getCategories(components);
 
@@ -123,7 +124,7 @@ public class DBManager implements DatabaseInterface {
 	public ArrayList<Product> getCategory(String category) {
 		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM Products WHERE LOWER(category) = '" + category.toLowerCase() + "'");
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE LOWER(category) = '" + category.toLowerCase() + "'");
 			ResultSet components = ps.executeQuery();
 			products = productHandler.getProducts(components);
 
@@ -154,33 +155,26 @@ public class DBManager implements DatabaseInterface {
 		//manager.addImage("src/images/blender.jpeg");
 	}
 
-	public void setUpImageTable() {
+	public void setUpTables() {
 		try {
-			Statement statement = con.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS imageTest ("
-							+ "name varchar(15),"
-							+ "image bytea"
-							+ ");";
-			statement.execute(sql);
+			executeUpdates(TestData.createTableQueries);
 		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			System.out.println("Failed creating tables: " + ex);
 		}
 	}
 
-	public void deleteImageTable() {
+	public void dropTables() {
 		try {
-			Statement statement = con.createStatement();
-			String sql = "DROP TABLE imageTest;";
-			statement.execute(sql);
+			executeUpdates(TestData.dropTableQueries);
 		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			System.out.println("Failed dropping tables: " + ex);
 		}
 	}
 
 	public void addImage(String imagePath) {
 		try {
 			String sql = "INSERT INTO imageTest VALUES (?, ?);";
-			PreparedStatement ps = con.prepareStatement(sql);
+			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setString(1, "someName");
 
 			InputStream input = new FileInputStream(new File(imagePath));
@@ -198,7 +192,7 @@ public class DBManager implements DatabaseInterface {
 		Image image = null;
 		try {
 			String sql = "SELECT image FROM imageTest WHERE name='someName'";
-			Statement s = con.createStatement();
+			Statement s = connection.createStatement();
 			ResultSet resulstSet = s.executeQuery(sql);
 			resulstSet.next();
 			InputStream x = resulstSet.getBinaryStream("image");
@@ -208,5 +202,23 @@ public class DBManager implements DatabaseInterface {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return image;
+	}
+
+	private void executeUpdate(String query) throws SQLException {
+		try (Statement statement = connection.createStatement()) {
+			statement.executeUpdate(query);
+		}
+	}
+
+	private ResultSet executeQuery(String query) throws SQLException {
+		return connection.createStatement().executeQuery(query);
+	}
+
+	private void executeUpdates(String[] queries) throws SQLException {
+		try (Statement statement = connection.createStatement()) {
+			for (String query : queries) {
+				statement.executeUpdate(query);
+			}
+		}
 	}
 }
