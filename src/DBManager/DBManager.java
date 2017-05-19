@@ -14,7 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -151,12 +153,12 @@ public class DBManager implements DatabaseInterface {
     public boolean saveOrder(Order order) {
 	try {
 	    PreparedStatement ps = con.prepareStatement(
-		    "INSERT INTO order"
-			    + "VALUES (?,?,TIMESTAMP,?)");
+		    "INSERT INTO orders\n"
+			    + "VALUES (?,?, CURRENT_TIMESTAMP,?)");
 	    ps.setInt(1, order.getId());
 	    ps.setInt(2, order.getCustomer().getId());
-	    ps.setString(4, order.getOrderStatus().toString());
-	    System.out.println(order.getOrderStatus().toString());
+	    ps.setString(3, order.getOrderStatus().name());
+	    ps.executeUpdate();
 	} catch (SQLException ex) {
 	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 	}
