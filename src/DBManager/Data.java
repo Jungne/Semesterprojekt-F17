@@ -23,8 +23,8 @@ public class Data {
 					= "CREATE TABLE IF NOT EXISTS Products ("
 					+ "id INTEGER,"
 					+ "name varchar(255),"
-					+ "categoryId INTEGER"
-					+ "desciption TEXT,"
+					+ "categoryId INTEGER,"
+					+ "description TEXT,"
 					+ "price decimal(10,2),"
 					+ "PRIMARY KEY (id),"
 					+ "FOREIGN KEY (categoryId) REFERENCES Categories(id)"
@@ -34,10 +34,10 @@ public class Data {
 					= "CREATE TABLE IF NOT EXISTS Orders ("
 					+ "id INTEGER,"
 					+ "customerId INTEGER,"
-					+ "date CURRENT_TIMESTAMP,"
+					+ "date TIMESTAMP,"
 					+ "orderStatus varchar(255),"
 					+ "PRIMARY KEY (id),"
-					+ "FOREIGN KEY (customerId) REFERENCES Customer(id)"
+					+ "FOREIGN KEY (customerId) REFERENCES Customers(id)"
 					+ ");";
 
 	private static String productsInOrdersTable
@@ -54,6 +54,7 @@ public class Data {
 					= "CREATE TABLE IF NOT EXISTS Images ("
 					+ "id INTEGER,"
 					+ "title varchar(255),"
+					+ "categoryId INTEGER,"
 					+ "imageFile bytea,"
 					+ "PRIMARY KEY (id)"
 					+ ");";
@@ -78,23 +79,34 @@ public class Data {
 	};
 
 	public static String[] dropTableQueries = {
-		"DROP TABLE IF EXISTS Categories;",
-		"DROP TABLE IF EXISTS Customers;",
-		"DROP TABLE IF EXISTS Products;",
-		"DROP TABLE IF EXISTS Orders;",
-		"DROP TABLE IF EXISTS ProductsInOrders;",
-		"DROP TABLE IF EXISTS Images;",
 		"DROP TABLE IF EXISTS ImagesInProducts;",
-		//Temporary part:'
-		"DROP TABLE IF EXISTS imageTest;",
-		"DROP TABLE IF EXISTS category;",
-		"DROP TABLE IF EXISTS customer;",
-		"DROP TABLE IF EXISTS image;",
-		"DROP TABLE IF EXISTS product;",
-		"DROP TABLE IF EXISTS productsinorder;"
+		"DROP TABLE IF EXISTS Images;",
+		"DROP TABLE IF EXISTS ProductsInOrders;",
+		"DROP TABLE IF EXISTS Orders;",
+		"DROP TABLE IF EXISTS Products;",
+		"DROP TABLE IF EXISTS Customers;",
+		"DROP TABLE IF EXISTS Categories;"
 	};
 
 	public static String insertCategories
 					= "INSERT INTO Categories (id, name) VALUES"
-					+ "(1, 'stuff');";
+					+ "(1, 'Appliances'),"
+					+ "(2, 'PC'),"
+					+ "(3, 'TV'),"
+					+ "(4, 'Mobil')"
+					+ ";";
+
+	public static String insertProducts
+					= "INSERT INTO Products (id, name, categoryId, description, price) VALUES"
+					+ "(1, 'Blender', 1, 'Blender fra Electrolux. Blender ting om til mindre stykker.', 299.00),"
+					+ "(2, 'Computeren', 2, 'En computer.', 999.99),"
+					+ "(3, 'Sony TV', 3, 'Et Sony TV', 3999.99),"
+					+ "(4, 'LG TV 43', 3, 'Et 43 tommer LG TV', 2499.00),"
+					+ "(5, 'Samsung Galaxy s9', 4, 'The newest member in the Galaxy family.', 5999.42)"
+					+ ";";
+
+	public static String[] insertIntoQueries = {
+		insertCategories,
+		insertProducts
+	};
 }

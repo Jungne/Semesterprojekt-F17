@@ -51,6 +51,10 @@ public class DBManager implements DatabaseInterface {
 			System.out.println("Connection to database failed.");
 		}
 
+		//Tables are created and data is inserted.
+		//dropTables();
+		//setUpTables();
+		//insertData();
 	}
 
 	public static DBManager getInstance() {
@@ -118,7 +122,7 @@ public class DBManager implements DatabaseInterface {
 	public TreeSet<String> getCategories() {
 		TreeSet<String> categories = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT category FROM Products");
+			PreparedStatement ps = connection.prepareStatement("SELECT name FROM Categories");
 			ResultSet components = ps.executeQuery();
 			categories = productHandler.getCategories(components);
 
@@ -189,6 +193,19 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	/**
+	 * Inserts categories and products into the database.
+	 */
+	private void insertData() {
+		try {
+			for (String query : Data.insertIntoQueries) {
+				executeUpdate(query);
+			}
+		} catch (SQLException ex) {
+			System.out.println("Failed dropping tables: " + ex);
+		}
+	}
+
+	/**
 	 * Temporary method for testing
 	 *
 	 * @param imagePath
@@ -234,6 +251,12 @@ public class DBManager implements DatabaseInterface {
 	private void execute(String query) throws SQLException {
 		try (Statement statement = connection.createStatement()) {
 			statement.execute(query);
+		}
+	}
+
+	private void executeUpdate(String query) throws SQLException {
+		try (Statement statement = connection.createStatement()) {
+			statement.executeUpdate(query);
 		}
 	}
 
