@@ -192,24 +192,12 @@ public class DBManager implements DatabaseInterface {
 	 * Temporary method for testing
 	 *
 	 * @param imagePath
+         * @param titel
+         * @param category
 	 */
-	@Override
-	public void addImage(File imageFile) {
-		try {
-			String sql = "INSERT INTO image VALUES (?, ?, ?);";
-			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setInt(1, 1);
-			ps.setString(2, "test title");
 
-			InputStream input = new FileInputStream(imageFile);
-			ps.setBinaryStream(3, input);
-			ps.executeUpdate();
-
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
+	public void addImage(String imagePath, String titel, int category) {
+		ImageHandler.addImage(connection, imagePath, titel, category);
 	}
 
 	/**
