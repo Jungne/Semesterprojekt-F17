@@ -24,8 +24,8 @@ public class Data {
 					+ "id INTEGER,"
 					+ "name varchar(255),"
 					+ "categoryId INTEGER"
-					+ "desciption ??," //TODO - hvilken type?
-					+ "price ??," //TODO - hvilken type?
+					+ "desciption TEXT," //TODO - hvilken type?
+					+ "price decimal(10,2)," //TODO - hvilken type?
 					+ "PRIMARY KEY (id),"
 					+ "FOREIGN KEY (categoryId) REFERENCES Categories(id)"
 					+ ");";
@@ -34,7 +34,7 @@ public class Data {
 					= "CREATE TABLE IF NOT EXISTS Orders ("
 					+ "id INTEGER,"
 					+ "customerId INTEGER,"
-					+ "date ??," //TODO - hvilken type?
+					+ "date CURRENT_TIMESTAMP," //TODO - hvilken type?
 					+ "orderStatus varchar(255),"
 					+ "PRIMARY KEY (id),"
 					+ "FOREIGN KEY (customerId) REFERENCES Customer(id)"
