@@ -153,32 +153,5 @@ public class DatabaseInterfaceTest {
 			return false;
 		}
 	}
-
-	public class DatabaseInterfaceImpl implements DatabaseInterface {
-
-		public Product getProduct(int productId) {
-			return null;
-		}
-
-		public ArrayList<Product> getAllProducts() {
-			return null;
-		}
-
-		public ArrayList<Product> findProducts(String query) {
-			return null;
-		}
-
-		public TreeSet<String> getCategories() {
-			return null;
-		}
-
-		public ArrayList<Product> getCategory(String category) {
-			return null;
-		}
-
-		public boolean saveOrder(Order order) {
-			return false;
-		}
-	}
 	
 }

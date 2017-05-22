@@ -19,22 +19,22 @@ import static org.junit.Assert.*;
  * @author Daniel
  */
 public class WebshopInterfaceTest {
-	
+
 	public WebshopInterfaceTest() {
 	}
-	
+
 	@BeforeClass
 	public static void setUpClass() {
 	}
-	
+
 	@AfterClass
 	public static void tearDownClass() {
 	}
-	
+
 	@Before
 	public void setUp() {
 	}
-	
+
 	@After
 	public void tearDown() {
 	}
@@ -264,53 +264,4 @@ public class WebshopInterfaceTest {
 		}
 	}
 
-	public class WebshopInterfaceImpl implements WebshopInterface {
-
-		public ArrayList<Product> findProducts(String query) {
-			return null;
-		}
-
-		public TreeSet<String> getCategories() {
-			return null;
-		}
-
-		public ArrayList<Product> getCategory(String category) {
-			return null;
-		}
-
-		public Product getProduct(int id) {
-			return null;
-		}
-
-		public ArrayList<Product> getAllProduct() {
-			return null;
-		}
-
-		public Order checkOut() {
-			return null;
-		}
-
-		public Order checkOut(String name, String email, int phoneNumber, ShoppingBasket shoppingBasket) {
-			return null;
-		}
-
-		public boolean addProductToBasket(int productId, int amount) {
-			return false;
-		}
-
-		public void removeProduct(int productId) {
-		}
-
-		public boolean setProductAmount(int productId, int amount) {
-			return false;
-		}
-
-		public ShoppingBasket getShoppingBasket() {
-			return null;
-		}
-
-		public void emptyShoppingBasket() {
-		}
-	}
-	
 }
