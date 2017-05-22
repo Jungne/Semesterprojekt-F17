@@ -32,7 +32,7 @@ public class Product {
 		this.category = category;
 		this.description = description;
 		this.price = price;
-		this.imagePath = "";
+		this.imagePath = "test.jpeg";
 	}
 
 	public void loadImage() throws IOException {

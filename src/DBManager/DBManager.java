@@ -20,6 +20,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.image.Image;
 
+/**
+ *
+ * @author jungn
+ */
 public class DBManager implements DatabaseInterface {
 
 	private Connection connection;
@@ -46,7 +50,7 @@ public class DBManager implements DatabaseInterface {
 		} catch (SQLException ex) {
 			System.out.println("Connection to database failed.");
 		}
-		
+
 	}
 
 	public static DBManager getInstance() {
@@ -60,7 +64,9 @@ public class DBManager implements DatabaseInterface {
 	public Product getProduct(int productId) {
 		Product product = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE id = " + productId);
+			PreparedStatement ps = connection.prepareStatement("SELECT product.name, product.id, category.name, description, price\n"
+							+ "FROM product, category\n"
+							+ "WHERE category.id = categoryid AND product.id = " + productId);
 			ResultSet components = ps.executeQuery();
 			product = productHandler.getProduct(components);
 
@@ -76,7 +82,9 @@ public class DBManager implements DatabaseInterface {
 	public ArrayList<Product> getAllProducts() {
 		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products");
+			PreparedStatement ps = connection.prepareStatement("SELECT product.name, product.id, category.name, description, price\n"
+							+ "FROM product, category\n"
+							+ "WHERE category.id = categoryid");
 			ResultSet components = ps.executeQuery();
 			products = productHandler.getProducts(components);
 
@@ -92,7 +100,9 @@ public class DBManager implements DatabaseInterface {
 	public ArrayList<Product> findProducts(String query) {
 		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
+			PreparedStatement ps = connection.prepareStatement("SELECT product.name, product.id, category.name, description, price\n"
+							+ "FROM Products\n"
+							+ "WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
 			ResultSet components = ps.executeQuery();
 			products = productHandler.getProducts(components);
 
@@ -138,7 +148,18 @@ public class DBManager implements DatabaseInterface {
 
 	@Override
 	public boolean saveOrder(Order order) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		try {
+			PreparedStatement ps = connection.prepareStatement(
+							"INSERT INTO orders\n"
+							+ "VALUES (?,?, CURRENT_TIMESTAMP,?)");
+			ps.setInt(1, order.getId());
+			ps.setInt(2, order.getCustomer().getId());
+			ps.setString(3, order.getOrderStatus().name());
+			ps.executeUpdate();
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return true;
 	}
 
 	/**

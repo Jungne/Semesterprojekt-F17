@@ -93,6 +93,8 @@ public class Data {
 		"DROP TABLE IF EXISTS product;",
 		"DROP TABLE IF EXISTS productsinorder;"
 	};
-	
-	public static String insertCategories = "INSERT INTO Categories VALUES ();";
+
+	public static String insertCategories
+					= "INSERT INTO Categories (id, name) VALUES"
+					+ "(1, 'stuff');";
 }
