@@ -14,12 +14,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.image.Image;
 
+/**
+ *
+ * @author jungn
+ */
 public class DBManager implements DatabaseInterface {
 
 	private Connection connection;
@@ -43,103 +49,119 @@ public class DBManager implements DatabaseInterface {
 		try {
 			connection = DriverManager.getConnection(url, user, password);
 			System.out.println("Connection to database successful!");
-
-		} catch (SQLException ex) {
-			System.out.println("Connection to database failed.");
-		}
+	} catch (SQLException ex) {
+	    System.out.println("Connection to database failed.");
 	}
+    }
 
-	public static DBManager getInstance() {
-		if (dbManager == null) {
-			dbManager = new DBManager();
-		}
-		return dbManager;
+    public static DBManager getInstance() {
+	if (dbManager == null) {
+	    dbManager = new DBManager();
 	}
+	return dbManager;
+    }
+    
+    @Override
+    public Product getProduct(int productId) {
+	Product product = null;
+	try {
+	    PreparedStatement ps = connection.prepareStatement("SELECT product.name, product.id, category.name, description, price\n"
+		    + "FROM product, category\n"
+		    + "WHERE category.id = categoryid AND product.id = " + productId);
+	    ResultSet components = ps.executeQuery();
+	    product = productHandler.getProduct(components);
 
-	@Override
-	public Product getProduct(int productId) {
-		Product product = null;
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE id = " + productId);
-			ResultSet components = ps.executeQuery();
-			product = productHandler.getProduct(components);
-
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return product;
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	} catch (IOException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	return product;
+    }
 
-	@Override
-	public ArrayList<Product> getAllProducts() {
-		ArrayList<Product> products = null;
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products");
-			ResultSet components = ps.executeQuery();
-			products = productHandler.getProducts(components);
+    @Override
+    public ArrayList<Product> getAllProducts() {
+	ArrayList<Product> products = null;
+	try {
+	    PreparedStatement ps = connection.prepareStatement("SELECT product.name, product.id, category.name, description, price\n"
+		    + "FROM product, category\n"
+		    + "WHERE category.id = categoryid");
+	    ResultSet components = ps.executeQuery();
+	    products = productHandler.getProducts(components);
 
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return products;
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	} catch (IOException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	return products;
+    }
 
-	@Override
-	public ArrayList<Product> findProducts(String query) {
-		ArrayList<Product> products = null;
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
-			ResultSet components = ps.executeQuery();
-			products = productHandler.getProducts(components);
+    @Override
+    public ArrayList<Product> findProducts(String query) {
+	ArrayList<Product> products = null;
+	try {
+	    PreparedStatement ps = connection.prepareStatement("SELECT product.name, product.id, category.name, description, price\n"
+		    + "FROM Products\n"
+		    + "WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
+	    ResultSet components = ps.executeQuery();
+	    products = productHandler.getProducts(components);
 
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return products;
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	} catch (IOException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	return products;
+    }
 
-	@Override
-	public TreeSet<String> getCategories() {
-		TreeSet<String> categories = null;
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT category FROM Products");
-			ResultSet components = ps.executeQuery();
-			categories = productHandler.getCategories(components);
+    @Override
+    public TreeSet<String> getCategories() {
+	TreeSet<String> categories = null;
+	try {
+	    PreparedStatement ps = connection.prepareStatement("SELECT category FROM Products");
+	    ResultSet components = ps.executeQuery();
+	    categories = productHandler.getCategories(components);
 
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-			System.out.println("Error");
-		}
-		return categories;
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	    System.out.println("Error");
 	}
+	return categories;
+    }
 
-	@Override
-	public ArrayList<Product> getCategory(String category) {
-		ArrayList<Product> products = null;
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE LOWER(category) = '" + category.toLowerCase() + "'");
-			ResultSet components = ps.executeQuery();
-			products = productHandler.getProducts(components);
+    @Override
+    public ArrayList<Product> getCategory(String category) {
+	ArrayList<Product> products = null;
+	try {
+	    PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE LOWER(category) = '" + category.toLowerCase() + "'");
+	    ResultSet components = ps.executeQuery();
+	    products = productHandler.getProducts(components);
 
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-			System.out.println("error");
-		} catch (IOException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return products;
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	    System.out.println("error");
+	} catch (IOException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	return products;
+    }
 
-	@Override
-	public boolean saveOrder(Order order) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Override
+    public boolean saveOrder(Order order) {
+	try {
+	    PreparedStatement ps = connection.prepareStatement(
+		    "INSERT INTO orders\n"
+			    + "VALUES (?,?, CURRENT_TIMESTAMP,?)");
+	    ps.setInt(1, order.getId());
+	    ps.setInt(2, order.getCustomer().getId());
+	    ps.setString(3, order.getOrderStatus().name());
+	    ps.executeUpdate();
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	return true;
+    }
 
 	/**
 	 * Sets up all tables in the database if they not already exists.
