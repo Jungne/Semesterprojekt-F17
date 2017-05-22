@@ -192,12 +192,12 @@ public class DBManager implements DatabaseInterface {
 	 * Temporary method for testing
 	 *
 	 * @param imagePath
-         * @param titel
+         * @param title
          * @param category
 	 */
 
-	public void addImage(String imagePath, String titel, int category) {
-		ImageHandler.addImage(connection, imagePath, titel, category);
+	public void addImage(String imagePath, String title, int category) {
+		ImageHandler.addImage(connection, imagePath, title, category);
 	}
 
 	/**
