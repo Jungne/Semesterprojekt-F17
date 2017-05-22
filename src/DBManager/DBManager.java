@@ -206,7 +206,7 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	/**
-	 * Temporary method for testing
+	 * Add image to database
 	 *
 	 * @param imagePath
          * @param title
@@ -218,25 +218,13 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	/**
-	 * Temporary method for testing
+	 * get images from databse
 	 *
-	 * @return
+	 * @return ResultSet
 	 */
 	@Override
-	public Image getImage() {
-		Image image = null;
-		try {
-			String sql = "SELECT image FROM image WHERE id = 1";
-			Statement s = connection.createStatement();
-			ResultSet resulstSet = s.executeQuery(sql);
-			resulstSet.next();
-			InputStream x = resulstSet.getBinaryStream("image");
-			image = new Image(x);
-
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return image;
+	public ResultSet getImages() {
+		return ImageHandler.getImages(connection);
 	}
 
 	private void execute(String query) throws SQLException {
