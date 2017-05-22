@@ -24,8 +24,8 @@ public class Data {
 					+ "id INTEGER,"
 					+ "name varchar(255),"
 					+ "categoryId INTEGER"
-					+ "desciption TEXT," //TODO - hvilken type?
-					+ "price decimal(10,2)," //TODO - hvilken type?
+					+ "desciption TEXT,"
+					+ "price decimal(10,2),"
 					+ "PRIMARY KEY (id),"
 					+ "FOREIGN KEY (categoryId) REFERENCES Categories(id)"
 					+ ");";
@@ -34,7 +34,7 @@ public class Data {
 					= "CREATE TABLE IF NOT EXISTS Orders ("
 					+ "id INTEGER,"
 					+ "customerId INTEGER,"
-					+ "date CURRENT_TIMESTAMP," //TODO - hvilken type?
+					+ "date CURRENT_TIMESTAMP,"
 					+ "orderStatus varchar(255),"
 					+ "PRIMARY KEY (id),"
 					+ "FOREIGN KEY (customerId) REFERENCES Customer(id)"
@@ -93,4 +93,6 @@ public class Data {
 		"DROP TABLE IF EXISTS product;",
 		"DROP TABLE IF EXISTS productsinorder;"
 	};
+	
+	public static String insertCategories = "INSERT INTO Categories VALUES ();";
 }

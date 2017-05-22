@@ -43,10 +43,10 @@ public class DBManager implements DatabaseInterface {
 		try {
 			connection = DriverManager.getConnection(url, user, password);
 			System.out.println("Connection to database successful!");
-
 		} catch (SQLException ex) {
 			System.out.println("Connection to database failed.");
 		}
+		
 	}
 
 	public static DBManager getInstance() {
