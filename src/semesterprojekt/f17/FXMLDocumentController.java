@@ -1,6 +1,8 @@
 package semesterprojekt.f17;
 
+import DAM.DAMManager;
 import Webshop.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,10 +28,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class FXMLDocumentController implements Initializable {
 
 	private WebshopInterface webshopController;
+	private DAMManager DAM;
 
 	private boolean isLoggedIn = false;
 	private ShoppingBasket guestBasket = new ShoppingBasket();
@@ -96,6 +101,22 @@ public class FXMLDocumentController implements Initializable {
 	private TextField CheckOut_URCPane_PhoneTextField;
 	@FXML
 	private Label CheckOut_EndPane_Receipt;
+    @FXML
+    private ImageView DAMImageView;
+    @FXML
+    private Button browseButton;
+    @FXML
+    private TextField imagePathTextField;
+    @FXML
+    private Button saveImageButton;
+    @FXML
+    private Button openImageButton;
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+    private ChoiceBox<?> imageCategoryTextField;
+    @FXML
+    private TextField imageTitleTextField;
 
 	@FXML
 	private void handleCatalogTestShowProductsButton(ActionEvent e) {
@@ -133,6 +154,7 @@ public class FXMLDocumentController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		try {
 			webshopController = new WebshopController();
+			DAM = new DAMManager();
 		} catch (IOException ex) {
 			//Do something about this.
 			Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -283,6 +305,27 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private void handleCheckOut_DoneButton(ActionEvent event) {
 		reset();
+	}
+	
+	@FXML
+	public void handleBrowseButton(ActionEvent event) {
+	    Stage stage = (Stage) anchorPane.getScene().getWindow();
+	    FileChooser fileChooser = new FileChooser();
+	    
+	    File file = fileChooser.showOpenDialog(stage);
+	    
+	    imagePathTextField.setText(file.getPath());
+	}
+	
+	private void handlesaveImageButton(ActionEvent event) {
+	    File file = new File(imagePathTextField.getText());
+	    DAM.addImage(file);
+	}
+	
+	
+	@FXML
+	public void handleOpenImageButton(ActionEvent event) {
+	    DAMImageView.setImage(DAM.getImage());
 	}
 
 	private void reset() {

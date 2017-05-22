@@ -193,14 +193,16 @@ public class DBManager implements DatabaseInterface {
 	 *
 	 * @param imagePath
 	 */
-	public void addImage(String imagePath) {
+	@Override
+	public void addImage(File imageFile) {
 		try {
-			String sql = "INSERT INTO imageTest VALUES (?, ?);";
+			String sql = "INSERT INTO image VALUES (?, ?, ?);";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setString(1, "someName");
+			ps.setInt(1, 1);
+			ps.setString(2, "test title");
 
-			InputStream input = new FileInputStream(new File(imagePath));
-			ps.setBinaryStream(2, input);
+			InputStream input = new FileInputStream(imageFile);
+			ps.setBinaryStream(3, input);
 			ps.executeUpdate();
 
 		} catch (SQLException ex) {
@@ -215,10 +217,11 @@ public class DBManager implements DatabaseInterface {
 	 *
 	 * @return
 	 */
+	@Override
 	public Image getImage() {
 		Image image = null;
 		try {
-			String sql = "SELECT image FROM imageTest WHERE name='someName'";
+			String sql = "SELECT image FROM image WHERE id = 1";
 			Statement s = connection.createStatement();
 			ResultSet resulstSet = s.executeQuery(sql);
 			resulstSet.next();

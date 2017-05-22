@@ -1,7 +1,9 @@
 package Webshop;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.TreeSet;
+import javafx.scene.image.Image;
 
 public interface DatabaseInterface {
 
@@ -18,5 +20,9 @@ public interface DatabaseInterface {
 
 	//Methods for OrderHistory:
 	public boolean saveOrder(Order order);
+	
+	public void addImage(File imageFile);
+	
+	public Image getImage();
 
 }
