@@ -209,22 +209,12 @@ public class DBManager implements DatabaseInterface {
 	 * Temporary method for testing
 	 *
 	 * @param imagePath
+         * @param title
+         * @param category
 	 */
-	public void addImage(String imagePath) {
-		try {
-			String sql = "INSERT INTO imageTest VALUES (?, ?);";
-			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setString(1, "someName");
 
-			InputStream input = new FileInputStream(new File(imagePath));
-			ps.setBinaryStream(2, input);
-			ps.executeUpdate();
-
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
+	public void addImage(String imagePath, String title, int category) {
+		ImageHandler.addImage(connection, imagePath, title, category);
 	}
 
 	/**
@@ -232,10 +222,11 @@ public class DBManager implements DatabaseInterface {
 	 *
 	 * @return
 	 */
+	@Override
 	public Image getImage() {
 		Image image = null;
 		try {
-			String sql = "SELECT image FROM imageTest WHERE name='someName'";
+			String sql = "SELECT image FROM image WHERE id = 1";
 			Statement s = connection.createStatement();
 			ResultSet resulstSet = s.executeQuery(sql);
 			resulstSet.next();
