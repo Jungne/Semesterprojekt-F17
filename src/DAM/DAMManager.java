@@ -13,8 +13,8 @@ public class DAMManager {
 	databaseInterface = DBManager.getInstance();
     }
 
-    public void addImage(File imageFile) {
-	databaseInterface.addImage(imageFile);
+    public void addImage(String imagePath, String title, int category) {
+	databaseInterface.addImage(imagePath, title, category);
     }    
     
     public Image getImage() {

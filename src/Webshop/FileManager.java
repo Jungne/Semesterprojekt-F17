@@ -151,12 +151,12 @@ public class FileManager implements DatabaseInterface {
 	}
 
     @Override
-    public void addImage(File imageFile) {
+    public Image getImage() {
 	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Image getImage() {
+    public void addImage(String imagePath, String title, int category) {
 	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

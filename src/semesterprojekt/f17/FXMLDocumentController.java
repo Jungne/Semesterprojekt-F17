@@ -113,10 +113,11 @@ public class FXMLDocumentController implements Initializable {
     private Button openImageButton;
     @FXML
     private AnchorPane anchorPane;
-    @FXML
     private ChoiceBox<?> imageCategoryTextField;
     @FXML
     private TextField imageTitleTextField;
+    @FXML
+    private ChoiceBox<String> imageCategoryChoiceBox;
 
 	@FXML
 	private void handleCatalogTestShowProductsButton(ActionEvent e) {
@@ -160,9 +161,7 @@ public class FXMLDocumentController implements Initializable {
 			Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		//populates categoriesChoiceBox.
-		categoriesChoiceBox.setItems(FXCollections.observableArrayList(webshopController.getCategories()));
-		categoriesChoiceBox.setValue(categoriesChoiceBox.getItems().get(0));
+		updateChoiceBoxes();
 	}
 
 	private void showProducts(ArrayList<Product> products, ListView listview) {
@@ -317,9 +316,10 @@ public class FXMLDocumentController implements Initializable {
 	    imagePathTextField.setText(file.getPath());
 	}
 	
-	private void handlesaveImageButton(ActionEvent event) {
-	    File file = new File(imagePathTextField.getText());
-	    DAM.addImage(file);
+	@FXML
+	private void handleSaveImageButton(ActionEvent event) {
+	    
+	    DAM.addImage(imagePathTextField.getText(), imageTitleTextField.getText(), 1);
 	}
 	
 	
@@ -334,5 +334,12 @@ public class FXMLDocumentController implements Initializable {
 		tabPane.getSelectionModel().select(catalogTestTab);
 		ShoppingBasket_CheckOutButton.setDisable(false);
 		CheckOut_EndPane_Receipt.setText("");
+	}
+	private void updateChoiceBoxes() {
+	    //populates categoriesChoiceBox.
+		categoriesChoiceBox.setItems(FXCollections.observableArrayList(webshopController.getCategories()));
+		categoriesChoiceBox.setValue(categoriesChoiceBox.getItems().get(0));
+		imageCategoryChoiceBox.setItems(FXCollections.observableArrayList(webshopController.getCategories()));
+		imageCategoryChoiceBox.setValue(imageCategoryChoiceBox.getItems().get(0));
 	}
 }

@@ -118,7 +118,7 @@ public class DBManager implements DatabaseInterface {
 	public TreeSet<String> getCategories() {
 		TreeSet<String> categories = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT category FROM Products");
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM category");
 			ResultSet components = ps.executeQuery();
 			categories = productHandler.getCategories(components);
 

@@ -26,7 +26,7 @@ public class ProductHandler {
 	TreeSet<String> categories = new TreeSet<>();
 	
 	while (components.next()) {
-	    categories.add(components.getString(1));
+	    categories.add(components.getString(2));
         }
 	
 	return categories;

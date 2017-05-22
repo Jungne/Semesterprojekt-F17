@@ -25,11 +25,11 @@ public class ImageHandler {
     */
     public static void addImage(Connection connection, String imagePath, String title, int category) {
         try {
-			String sql = "INSERT INTO images VALUES (?, ?, ?, ?);";
+			String sql = "INSERT INTO image VALUES (?, ?, ?, ?);";
 			PreparedStatement ps = connection.prepareStatement(sql);
                         
                         //Getting next id for image by selecting max id and adding 1
-                        String sqlId = "SELECT max(id) + 1 FROM images";
+                        String sqlId = "SELECT max(id) + 1 FROM image";
                         PreparedStatement psId = connection.prepareStatement(sqlId);
                         ResultSet rs = psId.executeQuery();
                         rs.next(); 

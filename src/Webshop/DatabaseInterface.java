@@ -21,7 +21,7 @@ public interface DatabaseInterface {
 	//Methods for OrderHistory:
 	public boolean saveOrder(Order order);
 	
-	public void addImage(File imageFile);
+	public void addImage(String imagePath, String title, int category);
 	
 	public Image getImage();
 

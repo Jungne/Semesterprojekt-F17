@@ -158,12 +158,12 @@
                         <ImageView fx:id="DAMImageView" fitHeight="150.0" fitWidth="200.0" layoutX="575.0" layoutY="382.0" pickOnBounds="true" preserveRatio="true" />
                         <Button fx:id="browseButton" layoutX="675.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBrowseButton" text="Vælg billede" />
                         <TextField fx:id="imagePathTextField" layoutX="108.0" layoutY="14.0" prefHeight="31.0" prefWidth="557.0" />
-                        <Button fx:id="saveImageButton" layoutX="675.0" layoutY="54.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="102.0" text="Gem" />
+                        <Button fx:id="saveImageButton" layoutX="675.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleSaveImageButton" prefHeight="31.0" prefWidth="102.0" text="Gem" />
                         <Button fx:id="openImageButton" layoutX="61.0" layoutY="149.0" mnemonicParsing="false" onAction="#handleOpenImageButton" prefHeight="31.0" prefWidth="106.0" text="Åben" />
                         <Label layoutX="38.0" layoutY="19.0" text="Filsti:" />
                         <Label layoutX="37.0" layoutY="59.0" text="Titel:" />
                         <Label layoutX="351.0" layoutY="59.0" text="Kategori:" />
-                        <ChoiceBox fx:id="imageCategoryTextField" layoutX="435.0" layoutY="54.0" prefHeight="31.0" prefWidth="228.0" />
+                        <ChoiceBox fx:id="imageCategoryChoiceBox" layoutX="435.0" layoutY="54.0" prefHeight="31.0" prefWidth="228.0" />
                         <TextField fx:id="imageTitleTextField" layoutX="108.0" layoutY="54.0" prefHeight="31.0" prefWidth="228.0" />
                      </children>
                   </AnchorPane>
