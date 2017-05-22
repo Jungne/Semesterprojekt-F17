@@ -101,23 +101,23 @@ public class FXMLDocumentController implements Initializable {
 	private TextField CheckOut_URCPane_PhoneTextField;
 	@FXML
 	private Label CheckOut_EndPane_Receipt;
-    @FXML
-    private ImageView DAMImageView;
-    @FXML
-    private Button browseButton;
-    @FXML
-    private TextField imagePathTextField;
-    @FXML
-    private Button saveImageButton;
-    @FXML
-    private Button openImageButton;
-    @FXML
-    private AnchorPane anchorPane;
-    private ChoiceBox<?> imageCategoryTextField;
-    @FXML
-    private TextField imageTitleTextField;
-    @FXML
-    private ChoiceBox<String> imageCategoryChoiceBox;
+	@FXML
+	private ImageView DAMImageView;
+	@FXML
+	private Button browseButton;
+	@FXML
+	private TextField imagePathTextField;
+	@FXML
+	private Button saveImageButton;
+	@FXML
+	private Button openImageButton;
+	@FXML
+	private AnchorPane anchorPane;
+	private ChoiceBox<?> imageCategoryTextField;
+	@FXML
+	private TextField imageTitleTextField;
+	@FXML
+	private ChoiceBox<String> imageCategoryChoiceBox;
 
 	@FXML
 	private void handleCatalogTestShowProductsButton(ActionEvent e) {
@@ -305,27 +305,26 @@ public class FXMLDocumentController implements Initializable {
 	private void handleCheckOut_DoneButton(ActionEvent event) {
 		reset();
 	}
-	
+
 	@FXML
 	public void handleBrowseButton(ActionEvent event) {
-	    Stage stage = (Stage) anchorPane.getScene().getWindow();
-	    FileChooser fileChooser = new FileChooser();
-	    
-	    File file = fileChooser.showOpenDialog(stage);
-	    
-	    imagePathTextField.setText(file.getPath());
+		Stage stage = (Stage) anchorPane.getScene().getWindow();
+		FileChooser fileChooser = new FileChooser();
+
+		File file = fileChooser.showOpenDialog(stage);
+
+		imagePathTextField.setText(file.getPath());
 	}
-	
+
 	@FXML
 	private void handleSaveImageButton(ActionEvent event) {
-	    
-	    DAM.addImage(imagePathTextField.getText(), imageTitleTextField.getText(), 1);
+
+		DAM.addImage(imagePathTextField.getText(), imageTitleTextField.getText(), 1);
 	}
-	
-	
+
 	@FXML
 	public void handleOpenImageButton(ActionEvent event) {
-	    DAMImageView.setImage(DAM.getImage());
+		DAMImageView.setImage(DAM.getImage());
 	}
 
 	private void reset() {
@@ -335,11 +334,13 @@ public class FXMLDocumentController implements Initializable {
 		ShoppingBasket_CheckOutButton.setDisable(false);
 		CheckOut_EndPane_Receipt.setText("");
 	}
+
 	private void updateChoiceBoxes() {
-	    //populates categoriesChoiceBox.
+		//populates categoriesChoiceBox.
 		categoriesChoiceBox.setItems(FXCollections.observableArrayList(webshopController.getCategories()));
 		categoriesChoiceBox.setValue(categoriesChoiceBox.getItems().get(0));
 		imageCategoryChoiceBox.setItems(FXCollections.observableArrayList(webshopController.getCategories()));
 		imageCategoryChoiceBox.setValue(imageCategoryChoiceBox.getItems().get(0));
 	}
+
 }

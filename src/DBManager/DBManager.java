@@ -3,11 +3,7 @@ package DBManager;
 import Webshop.DatabaseInterface;
 import Webshop.Order;
 import Webshop.Product;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -209,10 +205,10 @@ public class DBManager implements DatabaseInterface {
 	 * Add image to database
 	 *
 	 * @param imagePath
-         * @param title
-         * @param category
+	 * @param title
+	 * @param category
 	 */
-
+	@Override
 	public void addImage(String imagePath, String title, int category) {
 		ImageHandler.addImage(connection, imagePath, title, category);
 	}
@@ -222,9 +218,13 @@ public class DBManager implements DatabaseInterface {
 	 *
 	 * @return ResultSet
 	 */
-	@Override
 	public ResultSet getImages() {
 		return ImageHandler.getImages(connection);
+	}
+
+	@Override
+	public Image getImage() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
 	private void execute(String query) throws SQLException {

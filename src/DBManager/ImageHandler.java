@@ -13,53 +13,52 @@ import java.util.logging.Logger;
 
 public class ImageHandler {
 
-    /**
-     * adds an image to the database
-     *
-     * @param connection
-     * @param imagePath
-     * @param title
-     * @param category
-     */
-    public static void addImage(Connection connection, String imagePath, String title, int category) {
-        try {
-            String sql = "INSERT INTO image VALUES (?, ?, ?, ?);";
-            PreparedStatement ps = connection.prepareStatement(sql);
+	/**
+	 * adds an image to the database
+	 *
+	 * @param connection
+	 * @param imagePath
+	 * @param title
+	 * @param category
+	 */
+	public static void addImage(Connection connection, String imagePath, String title, int category) {
+		try {
+			String sql = "INSERT INTO image VALUES (?, ?, ?, ?);";
+			PreparedStatement ps = connection.prepareStatement(sql);
 
-            //Getting next id for image by selecting max id and adding 1
-            String sqlId = "SELECT max(id) + 1 FROM image";
-            PreparedStatement psId = connection.prepareStatement(sqlId);
-            ResultSet rs = psId.executeQuery();
-            rs.next();
-            ps.setInt(1, rs.getInt(1)); //Setting id
+			//Getting next id for image by selecting max id and adding 1
+			String sqlId = "SELECT max(id) + 1 FROM image";
+			PreparedStatement psId = connection.prepareStatement(sqlId);
+			ResultSet rs = psId.executeQuery();
+			rs.next();
+			ps.setInt(1, rs.getInt(1)); //Setting id
 
-            ps.setString(2, title); //Setting titel
+			ps.setString(2, title); //Setting titel
 
-            InputStream input = new FileInputStream(new File(imagePath));
-            ps.setBinaryStream(3, input); //Setting image
+			InputStream input = new FileInputStream(new File(imagePath));
+			ps.setBinaryStream(3, input); //Setting image
 
-            ps.setInt(4, category); //Setting category
-            ps.executeUpdate();
+			ps.setInt(4, category); //Setting category
+			ps.executeUpdate();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (FileNotFoundException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 
-    public static ResultSet getImages(Connection connection) {
-        ResultSet imageSet = null;
-        
-        try {
-            String sql = "SELECT * FROM images";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            imageSet = ps.executeQuery(sql);
-           
+	public static ResultSet getImages(Connection connection) {
+		ResultSet imageSet = null;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return imageSet;
-    }
+		try {
+			String sql = "SELECT * FROM images";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			imageSet = ps.executeQuery(sql);
+
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return imageSet;
+	}
 }

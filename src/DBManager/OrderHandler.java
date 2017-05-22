@@ -4,8 +4,7 @@ import Webshop.Order;
 
 public class OrderHandler {
 
-    public boolean saveOrder(Order order) {
-	
-	return true;
-    }
+	public boolean saveOrder(Order order) {
+		return true;
+	}
 }

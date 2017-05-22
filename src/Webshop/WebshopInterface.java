@@ -16,7 +16,7 @@ public interface WebshopInterface {
 	public ArrayList<Product> getAllProduct();
 
 	public Order checkOut();
-	
+
 	public Order checkOut(String name, String email, int phoneNumber, ShoppingBasket shoppingBasket);
 
 	public boolean addProductToBasket(int productId, int amount);
@@ -26,7 +26,7 @@ public interface WebshopInterface {
 	public boolean setProductAmount(int productId, int amount);
 
 	public ShoppingBasket getShoppingBasket();
-	
+
 	public void emptyShoppingBasket();
 
 }
