@@ -81,6 +81,7 @@ public class Data {
 
 	public static String[] dropTableQueries = {
 		"DROP TABLE IF EXISTS ImagesInProducts;",
+		"DROP TABLE IF EXISTS ImageFiles",
 		"DROP TABLE IF EXISTS Images;",
 		"DROP TABLE IF EXISTS ProductsInOrders;",
 		"DROP TABLE IF EXISTS Orders;",

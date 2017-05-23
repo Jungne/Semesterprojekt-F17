@@ -1,5 +1,6 @@
 package semesterprojekt.f17;
 
+import DAM.DAMImage;
 import Webshop.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -57,8 +58,35 @@ public class ProductHBoxCell extends HBox {
 
 		this.getChildren().addAll(imageView, name, price, amountLabel, totalPrice);
 	}
+	
+	public ProductHBoxCell(DAMImage damImage) {
+	    //Sets the padding and spacing.
+		super();
+		this.setSpacing(10);
+		
+		Label category = new Label();
+
+		id = damImage.getId();
+
+		imageView.setImage(damImage.getImage());
+		name.setText(damImage.getTitle());
+		name.setPrefWidth(150);
+		
+		category.setText(damImage.getCategory());
+		category.setPrefWidth(150);
+
+		imageView.setFitWidth(200);
+		imageView.setPreserveRatio(true);
+
+		this.getChildren().addAll(imageView, name, category);
+	}
 
 	public int getProductId() {
 		return id;
+	}
+	
+	@Override
+	public String toString() {
+	    return id + name.getText();
 	}
 }

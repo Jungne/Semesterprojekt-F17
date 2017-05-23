@@ -1,9 +1,10 @@
 package Webshop;
 
-import java.sql.ResultSet;
 
+import DAM.DAMImage;
 import java.util.ArrayList;
 import java.util.TreeSet;
+import javafx.scene.image.Image;
 
 public interface DatabaseInterface {
 
@@ -22,7 +23,14 @@ public interface DatabaseInterface {
     public boolean saveOrder(Order order);
 
     public void addImage(String imagePath, String title, int category);
+    
+    public Image getImage(int id);
 
-    public ResultSet getImages();
+    public ArrayList<Image> getImages();
 
+    public DAMImage getDAMImage(int id);
+    
+    public ArrayList<DAMImage> getDAMImages();
+    
+    public void deleteImage(int id);
 }

@@ -1,5 +1,6 @@
 package DBManager;
 
+import DAM.DAMImage;
 import Webshop.DatabaseInterface;
 import Webshop.Order;
 import Webshop.Product;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -213,13 +215,18 @@ public class DBManager implements DatabaseInterface {
 	public void addImage(String imagePath, String title, int category) {
 		ImageHandler.addImage(connection, imagePath, title, category);
 	}
+	
+	@Override
+	public Image getImage(int id) {
+	    return ImageHandler.getImage(connection, id);
+	}
 
 	/**
 	 * get images from databse
 	 *
 	 * @return ResultSet
 	 */
-	public ResultSet getImages() {
+	public ArrayList<Image> getImages(){
 		return ImageHandler.getImages(connection);
 	}
 
@@ -237,5 +244,17 @@ public class DBManager implements DatabaseInterface {
 
 	private ResultSet executeQuery(String query) throws SQLException {
 		return connection.createStatement().executeQuery(query);
+	}
+	
+	public DAMImage getDAMImage(int id) {
+	    return ImageHandler.getDAMImage(connection, id);
+	}
+	
+	public ArrayList<DAMImage> getDAMImages() {
+	    return ImageHandler.getDAMImages(connection);
+	}
+	
+	public void deleteImage(int id) {
+	    ImageHandler.deleteImage(connection, id);
 	}
 }
