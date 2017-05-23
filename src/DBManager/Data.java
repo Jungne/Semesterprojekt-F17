@@ -14,7 +14,7 @@ public class Data {
 					+ "id INTEGER,"
 					+ "firstName varchar(255),"
 					+ "lastName varchar(255),"
-					+ "email varchar(255),"
+					+ "email varchar(255) NOT NULL UNIQUE,"
 					+ "phoneNumber INTEGER,"
 					+ "PRIMARY KEY (id)"
 					+ ");";
@@ -53,18 +53,20 @@ public class Data {
 	private static String imagesTable
 					= "CREATE TABLE IF NOT EXISTS Images ("
 					+ "id INTEGER,"
+					+ "productId INTEGER,"
 					+ "title varchar(255),"
 					+ "categoryId INTEGER,"
 					+ "imageFile bytea,"
-					+ "PRIMARY KEY (id)"
+					+ "PRIMARY KEY (id),"
+					+ "FOREIGN KEY (productId) REFERENCES Products(id),"
+					+ "FOREIGN KEY (categoryId) REFERENCES Categories(id)"
 					+ ");";
 
-	private static String imagesInProductsTable
-					= "CREATE TABLE IF NOT EXISTS ImagesInProducts ("
-					+ "productId INTEGER,"
+	private static String imageFiles
+					= "CREATE TABLE IF NOT EXISTS ImageFiles ("
 					+ "imageId INTEGER,"
-					+ "PRIMARY KEY (productId, imageId),"
-					+ "FOREIGN KEY (productId) REFERENCES Products(id),"
+					+ "imageFile bytea,"
+					+ "PRIMARY KEY (imageId),"
 					+ "FOREIGN KEY (imageId) REFERENCES Images(id)"
 					+ ");";
 
@@ -75,7 +77,7 @@ public class Data {
 		ordersTable,
 		productsInOrdersTable,
 		imagesTable,
-		imagesInProductsTable
+		imageFiles
 	};
 
 	public static String[] dropTableQueries = {
