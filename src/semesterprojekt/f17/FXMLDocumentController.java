@@ -120,14 +120,14 @@ public class FXMLDocumentController implements Initializable {
 	private TextField imageTitleTextField;
 	@FXML
 	private ChoiceBox<String> imageCategoryChoiceBox;
-    @FXML
-    private Button dbCreateButton;
-    @FXML
-    private Button dbDropButton;
-    @FXML
-    private Button dbInsertButton;
-    @FXML
-    private Button updateButton;
+	@FXML
+	private Button dbCreateButton;
+	@FXML
+	private Button dbDropButton;
+	@FXML
+	private Button dbInsertButton;
+	@FXML
+	private Button updateButton;
 
 	@FXML
 	private void handleCatalogTestShowProductsButton(ActionEvent e) {
@@ -353,24 +353,25 @@ public class FXMLDocumentController implements Initializable {
 		imageCategoryChoiceBox.setItems(FXCollections.observableArrayList(webshopController.getCategories()));
 		imageCategoryChoiceBox.setValue(imageCategoryChoiceBox.getItems().get(0));
 	}
+
 	@FXML
 	private void handledbCreateButton(ActionEvent event) {
-	    dbm.setUpTables();
+		dbm.setUpTables();
 	}
-	
+
 	@FXML
 	private void handledbDropButton(ActionEvent event) {
-	    dbm.dropTables();
+		dbm.dropTables();
 	}
-	
+
 	@FXML
 	private void handledbInsertButton(ActionEvent event) {
-	    dbm.insertData();
+		dbm.insertData();
 	}
-	
+
 	@FXML
 	private void handleUpdateButton(ActionEvent event) {
-	    updateChoiceBoxes();
+		updateChoiceBoxes();
 	}
-	
+
 }

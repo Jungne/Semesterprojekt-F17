@@ -5,6 +5,7 @@
  */
 package Webshop;
 
+import DBManager.DatabaseInterface;
 import java.util.ArrayList;
 import java.util.TreeSet;
 import org.junit.After;

@@ -12,10 +12,16 @@ public class Data {
 	private static String customersTable
 					= "CREATE TABLE IF NOT EXISTS Customers ("
 					+ "id INTEGER,"
+					+ "email varchar(255) NOT NULL UNIQUE,"
+					+ "code varchar(255) NOT NULL UNIQUE,"
 					+ "firstName varchar(255),"
 					+ "lastName varchar(255),"
-					+ "email varchar(255) NOT NULL UNIQUE,"
 					+ "phoneNumber INTEGER,"
+					+ "mobilePhoneNumber INTEGER,"
+					+ "address varchar(255),"
+					+ "postalCode INTEGER,"
+					+ "city varchar(255),"
+					+ "country varchar(255),"
 					+ "PRIMARY KEY (id)"
 					+ ");";
 
@@ -28,6 +34,24 @@ public class Data {
 					+ "price decimal(10,2),"
 					+ "PRIMARY KEY (id),"
 					+ "FOREIGN KEY (categoryId) REFERENCES Categories(id)"
+					+ ");";
+
+	private static String basketsTable
+					= "CREATE TABLE IF NOT EXISTS Baskets ("
+					+ "id INTEGER,"
+					+ "customerId INTEGER,"
+					+ "PRIMARY KEY (id),"
+					+ "FOREIGN KEY (customerId) REFERENCES Customers(id)"
+					+ ");";
+
+	private static String productsInBasketsTable
+					= "CREATE TABLE IF NOT EXISTS ProductsInBaskets ("
+					+ "basketId INTEGER,"
+					+ "productId INTEGER,"
+					+ "amount INTEGER,"
+					+ "PRIMARY KEY (basketId, productId),"
+					+ "FOREIGN KEY (basketId) REFERENCES Baskets(id),"
+					+ "FOREIGN KEY (productId) REFERENCES Products(id)"
 					+ ");";
 
 	private static String ordersTable
@@ -73,6 +97,8 @@ public class Data {
 		categoriesTable,
 		customersTable,
 		productsTable,
+		basketsTable,
+		productsInBasketsTable,
 		ordersTable,
 		productsInOrdersTable,
 		imagesTable,
@@ -80,10 +106,12 @@ public class Data {
 	};
 
 	public static String[] dropTableQueries = {
-		"DROP TABLE IF EXISTS ImagesInProducts;",
+		"DROP TABLE IF EXISTS ImageFiles;",
 		"DROP TABLE IF EXISTS Images;",
 		"DROP TABLE IF EXISTS ProductsInOrders;",
 		"DROP TABLE IF EXISTS Orders;",
+		"DROP TABLE IF EXISTS ProductsInBaskets;",
+		"DROP TABLE IF EXISTS Baskets;",
 		"DROP TABLE IF EXISTS Products;",
 		"DROP TABLE IF EXISTS Customers;",
 		"DROP TABLE IF EXISTS Categories;"

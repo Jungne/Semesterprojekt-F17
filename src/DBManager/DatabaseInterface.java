@@ -1,5 +1,7 @@
-package Webshop;
+package DBManager;
 
+import Webshop.Order;
+import Webshop.Product;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;

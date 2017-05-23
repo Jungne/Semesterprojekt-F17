@@ -1,6 +1,5 @@
 package DBManager;
 
-import Webshop.DatabaseInterface;
 import Webshop.Order;
 import Webshop.Product;
 import java.io.IOException;
@@ -15,10 +14,6 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author jungn
- */
 public class DBManager implements DatabaseInterface {
 
 	private Connection connection;
@@ -133,11 +128,11 @@ public class DBManager implements DatabaseInterface {
 		ArrayList<Product> products = null;
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-				+ "FROM Products, categories\n"
-				+ "WHERE categories.name = '" + category + "' AND products.categoryid = categories.id");
+							+ "FROM Products, categories\n"
+							+ "WHERE categories.name = '" + category + "' AND products.categoryid = categories.id");
 			ResultSet components = ps.executeQuery();
 			products = productHandler.getProducts(components);
-			   System.out.println(category);
+			System.out.println(category);
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 			System.out.println("error");

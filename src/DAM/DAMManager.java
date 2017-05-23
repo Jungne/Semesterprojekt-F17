@@ -1,7 +1,7 @@
 package DAM;
 
 import DBManager.DBManager;
-import Webshop.DatabaseInterface;
+import DBManager.DatabaseInterface;
 import java.sql.ResultSet;
 import javafx.scene.image.Image;
 

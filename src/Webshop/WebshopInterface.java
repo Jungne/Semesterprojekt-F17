@@ -29,4 +29,8 @@ public interface WebshopInterface {
 
 	public void emptyShoppingBasket();
 
+	public boolean signUp(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, int postalCode, String city, String country);
+
+	public boolean login(String email, String code);
+
 }

@@ -1,5 +1,7 @@
 package Webshop;
 
+import DBManager.DatabaseInterface;
+
 public class OrderHistory {
 
 	private DatabaseInterface databaseInterface;

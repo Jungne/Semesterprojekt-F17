@@ -1,5 +1,6 @@
 package Webshop;
 
+import DBManager.DatabaseInterface;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeSet;
@@ -139,5 +140,15 @@ public class WebshopController implements WebshopInterface {
 	@Override
 	public void emptyShoppingBasket() {
 		customer.getShoppingBasket().empty();
+	}
+
+	@Override
+	public boolean signUp(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, int postalCode, String city, String country) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public boolean login(String email, String code) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 }
