@@ -1,6 +1,7 @@
 package semesterprojekt.f17;
 
 import DAM.DAMManager;
+import DBManager.DBManager;
 import Webshop.*;
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +36,7 @@ public class FXMLDocumentController implements Initializable {
 
 	private WebshopInterface webshopController;
 	private DAMManager DAM;
+	private DBManager dbm;
 
 	private boolean isLoggedIn = false;
 	private ShoppingBasket guestBasket = new ShoppingBasket();
@@ -118,6 +120,14 @@ public class FXMLDocumentController implements Initializable {
 	private TextField imageTitleTextField;
 	@FXML
 	private ChoiceBox<String> imageCategoryChoiceBox;
+    @FXML
+    private Button dbCreateButton;
+    @FXML
+    private Button dbDropButton;
+    @FXML
+    private Button dbInsertButton;
+    @FXML
+    private Button updateButton;
 
 	@FXML
 	private void handleCatalogTestShowProductsButton(ActionEvent e) {
@@ -156,6 +166,7 @@ public class FXMLDocumentController implements Initializable {
 		try {
 			webshopController = new WebshopController();
 			DAM = new DAMManager();
+			dbm = DBManager.getInstance();
 		} catch (IOException ex) {
 			//Do something about this.
 			Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -342,5 +353,24 @@ public class FXMLDocumentController implements Initializable {
 		imageCategoryChoiceBox.setItems(FXCollections.observableArrayList(webshopController.getCategories()));
 		imageCategoryChoiceBox.setValue(imageCategoryChoiceBox.getItems().get(0));
 	}
-
+	@FXML
+	private void handledbCreateButton(ActionEvent event) {
+	    dbm.setUpTables();
+	}
+	
+	@FXML
+	private void handledbDropButton(ActionEvent event) {
+	    dbm.dropTables();
+	}
+	
+	@FXML
+	private void handledbInsertButton(ActionEvent event) {
+	    dbm.insertData();
+	}
+	
+	@FXML
+	private void handleUpdateButton(ActionEvent event) {
+	    updateChoiceBoxes();
+	}
+	
 }

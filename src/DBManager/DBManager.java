@@ -63,9 +63,9 @@ public class DBManager implements DatabaseInterface {
 	public Product getProduct(int productId) {
 		Product product = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT product.name, product.id, category.name, description, price\n"
-							+ "FROM product, category\n"
-							+ "WHERE category.id = categoryid AND product.id = " + productId);
+			PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
+							+ "FROM products, categories\n"
+							+ "WHERE categories.id = categoryid AND products.id = " + productId);
 			ResultSet components = ps.executeQuery();
 			product = productHandler.getProduct(components);
 
@@ -81,9 +81,9 @@ public class DBManager implements DatabaseInterface {
 	public ArrayList<Product> getAllProducts() {
 		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT product.name, product.id, category.name, description, price\n"
-							+ "FROM product, category\n"
-							+ "WHERE category.id = categoryid");
+			PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
+							+ "FROM products, categories\n"
+							+ "WHERE categories.id = categoryid");
 			ResultSet components = ps.executeQuery();
 			products = productHandler.getProducts(components);
 
@@ -99,7 +99,7 @@ public class DBManager implements DatabaseInterface {
 	public ArrayList<Product> findProducts(String query) {
 		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT product.name, product.id, category.name, description, price\n"
+			PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
 							+ "FROM Products\n"
 							+ "WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
 			ResultSet components = ps.executeQuery();
@@ -132,10 +132,12 @@ public class DBManager implements DatabaseInterface {
 	public ArrayList<Product> getCategory(String category) {
 		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE LOWER(category) = '" + category.toLowerCase() + "'");
+			PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
+				+ "FROM Products, categories\n"
+				+ "WHERE categories.name = '" + category + "' AND products.categoryid = categories.id");
 			ResultSet components = ps.executeQuery();
 			products = productHandler.getProducts(components);
-
+			   System.out.println(category);
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 			System.out.println("error");
@@ -164,7 +166,7 @@ public class DBManager implements DatabaseInterface {
 	/**
 	 * Sets up all tables in the database if they not already exists.
 	 */
-	private void setUpTables() {
+	public void setUpTables() {
 		try {
 			for (String query : Data.createTableQueries) {
 				execute(query);
@@ -177,7 +179,7 @@ public class DBManager implements DatabaseInterface {
 	/**
 	 * Drops all tables in the database.
 	 */
-	private void dropTables() {
+	public void dropTables() {
 		try {
 			for (String query : Data.dropTableQueries) {
 				execute(query);
@@ -190,7 +192,7 @@ public class DBManager implements DatabaseInterface {
 	/**
 	 * Inserts categories and products into the database.
 	 */
-	private void insertData() {
+	public void insertData() {
 		try {
 			for (String query : Data.insertIntoQueries) {
 				executeUpdate(query);
