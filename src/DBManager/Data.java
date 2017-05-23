@@ -56,7 +56,6 @@ public class Data {
 					+ "productId INTEGER,"
 					+ "title varchar(255),"
 					+ "categoryId INTEGER,"
-					+ "imageFile bytea,"
 					+ "PRIMARY KEY (id),"
 					+ "FOREIGN KEY (productId) REFERENCES Products(id),"
 					+ "FOREIGN KEY (categoryId) REFERENCES Categories(id)"
