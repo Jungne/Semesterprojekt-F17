@@ -11,6 +11,6 @@ public class OrderHistory {
 	}
 
 	public boolean saveOrder(Customer customer, Order order) {
-		return databaseInterface.saveOrder(order);
+		return databaseInterface.createOrder(order);
 	}
 }

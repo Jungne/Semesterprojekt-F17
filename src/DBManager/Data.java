@@ -13,7 +13,7 @@ public class Data {
 					= "CREATE TABLE IF NOT EXISTS Customers ("
 					+ "id INTEGER,"
 					+ "email varchar(255) NOT NULL UNIQUE,"
-					+ "code varchar(255) NOT NULL UNIQUE,"
+					+ "code varchar(255),"
 					+ "firstName varchar(255),"
 					+ "lastName varchar(255),"
 					+ "phoneNumber INTEGER,"

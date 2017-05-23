@@ -1,6 +1,7 @@
 package DBManager;
 
 import DAM.DAMImage;
+import Webshop.Customer2;
 import Webshop.Order;
 import Webshop.Product;
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import javafx.scene.image.Image;
 
 public interface DatabaseInterface {
 
-	//Methods for Catalog:
 	public Product getProduct(int productId);
 
 	public ArrayList<Product> getAllProducts();
@@ -20,10 +20,9 @@ public interface DatabaseInterface {
 
 	public ArrayList<Product> getCategory(String category);
 
-	//Methods for OrderHistory:
-	public boolean saveOrder(Order order);
+	public boolean createOrder(Order order);
 
-	public void addImage(String imagePath, String title, int category);
+	public void createImage(String imagePath, String title, int category);
 
 	public Image getImage(int id);
 
@@ -34,5 +33,8 @@ public interface DatabaseInterface {
 	public ArrayList<DAMImage> getDAMImages();
 
 	public void deleteImage(int id);
+	
+	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country);
 
+	public Customer2 getCustomer(String email, String code);
 }

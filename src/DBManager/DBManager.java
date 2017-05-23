@@ -1,8 +1,10 @@
 package DBManager;
 
 import DAM.DAMImage;
+import Webshop.Customer2;
 import Webshop.Order;
 import Webshop.Product;
+import Webshop.ShoppingBasket;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -47,6 +49,7 @@ public class DBManager implements DatabaseInterface {
 		//dropTables();
 		//setUpTables();
 		//insertData();
+		createCustomer("test2@gmail.com", "1234", "Lasse", null, 65351010, 22001100, "vejen 12", "5000", "Odense", "Danmark");
 	}
 
 	public static DBManager getInstance() {
@@ -54,6 +57,22 @@ public class DBManager implements DatabaseInterface {
 			dbManager = new DBManager();
 		}
 		return dbManager;
+	}
+
+	private void execute(String query) throws SQLException {
+		try (Statement statement = connection.createStatement()) {
+			statement.execute(query);
+		}
+	}
+
+	private void executeUpdate(String query) throws SQLException {
+		try (Statement statement = connection.createStatement()) {
+			statement.executeUpdate(query);
+		}
+	}
+
+	private ResultSet executeQuery(String query) throws SQLException {
+		return connection.createStatement().executeQuery(query);
 	}
 
 	@Override
@@ -145,7 +164,7 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public boolean saveOrder(Order order) {
+	public boolean createOrder(Order order) {
 		try {
 			PreparedStatement ps = connection.prepareStatement(
 							"INSERT INTO orders\n"
@@ -207,13 +226,13 @@ public class DBManager implements DatabaseInterface {
 	 * @param category
 	 */
 	@Override
-	public void addImage(String imagePath, String title, int category) {
-		ImageHandler.addImage(connection, imagePath, title, category);
+	public void createImage(String imagePath, String title, int category) {
+		ImageHandler.createImage(connection, imagePath, title, category);
 	}
-	
+
 	@Override
 	public Image getImage(int id) {
-	    return ImageHandler.getImage(connection, id);
+		return ImageHandler.getImage(connection, id);
 	}
 
 	/**
@@ -221,35 +240,74 @@ public class DBManager implements DatabaseInterface {
 	 *
 	 * @return ResultSet
 	 */
-	public ArrayList<Image> getImages(){
+	@Override
+	public ArrayList<Image> getImages() {
 		return ImageHandler.getImages(connection);
 	}
 
-	private void execute(String query) throws SQLException {
-		try (Statement statement = connection.createStatement()) {
-			statement.execute(query);
-		}
-	}
-
-	private void executeUpdate(String query) throws SQLException {
-		try (Statement statement = connection.createStatement()) {
-			statement.executeUpdate(query);
-		}
-	}
-
-	private ResultSet executeQuery(String query) throws SQLException {
-		return connection.createStatement().executeQuery(query);
-	}
-	
+	@Override
 	public DAMImage getDAMImage(int id) {
-	    return ImageHandler.getDAMImage(connection, id);
+		return ImageHandler.getDAMImage(connection, id);
 	}
-	
+
+	@Override
 	public ArrayList<DAMImage> getDAMImages() {
-	    return ImageHandler.getDAMImages(connection);
+		return ImageHandler.getDAMImages(connection);
 	}
-	
+
+	@Override
 	public void deleteImage(int id) {
-	    ImageHandler.deleteImage(connection, id);
+		ImageHandler.deleteImage(connection, id);
 	}
+
+	@Override
+	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
+		try {
+			//Checks if email is unique
+			ResultSet existingEmail = executeQuery("SELECT email FROM Customers WHERE email = '" + email + "';");
+			if (existingEmail.next()) {
+				return false;
+			}
+
+			//Gets the next available id in Customers
+			ResultSet maxCustomerId = executeQuery("SELECT max(id) FROM Customers;");
+			maxCustomerId.next();
+			int customerId = 1 + maxCustomerId.getInt(1);
+
+			//Insert the new customer to the database
+			String sql = "INSERT INTO Customers VALUES "
+							+ "(" + customerId + ", '" + email + "', '" + code + "', "
+							+ "'" + firstName + "', '" + lastName + "', " + phoneNumber + ", " + mobilePhoneNumber + ", "
+							+ "'" + address + "', '" + postalCode + "', '" + city + "', '" + country + "');";
+			executeUpdate(sql);
+			return true;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
+		}
+	}
+
+	@Override
+	public Customer2 getCustomer(String email, String code) {
+		try {
+			ResultSet customer = executeQuery("SELECT * FROM Customers WHERE email = '" + email + "' AND code = '" + code + "';");
+			if (!customer.next()) {
+				return null;
+			}
+
+			ShoppingBasket shoppingBasket = null;
+			//Something where OrderLines are made from the ProductsInBaskets table from the first basket the customer have in Baskets
+
+			return new Customer2(customer.getInt("id"), customer.getString("email"),
+							customer.getString("code"), customer.getString("firstName"),
+							customer.getString("lastName"), customer.getInt("phoneNumber"),
+							customer.getInt("mobilePhoneNumber"), customer.getString("address"),
+							customer.getString("postalCode"), customer.getString("city"),
+							customer.getString("country"), shoppingBasket);
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
+	}
+
 }

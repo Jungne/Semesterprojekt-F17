@@ -1,6 +1,6 @@
 package Webshop;
 
-public abstract class Customer2 {
+public class Customer2 {
 
 	private int id;
 	private String email;
@@ -10,7 +10,7 @@ public abstract class Customer2 {
 	private int phoneNumber;
 	private int mobilePhoneNumber;
 	private String address;
-	private int postalCode;
+	private String postalCode;
 	private String city;
 	private String country;
 	private ShoppingBasket shoppingBasket;
@@ -25,14 +25,14 @@ public abstract class Customer2 {
 		this.phoneNumber = 0;
 		this.mobilePhoneNumber = 0;
 		this.address = null;
-		this.postalCode = 0;
+		this.postalCode = null;
 		this.city = null;
 		this.country = null;
 		this.shoppingBasket = null;
 		this.isRegisted = false;
 	}
 
-	public Customer2(int id, String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, int postalCode, String city, String country, ShoppingBasket shoppingBasket) {
+	public Customer2(int id, String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket) {
 		this.id = id;
 		this.email = email;
 		this.code = code;
@@ -107,7 +107,7 @@ public abstract class Customer2 {
 	/**
 	 * @return the postalCode
 	 */
-	public int getPostalCode() {
+	public String getPostalCode() {
 		return postalCode;
 	}
 

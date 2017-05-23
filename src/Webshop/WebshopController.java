@@ -8,12 +8,13 @@ import DBManager.DBManager;
 
 public class WebshopController implements WebshopInterface {
 
+	private DatabaseInterface databaseInterface;
 	private Catalog catalog;
 	private OrderHistory orderHistory;
 	private Customer customer;
 
 	public WebshopController() throws IOException {
-		DatabaseInterface databaseInterface = DBManager.getInstance();
+		this.databaseInterface = DBManager.getInstance();
 		this.catalog = new Catalog(databaseInterface);
 		this.orderHistory = new OrderHistory(databaseInterface);
 		this.customer = new Customer();
@@ -143,12 +144,25 @@ public class WebshopController implements WebshopInterface {
 	}
 
 	@Override
-	public boolean signUp(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, int postalCode, String city, String country) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public boolean signUp(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
+		//Checks if all parameters are valid
+		if (email == null || code == null || firstName == null || lastName == null || address == null || city == null || country == null) {
+			return false;
+		}
+
+		//Saves the customer in the database
+		if (!databaseInterface.createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country)) {
+			return false;
+		}
+
+		//Sets the current customer to the newly signed up customer
+		//this.customer = databaseInterface.getCustomer(email, code);
+		return true;
 	}
 
 	@Override
 	public boolean login(String email, String code) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
+
 }

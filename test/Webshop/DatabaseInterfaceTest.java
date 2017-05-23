@@ -122,7 +122,7 @@ public class DatabaseInterfaceTest {
 		Order order = null;
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
 		boolean expResult = false;
-		boolean result = instance.saveOrder(order);
+		boolean result = instance.createOrder(order);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -150,7 +150,7 @@ public class DatabaseInterfaceTest {
 			return null;
 		}
 
-		public boolean saveOrder(Order order) {
+		public boolean createOrder(Order order) {
 			return false;
 		}
 	}

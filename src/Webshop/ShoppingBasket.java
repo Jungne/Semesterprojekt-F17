@@ -10,6 +10,10 @@ public class ShoppingBasket {
 		basket = new ArrayList<>();
 	}
 
+	public ShoppingBasket(ArrayList<OrderLine> basket) {
+		this.basket = basket;
+	}
+
 	/**
 	 * Finds and return an existing OrderLine in the basket, that contains the
 	 * given product. Null is returned if the OrderLine does not exist.
