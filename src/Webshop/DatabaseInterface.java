@@ -1,5 +1,10 @@
 package Webshop;
 
+<<<<<<< Updated upstream
+=======
+import java.io.File;
+import java.sql.ResultSet;
+>>>>>>> Stashed changes
 import java.util.ArrayList;
 import java.util.TreeSet;
 import javafx.scene.image.Image;
@@ -21,7 +26,12 @@ public interface DatabaseInterface {
 	public boolean saveOrder(Order order);
 
 	public void addImage(String imagePath, String title, int category);
+<<<<<<< Updated upstream
 
 	public Image getImage();
+=======
+	
+	public ResultSet getImages();
+>>>>>>> Stashed changes
 
 }
