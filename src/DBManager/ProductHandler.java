@@ -42,21 +42,18 @@ public class ProductHandler {
 		return productsResultSet;
 	}
 	
-	public ArrayList<Product> findProducts(Connection connection, String query) {
-	    ArrayList<Product> products = null;
+	public ResultSet findProducts(Connection connection, String query) {
+	    ResultSet productsResultSet = null;
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-							+ "FROM Products\n"
-							+ "WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
-			ResultSet productsResultSet = ps.executeQuery();
-			products = mapProducts(productsResultSet);
+							+ "FROM Products, categories\n"
+							+ "WHERE LOWER(products.name) LIKE '%" + query.toLowerCase() + "%' AND products.categoryID = categories.id");
+			productsResultSet = ps.executeQuery();
 
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return products;
+		return productsResultSet;
 	}
 
 	public LinkedHashMap<String, Integer> getCategories(Connection connection) {

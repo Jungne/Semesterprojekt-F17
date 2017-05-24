@@ -85,7 +85,7 @@ public class DBManager implements DatabaseInterface {
     }
 
     @Override
-    public ArrayList<Product> findProducts(String query) {
+    public ResultSet findProducts(String query) {
 	return productHandler.findProducts(connection, query);
     }
 

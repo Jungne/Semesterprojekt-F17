@@ -40,7 +40,8 @@ public class Catalog {
     }
 
     public ArrayList<Product> findProducts(String query) {
-	return databaseInterface.findProducts(query);
+	ArrayList<Product> products = mapProducts(databaseInterface.findProducts(query));
+	return products;
     }
 
     private Product mapProduct(ResultSet productResultSet) {
