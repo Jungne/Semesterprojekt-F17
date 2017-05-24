@@ -49,7 +49,6 @@ public class DBManager implements DatabaseInterface {
 		//dropTables();
 		//setUpTables();
 		//insertData();
-		createCustomer("test2@gmail.com", "1234", "Lasse", null, 65351010, 22001100, "vejen 12", "5000", "Odense", "Danmark");
 	}
 
 	public static DBManager getInstance() {
