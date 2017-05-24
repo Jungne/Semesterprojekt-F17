@@ -99,7 +99,7 @@ public class DatabaseInterfaceTest {
 	}
 
 	/**
-	 * Test of getCategory method, of class DatabaseInterface.
+	 * Test of getProductsInCategory method, of class DatabaseInterface.
 	 */
 	@Test
 	public void testGetCategory() {
@@ -107,7 +107,7 @@ public class DatabaseInterfaceTest {
 		String category = "";
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
 		ArrayList<Product> expResult = null;
-		ArrayList<Product> result = instance.getCategory(category);
+		ArrayList<Product> result = instance.getProductsInCategory(category);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -146,7 +146,7 @@ public class DatabaseInterfaceTest {
 			return null;
 		}
 
-		public ArrayList<Product> getCategory(String category) {
+		public ArrayList<Product> getProductsInCategory(String category) {
 			return null;
 		}
 

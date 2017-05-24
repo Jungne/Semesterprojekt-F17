@@ -83,7 +83,7 @@ public class CatalogTest {
 	}
 
 	/**
-	 * Test of getCategory method, of class Catalog.
+	 * Test of getProductsInCategory method, of class Catalog.
 	 */
 	@Test
 	public void testGetCategory() {
@@ -91,7 +91,7 @@ public class CatalogTest {
 		String category = "";
 		Catalog instance = null;
 		ArrayList<Product> expResult = null;
-		ArrayList<Product> result = instance.getCategory(category);
+		ArrayList<Product> result = instance.getProductsInCategory(category);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

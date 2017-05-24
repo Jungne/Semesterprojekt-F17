@@ -16,11 +16,11 @@ public interface DatabaseInterface {
 
 	public ResultSet getAllProducts();
 
-	public ArrayList<Product> findProducts(String query);
+	public ResultSet findProducts(String query);
 
 	public LinkedHashMap<String, Integer> getCategories();
 
-	public ArrayList<Product> getCategory(String category);
+	public ResultSet getProductsInCategory(String category);
 
 	public boolean createOrder(Order order);
 

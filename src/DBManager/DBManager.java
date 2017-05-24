@@ -85,8 +85,13 @@ public class DBManager implements DatabaseInterface {
     }
 
     @Override
+<<<<<<< HEAD
     public ArrayList<Product> findProducts(String query) {
         return productHandler.findProducts(connection, query);
+=======
+    public ResultSet findProducts(String query) {
+	return productHandler.findProducts(connection, query);
+>>>>>>> origin/master
     }
 
     @Override
@@ -95,8 +100,13 @@ public class DBManager implements DatabaseInterface {
     }
 
     @Override
+<<<<<<< HEAD
     public ArrayList<Product> getCategory(String category) {
         return productHandler.getProductsInCategory(connection, category);
+=======
+    public ResultSet getProductsInCategory(String category) {
+	return productHandler.getProductsInCategory(connection, category);
+>>>>>>> origin/master
     }
 
     @Override
