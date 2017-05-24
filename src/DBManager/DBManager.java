@@ -95,7 +95,7 @@ public class DBManager implements DatabaseInterface {
     }
 
     @Override
-    public ArrayList<Product> getCategory(String category) {
+    public ResultSet getProductsInCategory(String category) {
 	return productHandler.getProductsInCategory(connection, category);
     }
 

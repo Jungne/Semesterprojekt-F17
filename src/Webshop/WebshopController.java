@@ -73,7 +73,7 @@ public class WebshopController implements WebshopInterface {
 	 */
 	@Override
 	public ArrayList<Product> getCategory(String category) {
-		return catalog.getCategory(category);
+		return catalog.getProductsInCategory(category);
 	}
 
 	/**

@@ -35,8 +35,9 @@ public class Catalog {
 	return databaseInterface.getCategories();
     }
 
-    public ArrayList<Product> getCategory(String category) {
-	return databaseInterface.getCategory(category);
+    public ArrayList<Product> getProductsInCategory(String category) {
+	ArrayList<Product> products = mapProducts(databaseInterface.getProductsInCategory(category));
+	return products;
     }
 
     public ArrayList<Product> findProducts(String query) {
