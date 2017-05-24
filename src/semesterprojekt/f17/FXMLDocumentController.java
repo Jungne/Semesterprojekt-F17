@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +41,7 @@ public class FXMLDocumentController implements Initializable {
     private DAMManager DAM;
     private DBManager dbm;
 
+    private LinkedHashMap<String, Integer> categoriesMap;
     private boolean isLoggedIn = false;
     private ShoppingBasket guestBasket = new ShoppingBasket();
 
@@ -333,7 +336,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleSaveImageButton(ActionEvent event) {
-	DAM.addImage(imagePathTextField.getText(), imageTitleTextField.getText(), 1);
+	DAM.addImage(imagePathTextField.getText(), imageTitleTextField.getText(), getCategoryID(imageCategoryChoiceBox.getValue()));
 	showDAMImages();
     }
 
@@ -364,10 +367,16 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private void updateChoiceBoxes() {
+	categoriesMap = webshopController.getCategories();
+	ArrayList<String> categoriesList = new ArrayList<>();
+	
+	for (Map.Entry<String, Integer> entry : categoriesMap.entrySet()) {
+	    categoriesList.add(entry.getKey());
+	}
 	//populates categoriesChoiceBox.
-	categoriesChoiceBox.setItems(FXCollections.observableArrayList(webshopController.getCategories()));
+	categoriesChoiceBox.setItems(FXCollections.observableArrayList(categoriesList));
 	categoriesChoiceBox.setValue(categoriesChoiceBox.getItems().get(0));
-	imageCategoryChoiceBox.setItems(FXCollections.observableArrayList(webshopController.getCategories()));
+	imageCategoryChoiceBox.setItems(FXCollections.observableArrayList(categoriesList));
 	imageCategoryChoiceBox.setValue(imageCategoryChoiceBox.getItems().get(0));
     }
 
@@ -398,5 +407,9 @@ public class FXMLDocumentController implements Initializable {
 	DAM.deleteImage(id);
 	
 	showDAMImages();
+    }
+    
+    private int getCategoryID(String category) {
+	return categoriesMap.get(category);
     }
 }

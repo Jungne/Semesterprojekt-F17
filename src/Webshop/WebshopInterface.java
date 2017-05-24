@@ -1,13 +1,14 @@
 package Webshop;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.TreeSet;
 
 public interface WebshopInterface {
 
 	public ArrayList<Product> findProducts(String query);
 
-	public TreeSet<String> getCategories();
+	public LinkedHashMap<String, Integer> getCategories();
 
 	public ArrayList<Product> getCategory(String category);
 

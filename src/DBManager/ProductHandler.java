@@ -7,7 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -64,13 +65,13 @@ public class ProductHandler {
 		return products;
 	}
 
-	public TreeSet<String> getCategories(Connection connection) {
-	    TreeSet<String> categories = null;
+	public LinkedHashMap<String, Integer> getCategories(Connection connection) {
+	    LinkedHashMap<String, Integer> categories = new LinkedHashMap<>();
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT name FROM Categories");
+			PreparedStatement ps = connection.prepareStatement("SELECT name, id FROM categories");
 			ResultSet components = ps.executeQuery();
 			while (components.next()) {
-			categories.add(components.getString(1));
+			categories.put(components.getString(1), components.getInt(2));
 		}
 
 		} catch (SQLException ex) {

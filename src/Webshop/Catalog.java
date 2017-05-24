@@ -2,6 +2,7 @@ package Webshop;
 
 import DBManager.DatabaseInterface;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.TreeSet;
 
 public class Catalog {
@@ -23,7 +24,7 @@ public class Catalog {
 	/**
 	 * @return a TreeSet<String> of all categories that exist.
 	 */
-	public TreeSet<String> getCategories() {
+	public LinkedHashMap<String, Integer> getCategories() {
 		return databaseInterface.getCategories();
 	}
 

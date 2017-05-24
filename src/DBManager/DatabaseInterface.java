@@ -5,7 +5,7 @@ import Webshop.Customer2;
 import Webshop.Order;
 import Webshop.Product;
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.LinkedHashMap;
 import javafx.scene.image.Image;
 
 public interface DatabaseInterface {
@@ -16,7 +16,7 @@ public interface DatabaseInterface {
 
 	public ArrayList<Product> findProducts(String query);
 
-	public TreeSet<String> getCategories();
+	public LinkedHashMap<String, Integer> getCategories();
 
 	public ArrayList<Product> getCategory(String category);
 

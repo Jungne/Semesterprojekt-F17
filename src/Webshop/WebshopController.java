@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeSet;
 import DBManager.DBManager;
+import java.util.LinkedHashMap;
 
 public class WebshopController implements WebshopInterface {
 
@@ -60,7 +61,7 @@ public class WebshopController implements WebshopInterface {
 	 * @return a treeset containing all the product categories as strings.
 	 */
 	@Override
-	public TreeSet<String> getCategories() {
+	public LinkedHashMap<String, Integer> getCategories() {
 		return catalog.getCategories();
 	}
 

@@ -5,7 +5,6 @@ import Webshop.Customer2;
 import Webshop.Order;
 import Webshop.Product;
 import Webshop.ShoppingBasket;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.image.Image;
@@ -90,7 +89,7 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public TreeSet<String> getCategories() {
+	public LinkedHashMap<String, Integer> getCategories() {
 		return productHandler.getCategories(connection);
 	}
 
