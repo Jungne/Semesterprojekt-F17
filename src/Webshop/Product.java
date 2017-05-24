@@ -1,9 +1,9 @@
 package Webshop;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
 
 public class Product {
@@ -14,7 +14,7 @@ public class Product {
 	private String description;
 	private double price;
 	private String imagePath;
-	private ArrayList<BufferedImage> imageList = new ArrayList<>();
+	private ArrayList<Image> imageList = new ArrayList<>();
 
 	public Product(String name, int id, String category, String description, double price, String imagePath) throws IOException {
 		this.name = name;
@@ -36,7 +36,7 @@ public class Product {
 	}
 
 	public void loadImage() throws IOException {
-		imageList.add(ImageIO.read(new File("src/images/" + imagePath)));
+		imageList.add(new Image("src/images/" + imagePath));
 	}
 
 	public String getName() {
