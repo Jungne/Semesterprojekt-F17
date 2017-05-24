@@ -1,6 +1,7 @@
 package DBManager;
 
 import DAM.DAMImage;
+import PIM.PIMProduct;
 import Webshop.Customer2;
 import Webshop.Order;
 import Webshop.Product;
@@ -38,4 +39,6 @@ public interface DatabaseInterface {
 	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country);
 
 	public Customer2 getCustomer(String email, String code);
+	
+	public void addProduct(PIMProduct product);
 }

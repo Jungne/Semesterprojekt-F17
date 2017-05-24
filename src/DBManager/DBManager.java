@@ -20,113 +20,83 @@ import javafx.scene.image.Image;
 
 public class DBManager implements DatabaseInterface {
 
-<<<<<<< HEAD
     private Connection connection;
     private ProductHandler productHandler;
     private static DBManager dbManager = null;
 
     private DBManager() {
-        productHandler = new ProductHandler();
+	productHandler = new ProductHandler();
 
-        String url = "jdbc:postgresql://localhost:5432/semesterprojekt";
-        String user = "postgres";
-        String password = "1234";
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return;
-        }
+	String url = "jdbc:postgresql://localhost:5432/semesterprojekt";
+	String user = "postgres";
+	String password = "1234";
+	try {
+	    Class.forName("org.postgresql.Driver");
+	} catch (ClassNotFoundException e) {
+	    e.printStackTrace();
+	    return;
+	}
 
-        connection = null;
-        try {
-            connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Connection to database successful!");
-        } catch (SQLException ex) {
-            System.out.println("Connection to database failed.");
-        }
+	connection = null;
+	try {
+	    connection = DriverManager.getConnection(url, user, password);
+	    System.out.println("Connection to database successful!");
+	} catch (SQLException ex) {
+	    System.out.println("Connection to database failed.");
+	}
 
-        //Tables are created and data is inserted.
-        //dropTables();
-        //setUpTables();
-        //insertData();
+	//Tables are created and data is inserted.
+	//dropTables();
+	//setUpTables();
+	//insertData();
     }
 
     public static DBManager getInstance() {
-        if (dbManager == null) {
-            dbManager = new DBManager();
-        }
-        return dbManager;
+	if (dbManager == null) {
+	    dbManager = new DBManager();
+	}
+	return dbManager;
     }
 
     private void execute(String query) throws SQLException {
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(query);
-        }
+	try (Statement statement = connection.createStatement()) {
+	    statement.execute(query);
+	}
     }
 
     private void executeUpdate(String query) throws SQLException {
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(query);
-        }
+	try (Statement statement = connection.createStatement()) {
+	    statement.executeUpdate(query);
+	}
     }
 
     private ResultSet executeQuery(String query) throws SQLException {
-        return connection.createStatement().executeQuery(query);
+	return connection.createStatement().executeQuery(query);
     }
 
     @Override
-    public Product getProduct(int productId) {
-        Product product = null;
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-                    + "FROM products, categories\n"
-                    + "WHERE categories.id = categoryid AND products.id = " + productId);
-            ResultSet components = ps.executeQuery();
-            product = productHandler.getProduct(components);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return product;
+    public ResultSet getProduct(int productID) {
+	return productHandler.getProduct(connection, productID);
     }
 
     @Override
-    public ArrayList<Product> getAllProducts() {
-        ArrayList<Product> products = null;
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-                    + "FROM products, categories\n"
-                    + "WHERE categories.id = categoryid");
-            ResultSet components = ps.executeQuery();
-            products = productHandler.getProducts(components);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return products;
+    public ResultSet getAllProducts() {
+	return productHandler.getAllProducts(connection);
     }
 
     @Override
     public ArrayList<Product> findProducts(String query) {
-        ArrayList<Product> products = null;
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-                    + "FROM Products\n"
-                    + "WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
-            ResultSet components = ps.executeQuery();
-            products = productHandler.getProducts(components);
+	return productHandler.findProducts(connection, query);
+    }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return products;
+    @Override
+    public LinkedHashMap<String, Integer> getCategories() {
+	return productHandler.getCategories(connection);
+    }
+
+    @Override
+    public ArrayList<Product> getCategory(String category) {
+	return productHandler.getProductsInCategory(connection, category);
     }
 
     @Override
@@ -135,92 +105,58 @@ public class DBManager implements DatabaseInterface {
     }
 
     @Override
-    public TreeSet<String> getCategories() {
-        TreeSet<String> categories = null;
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT name FROM Categories");
-            ResultSet components = ps.executeQuery();
-            categories = productHandler.getCategories(components);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error");
-        }
-        return categories;
-    }
-
-    @Override
-    public ArrayList<Product> getCategory(String category) {
-        ArrayList<Product> products = null;
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-                    + "FROM Products, categories\n"
-                    + "WHERE categories.name = '" + category + "' AND products.categoryid = categories.id");
-            ResultSet components = ps.executeQuery();
-            products = productHandler.getProducts(components);
-            System.out.println(category);
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("error");
-        } catch (IOException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return products;
-    }
-
-    @Override
     public boolean createOrder(Order order) {
-        try {
-            PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO orders\n"
-                    + "VALUES (?,?, CURRENT_TIMESTAMP,?)");
-            ps.setInt(1, order.getId());
-            ps.setInt(2, order.getCustomer().getId());
-            ps.setString(3, order.getOrderStatus().name());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return true;
+	try {
+	    PreparedStatement ps = connection.prepareStatement(
+		    "INSERT INTO orders\n"
+		    + "VALUES (?,?, CURRENT_TIMESTAMP,?)");
+	    ps.setInt(1, order.getId());
+	    ps.setInt(2, order.getCustomer().getId());
+	    ps.setString(3, order.getOrderStatus().name());
+	    ps.executeUpdate();
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	return true;
     }
 
     /**
      * Sets up all tables in the database if they not already exists.
      */
     public void setUpTables() {
-        try {
-            for (String query : Data.createTableQueries) {
-                execute(query);
-            }
-        } catch (SQLException ex) {
-            System.out.println("Failed creating tables: " + ex);
-        }
+	try {
+	    for (String query : Data.createTableQueries) {
+		execute(query);
+	    }
+	} catch (SQLException ex) {
+	    System.out.println("Failed creating tables: " + ex);
+	}
     }
 
     /**
      * Drops all tables in the database.
      */
     public void dropTables() {
-        try {
-            for (String query : Data.dropTableQueries) {
-                execute(query);
-            }
-        } catch (SQLException ex) {
-            System.out.println("Failed dropping tables: " + ex);
-        }
+	try {
+	    for (String query : Data.dropTableQueries) {
+		execute(query);
+	    }
+	} catch (SQLException ex) {
+	    System.out.println("Failed dropping tables: " + ex);
+	}
     }
 
     /**
      * Inserts categories and products into the database.
      */
     public void insertData() {
-        try {
-            for (String query : Data.insertIntoQueries) {
-                executeUpdate(query);
-            }
-        } catch (SQLException ex) {
-            System.out.println("Failed dropping tables: " + ex);
-        }
+	try {
+	    for (String query : Data.insertIntoQueries) {
+		executeUpdate(query);
+	    }
+	} catch (SQLException ex) {
+	    System.out.println("Failed dropping tables: " + ex);
+	}
     }
 
     /**
@@ -232,12 +168,12 @@ public class DBManager implements DatabaseInterface {
      */
     @Override
     public void createImage(String imagePath, String title, int category) {
-        ImageHandler.createImage(connection, imagePath, title, category);
+	ImageHandler.createImage(connection, imagePath, title, category);
     }
 
     @Override
     public Image getImage(int id) {
-        return ImageHandler.getImage(connection, id);
+	return ImageHandler.getImage(connection, id);
     }
 
     /**
@@ -247,299 +183,71 @@ public class DBManager implements DatabaseInterface {
      */
     @Override
     public ArrayList<Image> getImages() {
-        return ImageHandler.getImages(connection);
+	return ImageHandler.getImages(connection);
     }
 
     @Override
     public DAMImage getDAMImage(int id) {
-        return ImageHandler.getDAMImage(connection, id);
+	return ImageHandler.getDAMImage(connection, id);
     }
 
     @Override
     public ArrayList<DAMImage> getDAMImages() {
-        return ImageHandler.getDAMImages(connection);
+	return ImageHandler.getDAMImages(connection);
     }
 
     @Override
     public void deleteImage(int id) {
-        ImageHandler.deleteImage(connection, id);
+	ImageHandler.deleteImage(connection, id);
     }
 
     @Override
     public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
-        try {
-            //Checks if email is unique
-            ResultSet existingEmail = executeQuery("SELECT email FROM Customers WHERE email = '" + email + "';");
-            if (existingEmail.next()) {
-                return false;
-            }
+	try {
+	    //Checks if email is unique
+	    ResultSet existingEmail = executeQuery("SELECT email FROM Customers WHERE email = '" + email + "';");
+	    if (existingEmail.next()) {
+		return false;
+	    }
 
-            //Gets the next available id in Customers
-            ResultSet maxCustomerId = executeQuery("SELECT max(id) FROM Customers;");
-            maxCustomerId.next();
-            int customerId = 1 + maxCustomerId.getInt(1);
+	    //Gets the next available id in Customers
+	    ResultSet maxCustomerId = executeQuery("SELECT max(id) FROM Customers;");
+	    maxCustomerId.next();
+	    int customerId = 1 + maxCustomerId.getInt(1);
 
-            //Insert the new customer to the database
-            String sql = "INSERT INTO Customers VALUES "
-                    + "(" + customerId + ", '" + email + "', '" + code + "', "
-                    + "'" + firstName + "', '" + lastName + "', " + phoneNumber + ", " + mobilePhoneNumber + ", "
-                    + "'" + address + "', '" + postalCode + "', '" + city + "', '" + country + "');";
-            executeUpdate(sql);
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
+	    //Insert the new customer to the database
+	    String sql = "INSERT INTO Customers VALUES "
+		    + "(" + customerId + ", '" + email + "', '" + code + "', "
+		    + "'" + firstName + "', '" + lastName + "', " + phoneNumber + ", " + mobilePhoneNumber + ", "
+		    + "'" + address + "', '" + postalCode + "', '" + city + "', '" + country + "');";
+	    executeUpdate(sql);
+	    return true;
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	    return false;
+	}
     }
 
     @Override
     public Customer2 getCustomer(String email, String code) {
-        try {
-            ResultSet customer = executeQuery("SELECT * FROM Customers WHERE email = '" + email + "' AND code = '" + code + "';");
-            if (!customer.next()) {
-                return null;
-            }
+	try {
+	    ResultSet customer = executeQuery("SELECT * FROM Customers WHERE email = '" + email + "' AND code = '" + code + "';");
+	    if (!customer.next()) {
+		return null;
+	    }
 
-            ShoppingBasket shoppingBasket = null;
-            //Something where OrderLines are made from the ProductsInBaskets table from the first basket the customer have in Baskets
+	    ShoppingBasket shoppingBasket = null;
+	    //Something where OrderLines are made from the ProductsInBaskets table from the first basket the customer have in Baskets
 
-            return new Customer2(customer.getInt("id"), customer.getString("email"),
-                    customer.getString("code"), customer.getString("firstName"),
-                    customer.getString("lastName"), customer.getInt("phoneNumber"),
-                    customer.getInt("mobilePhoneNumber"), customer.getString("address"),
-                    customer.getString("postalCode"), customer.getString("city"),
-                    customer.getString("country"), shoppingBasket);
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+	    return new Customer2(customer.getInt("id"), customer.getString("email"),
+		    customer.getString("code"), customer.getString("firstName"),
+		    customer.getString("lastName"), customer.getInt("phoneNumber"),
+		    customer.getInt("mobilePhoneNumber"), customer.getString("address"),
+		    customer.getString("postalCode"), customer.getString("city"),
+		    customer.getString("country"), shoppingBasket);
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	    return null;
+	}
     }
-=======
-	private Connection connection;
-	private ProductHandler productHandler;
-	private static DBManager dbManager = null;
-
-	private DBManager() {
-		productHandler = new ProductHandler();
-
-		String url = "jdbc:postgresql://localhost:5432/semesterprojekt";
-		String user = "postgres";
-		String password = "1234";
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			return;
-		}
-
-		connection = null;
-		try {
-			connection = DriverManager.getConnection(url, user, password);
-			System.out.println("Connection to database successful!");
-		} catch (SQLException ex) {
-			System.out.println("Connection to database failed.");
-		}
-
-		//Tables are created and data is inserted.
-		//dropTables();
-		//setUpTables();
-		//insertData();
-	}
-
-	public static DBManager getInstance() {
-		if (dbManager == null) {
-			dbManager = new DBManager();
-		}
-		return dbManager;
-	}
-
-	private void execute(String query) throws SQLException {
-		try (Statement statement = connection.createStatement()) {
-			statement.execute(query);
-		}
-	}
-
-	private void executeUpdate(String query) throws SQLException {
-		try (Statement statement = connection.createStatement()) {
-			statement.executeUpdate(query);
-		}
-	}
-
-	private ResultSet executeQuery(String query) throws SQLException {
-		return connection.createStatement().executeQuery(query);
-	}
-
-	@Override
-	public ResultSet getProduct(int productID) {
-		return productHandler.getProduct(connection, productID);
-	}
-
-	@Override
-	public ResultSet getAllProducts() {
-		return productHandler.getAllProducts(connection);
-	}
-
-	@Override
-	public ArrayList<Product> findProducts(String query) {
-		return productHandler.findProducts(connection, query);
-	}
-
-	@Override
-	public LinkedHashMap<String, Integer> getCategories() {
-		return productHandler.getCategories(connection);
-	}
-
-	@Override
-	public ArrayList<Product> getCategory(String category) {
-		return productHandler.getProductsInCategory(connection, category);
-	}
-
-	@Override
-	public boolean createOrder(Order order) {
-		try {
-			PreparedStatement ps = connection.prepareStatement(
-							"INSERT INTO orders\n"
-							+ "VALUES (?,?, CURRENT_TIMESTAMP,?)");
-			ps.setInt(1, order.getId());
-			ps.setInt(2, order.getCustomer().getId());
-			ps.setString(3, order.getOrderStatus().name());
-			ps.executeUpdate();
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return true;
-	}
-
-	/**
-	 * Sets up all tables in the database if they not already exists.
-	 */
-	public void setUpTables() {
-		try {
-			for (String query : Data.createTableQueries) {
-				execute(query);
-			}
-		} catch (SQLException ex) {
-			System.out.println("Failed creating tables: " + ex);
-		}
-	}
-
-	/**
-	 * Drops all tables in the database.
-	 */
-	public void dropTables() {
-		try {
-			for (String query : Data.dropTableQueries) {
-				execute(query);
-			}
-		} catch (SQLException ex) {
-			System.out.println("Failed dropping tables: " + ex);
-		}
-	}
-
-	/**
-	 * Inserts categories and products into the database.
-	 */
-	public void insertData() {
-		try {
-			for (String query : Data.insertIntoQueries) {
-				executeUpdate(query);
-			}
-		} catch (SQLException ex) {
-			System.out.println("Failed dropping tables: " + ex);
-		}
-	}
-
-	/**
-	 * Add image to database
-	 *
-	 * @param imagePath
-	 * @param title
-	 * @param category
-	 */
-	@Override
-	public void createImage(String imagePath, String title, int category) {
-		ImageHandler.createImage(connection, imagePath, title, category);
-	}
-
-	@Override
-	public Image getImage(int id) {
-		return ImageHandler.getImage(connection, id);
-	}
-
-	/**
-	 * get images from databse
-	 *
-	 * @return ResultSet
-	 */
-	@Override
-	public ArrayList<Image> getImages() {
-		return ImageHandler.getImages(connection);
-	}
-
-	@Override
-	public DAMImage getDAMImage(int id) {
-		return ImageHandler.getDAMImage(connection, id);
-	}
-
-	@Override
-	public ArrayList<DAMImage> getDAMImages() {
-		return ImageHandler.getDAMImages(connection);
-	}
-
-	@Override
-	public void deleteImage(int id) {
-		ImageHandler.deleteImage(connection, id);
-	}
-
-	@Override
-	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
-		try {
-			//Checks if email is unique
-			ResultSet existingEmail = executeQuery("SELECT email FROM Customers WHERE email = '" + email + "';");
-			if (existingEmail.next()) {
-				return false;
-			}
-
-			//Gets the next available id in Customers
-			ResultSet maxCustomerId = executeQuery("SELECT max(id) FROM Customers;");
-			maxCustomerId.next();
-			int customerId = 1 + maxCustomerId.getInt(1);
-
-			//Insert the new customer to the database
-			String sql = "INSERT INTO Customers VALUES "
-							+ "(" + customerId + ", '" + email + "', '" + code + "', "
-							+ "'" + firstName + "', '" + lastName + "', " + phoneNumber + ", " + mobilePhoneNumber + ", "
-							+ "'" + address + "', '" + postalCode + "', '" + city + "', '" + country + "');";
-			executeUpdate(sql);
-			return true;
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-			return false;
-		}
-	}
-
-	@Override
-	public Customer2 getCustomer(String email, String code) {
-		try {
-			ResultSet customer = executeQuery("SELECT * FROM Customers WHERE email = '" + email + "' AND code = '" + code + "';");
-			if (!customer.next()) {
-				return null;
-			}
-
-			ShoppingBasket shoppingBasket = null;
-			//Something where OrderLines are made from the ProductsInBaskets table from the first basket the customer have in Baskets
-
-			return new Customer2(customer.getInt("id"), customer.getString("email"),
-							customer.getString("code"), customer.getString("firstName"),
-							customer.getString("lastName"), customer.getInt("phoneNumber"),
-							customer.getInt("mobilePhoneNumber"), customer.getString("address"),
-							customer.getString("postalCode"), customer.getString("city"),
-							customer.getString("country"), shoppingBasket);
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-			return null;
-		}
-	}
->>>>>>> origin/master
-
 }
