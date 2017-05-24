@@ -4,15 +4,16 @@ import DAM.DAMImage;
 import Webshop.Customer2;
 import Webshop.Order;
 import Webshop.Product;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import javafx.scene.image.Image;
 
 public interface DatabaseInterface {
 
-	public Product getProduct(int productId);
+	public ResultSet getProduct(int productId);
 
-	public ArrayList<Product> getAllProducts();
+	public ResultSet getAllProducts();
 
 	public ArrayList<Product> findProducts(String query);
 

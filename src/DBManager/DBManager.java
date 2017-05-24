@@ -370,13 +370,13 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public Product getProduct(int productID) {
+	public ResultSet getProduct(int productID) {
 		return productHandler.getProduct(connection, productID);
 	}
 
 	@Override
-	public ArrayList<Product> getAllProducts() {
-		return productHandler.getProducts(connection);
+	public ResultSet getAllProducts() {
+		return productHandler.getAllProducts(connection);
 	}
 
 	@Override

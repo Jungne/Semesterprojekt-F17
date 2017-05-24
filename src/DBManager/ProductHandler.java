@@ -14,38 +14,32 @@ import java.util.logging.Logger;
 
 public class ProductHandler {
 
-	public Product getProduct(Connection connection, int productID) {
-		Product product = null;
+	public ResultSet getProduct(Connection connection, int productID) {
+		ResultSet productResultSet = null;
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
 							+ "FROM products, categories\n"
 							+ "WHERE categories.id = categoryid AND products.id = " + productID);
-			ResultSet productResultSet = ps.executeQuery();
-			product = mapProduct(productResultSet);
-
+			productResultSet = ps.executeQuery();
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return product;
+		return productResultSet;
 	}
 
-	public ArrayList<Product> getProducts(Connection connection) {
+	public ResultSet getAllProducts(Connection connection) {
+	    ResultSet productsResultSet = null;
 		ArrayList<Product> products = null;
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
 							+ "FROM products, categories\n"
 							+ "WHERE categories.id = categoryid");
-			ResultSet productResultSet = ps.executeQuery();
-			products = mapProducts(productResultSet);
+			productsResultSet = ps.executeQuery();
 
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return products;
+		return productsResultSet;
 	}
 	
 	public ArrayList<Product> findProducts(Connection connection, String query) {
