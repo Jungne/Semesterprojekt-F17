@@ -75,91 +75,28 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public Product getProduct(int productId) {
-		Product product = null;
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-							+ "FROM products, categories\n"
-							+ "WHERE categories.id = categoryid AND products.id = " + productId);
-			ResultSet components = ps.executeQuery();
-			product = productHandler.getProduct(components);
-
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return product;
+	public Product getProduct(int productID) {
+		return productHandler.getProduct(connection, productID);
 	}
 
 	@Override
 	public ArrayList<Product> getAllProducts() {
-		ArrayList<Product> products = null;
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-							+ "FROM products, categories\n"
-							+ "WHERE categories.id = categoryid");
-			ResultSet components = ps.executeQuery();
-			products = productHandler.getProducts(components);
-
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return products;
+		return productHandler.getProducts(connection);
 	}
 
 	@Override
 	public ArrayList<Product> findProducts(String query) {
-		ArrayList<Product> products = null;
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-							+ "FROM Products\n"
-							+ "WHERE LOWER(name) LIKE '%" + query.toLowerCase() + "%'");
-			ResultSet components = ps.executeQuery();
-			products = productHandler.getProducts(components);
-
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return products;
+		return productHandler.findProducts(connection, query);
 	}
 
 	@Override
 	public TreeSet<String> getCategories() {
-		TreeSet<String> categories = null;
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT name FROM Categories");
-			ResultSet components = ps.executeQuery();
-			categories = productHandler.getCategories(components);
-
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-			System.out.println("Error");
-		}
-		return categories;
+		return productHandler.getCategories(connection);
 	}
 
 	@Override
 	public ArrayList<Product> getCategory(String category) {
-		ArrayList<Product> products = null;
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-							+ "FROM Products, categories\n"
-							+ "WHERE categories.name = '" + category + "' AND products.categoryid = categories.id");
-			ResultSet components = ps.executeQuery();
-			products = productHandler.getProducts(components);
-			System.out.println(category);
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-			System.out.println("error");
-		} catch (IOException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return products;
+		return productHandler.getProductsInCategory(connection, category);
 	}
 
 	@Override
