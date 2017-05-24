@@ -40,5 +40,5 @@ public interface DatabaseInterface {
 
 	public Customer2 getCustomer(String email, String code);
 	
-	public void addProduct(PIMProduct product);
+	public void addProduct(int category, double price, String description, String titel, ArrayList<Integer> imageList);
 }
