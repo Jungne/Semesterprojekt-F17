@@ -23,7 +23,6 @@ public class Product {
 	this.description = description;
 	this.price = price;
 	this.imagePath = imagePath;
-	loadImage();
     }
 
     public Product(String name, int id, String category, String description, double price) {
@@ -41,12 +40,11 @@ public class Product {
 	this.category = category;
 	this.description = description;
 	this.price = price;
-	this.imagePath = "test.jpeg";
 	this.imageList = images;
-    }
 
-    public void loadImage() throws IOException {
-	imageList.add(new Image("src/images/" + imagePath));
+	if (imageList.isEmpty()) {
+	    imageList.add(new Image("images/test.jpeg"));
+	}
     }
 
     public String getName() {
@@ -72,11 +70,11 @@ public class Product {
     public String getImagePath() {
 	return imagePath;
     }
-    
+
     public ArrayList<Image> getImageList() {
 	return imageList;
     }
-    
+
     @Override
     public String toString() {
 	return "Product{" + "name=" + name + ", id=" + id + ", category=" + category + ", description=" + description + ", price=" + price + '}';

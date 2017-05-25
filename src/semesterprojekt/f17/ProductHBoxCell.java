@@ -23,19 +23,20 @@ public class ProductHBoxCell extends HBox {
 
 	id = product.getId();
 
-	if (product.getImageList().isEmpty()) {
-	    imageView.setImage(new Image("images/" + product.getImagePath()));
-	} else {
-	    imageView.setImage(product.getImageList().get(0));
-	}
+	imageView.setImage(product.getImageList().get(0));
+
 	name.setText(product.getName());
-	name.setPrefWidth(150);
+	name.setPrefWidth(
+		150);
 	price.setText(Double.toString(product.getPrice()) + "kr");
 
-	imageView.setFitWidth(100);
-	imageView.setPreserveRatio(true);
+	imageView.setFitWidth(
+		100);
+	imageView.setPreserveRatio(
+		true);
 
-	this.getChildren().addAll(imageView, name, price);
+	this.getChildren()
+		.addAll(imageView, name, price);
     }
 
     public ProductHBoxCell(OrderLine orderLine) {

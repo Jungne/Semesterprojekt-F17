@@ -44,7 +44,9 @@ public class FXMLDocumentController implements Initializable {
     private LinkedHashMap<String, Integer> categoriesMap;
     private boolean isLoggedIn = false;
     private ShoppingBasket guestBasket = new ShoppingBasket();
-
+    private int imageNumber;
+    private Product currentProduct;
+    
     @FXML
     private Button CatalogTestShowProductsButton;
     @FXML
@@ -135,6 +137,12 @@ public class FXMLDocumentController implements Initializable {
     private ListView<ProductHBoxCell> DAMListView;
     @FXML
     private Button DAMDeleteButton;
+    @FXML
+    private Button imageLeftButton;
+    @FXML
+    private Button imageRightButton;
+    @FXML
+    private Label imageNumberLabel;
 
     @FXML
     private void handleCatalogTestShowProductsButton(ActionEvent e) {
@@ -149,15 +157,26 @@ public class FXMLDocumentController implements Initializable {
 	    return;
 	}
 	int id = productHBoxCell.getProductId();
-	Product product = webshopController.getProduct(id);
+	currentProduct = webshopController.getProduct(id);
 
-	catalogTestImageView.setImage(new Image("images/" + product.getImagePath()));
+	catalogTestImageView.setImage(currentProduct.getImageList().get(0));
+
+	if (currentProduct.getImageList().size() > 1) {
+	    imageNumber = 1;
+	    imageLeftButton.setDisable(false);
+	    imageRightButton.setDisable(false);
+	    imageNumberLabel.setText(imageNumber + " ud af " + currentProduct.getImageList().size());
+	} else {
+	    imageLeftButton.setDisable(true);
+	    imageRightButton.setDisable(true);
+	    imageNumberLabel.setText("0 ud af 0");
+	}
 
 	String text = "";
-	text = "Name: " + product.getName() + "\n";
-	text += "Category: " + product.getCategory() + "\n";
-	text += "Price: " + Double.toString(product.getPrice()) + "\n";
-	text += "Description: " + product.getDescription();
+	text = "Name: " + currentProduct.getName() + "\n";
+	text += "Category: " + currentProduct.getCategory() + "\n";
+	text += "Price: " + Double.toString(currentProduct.getPrice()) + "\n";
+	text += "Description: " + currentProduct.getDescription();
 
 	catalogTestTextArea.setText(text);
     }
@@ -369,7 +388,7 @@ public class FXMLDocumentController implements Initializable {
     private void updateChoiceBoxes() {
 	categoriesMap = webshopController.getCategories();
 	ArrayList<String> categoriesList = new ArrayList<>();
-	
+
 	for (Map.Entry<String, Integer> entry : categoriesMap.entrySet()) {
 	    categoriesList.add(entry.getKey());
 	}
@@ -403,13 +422,27 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleDAMDeleteButton(ActionEvent event) {
 	int id = DAMListView.getSelectionModel().getSelectedItem().getProductId();
-	
+
 	DAM.deleteImage(id);
-	
+
 	showDAMImages();
     }
-    
+
     private int getCategoryID(String category) {
 	return categoriesMap.get(category);
+    }
+
+    @FXML
+    private void handleLeftImageButton(ActionEvent event) {
+	imageNumber--;
+	catalogTestImageView.setImage(currentProduct.getImageList().get((imageNumber - 1) % currentProduct.getImageList().size()));
+	imageNumberLabel.setText((((imageNumber - 1) % currentProduct.getImageList().size()) + 1) + " ud af " + currentProduct.getImageList().size());
+    }
+
+    @FXML
+    private void handleImageRightButton(ActionEvent event) {
+	imageNumber++;
+	catalogTestImageView.setImage(currentProduct.getImageList().get((imageNumber - 1) % currentProduct.getImageList().size()));
+	imageNumberLabel.setText((((imageNumber - 1) % currentProduct.getImageList().size()) + 1) + " ud af " + currentProduct.getImageList().size());
     }
 }

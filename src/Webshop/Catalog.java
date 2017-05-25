@@ -47,8 +47,10 @@ public class Catalog {
     private Product mapProduct(ResultSet productResultSet) {
 	Product product = null;
 	try {
-	    productResultSet.next();
-	    product = new Product(productResultSet.getString(1), productResultSet.getInt(2), productResultSet.getString(3), productResultSet.getString(4), productResultSet.getDouble(5));
+	    productResultSet.next();	    
+	    int productID = productResultSet.getInt(2);
+	    ArrayList<Image> images = databaseInterface.getImages(productID);
+	    product = new Product(productResultSet.getString(1), productID, productResultSet.getString(3), productResultSet.getString(4), productResultSet.getDouble(5), images);
 	} catch (SQLException ex) {
 	    Logger.getLogger(Catalog.class.getName()).log(Level.SEVERE, null, ex);
 	}
@@ -61,7 +63,7 @@ public class Catalog {
 	    while (productsResultSet.next()) {
 		int productID = productsResultSet.getInt(2);
 		ArrayList<Image> images = databaseInterface.getImages(productID);
-		products.add(new Product(productsResultSet.getString(1), productsResultSet.getInt(2), productsResultSet.getString(3), productsResultSet.getString(4), productsResultSet.getDouble(5), images));
+		products.add(new Product(productsResultSet.getString(1), productID, productsResultSet.getString(3), productsResultSet.getString(4), productsResultSet.getDouble(5), images));
 	    }
 	} catch (SQLException ex) {
 	    Logger.getLogger(Catalog.class.getName()).log(Level.SEVERE, null, ex);
