@@ -7,6 +7,7 @@ package semesterprojekt.f17;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -49,6 +50,32 @@ public class FXMLDocumentControllerTest {
 		ResourceBundle rb = null;
 		FXMLDocumentController instance = new FXMLDocumentController();
 		instance.initialize(url, rb);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of handleBrowseButton method, of class FXMLDocumentController.
+	 */
+	@Test
+	public void testHandleBrowseButton() {
+		System.out.println("handleBrowseButton");
+		ActionEvent event = null;
+		FXMLDocumentController instance = new FXMLDocumentController();
+		instance.handleBrowseButton(event);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of handleOpenImageButton method, of class FXMLDocumentController.
+	 */
+	@Test
+	public void testHandleOpenImageButton() {
+		System.out.println("handleOpenImageButton");
+		ActionEvent event = null;
+		FXMLDocumentController instance = new FXMLDocumentController();
+		instance.handleOpenImageButton(event);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}

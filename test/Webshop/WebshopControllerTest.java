@@ -7,7 +7,7 @@ package Webshop;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
@@ -97,8 +97,8 @@ public class WebshopControllerTest {
 	@Test
 	public void testGetCategories() {
 		System.out.println("getCategories");
-		TreeSet<String> expResult = null;
-		TreeSet<String> result = instance.getCategories();
+		LinkedHashMap<String, Integer> expResult = null;
+		LinkedHashMap<String, Integer> result = instance.getCategories();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -210,6 +210,56 @@ public class WebshopControllerTest {
 	public void testEmptyShoppingBasket() {
 		System.out.println("emptyShoppingBasket");
 		instance.emptyShoppingBasket();
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of signUp method, of class WebshopController.
+	 */
+	@Test
+	public void testSignUp() {
+		System.out.println("signUp");
+		String email = "";
+		String code = "";
+		String firstName = "";
+		String lastName = "";
+		int phoneNumber = 0;
+		int mobilePhoneNumber = 0;
+		String address = "";
+		String postalCode = "";
+		String city = "";
+		String country = "";
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		boolean expResult = false;
+		boolean result = instance.signUp(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of login method, of class WebshopController.
+	 */
+	@Test
+	public void testLogin() {
+		System.out.println("login");
+		String email = "";
+		String code = "";
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		boolean expResult = false;
+		boolean result = instance.login(email, code);
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}

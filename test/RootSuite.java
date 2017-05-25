@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 
+import DAM.DAMSuite;
+import DBManager.DBManagerSuite;
+import PIM.PIMSuite;
 import Webshop.WebshopSuite;
 import images.ImagesSuite;
 import org.junit.After;
@@ -19,7 +22,7 @@ import semesterprojekt.SemesterprojektSuite;
  * @author Daniel
  */
 @org.junit.runner.RunWith(org.junit.runners.Suite.class)
-@org.junit.runners.Suite.SuiteClasses({WebshopSuite.class, ImagesSuite.class, SemesterprojektSuite.class})
+@	Suite.SuiteClasses({SemesterprojektSuite.class, WebshopSuite.class, DAMSuite.class, ImagesSuite.class, DBManagerSuite.class, PIMSuite.class})
 public class RootSuite {
 
 	@BeforeClass

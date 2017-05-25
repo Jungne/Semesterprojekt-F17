@@ -5,6 +5,8 @@
  */
 package Webshop;
 
+import java.util.ArrayList;
+import javafx.scene.image.Image;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -157,6 +159,20 @@ public class ProductTest {
 		Product instance = null;
 		boolean expResult = false;
 		boolean result = instance.equals(product);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getImageList method, of class Product.
+	 */
+	@Test
+	public void testGetImageList() {
+		System.out.println("getImageList");
+		Product instance = null;
+		ArrayList<Image> expResult = null;
+		ArrayList<Image> result = instance.getImageList();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

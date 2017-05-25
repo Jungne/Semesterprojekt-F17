@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Webshop;
+package DBManager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.LinkedHashMap;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,11 +18,11 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
-public class DBManagerTest {
+public class ProductHandlerTest {
 	
-	public DBManagerTest() {
+	public ProductHandlerTest() {
 	}
 	
 	@BeforeClass
@@ -40,89 +42,97 @@ public class DBManagerTest {
 	}
 
 	/**
-	 * Test of getProduct method, of class FileManager.
+	 * Test of getProduct method, of class ProductHandler.
 	 */
 	@Test
 	public void testGetProduct() {
 		System.out.println("getProduct");
-		int productId = 0;
-		FileManager instance = new FileManager();
-		Product expResult = null;
-		Product result = instance.getProduct(productId);
+		Connection connection = null;
+		int productID = 0;
+		ProductHandler instance = new ProductHandler();
+		ResultSet expResult = null;
+		ResultSet result = instance.getProduct(connection, productID);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of getAllProducts method, of class FileManager.
+	 * Test of getAllProducts method, of class ProductHandler.
 	 */
 	@Test
 	public void testGetAllProducts() {
 		System.out.println("getAllProducts");
-		FileManager instance = new FileManager();
-		ArrayList<Product> expResult = null;
-		ArrayList<Product> result = instance.getAllProducts();
+		Connection connection = null;
+		ProductHandler instance = new ProductHandler();
+		ResultSet expResult = null;
+		ResultSet result = instance.getAllProducts(connection);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of findProducts method, of class FileManager.
+	 * Test of findProducts method, of class ProductHandler.
 	 */
 	@Test
 	public void testFindProducts() {
 		System.out.println("findProducts");
+		Connection connection = null;
 		String query = "";
-		FileManager instance = new FileManager();
-		ArrayList<Product> expResult = null;
-		ArrayList<Product> result = instance.findProducts(query);
+		ProductHandler instance = new ProductHandler();
+		ResultSet expResult = null;
+		ResultSet result = instance.findProducts(connection, query);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of getCategories method, of class FileManager.
+	 * Test of getCategories method, of class ProductHandler.
 	 */
 	@Test
 	public void testGetCategories() {
 		System.out.println("getCategories");
-		FileManager instance = new FileManager();
-		TreeSet<String> expResult = null;
-		TreeSet<String> result = instance.getCategories();
+		Connection connection = null;
+		ProductHandler instance = new ProductHandler();
+		LinkedHashMap<String, Integer> expResult = null;
+		LinkedHashMap<String, Integer> result = instance.getCategories(connection);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of getCategory method, of class FileManager.
+	 * Test of getProductsInCategory method, of class ProductHandler.
 	 */
 	@Test
-	public void testGetCategory() {
-		System.out.println("getCategory");
+	public void testGetProductsInCategory() {
+		System.out.println("getProductsInCategory");
+		Connection connection = null;
 		String category = "";
-		FileManager instance = new FileManager();
-		ArrayList<Product> expResult = null;
-		ArrayList<Product> result = instance.getCategory(category);
+		ProductHandler instance = new ProductHandler();
+		ResultSet expResult = null;
+		ResultSet result = instance.getProductsInCategory(connection, category);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of saveOrder method, of class FileManager.
+	 * Test of addProduct method, of class ProductHandler.
 	 */
 	@Test
-	public void testSaveOrder() {
-		System.out.println("saveOrder");
-		Order order = null;
-		FileManager instance = new FileManager();
-		boolean expResult = false;
-		boolean result = instance.saveOrder(order);
-		assertEquals(expResult, result);
+	public void testAddProduct() {
+		System.out.println("addProduct");
+		Connection connection = null;
+		int category = 0;
+		double price = 0.0;
+		String description = "";
+		String name = "";
+		ArrayList<Integer> imageList = null;
+		ProductHandler instance = new ProductHandler();
+		instance.addProduct(connection, category, price, description, name, imageList);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}

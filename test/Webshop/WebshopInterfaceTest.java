@@ -6,6 +6,7 @@
 package Webshop;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.TreeSet;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -61,8 +62,8 @@ public class WebshopInterfaceTest {
 	public void testGetCategories() {
 		System.out.println("getCategories");
 		WebshopInterface instance = new WebshopInterfaceImpl();
-		TreeSet<String> expResult = null;
-		TreeSet<String> result = instance.getCategories();
+		LinkedHashMap<String, Integer> expResult = null;
+		LinkedHashMap<String, Integer> result = instance.getCategories();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -215,13 +216,53 @@ public class WebshopInterfaceTest {
 		fail("The test case is a prototype.");
 	}
 
+	/**
+	 * Test of signUp method, of class WebshopInterface.
+	 */
+	@Test
+	public void testSignUp() {
+		System.out.println("signUp");
+		String email = "";
+		String code = "";
+		String firstName = "";
+		String lastName = "";
+		int phoneNumber = 0;
+		int mobilePhoneNumber = 0;
+		String address = "";
+		String postalCode = "";
+		String city = "";
+		String country = "";
+		WebshopInterface instance = new WebshopInterfaceImpl();
+		boolean expResult = false;
+		boolean result = instance.signUp(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of login method, of class WebshopInterface.
+	 */
+	@Test
+	public void testLogin() {
+		System.out.println("login");
+		String email = "";
+		String code = "";
+		WebshopInterface instance = new WebshopInterfaceImpl();
+		boolean expResult = false;
+		boolean result = instance.login(email, code);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
 	public class WebshopInterfaceImpl implements WebshopInterface {
 
 		public ArrayList<Product> findProducts(String query) {
 			return null;
 		}
 
-		public TreeSet<String> getCategories() {
+		public LinkedHashMap<String, Integer> getCategories() {
 			return null;
 		}
 
@@ -261,6 +302,14 @@ public class WebshopInterfaceTest {
 		}
 
 		public void emptyShoppingBasket() {
+		}
+
+		public boolean signUp(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
+			return false;
+		}
+
+		public boolean login(String email, String code) {
+			return false;
 		}
 	}
 

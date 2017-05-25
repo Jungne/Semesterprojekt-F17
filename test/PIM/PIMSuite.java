@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Webshop;
+package PIM;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,11 +14,11 @@ import org.junit.runners.Suite;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
-@org.junit.runner.RunWith(org.junit.runners.Suite.class)
-@	Suite.SuiteClasses({CustomerTest.class, ShoppingBasketTest.class, WebshopControllerTest.class, Customer2Test.class, OrderHistoryTest.class, ProductTest.class, OrderStatusTest.class, PaymentTest.class, WebshopInterfaceTest.class, OrderLineTest.class, ProductCategoryTest.class, CatalogTest.class, OrderTest.class})
-public class WebshopSuite {
+@RunWith(Suite.class)
+@Suite.SuiteClasses({PIM.PIMManagerTest.class, PIM.ProductSearchTest.class, PIM.EditProductTest.class, PIM.PIMProductTest.class})
+public class PIMSuite {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

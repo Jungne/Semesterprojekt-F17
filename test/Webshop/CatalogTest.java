@@ -6,7 +6,7 @@
 package Webshop;
 
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.LinkedHashMap;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -75,8 +75,8 @@ public class CatalogTest {
 	public void testGetCategories() {
 		System.out.println("getCategories");
 		Catalog instance = null;
-		TreeSet<String> expResult = null;
-		TreeSet<String> result = instance.getCategories();
+		LinkedHashMap<String, Integer> expResult = null;
+		LinkedHashMap<String, Integer> result = instance.getCategories();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -107,6 +107,21 @@ public class CatalogTest {
 		Catalog instance = null;
 		ArrayList<Product> expResult = null;
 		ArrayList<Product> result = instance.findProducts(query);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getProductsInCategory method, of class Catalog.
+	 */
+	@Test
+	public void testGetProductsInCategory() {
+		System.out.println("getProductsInCategory");
+		String category = "";
+		Catalog instance = null;
+		ArrayList<Product> expResult = null;
+		ArrayList<Product> result = instance.getProductsInCategory(category);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
