@@ -7,6 +7,8 @@ import java.util.TreeSet;
 public interface WebshopInterface {
 
 	public ArrayList<Product> findProducts(String query);
+	
+	public ArrayList<Product> findProducts(String query, int categoryID);
 
 	public LinkedHashMap<String, Integer> getCategories();
 

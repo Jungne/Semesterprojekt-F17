@@ -17,6 +17,8 @@ public interface DatabaseInterface {
 	public ResultSet getAllProducts();
 
 	public ResultSet findProducts(String query);
+	
+	public ResultSet findProducts(String query, int categoryID);
 
 	public LinkedHashMap<String, Integer> getCategories();
 

@@ -54,6 +54,11 @@ public class WebshopController implements WebshopInterface {
 	public ArrayList<Product> findProducts(String query) {
 		return catalog.findProducts(query);
 	}
+	
+	@Override
+	public ArrayList<Product> findProducts(String query, int categoryID) {
+	    return catalog.findProducts(query, categoryID);
+	}
 
 	/**
 	 * Returns a treeSet containing all the product categories as strings.

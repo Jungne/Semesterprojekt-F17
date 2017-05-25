@@ -44,10 +44,15 @@ public class Catalog {
 	return products;
     }
 
+    public ArrayList<Product> findProducts(String query, int categoryID) {
+	ArrayList<Product> products = mapProducts(databaseInterface.findProducts(query, categoryID));
+	return products;
+    }
+
     private Product mapProduct(ResultSet productResultSet) {
 	Product product = null;
 	try {
-	    productResultSet.next();	    
+	    productResultSet.next();
 	    int productID = productResultSet.getInt(2);
 	    ArrayList<Image> images = databaseInterface.getImages(productID);
 	    product = new Product(productResultSet.getString(1), productID, productResultSet.getString(3), productResultSet.getString(4), productResultSet.getDouble(5), images);

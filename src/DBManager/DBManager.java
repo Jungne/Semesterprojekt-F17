@@ -88,6 +88,11 @@ public class DBManager implements DatabaseInterface {
     public ResultSet findProducts(String query) {
         return productHandler.findProducts(connection, query);
     }
+    
+    @Override
+    public ResultSet findProducts(String query, int categoryID) {
+        return productHandler.findProducts(connection, query, categoryID);
+    }
 
     @Override
     public LinkedHashMap<String, Integer> getCategories() {

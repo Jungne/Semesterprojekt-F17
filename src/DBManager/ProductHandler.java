@@ -16,7 +16,6 @@ public class ProductHandler {
 
     public ResultSet getProduct(Connection connection, int productID) {
 
-
 	ResultSet productResultSet = null;
 	try {
 	    PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price, imagefiles.imagefile\n"
@@ -58,6 +57,20 @@ public class ProductHandler {
 	return productsResultSet;
     }
 
+    public ResultSet findProducts(Connection connection, String query, int categoryID) {
+	ResultSet productsResultSet = null;
+	try {
+	    PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
+		    + "FROM Products, categories\n"
+		    + "WHERE LOWER(products.name) LIKE '%" + query.toLowerCase() + "%' AND products.categoryID = categories.id AND products.categoryID = " + categoryID);
+	    productsResultSet = ps.executeQuery();
+
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	return productsResultSet;
+    }
+
     public LinkedHashMap<String, Integer> getCategories(Connection connection) {
 	LinkedHashMap<String, Integer> categories = new LinkedHashMap<>();
 	try {
@@ -89,29 +102,29 @@ public class ProductHandler {
     }
 
     public void addProduct(Connection connection, int category, double price, String description, String name, ArrayList<Integer> imageList) {
-        try {
-            //Getting new id for product 
-            PreparedStatement psId = connection.prepareStatement("SELECT max(id) FROM Products;");
+	try {
+	    //Getting new id for product 
+	    PreparedStatement psId = connection.prepareStatement("SELECT max(id) FROM Products;");
 
-            ResultSet maxProductId = psId.executeQuery();
-            maxProductId.next();
-            int productId = 1 + maxProductId.getInt(1);
+	    ResultSet maxProductId = psId.executeQuery();
+	    maxProductId.next();
+	    int productId = 1 + maxProductId.getInt(1);
 
-            //Query inserting products  
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO Products (id, name, categoryId, description, price) VALUES (" + productId + ", " + name + ", " + category + ", " + description + ", " + price + ")");
-            ps.executeUpdate();
+	    //Query inserting products  
+	    PreparedStatement ps = connection.prepareStatement("INSERT INTO Products (id, name, categoryId, description, price) VALUES (" + productId + ", " + name + ", " + category + ", " + description + ", " + price + ")");
+	    ps.executeUpdate();
 
-            //Query inserting images
-            PreparedStatement psImages = connection.prepareStatement("UPDATE Images SET productId = '" + productId + "' WHERE id = '?'");
+	    //Query inserting images
+	    PreparedStatement psImages = connection.prepareStatement("UPDATE Images SET productId = '" + productId + "' WHERE id = '?'");
 
-            for (Integer i : imageList) {
-                psImages.setInt(1, i);
-                psImages.executeUpdate();
-            }
+	    for (Integer i : imageList) {
+		psImages.setInt(1, i);
+		psImages.executeUpdate();
+	    }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
 
 }

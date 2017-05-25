@@ -30,6 +30,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -148,6 +149,7 @@ public class FXMLDocumentController implements Initializable {
     private void handleCatalogTestShowProductsButton(ActionEvent e) {
 	ArrayList<Product> products = webshopController.getAllProduct();
 	showProducts(products, catalogTestListView);
+	searchTextField.clear();
     }
 
     @FXML
@@ -212,7 +214,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleFilterButton(ActionEvent event) {
-	ArrayList<Product> products = webshopController.getCategory(categoriesChoiceBox.getValue());
+	ArrayList<Product> products = webshopController.findProducts(searchTextField.getText(), getCategoryID(categoriesChoiceBox.getValue()));
 	showProducts(products, catalogTestListView);
     }
 
@@ -445,4 +447,5 @@ public class FXMLDocumentController implements Initializable {
 	catalogTestImageView.setImage(currentProduct.getImageList().get((imageNumber - 1) % currentProduct.getImageList().size()));
 	imageNumberLabel.setText((((imageNumber - 1) % currentProduct.getImageList().size()) + 1) + " ud af " + currentProduct.getImageList().size());
     }
+
 }

@@ -49,7 +49,7 @@ public class ProductHBoxCell extends HBox {
 
 	id = product.getId();
 
-	imageView.setImage(new Image("images/" + product.getImagePath()));
+	imageView.setImage(product.getImageList().get(0));
 	name.setText(product.getName());
 	price.setText(Double.toString(product.getPrice()) + "kr");
 	amountLabel.setText(Integer.toString(amount));
