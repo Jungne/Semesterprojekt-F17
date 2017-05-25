@@ -186,6 +186,11 @@ public class DBManager implements DatabaseInterface {
     public ArrayList<Image> getImages() {
         return ImageHandler.getImages(connection);
     }
+    
+    @Override
+    public ArrayList<Image> getImages(int productID) {
+	return ImageHandler.getImages(connection, productID);
+    }
 
     @Override
     public DAMImage getDAMImage(int id) {

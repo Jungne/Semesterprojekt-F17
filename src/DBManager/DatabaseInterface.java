@@ -29,6 +29,8 @@ public interface DatabaseInterface {
 	public Image getImage(int id);
 
 	public ArrayList<Image> getImages();
+	
+	public ArrayList<Image> getImages(int productID);
 
 	public DAMImage getDAMImage(int id);
 

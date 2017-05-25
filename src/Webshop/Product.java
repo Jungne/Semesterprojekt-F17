@@ -8,68 +8,82 @@ import javax.imageio.ImageIO;
 
 public class Product {
 
-	private String name;
-	private int id;
-	private String category;
-	private String description;
-	private double price;
-	private String imagePath;
-	private ArrayList<Image> imageList = new ArrayList<>();
+    private String name;
+    private int id;
+    private String category;
+    private String description;
+    private double price;
+    private String imagePath;
+    private ArrayList<Image> imageList = new ArrayList<>();
 
-	public Product(String name, int id, String category, String description, double price, String imagePath) throws IOException {
-		this.name = name;
-		this.id = id;
-		this.category = category;
-		this.description = description;
-		this.price = price;
-		this.imagePath = imagePath;
-		loadImage();
-	}
+    public Product(String name, int id, String category, String description, double price, String imagePath) throws IOException {
+	this.name = name;
+	this.id = id;
+	this.category = category;
+	this.description = description;
+	this.price = price;
+	this.imagePath = imagePath;
+	loadImage();
+    }
 
-	public Product(String name, int id, String category, String description, double price) {
-		this.name = name;
-		this.id = id;
-		this.category = category;
-		this.description = description;
-		this.price = price;
-		this.imagePath = "test.jpeg";
-	}
+    public Product(String name, int id, String category, String description, double price) {
+	this.name = name;
+	this.id = id;
+	this.category = category;
+	this.description = description;
+	this.price = price;
+	this.imagePath = "test.jpeg";
+    }
 
-	public void loadImage() throws IOException {
-		imageList.add(new Image("src/images/" + imagePath));
-	}
+    public Product(String name, int id, String category, String description, double price, ArrayList<Image> images) {
+	this.name = name;
+	this.id = id;
+	this.category = category;
+	this.description = description;
+	this.price = price;
+	this.imagePath = "test.jpeg";
+	this.imageList = images;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void loadImage() throws IOException {
+	imageList.add(new Image("src/images/" + imagePath));
+    }
 
-	public int getId() {
-		return id;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public String getCategory() {
-		return category;
-	}
+    public int getId() {
+	return id;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getCategory() {
+	return category;
+    }
 
-	public double getPrice() {
-		return price;
-	}
+    public String getDescription() {
+	return description;
+    }
 
-	public String getImagePath() {
-		return imagePath;
-	}
+    public double getPrice() {
+	return price;
+    }
 
-	@Override
-	public String toString() {
-		return "Product{" + "name=" + name + ", id=" + id + ", category=" + category + ", description=" + description + ", price=" + price + '}';
-	}
+    public String getImagePath() {
+	return imagePath;
+    }
+    
+    public ArrayList<Image> getImageList() {
+	return imageList;
+    }
+    
+    @Override
+    public String toString() {
+	return "Product{" + "name=" + name + ", id=" + id + ", category=" + category + ", description=" + description + ", price=" + price + '}';
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		return this.id == ((Product) o).id;
-	}
+    @Override
+    public boolean equals(Object o) {
+	return this.id == ((Product) o).id;
+    }
 }

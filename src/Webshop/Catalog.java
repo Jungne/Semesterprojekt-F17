@@ -1,14 +1,13 @@
 package Webshop;
 
 import DBManager.DatabaseInterface;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.image.Image;
 
 public class Catalog {
 
@@ -60,7 +59,9 @@ public class Catalog {
 	ArrayList<Product> products = new ArrayList<>();
 	try {
 	    while (productsResultSet.next()) {
-		products.add(new Product(productsResultSet.getString(1), productsResultSet.getInt(2), productsResultSet.getString(3), productsResultSet.getString(4), productsResultSet.getDouble(5)));
+		int productID = productsResultSet.getInt(2);
+		ArrayList<Image> images = databaseInterface.getImages(productID);
+		products.add(new Product(productsResultSet.getString(1), productsResultSet.getInt(2), productsResultSet.getString(3), productsResultSet.getString(4), productsResultSet.getDouble(5), images));
 	    }
 	} catch (SQLException ex) {
 	    Logger.getLogger(Catalog.class.getName()).log(Level.SEVERE, null, ex);

@@ -19,9 +19,9 @@ public class ProductHandler {
 
 	ResultSet productResultSet = null;
 	try {
-	    PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-		    + "FROM products, categories\n"
-		    + "WHERE categories.id = categoryid AND products.id = " + productID);
+	    PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price, imagefiles.imagefile\n"
+		    + "FROM products, categories, images, imagefiles\n"
+		    + "WHERE categories.id = products.categoryid AND products.id = " + productID);
 	    productResultSet = ps.executeQuery();
 	} catch (SQLException ex) {
 	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
