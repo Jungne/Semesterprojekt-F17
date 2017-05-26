@@ -1,29 +1,29 @@
 package DBManager;
 
 import DAM.DAMImage;
-import PIM.PIMProduct;
 import Webshop.Customer2;
 import Webshop.Order;
-import Webshop.Product;
 import Webshop.ShoppingBasket;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import javafx.scene.image.Image;
 
 public interface DatabaseInterface {
 
-	public ResultSet getProduct(int productId);
+	public HashMap<String, String> getProduct(int productId);
 
-	public ResultSet getAllProducts();
+	public LinkedList<HashMap<String, String>> getAllProducts();
 
-	public ResultSet findProducts(String query);
+	public LinkedList<HashMap<String, String>> findProducts(String query);
 	
-	public ResultSet findProducts(String query, int categoryID);
+	public LinkedList<HashMap<String, String>> findProducts(String query, int categoryID);
 
 	public LinkedHashMap<String, Integer> getCategories();
 
-	public ResultSet getProductsInCategory(String category);
+	public LinkedList<HashMap<String, String>> getProductsInCategory(String category);
 
 	public boolean createOrder(Order order);
 

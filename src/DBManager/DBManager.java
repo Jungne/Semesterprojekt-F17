@@ -1,20 +1,19 @@
 package DBManager;
 
 import DAM.DAMImage;
-import PIM.PIMProduct;
 import Webshop.Customer2;
 import Webshop.Order;
 import Webshop.OrderLine;
-import Webshop.Product;
 import Webshop.ShoppingBasket;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.image.Image;
@@ -78,22 +77,22 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public ResultSet getProduct(int productID) {
+	public HashMap<String, String> getProduct(int productID) {
 		return productHandler.getProduct(connection, productID);
 	}
 
 	@Override
-	public ResultSet getAllProducts() {
+	public LinkedList<HashMap<String, String>> getAllProducts() {
 		return productHandler.getAllProducts(connection);
 	}
 
 	@Override
-	public ResultSet findProducts(String query) {
+	public LinkedList<HashMap<String, String>> findProducts(String query) {
 		return productHandler.findProducts(connection, query);
 	}
 
 	@Override
-	public ResultSet findProducts(String query, int categoryID) {
+	public LinkedList<HashMap<String, String>> findProducts(String query, int categoryID) {
 		return productHandler.findProducts(connection, query, categoryID);
 	}
 
@@ -103,7 +102,7 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public ResultSet getProductsInCategory(String category) {
+	public LinkedList<HashMap<String, String>> getProductsInCategory(String category) {
 		return productHandler.getProductsInCategory(connection, category);
 
 	}
