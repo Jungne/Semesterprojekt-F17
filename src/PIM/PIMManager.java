@@ -12,7 +12,12 @@ public class PIMManager {
 
     public ArrayList<PIMProduct> getAllProducts() {
         this.currentProductList = ProductSearch.getAllProducts();
+        
         return currentProductList;
+    }
+    
+    public void newProduct(int category, double price, String description, String titel, ArrayList<Integer> imageList) {
+        EditProduct.newProduct(category, price, description, titel, imageList);
     }
 
 }
