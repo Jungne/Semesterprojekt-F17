@@ -18,9 +18,10 @@ public class ProductHandler {
 
 	ResultSet productResultSet = null;
 	try {
-	    PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price, imagefiles.imagefile\n"
-		    + "FROM products, categories, images, imagefiles\n"
-		    + "WHERE categories.id = products.categoryid AND products.id = " + productID);
+	    PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
+		    + "FROM products\n"
+		    + "INNER JOIN categories ON products.categoryID = categories.id\n"
+		    + "WHERE products.id = " + productID);
 	    productResultSet = ps.executeQuery();
 	} catch (SQLException ex) {
 	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -33,8 +34,8 @@ public class ProductHandler {
 	ArrayList<Product> products = null;
 	try {
 	    PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-		    + "FROM products, categories\n"
-		    + "WHERE categories.id = categoryid");
+		    + "FROM products\n"
+		    + "INNER JOIN categories ON categories.id = categoryid");
 	    productsResultSet = ps.executeQuery();
 
 	} catch (SQLException ex) {
@@ -47,8 +48,9 @@ public class ProductHandler {
 	ResultSet productsResultSet = null;
 	try {
 	    PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-		    + "FROM Products, categories\n"
-		    + "WHERE LOWER(products.name) LIKE '%" + query.toLowerCase() + "%' AND products.categoryID = categories.id");
+		    + "FROM Products\n"
+		    + "INNER JOIN categories ON products.categoryID = categories.id"
+		    + "WHERE LOWER(products.name) LIKE '%" + query.toLowerCase() + "%'");
 	    productsResultSet = ps.executeQuery();
 
 	} catch (SQLException ex) {
@@ -61,8 +63,9 @@ public class ProductHandler {
 	ResultSet productsResultSet = null;
 	try {
 	    PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-		    + "FROM Products, categories\n"
-		    + "WHERE LOWER(products.name) LIKE '%" + query.toLowerCase() + "%' AND products.categoryID = categories.id AND products.categoryID = " + categoryID);
+		    + "FROM Products\n"
+		    + "INNER JOIN categories ON products.categoryID = categories.id"
+		    + "WHERE LOWER(products.name) LIKE '%" + query.toLowerCase() + "%' AND products.categoryID = " + categoryID);
 	    productsResultSet = ps.executeQuery();
 
 	} catch (SQLException ex) {
@@ -91,8 +94,9 @@ public class ProductHandler {
 	ResultSet productsResultSet = null;
 	try {
 	    PreparedStatement ps = connection.prepareStatement("SELECT products.name, products.id, categories.name, description, price\n"
-		    + "FROM Products, categories\n"
-		    + "WHERE categories.name = '" + category + "' AND products.categoryid = categories.id");
+		    + "FROM Products\n"
+		    + "INNER JOIN categories ON products.categoryID = categories.id"
+		    + "WHERE categories.name = '" + category + "'");
 	    productsResultSet = ps.executeQuery();
 	} catch (SQLException ex) {
 	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
