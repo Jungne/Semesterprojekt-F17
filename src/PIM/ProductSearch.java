@@ -1,10 +1,12 @@
 package PIM;
 
+import DBManager.DBManager;
 import DBManager.DatabaseInterface;
-import Webshop.Product;
-import java.sql.ResultSet;
+import static java.lang.reflect.Array.set;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.image.Image;
@@ -18,22 +20,19 @@ public class ProductSearch {
     private static DatabaseInterface databaseInterface;
 
     public static ArrayList<PIMProduct> getAllProducts() {
-
+        databaseInterface = DBManager.getInstance();
         ArrayList<PIMProduct> productList = new ArrayList<PIMProduct>();
+        LinkedList<HashMap<String, String>> productsMapList= databaseInterface.getAllProducts();
 
-        ResultSet set = DBManager.DBManager.getInstance().getAllProducts();
-
-        try {
-            while (set.next()) {
-
-                int productID = set.getInt(2);
-                ArrayList<Image> images = databaseInterface.getImages(productID);
-                productList.add(new PIMProduct(set.getString(1), productID, set.getString(3), set.getString(4), set.getDouble(5), images));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductSearch.class.getName()).log(Level.SEVERE, null, ex);
+        for (HashMap<String, String> productMap : productsMapList) {
+            String productName = productMap.get("productName");
+            int productID = Integer.parseInt(productMap.get("productID"));
+            String categoryName = productMap.get("categoryName");
+            String description = productMap.get("description");
+            double price = Double.parseDouble(productMap.get("price"));
+            ArrayList<Image> images = databaseInterface.getImages(productID);
+            productList.add(new PIMProduct(productName, productID, categoryName, description, price, images));
         }
-
         return productList;
     }
 

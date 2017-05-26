@@ -17,11 +17,12 @@ public class ProductHandler {
     public HashMap<String, String> getProduct(Connection connection, int productID) {
         HashMap<String, String> productMap = new HashMap<>();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
+            PreparedStatement productStatement = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
                     + "FROM products\n"
                     + "NATURAL JOIN categories\n"
-                    + "WHERE productid = " + productID);
-            ResultSet productResultSet = ps.executeQuery();
+                    + "WHERE productid = ?");
+            productStatement.setInt(1, productID);
+            ResultSet productResultSet = productStatement.executeQuery();
             productResultSet.next();
 
             //Maps the resultset to a hashmap
@@ -35,14 +36,13 @@ public class ProductHandler {
     public LinkedList<HashMap<String, String>> getAllProducts(Connection connection) {
         LinkedList<HashMap<String, String>> productsMapList = new LinkedList<>();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
+            PreparedStatement allProductsStatement = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
                     + "FROM products\n"
                     + "NATURAL JOIN categories");
-            ResultSet productsResultSet = ps.executeQuery();
+            ResultSet productsResultSet = allProductsStatement.executeQuery();
 
             //Maps the resultset to a HashMap.
             productsMapList = mapProducts(productsResultSet);
-
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,15 +52,14 @@ public class ProductHandler {
     public LinkedList<HashMap<String, String>> findProducts(Connection connection, String query) {
         LinkedList<HashMap<String, String>> productsMapList = new LinkedList<>();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
+            PreparedStatement findProductStatement = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
                     + "FROM Products\n"
                     + "NATURAL JOIN categories\n"
                     + "WHERE LOWER(productName) LIKE '%" + query.toLowerCase() + "%'");
-            ResultSet productsResultSet = ps.executeQuery();
+            ResultSet productsResultSet = findProductStatement.executeQuery();
 
             //Maps the resultset to a HashMap.
             productsMapList = mapProducts(productsResultSet);
-
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,15 +69,15 @@ public class ProductHandler {
     public LinkedList<HashMap<String, String>> findProducts(Connection connection, String query, int categoryID) {
         LinkedList<HashMap<String, String>> productsMapList = new LinkedList<>();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
-                    + "FROM Products\n"
-                    + "NATURAL JOIN categories\n"
-                    + "WHERE LOWER(productName) LIKE '%" + query.toLowerCase() + "%'");
-            ResultSet productsResultSet = ps.executeQuery();
+            PreparedStatement findProductsStatement = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
+                    + "FROM Products "
+                    + "NATURAL JOIN categories "
+                    + "WHERE LOWER(productName) LIKE '%" + query.toLowerCase() + "%' AND categoryid = ?");
+            findProductsStatement.setInt(1, categoryID);
+            ResultSet productsResultSet = findProductsStatement.executeQuery();
 
             //Maps the resultset to a HashMap.
             productsMapList = mapProducts(productsResultSet);
-
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -93,7 +92,6 @@ public class ProductHandler {
             while (components.next()) {
                 categories.put(components.getString(1), components.getInt(2));
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error");
@@ -112,7 +110,6 @@ public class ProductHandler {
 
             //Maps the resultset to a HashMap.
             productsMapList = mapProducts(productsResultSet);
-
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -162,7 +159,7 @@ public class ProductHandler {
             productMap.put("categoryName", productsResultSet.getString(3));
             productMap.put("description", productsResultSet.getString(4));
             productMap.put("price", productsResultSet.getString(5));
-           
+
         } catch (SQLException ex) {
             Logger.getLogger(ProductHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -188,7 +185,7 @@ public class ProductHandler {
         } catch (SQLException ex) {
             Logger.getLogger(ProductHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return productsMapList;
     }
 }

@@ -8,9 +8,11 @@ import javafx.scene.image.Image;
 public class DAMManager {
 
 	private DatabaseInterface databaseInterface;
+        private FileHandler fileHandler;
 
 	public DAMManager() {
 		databaseInterface = DBManager.getInstance();
+                fileHandler = new FileHandler();
 	}
 
 	public void addImage(String imagePath, String title, int category) {
@@ -26,11 +28,11 @@ public class DAMManager {
 	}
 
 	public DAMImage getDAMImage(int id) {
-		return databaseInterface.getDAMImage(id);
+		return fileHandler.getDAMImage(id);
 	}
 
 	public ArrayList<DAMImage> getDAMImages() {
-		return databaseInterface.getDAMImages();
+		return fileHandler.getDAMImages();
 	}
 
 	public void deleteImage(int id) {

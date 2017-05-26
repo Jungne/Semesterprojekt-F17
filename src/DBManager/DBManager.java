@@ -190,12 +190,12 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public DAMImage getDAMImage(int id) {
+	public HashMap<String, String> getDAMImage(int id) {
 		return ImageHandler.getDAMImage(connection, id);
 	}
 
 	@Override
-	public ArrayList<DAMImage> getDAMImages() {
+	public LinkedList<HashMap<String, String>> getDAMImages() {
 		return ImageHandler.getDAMImages(connection);
 	}
 
