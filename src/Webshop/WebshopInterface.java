@@ -32,7 +32,7 @@ public interface WebshopInterface {
 
 	public void emptyShoppingBasket();
 
-	public boolean signUp(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country);
+	public boolean signUp(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket);
 
 	public boolean login(String email, String code);
 

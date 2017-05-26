@@ -5,6 +5,7 @@ import PIM.PIMProduct;
 import Webshop.Customer2;
 import Webshop.Order;
 import Webshop.Product;
+import Webshop.ShoppingBasket;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -40,7 +41,7 @@ public interface DatabaseInterface {
 
 	public void deleteImage(int id);
 	
-	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country);
+	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket);
 
 	public Customer2 getCustomer(String email, String code);
 	

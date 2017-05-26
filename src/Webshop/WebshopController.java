@@ -150,14 +150,14 @@ public class WebshopController implements WebshopInterface {
 	}
 
 	@Override
-	public boolean signUp(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
+	public boolean signUp(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket) {
 		//Checks if all parameters are valid
 		if (email == null || code == null || firstName == null || lastName == null || address == null || city == null || country == null) {
 			return false;
 		}
 
 		//Saves the customer in the database
-		if (!databaseInterface.createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country)) {
+		if (!databaseInterface.createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket)) {
 			return false;
 		}
 

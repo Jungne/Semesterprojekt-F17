@@ -4,14 +4,14 @@ public class Data {
 
 	private static String categoriesTable
 					= "CREATE TABLE IF NOT EXISTS Categories ("
-					+ "id INTEGER,"
+					+ "categoryId INTEGER,"
 					+ "name varchar(255),"
-					+ "PRIMARY KEY (id)"
+					+ "PRIMARY KEY (categoryId)"
 					+ ");";
 
 	private static String customersTable
 					= "CREATE TABLE IF NOT EXISTS Customers ("
-					+ "id INTEGER,"
+					+ "customerId INTEGER,"
 					+ "email varchar(255) NOT NULL UNIQUE,"
 					+ "code varchar(255),"
 					+ "firstName varchar(255),"
@@ -19,29 +19,29 @@ public class Data {
 					+ "phoneNumber INTEGER,"
 					+ "mobilePhoneNumber INTEGER,"
 					+ "address varchar(255),"
-					+ "postalCode INTEGER,"
+					+ "postalCode varchar(255),"
 					+ "city varchar(255),"
 					+ "country varchar(255),"
-					+ "PRIMARY KEY (id)"
+					+ "PRIMARY KEY (customerId)"
 					+ ");";
 
 	private static String productsTable
 					= "CREATE TABLE IF NOT EXISTS Products ("
-					+ "id INTEGER,"
+					+ "productId INTEGER,"
 					+ "name varchar(255),"
 					+ "categoryId INTEGER,"
 					+ "description TEXT,"
 					+ "price decimal(10,2),"
-					+ "PRIMARY KEY (id),"
-					+ "FOREIGN KEY (categoryId) REFERENCES Categories(id)"
+					+ "PRIMARY KEY (productId),"
+					+ "FOREIGN KEY (categoryId) REFERENCES Categories(categoryId)"
 					+ ");";
 
 	private static String basketsTable
 					= "CREATE TABLE IF NOT EXISTS Baskets ("
-					+ "id INTEGER,"
+					+ "basketId INTEGER,"
 					+ "customerId INTEGER,"
-					+ "PRIMARY KEY (id),"
-					+ "FOREIGN KEY (customerId) REFERENCES Customers(id)"
+					+ "PRIMARY KEY (basketId),"
+					+ "FOREIGN KEY (customerId) REFERENCES Customers(customerId)"
 					+ ");";
 
 	private static String productsInBasketsTable
@@ -50,18 +50,18 @@ public class Data {
 					+ "productId INTEGER,"
 					+ "amount INTEGER,"
 					+ "PRIMARY KEY (basketId, productId),"
-					+ "FOREIGN KEY (basketId) REFERENCES Baskets(id),"
-					+ "FOREIGN KEY (productId) REFERENCES Products(id)"
+					+ "FOREIGN KEY (basketId) REFERENCES Baskets(basketId),"
+					+ "FOREIGN KEY (productId) REFERENCES Products(productId)"
 					+ ");";
 
 	private static String ordersTable
 					= "CREATE TABLE IF NOT EXISTS Orders ("
-					+ "id INTEGER,"
+					+ "orderId INTEGER,"
 					+ "customerId INTEGER,"
 					+ "date TIMESTAMP,"
 					+ "orderStatus varchar(255),"
-					+ "PRIMARY KEY (id),"
-					+ "FOREIGN KEY (customerId) REFERENCES Customers(id)"
+					+ "PRIMARY KEY (orderId),"
+					+ "FOREIGN KEY (customerId) REFERENCES Customers(customerId)"
 					+ ");";
 
 	private static String productsInOrdersTable
@@ -70,19 +70,19 @@ public class Data {
 					+ "productId INTEGER,"
 					+ "amount INTEGER,"
 					+ "PRIMARY KEY (orderId, productId),"
-					+ "FOREIGN KEY (orderId) REFERENCES Orders(id),"
-					+ "FOREIGN KEY (productId) REFERENCES Products(id)"
+					+ "FOREIGN KEY (orderId) REFERENCES Orders(orderId),"
+					+ "FOREIGN KEY (productId) REFERENCES Products(productId)"
 					+ ");";
 
 	private static String imagesTable
 					= "CREATE TABLE IF NOT EXISTS Images ("
-					+ "id INTEGER,"
+					+ "imageId INTEGER,"
 					+ "productId INTEGER,"
 					+ "title varchar(255),"
 					+ "categoryId INTEGER,"
-					+ "PRIMARY KEY (id),"
-					+ "FOREIGN KEY (productId) REFERENCES Products(id),"
-					+ "FOREIGN KEY (categoryId) REFERENCES Categories(id)"
+					+ "PRIMARY KEY (imageId),"
+					+ "FOREIGN KEY (productId) REFERENCES Products(productId),"
+					+ "FOREIGN KEY (categoryId) REFERENCES Categories(categoryId)"
 					+ ");";
 
 	private static String imageFiles
@@ -90,7 +90,7 @@ public class Data {
 					+ "imageId INTEGER,"
 					+ "imageFile bytea,"
 					+ "PRIMARY KEY (imageId),"
-					+ "FOREIGN KEY (imageId) REFERENCES Images(id)"
+					+ "FOREIGN KEY (imageId) REFERENCES Images(imageId)"
 					+ ");";
 
 	public static String[] createTableQueries = {
