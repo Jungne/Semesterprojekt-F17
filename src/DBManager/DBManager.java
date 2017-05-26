@@ -23,10 +23,12 @@ public class DBManager implements DatabaseInterface {
 
 	private Connection connection;
 	private ProductHandler productHandler;
+	private OrderHandler orderHandler;
 	private static DBManager dbManager = null;
 
 	private DBManager() {
 		productHandler = new ProductHandler();
+		orderHandler = new OrderHandler();
 
 		String url = "jdbc:postgresql://localhost:5432/semesterprojekt";
 		String user = "postgres";
@@ -113,17 +115,7 @@ public class DBManager implements DatabaseInterface {
 
 	@Override
 	public boolean createOrder(Order order) {
-		try {
-			PreparedStatement ps = connection.prepareStatement(
-							"INSERT INTO orders\n"
-							+ "VALUES (?,?, CURRENT_TIMESTAMP,?)");
-			ps.setInt(1, order.getId());
-			ps.setInt(2, order.getCustomer().getId());
-			ps.setString(3, order.getOrderStatus().name());
-			ps.executeUpdate();
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		orderHandler.createOrder(connection, order);
 		return true;
 	}
 

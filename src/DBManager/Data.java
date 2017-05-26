@@ -56,7 +56,7 @@ public class Data {
 
 	private static String ordersTable
 					= "CREATE TABLE IF NOT EXISTS Orders ("
-					+ "orderId INTEGER,"
+					+ "orderId serial,"
 					+ "customerId INTEGER,"
 					+ "date TIMESTAMP,"
 					+ "orderStatus varchar(255),"
