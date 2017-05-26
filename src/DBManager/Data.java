@@ -4,8 +4,8 @@ public class Data {
 
 	private static String categoriesTable
 					= "CREATE TABLE IF NOT EXISTS Categories ("
-					+ "categoryId INTEGER,"
-					+ "name varchar(255),"
+					+ "categoryId serial,"
+					+ "categoryName varchar(255),"
 					+ "PRIMARY KEY (categoryId)"
 					+ ");";
 
@@ -27,8 +27,8 @@ public class Data {
 
 	private static String productsTable
 					= "CREATE TABLE IF NOT EXISTS Products ("
-					+ "productId INTEGER,"
-					+ "name varchar(255),"
+					+ "productId serial,"
+					+ "productName varchar(255),"
 					+ "categoryId INTEGER,"
 					+ "description TEXT,"
 					+ "price decimal(10,2),"
@@ -56,7 +56,7 @@ public class Data {
 
 	private static String ordersTable
 					= "CREATE TABLE IF NOT EXISTS Orders ("
-					+ "orderId INTEGER,"
+					+ "orderId serial,"
 					+ "customerId INTEGER,"
 					+ "date TIMESTAMP,"
 					+ "orderStatus varchar(255),"
@@ -118,20 +118,20 @@ public class Data {
 	};
 
 	public static String insertCategories
-					= "INSERT INTO Categories (categoryId, name) VALUES"
-					+ "(1, 'Appliances'),"
-					+ "(2, 'PC'),"
-					+ "(3, 'TV'),"
-					+ "(4, 'Mobil')"
+					= "INSERT INTO Categories (categoryName) VALUES"
+					+ "('Appliances'),"
+					+ "('PC'),"
+					+ "('TV'),"
+					+ "('Mobil')"
 					+ ";";
 
 	public static String insertProducts
-					= "INSERT INTO Products (productId, name, categoryId, description, price) VALUES"
-					+ "(1, 'Blender', 1, 'Blender fra Electrolux. Blender ting om til mindre stykker.', 299.00),"
-					+ "(2, 'Computeren', 2, 'En computer.', 999.99),"
-					+ "(3, 'Sony TV', 3, 'Et Sony TV', 3999.99),"
-					+ "(4, 'LG TV 43', 3, 'Et 43 tommer LG TV', 2499.00),"
-					+ "(5, 'Samsung Galaxy s9', 4, 'The newest member in the Galaxy family.', 5999.42)"
+					= "INSERT INTO Products (productName, categoryId, description, price) VALUES"
+					+ "('Blender', 1, 'Blender fra Electrolux. Blender ting om til mindre stykker.', 299.00),"
+					+ "('Computeren', 2, 'En computer.', 999.99),"
+					+ "('Sony TV', 3, 'Et Sony TV', 3999.99),"
+					+ "('LG TV 43', 3, 'Et 43 tommer LG TV', 2499.00),"
+					+ "('Samsung Galaxy s9', 4, 'The newest member in the Galaxy family.', 5999.42)"
 					+ ";";
 
 	public static String[] insertIntoQueries = {
