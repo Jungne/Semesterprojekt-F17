@@ -98,7 +98,7 @@ public class ImageHandler {
 	ResultSet imageSet = null;
 
 	try {
-	    String sql = "SELECT imagefile FROM images, ImageFiles WHERE images.productid = " + productID + " AND images.id = imagefiles.imageid";
+	    String sql = "SELECT imagefile FROM images INNER JOIN imageFiles ON images.id = imageFiles.imageid WHERE images.productid = " + productID;
 	    PreparedStatement ps = connection.prepareStatement(sql);
 	    imageSet = ps.executeQuery();
 
@@ -123,7 +123,8 @@ public class ImageHandler {
 	try {
 	    PreparedStatement ps = connection.prepareStatement("SELECT Images.id, productId, title, Categories.name, ImageFiles.imageFile "
 		    + "FROM Images, ImageFiles, Categories "
-		    + "WHERE Images.id = " + id + " AND Categories.id = Images.categoryId;");
+		    + "INNER JOIN Dategories ON Categories.id = Images.categoryId"
+		    + "WHERE Images.id = " + id);
 	    ResultSet images = ps.executeQuery();
 	    images.next();
 
@@ -149,8 +150,9 @@ public class ImageHandler {
 
 	try {
 	    PreparedStatement ps = connection.prepareStatement("SELECT Images.id, productId, title, Categories.name, ImageFiles.imageFile "
-		    + "FROM Images, ImageFiles, Categories "
-		    + "WHERE Images.id = ImageFiles.imageId AND Categories.id = Images.categoryId;");
+		    + "FROM Images "
+		    + "INNER JOIN ImageFiles ON Images.id = ImageFiles.imageId "
+		    + "INNER JOIN Categories ON Images.categoryId = Categories.id");
 	    ResultSet images = ps.executeQuery();
 
 	    while (images.next()) {
