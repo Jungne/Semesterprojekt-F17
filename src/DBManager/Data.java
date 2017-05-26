@@ -118,7 +118,7 @@ public class Data {
 	};
 
 	public static String insertCategories
-					= "INSERT INTO Categories (id, name) VALUES"
+					= "INSERT INTO Categories (categoryId, name) VALUES"
 					+ "(1, 'Appliances'),"
 					+ "(2, 'PC'),"
 					+ "(3, 'TV'),"
@@ -126,7 +126,7 @@ public class Data {
 					+ ";";
 
 	public static String insertProducts
-					= "INSERT INTO Products (id, name, categoryId, description, price) VALUES"
+					= "INSERT INTO Products (productId, name, categoryId, description, price) VALUES"
 					+ "(1, 'Blender', 1, 'Blender fra Electrolux. Blender ting om til mindre stykker.', 299.00),"
 					+ "(2, 'Computeren', 2, 'En computer.', 999.99),"
 					+ "(3, 'Sony TV', 3, 'Et Sony TV', 3999.99),"
