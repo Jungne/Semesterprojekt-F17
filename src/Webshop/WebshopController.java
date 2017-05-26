@@ -16,8 +16,8 @@ public class WebshopController implements WebshopInterface {
 
 	public WebshopController() throws IOException {
 		this.databaseInterface = DBManager.getInstance();
-		this.catalog = new Catalog(databaseInterface);
-		this.orderHistory = new OrderHistory(databaseInterface);
+		this.catalog = new Catalog();
+		this.orderHistory = new OrderHistory();
 		this.customer = new Customer();
 	}
 

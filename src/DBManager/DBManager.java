@@ -245,7 +245,10 @@ public class DBManager implements DatabaseInterface {
 			sql = "INSERT INTO Baskets (basketId, customerId) VALUES (" + basketId + ", " + customerId + ")";
 			executeUpdate(sql);
 
-			//Insert the products from the basket into to the database
+			//Insert the products from the basket into to the database, if there is a basket
+			if (shoppingBasket == null) {
+				return true;
+			}
 			for (OrderLine orderLine : shoppingBasket.getBasketContent()) {
 				sql = "INSERT INTO ProductsInBaskets (basketId, productId, amount) VALUES ("
 								+ basketId + ", " + orderLine.getProduct().getId() + ", " + orderLine.getAmount() + ");";
@@ -262,23 +265,58 @@ public class DBManager implements DatabaseInterface {
 	@Override
 	public Customer2 getCustomer(String email, String code) {
 		try {
+			//Gets customer and stores the attributes for later
 			ResultSet customer = executeQuery("SELECT * FROM Customers WHERE email = '" + email + "' AND code = '" + code + "';");
 			if (!customer.next()) {
 				return null;
 			}
+			int customerId, phoneNumber, mobilePhoneNumber;
+			String firstName, lastName, address, postalCode, city, country;
+			customerId = customer.getInt("customerId");
+			firstName = customer.getString("firstName");
+			lastName = customer.getString("lastName");
+			phoneNumber = customer.getInt("phoneNumber");
+			mobilePhoneNumber = customer.getInt("mobilePhoneNumber");
+			address = customer.getString("address");
+			postalCode = customer.getString("postalCode");
+			city = customer.getString("city");
+			country = customer.getString("country");
 
-			ShoppingBasket shoppingBasket = null;
-			//Something where OrderLines are made from the ProductsInBaskets table from the first basket the customer have in Baskets
+			//Gets all basketId's belonging to the customer
+			ArrayList<Integer> basketIdList = new ArrayList<>();
+			ResultSet basketIdSet = executeQuery("SELECT basketId FROM Baskets WHERE customerId = " + customerId + ";");
+			while (basketIdSet.next()) {
+				basketIdList.add(basketIdSet.getInt(1));
+			}
 
-			return new Customer2(customer.getInt("customerId"), customer.getString("email"),
-							customer.getString("code"), customer.getString("firstName"),
-							customer.getString("lastName"), customer.getInt("phoneNumber"),
-							customer.getInt("mobilePhoneNumber"), customer.getString("address"),
-							customer.getString("postalCode"), customer.getString("city"),
-							customer.getString("country"), shoppingBasket);
+			ArrayList<ShoppingBasket> shoppingBaskets = new ArrayList<>();
+			for (int basketId : basketIdList) {
+				shoppingBaskets.add(getShoppingBasket(basketId));
+			}
+
+			return new Customer2(customerId, email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBaskets);
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 			return null;
 		}
 	}
+
+	private ShoppingBasket getShoppingBasket(int basketId) {
+		try {
+			ShoppingBasket shoppingBasket = new ShoppingBasket();
+			ResultSet orderLineSet = executeQuery("SELECT productId, amount FROM ProductsInBaskets WHERE basketId = " + basketId + ";");
+			int productId, amount;
+			while (orderLineSet.next()) {
+				productId = orderLineSet.getInt(1);
+				amount = orderLineSet.getInt(2);
+				//OrderLine orderLine = new OrderLine(getProduct(productId), amount);
+			}
+
+			return shoppingBasket;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
+	}
+
 }

@@ -1,5 +1,7 @@
 package Webshop;
 
+import java.util.ArrayList;
+
 public class Customer2 {
 
 	private int id;
@@ -13,7 +15,7 @@ public class Customer2 {
 	private String postalCode;
 	private String city;
 	private String country;
-	private ShoppingBasket shoppingBasket;
+	private ArrayList<ShoppingBasket> shoppingBaskets;
 	private boolean isRegisted;
 
 	public Customer2() {
@@ -28,11 +30,11 @@ public class Customer2 {
 		this.postalCode = null;
 		this.city = null;
 		this.country = null;
-		this.shoppingBasket = null;
+		this.shoppingBaskets = new ArrayList<>();
 		this.isRegisted = false;
 	}
 
-	public Customer2(int id, String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket) {
+	public Customer2(int id, String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ArrayList<ShoppingBasket> shoppingBaskets) {
 		this.id = id;
 		this.email = email;
 		this.code = code;
@@ -44,7 +46,7 @@ public class Customer2 {
 		this.postalCode = postalCode;
 		this.city = city;
 		this.country = country;
-		this.shoppingBasket = shoppingBasket;
+		this.shoppingBaskets = shoppingBaskets;
 		this.isRegisted = true;
 	}
 
@@ -126,10 +128,10 @@ public class Customer2 {
 	}
 
 	/**
-	 * @return the shoppingBasket
+	 * @return the shoppingBaskets
 	 */
-	public ShoppingBasket getShoppingBasket() {
-		return shoppingBasket;
+	public ArrayList<ShoppingBasket> getShoppingBaskets() {
+		return shoppingBaskets;
 	}
 
 	/**
