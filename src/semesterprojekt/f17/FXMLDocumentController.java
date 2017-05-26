@@ -47,7 +47,7 @@ public class FXMLDocumentController implements Initializable {
     private ShoppingBasket guestBasket = new ShoppingBasket();
     private int imageNumber;
     private Product currentProduct;
-    
+
     @FXML
     private Button CatalogTestShowProductsButton;
     @FXML
@@ -163,9 +163,13 @@ public class FXMLDocumentController implements Initializable {
 
 	catalogTestImageView.setImage(currentProduct.getImageList().get(0));
 
-	if (currentProduct.getImageList().size() > 1) {
+	if (currentProduct.getImageList().size() == 1) {
+	    imageLeftButton.setDisable(true);
+	    imageRightButton.setDisable(true);
+	    imageNumberLabel.setText("1 ud af 1");
+	} else if (currentProduct.getImageList().size() > 1) {
 	    imageNumber = 1;
-	    imageLeftButton.setDisable(false);
+	    imageLeftButton.setDisable(true);
 	    imageRightButton.setDisable(false);
 	    imageNumberLabel.setText(imageNumber + " ud af " + currentProduct.getImageList().size());
 	} else {
@@ -438,14 +442,24 @@ public class FXMLDocumentController implements Initializable {
     private void handleLeftImageButton(ActionEvent event) {
 	imageNumber--;
 	catalogTestImageView.setImage(currentProduct.getImageList().get((imageNumber - 1) % currentProduct.getImageList().size()));
-	imageNumberLabel.setText((((imageNumber - 1) % currentProduct.getImageList().size()) + 1) + " ud af " + currentProduct.getImageList().size());
+	imageNumberLabel.setText((imageNumber) + " ud af " + currentProduct.getImageList().size());
+	
+	if(imageNumber == 1) {
+	    imageLeftButton.setDisable(true);
+	}
+	imageRightButton.setDisable(false);
     }
 
     @FXML
     private void handleImageRightButton(ActionEvent event) {
 	imageNumber++;
 	catalogTestImageView.setImage(currentProduct.getImageList().get((imageNumber - 1) % currentProduct.getImageList().size()));
-	imageNumberLabel.setText((((imageNumber - 1) % currentProduct.getImageList().size()) + 1) + " ud af " + currentProduct.getImageList().size());
+	imageNumberLabel.setText((imageNumber) + " ud af " + currentProduct.getImageList().size());
+	
+	if(imageNumber == currentProduct.getImageList().size()) {
+	    imageRightButton.setDisable(true);
+	}
+	imageLeftButton.setDisable(false);
     }
 
 }

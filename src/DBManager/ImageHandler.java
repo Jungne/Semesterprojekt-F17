@@ -28,7 +28,7 @@ public class ImageHandler {
     public static void createImage(Connection connection, String imagePath, String title, int categoryid) {
 	try {
 	    //Getting next id for image by selecting max id and adding 1
-	    String sqlId = "SELECT max(id) + 1 FROM Images;";
+	    String sqlId = "SELECT max(imageid) + 1 FROM Images;";
 	    PreparedStatement psId = connection.prepareStatement(sqlId);
 	    ResultSet maxID = psId.executeQuery();
 	    maxID.next();
@@ -98,7 +98,10 @@ public class ImageHandler {
 	ResultSet imageSet = null;
 
 	try {
-	    String sql = "SELECT imagefile FROM images INNER JOIN imageFiles ON images.id = imageFiles.imageid WHERE images.productid = " + productID;
+	    String sql = "SELECT imagefile "
+		    + "FROM images "
+		    + "NATURAL JOIN imageFiles "
+		    + "WHERE images.productid = " + productID;
 	    PreparedStatement ps = connection.prepareStatement(sql);
 	    imageSet = ps.executeQuery();
 
@@ -121,10 +124,10 @@ public class ImageHandler {
 	int productID;
 
 	try {
-	    PreparedStatement ps = connection.prepareStatement("SELECT Images.id, productId, title, Categories.name, ImageFiles.imageFile "
-		    + "FROM Images, ImageFiles, Categories "
-		    + "INNER JOIN Dategories ON Categories.id = Images.categoryId"
-		    + "WHERE Images.id = " + id);
+	    PreparedStatement ps = connection.prepareStatement("SELECT Imageid, productId, title, CategoryName, imageFile "
+		    + "FROM Images, ImageFiles "
+		    + "NATURAL JOIN Categories "
+		    + "WHERE Imageid = " + id);
 	    ResultSet images = ps.executeQuery();
 	    images.next();
 
@@ -149,10 +152,10 @@ public class ImageHandler {
 	int productID;
 
 	try {
-	    PreparedStatement ps = connection.prepareStatement("SELECT Images.id, productId, title, Categories.name, ImageFiles.imageFile "
+	    PreparedStatement ps = connection.prepareStatement("SELECT Imageid, productId, title, CategoryName, ImageFiles.imageFile "
 		    + "FROM Images "
-		    + "INNER JOIN ImageFiles ON Images.id = ImageFiles.imageId "
-		    + "INNER JOIN Categories ON Images.categoryId = Categories.id");
+		    + "NATURAL JOIN imageFiles "
+		    + "NATURAL JOIN categories");
 	    ResultSet images = ps.executeQuery();
 
 	    while (images.next()) {
