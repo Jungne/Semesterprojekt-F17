@@ -8,14 +8,14 @@ public class Order {
 	private Customer customer;
 	private Date date;
 	private OrderStatus orderStatus;
-	private ShoppingBasket basket;
+	private ShoppingBasket shoppingBasket;
 
-	public Order(Customer customer) {
-		this.id = 0; // TODO - set id to something unique
+	public Order(int id, Customer customer, Date date, OrderStatus orderStatus, ShoppingBasket shoppingBasket) {
+		this.id = id;
 		this.customer = customer;
-		this.date = new Date();
-		this.basket = customer.getShoppingBasket();
-		this.orderStatus = OrderStatus.CREATED;
+		this.date = date;
+		this.orderStatus = orderStatus;
+		this.shoppingBasket = shoppingBasket;
 	}
 
 	/**
@@ -26,20 +26,6 @@ public class Order {
 	}
 
 	/**
-	 * @return the dato
-	 */
-	public Date getDate() {
-		return date;
-	}
-
-	/**
-	 * @return the OrderStatus
-	 */
-	public OrderStatus getOrderStatus() {
-		return orderStatus;
-	}
-
-	/**
 	 * @return the customer
 	 */
 	public Customer getCustomer() {
@@ -47,13 +33,28 @@ public class Order {
 	}
 
 	/**
-	 * @return the basket
+	 * @return the date
 	 */
-	public ShoppingBasket getBasket() {
-		return basket;
+	public Date getDate() {
+		return date;
+	}
+
+	/**
+	 * @return the orderStatus
+	 */
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+	/**
+	 * @return the shoppingBasket
+	 */
+	public ShoppingBasket getShoppingBasket() {
+		return shoppingBasket;
 	}
 
 	public double getTotalPrice() {
-		return basket.getTotalPrice();
+		return shoppingBasket.getTotalPrice();
 	}
+
 }

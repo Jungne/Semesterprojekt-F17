@@ -1,9 +1,6 @@
 package DBManager;
 
 import DAM.DAMImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,176 +10,114 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.image.Image;
 
 public class ImageHandler {
 
-    /**
-     * adds an image to the database
-     *
-     * @param connection
-     * @param imagePath
-     * @param title
-     * @param category
-     */
-    public static void createImage(Connection connection, String imagePath, String title, int categoryid) {
-	try {
-	    //Getting next id for image by selecting max id and adding 1
-	    String sqlId = "SELECT max(imageid) + 1 FROM Images;";
-	    PreparedStatement psId = connection.prepareStatement(sqlId);
-	    ResultSet maxID = psId.executeQuery();
-	    maxID.next();
-	    int id = maxID.getInt(1);
-	    //Setting up the query for images
-	    String sql = "INSERT INTO Images VALUES (?, null, ?, ?);";
-	    PreparedStatement ps = connection.prepareStatement(sql);
-	    ps.setInt(1, id); //Setting id
-	    ps.setString(2, title); //Setting title
-	    ps.setInt(3, categoryid); //Setting category
-	    ps.executeUpdate();
+	private Connection connection;
 
-	    //Setting up the query for imagefile
-	    PreparedStatement insertImageFile = connection.prepareStatement("INSERT INTO ImageFiles VALUES (?, ?);");
-	    insertImageFile.setInt(1, id);
-	    InputStream input = new FileInputStream(new File(imagePath));
-	    insertImageFile.setBinaryStream(2, input); //Setting image
-
-	    insertImageFile.executeUpdate();
-
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-	} catch (FileNotFoundException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	public ImageHandler(Connection connection) {
+		this.connection = connection;
 	}
-    }
 
-    public static Image getImage(Connection connection, int id) {
-	Image image = null;
-	try {
-	    String sql = "SELECT imageFile FROM ImageFiles WHERE imageId = " + id;
-	    Statement s = connection.createStatement();
-	    ResultSet resultSet = s.executeQuery(sql);
-	    resultSet.next();
-	    InputStream inputStream = resultSet.getBinaryStream("imageFile");
-	    image = new Image(inputStream);
-
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	private void executeUpdate(String query) throws SQLException {
+		try (Statement statement = connection.createStatement()) {
+			statement.executeUpdate(query);
+		}
 	}
-	return image;
-    }
 
-    public static ArrayList<Image> getImages(Connection connection) {
-	ArrayList<Image> imageList = null;
-	ResultSet imageSet = null;
-	InputStream inputStream = null;
-
-	try {
-	    String sql = "SELECT * FROM ImageFiles";
-	    PreparedStatement ps = connection.prepareStatement(sql);
-	    imageSet = ps.executeQuery(sql);
-	    inputStream = imageSet.getBinaryStream("imageFile");
-
-	    while (imageSet.next()) {
-		imageList.add(new Image(inputStream));
-	    }
-
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	private ResultSet executeQuery(String query) throws SQLException {
+		return connection.createStatement().executeQuery(query);
 	}
-	return imageList;
-    }
 
-    public static ArrayList<Image> getImages(Connection connection, int productID) {
-	ArrayList<Image> imageList = new ArrayList<>();
-	ResultSet imageSet = null;
+	public ArrayList<InputStream> getImageFiles(int productID) {
+		try {
+			ResultSet imageFileSet = executeQuery("SELECT imageFile FROM Images NATURAL JOIN ImageFiles WHERE productId = " + productID);
 
-	try {
-	    String sql = "SELECT imagefile "
-		    + "FROM images "
-		    + "NATURAL JOIN imageFiles "
-		    + "WHERE images.productid = " + productID;
-	    PreparedStatement ps = connection.prepareStatement(sql);
-	    imageSet = ps.executeQuery();
+			ArrayList<InputStream> imageFiles = new ArrayList<>();
+			while (imageFileSet.next()) {
+				imageFiles.add(imageFileSet.getBinaryStream(1));
+			}
 
-	    while (imageSet.next()) {
-		InputStream inputStream = imageSet.getBinaryStream("imagefile");
-		imageList.add(new Image(inputStream));
-	    }
-
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return imageFiles;
+		} catch (SQLException ex) {
+			Logger.getLogger(ImageHandler.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
 	}
-	return imageList;
-    }
 
-    public static DAMImage getDAMImage(Connection connection, int id) {
-	DAMImage damImage = null;
-	Image image = getImage(connection, id);
-	String title;
-	String category;
-	int productID;
+	public DAMImage getImage(int imageId) {
+		try {
+			ResultSet imageSet = executeQuery("SELECT imageName, categoryName, imageFile "
+							+ "FROM Images NATURAL JOIN Categories NATURAL JOIN ImageFiles "
+							+ "WHERE imageId = " + imageId);
+			imageSet.next();
 
-	try {
-	    PreparedStatement ps = connection.prepareStatement("SELECT Imageid, productId, title, CategoryName, imageFile "
-		    + "FROM Images, ImageFiles "
-		    + "NATURAL JOIN Categories "
-		    + "WHERE Imageid = " + id);
-	    ResultSet images = ps.executeQuery();
-	    images.next();
-
-	    title = images.getString(3);
-	    category = images.getString(4);
-	    productID = images.getInt(2);
-	    damImage = new DAMImage(title, id, category, image, productID);
-
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return new DAMImage(imageId, imageSet.getString(1), imageSet.getString(2), imageSet.getBinaryStream(3));
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
 	}
-	return damImage;
-    }
 
-    public static ArrayList<DAMImage> getDAMImages(Connection connection) {
-	ArrayList<DAMImage> damImages = new ArrayList<>();
-	DAMImage damImage = null;
-	Image image;
-	int id;
-	String title;
-	String category;
-	int productID;
+	public ArrayList<DAMImage> getAllImages() {
+		try {
+			ResultSet imageSet = executeQuery("SELECT imageId, imageName, categoryName, imageFile FROM Images NATURAL JOIN Categories NATURAL JOIN ImageFiles");
 
-	try {
-	    PreparedStatement ps = connection.prepareStatement("SELECT Imageid, productId, title, CategoryName, ImageFiles.imageFile "
-		    + "FROM Images "
-		    + "NATURAL JOIN imageFiles "
-		    + "NATURAL JOIN categories");
-	    ResultSet images = ps.executeQuery();
+			ArrayList<DAMImage> images = new ArrayList<>();
+			while (imageSet.next()) {
+				images.add(new DAMImage(imageSet.getInt(1), imageSet.getString(2), imageSet.getString(3), imageSet.getBinaryStream(4)));
+			}
 
-	    while (images.next()) {
-		id = images.getInt(1);
-		title = images.getString(3);
-		category = images.getString(4);
-		productID = images.getInt(2);
-		image = getImage(connection, id);
-		damImages.add(new DAMImage(title, id, category, image, productID));
-	    }
-
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return images;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
 	}
-	return damImages;
-    }
 
-    public static void deleteImage(Connection connection, int id) {
-	try {
-	    PreparedStatement deleteFromImageFiles = connection.prepareStatement("DELETE FROM ImageFiles WHERE imageId = " + id);
-	    deleteFromImageFiles.executeUpdate();
-	    PreparedStatement deleteFromImages = connection.prepareStatement("DELETE FROM Images WHERE id = " + id);
-	    deleteFromImages.executeUpdate();
+	public boolean createImage(String name, String category, InputStream imageFile) {
+		try {
+			//Creates new category if not exists
+			ResultSet categoryNameSet = executeQuery("SELECT categoryName FROM Categories WHERE categoryName = '" + category + "'");
+			if (!categoryNameSet.next()) {
+				executeUpdate("INSERT INTO Categories (categoryName) VALUES ('" + category + "')");
+			}
 
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			//Gets the categoryId
+			ResultSet categoryIdSet = executeQuery("SELECT categoryId FROM Categories WHERE categoryName = '" + category + "'");
+			categoryIdSet.next();
+			int categoryId = categoryIdSet.getInt(1);
+
+			//Inserts the image
+			executeUpdate("INSERT INTO Images (productId, imageName, categoryId) VALUES (null, '" + name + "', " + categoryId + ")");
+
+			//Gets the imageId
+			ResultSet imageIdSet = executeQuery("SELECT imageId FROM Images WHERE imageName = '" + name + "'");
+			imageIdSet.next();
+			int imageId = imageIdSet.getInt(1);
+
+			//Inserts the imageFile
+			PreparedStatement insertImageFile = connection.prepareStatement("INSERT INTO ImageFiles (imageId, imageFile) VALUES (" + imageId + ", ?)");
+			insertImageFile.setBinaryStream(1, imageFile);
+			insertImageFile.executeUpdate();
+
+			return true;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
+		}
 	}
-    }
+
+	public boolean deleteImage(int imageId) {
+		try {
+			executeUpdate("DELETE FROM ImageFiles WHERE imageId = " + imageId);
+			executeUpdate("DELETE FROM Images WHERE imageId = " + imageId);
+
+			return true;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
+		}
+	}
 
 }

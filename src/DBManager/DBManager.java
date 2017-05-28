@@ -1,35 +1,33 @@
 package DBManager;
 
 import DAM.DAMImage;
-import PIM.PIMProduct;
-import Webshop.Customer2;
+import Webshop.Customer;
 import Webshop.Order;
 import Webshop.OrderLine;
 import Webshop.Product;
 import Webshop.ShoppingBasket;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.image.Image;
 
 public class DBManager implements DatabaseInterface {
 
 	private Connection connection;
 	private ProductHandler productHandler;
+	private ImageHandler imageHandler;
 	private OrderHandler orderHandler;
 	private static DBManager dbManager = null;
 
 	private DBManager() {
-		productHandler = new ProductHandler();
-		orderHandler = new OrderHandler();
-
 		String url = "jdbc:postgresql://localhost:5432/semesterprojekt";
 		String user = "postgres";
 		String password = "1234";
@@ -47,6 +45,10 @@ public class DBManager implements DatabaseInterface {
 		} catch (SQLException ex) {
 			System.out.println("Connection to database failed.");
 		}
+
+		productHandler = new ProductHandler(connection);
+		imageHandler = new ImageHandler(connection);
+		orderHandler = new OrderHandler(connection);
 
 		//Tables are created and data is inserted.
 		//dropTables();
@@ -78,45 +80,198 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public ResultSet getProduct(int productID) {
-		return productHandler.getProduct(connection, productID);
+	public Product getProduct(int productID) {
+		return productHandler.getProduct(productID);
 	}
 
 	@Override
-	public ResultSet getAllProducts() {
-		return productHandler.getAllProducts(connection);
+	public ArrayList<Product> getAllProducts() {
+		return productHandler.getAllProducts();
 	}
 
 	@Override
-	public ResultSet findProducts(String query) {
-		return productHandler.findProducts(connection, query);
-	}
-
-	@Override
-	public ResultSet findProducts(String query, int categoryID) {
-		return productHandler.findProducts(connection, query, categoryID);
+	public ArrayList<Product> findProducts(String query, int categoryID) {
+		return productHandler.findProducts(query, categoryID);
 	}
 
 	@Override
 	public LinkedHashMap<String, Integer> getCategories() {
-		return productHandler.getCategories(connection);
+		return productHandler.getCategories();
 	}
 
 	@Override
-	public ResultSet getProductsInCategory(String category) {
-		return productHandler.getProductsInCategory(connection, category);
-
-	}
-
-	@Override
-	public void addProduct(int category, double price, String description, String name, ArrayList<Integer> imageList) {
-		productHandler.addProduct(connection, category, price, description, name, imageList);
+	public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
+		return productHandler.createProduct(name, category, description, price, imageIdList);
 	}
 
 	@Override
 	public boolean createOrder(Order order) {
-		orderHandler.createOrder(connection, order);
-		return true;
+		return orderHandler.createOrder(order);
+	}
+
+	@Override
+	public DAMImage getImage(int imageId) {
+		return imageHandler.getImage(imageId);
+	}
+
+	@Override
+	public ArrayList<DAMImage> getAllImages() {
+		return imageHandler.getAllImages();
+	}
+
+	@Override
+	public boolean createImage(String name, String category, InputStream imageFile) {
+		return imageHandler.createImage(name, category, imageFile);
+	}
+
+	@Override
+	public boolean deleteImage(int imageId) {
+		return imageHandler.deleteImage(imageId);
+	}
+
+	@Override
+	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket) {
+		try {
+			//Checks if email is unique
+			ResultSet existingEmail = executeQuery("SELECT email FROM Customers WHERE email = '" + email + "'");
+			if (existingEmail.next()) {
+				return false;
+			}
+
+			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Customers "
+							+ "(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country) "
+							+ "VALUES (email, ?, ?, ?, phoneNumber, mobilePhoneNumber, ?, ?, ?, ?)");
+
+			//Checks for all attributes whether they are null are not
+			setStringParameter(preparedStatement, 1, code);
+			setStringParameter(preparedStatement, 2, firstName);
+			setStringParameter(preparedStatement, 3, lastName);
+			setStringParameter(preparedStatement, 4, address);
+			setStringParameter(preparedStatement, 5, postalCode);
+			setStringParameter(preparedStatement, 6, city);
+			setStringParameter(preparedStatement, 7, country);
+
+			preparedStatement.executeUpdate();
+
+			//Gets the customerId
+			ResultSet customerSet = executeQuery("SELECT customerId FROM Customers WHERE email = '" + email + "'");
+			customerSet.next();
+			int customerId = customerSet.getInt(1);
+
+			//Check if shoppingBasket is null. If null then it means that this is a unregisted customer made via checkOut. Otherwise it's made via SignUp
+			if (shoppingBasket == null) {
+				return true;
+			}
+
+			//Insert the new basket to the database
+			executeUpdate("INSERT INTO Baskets (customerId) VALUES (" + customerId + ")");
+
+			//Returns if shoppingBasket is empty
+			if (shoppingBasket.isEmpty()) {
+				return true;
+			}
+
+			//Get the basketId
+			ResultSet basketSet = executeQuery("SELECT basketId FROM Baskets WHERE customerId = " + customerId);
+			basketSet.next();
+			int basketId = basketSet.getInt(1);
+
+			//Insert the products from the shoppingBasket into to the database
+			for (OrderLine orderLine : shoppingBasket.getOrderLines()) {
+				executeUpdate("INSERT INTO ProductsInBaskets (basketId, productId, amount) VALUES ("
+								+ basketId + ", "
+								+ orderLine.getProduct().getId() + ", "
+								+ orderLine.getAmount() + ")");
+			}
+
+			return true;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
+		}
+	}
+
+	private void setStringParameter(PreparedStatement preparedStatement, int parameterIndex, String parameter) {
+		try {
+			if (parameter == null) {
+				preparedStatement.setNull(parameterIndex, Types.VARCHAR);
+			} else {
+				preparedStatement.setString(parameterIndex, parameter);
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	@Override
+	public Customer getCustomer(String email, String code) {
+		try {
+			//Gets customer and stores the attributes for later
+			ResultSet customer = executeQuery("SELECT * FROM Customers WHERE email = '" + email + "' AND code = '" + code + "'");
+			if (!customer.next()) {
+				return null;
+			}
+
+			int customerId, phoneNumber, mobilePhoneNumber;
+			String firstName, lastName, address, postalCode, city, country;
+
+			customerId = customer.getInt("customerId");
+			firstName = customer.getString("firstName");
+			lastName = customer.getString("lastName");
+			phoneNumber = customer.getInt("phoneNumber");
+			mobilePhoneNumber = customer.getInt("mobilePhoneNumber");
+			address = customer.getString("address");
+			postalCode = customer.getString("postalCode");
+			city = customer.getString("city");
+			country = customer.getString("country");
+
+			ArrayList<ShoppingBasket> shoppingBaskets = getShoppingBaskets(customerId);
+
+			return new Customer(customerId, email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBaskets);
+
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class
+							.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
+	}
+
+	private ArrayList<ShoppingBasket> getShoppingBaskets(int customerId) {
+		try {
+			ResultSet basketSet = executeQuery("SELECT basketId FROM Baskets WHERE customerId = " + customerId);
+
+			ArrayList<ShoppingBasket> shoppingBaskets = new ArrayList<>();
+			while (basketSet.next()) {
+				shoppingBaskets.add(getShoppingBasket(basketSet.getInt(1)));
+			}
+
+			return shoppingBaskets;
+
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class
+							.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
+	}
+
+	private ShoppingBasket getShoppingBasket(int basketId) {
+		try {
+			ResultSet orderLineSet = executeQuery("SELECT productId, amount FROM ProductsInBaskets WHERE basketId = " + basketId);
+
+			ArrayList<OrderLine> orderLines = new ArrayList<>();
+			while (orderLineSet.next()) {
+				int productId = orderLineSet.getInt(1);
+				int amount = orderLineSet.getInt(2);
+				orderLines.add(new OrderLine(getProduct(productId), amount));
+			}
+
+			return new ShoppingBasket(basketId, orderLines);
+
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class
+							.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
 	}
 
 	/**
@@ -155,159 +310,6 @@ public class DBManager implements DatabaseInterface {
 			}
 		} catch (SQLException ex) {
 			System.out.println("Failed dropping tables: " + ex);
-		}
-	}
-
-	/**
-	 * Add image to database
-	 *
-	 * @param imagePath
-	 * @param title
-	 * @param category
-	 */
-	@Override
-	public void createImage(String imagePath, String title, int category) {
-		ImageHandler.createImage(connection, imagePath, title, category);
-	}
-
-	@Override
-	public Image getImage(int id) {
-		return ImageHandler.getImage(connection, id);
-	}
-
-	/**
-	 * get images from databse
-	 *
-	 * @return ResultSet
-	 */
-	@Override
-	public ArrayList<Image> getImages() {
-		return ImageHandler.getImages(connection);
-	}
-
-	@Override
-	public ArrayList<Image> getImages(int productID) {
-		return ImageHandler.getImages(connection, productID);
-	}
-
-	@Override
-	public DAMImage getDAMImage(int id) {
-		return ImageHandler.getDAMImage(connection, id);
-	}
-
-	@Override
-	public ArrayList<DAMImage> getDAMImages() {
-		return ImageHandler.getDAMImages(connection);
-	}
-
-	@Override
-	public void deleteImage(int id) {
-		ImageHandler.deleteImage(connection, id);
-	}
-
-	@Override
-	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket) {
-		try {
-			//Checks if email is unique
-			ResultSet existingEmail = executeQuery("SELECT email FROM Customers WHERE email = '" + email + "';");
-			if (existingEmail.next()) {
-				return false;
-			}
-
-			//Gets the next available id in Customers
-			ResultSet maxCustomerId = executeQuery("SELECT max(customerId) FROM Customers;");
-			maxCustomerId.next();
-			int customerId = 1 + maxCustomerId.getInt(1);
-
-			//Insert the new customer to the database
-			String sql = "INSERT INTO Customers (customerId, email, code, firstName, "
-							+ "lastName, phoneNumber, mobilePhoneNumber, address, postalCode, "
-							+ "city, country) VALUES (" + customerId + ", '" + email + "', '"
-							+ code + "', '" + firstName + "', '" + lastName + "', "
-							+ phoneNumber + ", " + mobilePhoneNumber + ", '" + address + "', '"
-							+ postalCode + "', '" + city + "', '" + country + "');";
-			executeUpdate(sql);
-
-			//Gets the next available id in Baskets
-			ResultSet maxBasketId = executeQuery("SELECT max(basketId) FROM Baskets;");
-			maxBasketId.next();
-			int basketId = 1 + maxBasketId.getInt(1);
-
-			//Insert the new basket to the database
-			sql = "INSERT INTO Baskets (basketId, customerId) VALUES (" + basketId + ", " + customerId + ")";
-			executeUpdate(sql);
-
-			//Insert the products from the basket into to the database, if there is a basket
-			if (shoppingBasket == null) {
-				return true;
-			}
-			for (OrderLine orderLine : shoppingBasket.getBasketContent()) {
-				sql = "INSERT INTO ProductsInBaskets (basketId, productId, amount) VALUES ("
-								+ basketId + ", " + orderLine.getProduct().getId() + ", " + orderLine.getAmount() + ");";
-				executeUpdate(sql);
-			}
-
-			return true;
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-			return false;
-		}
-	}
-
-	@Override
-	public Customer2 getCustomer(String email, String code) {
-		try {
-			//Gets customer and stores the attributes for later
-			ResultSet customer = executeQuery("SELECT * FROM Customers WHERE email = '" + email + "' AND code = '" + code + "';");
-			if (!customer.next()) {
-				return null;
-			}
-			int customerId, phoneNumber, mobilePhoneNumber;
-			String firstName, lastName, address, postalCode, city, country;
-			customerId = customer.getInt("customerId");
-			firstName = customer.getString("firstName");
-			lastName = customer.getString("lastName");
-			phoneNumber = customer.getInt("phoneNumber");
-			mobilePhoneNumber = customer.getInt("mobilePhoneNumber");
-			address = customer.getString("address");
-			postalCode = customer.getString("postalCode");
-			city = customer.getString("city");
-			country = customer.getString("country");
-
-			//Gets all basketId's belonging to the customer
-			ArrayList<Integer> basketIdList = new ArrayList<>();
-			ResultSet basketIdSet = executeQuery("SELECT basketId FROM Baskets WHERE customerId = " + customerId + ";");
-			while (basketIdSet.next()) {
-				basketIdList.add(basketIdSet.getInt(1));
-			}
-
-			ArrayList<ShoppingBasket> shoppingBaskets = new ArrayList<>();
-			for (int basketId : basketIdList) {
-				shoppingBaskets.add(getShoppingBasket(basketId));
-			}
-
-			return new Customer2(customerId, email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBaskets);
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-			return null;
-		}
-	}
-
-	private ShoppingBasket getShoppingBasket(int basketId) {
-		try {
-			ShoppingBasket shoppingBasket = new ShoppingBasket();
-			ResultSet orderLineSet = executeQuery("SELECT productId, amount FROM ProductsInBaskets WHERE basketId = " + basketId + ";");
-			int productId, amount;
-			while (orderLineSet.next()) {
-				productId = orderLineSet.getInt(1);
-				amount = orderLineSet.getInt(2);
-				//OrderLine orderLine = new OrderLine(getProduct(productId), amount);
-			}
-
-			return shoppingBasket;
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-			return null;
 		}
 	}
 

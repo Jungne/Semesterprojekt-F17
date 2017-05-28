@@ -6,7 +6,7 @@
 package DBManager;
 
 import DAM.DAMImage;
-import Webshop.Customer2;
+import Webshop.Customer;
 import Webshop.Order;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -142,7 +142,7 @@ public class DBManagerTest {
 		String name = "";
 		ArrayList<Integer> imageList = null;
 		DBManager instance = null;
-		instance.addProduct(category, price, description, name, imageList);
+		instance.createProduct(category, price, description, name, imageList);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -280,7 +280,7 @@ public class DBManagerTest {
 		System.out.println("getDAMImages");
 		DBManager instance = null;
 		ArrayList<DAMImage> expResult = null;
-		ArrayList<DAMImage> result = instance.getDAMImages();
+		ArrayList<DAMImage> result = instance.getAllImages();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -332,8 +332,8 @@ public class DBManagerTest {
 		String email = "";
 		String code = "";
 		DBManager instance = null;
-		Customer2 expResult = null;
-		Customer2 result = instance.getCustomer(email, code);
+		Customer expResult = null;
+		Customer result = instance.getCustomer(email, code);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

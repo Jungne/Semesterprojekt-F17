@@ -38,11 +38,10 @@
 								<Button fx:id="searchButton" layoutX="298.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleSearchButton" text="Søg" />
 								<ChoiceBox fx:id="categoriesChoiceBox" layoutX="447.0" layoutY="14.0" prefHeight="31.0" prefWidth="135.0" />
 								<Label layoutX="373.0" layoutY="19.0" text="Kategorier:" />
-								<Button layoutX="447.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleFilterButton" prefHeight="31.0" prefWidth="135.0" text="Filter" />
 								<Button fx:id="addToBasketButton" layoutX="250.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAddToBasketButton" text="Tilføj til kurv" />
-                        <Button fx:id="imageLeftButton" disable="true" layoutX="614.0" layoutY="164.0" mnemonicParsing="false" onAction="#handleLeftImageButton" text="&lt;" />
-                        <Button fx:id="imageRightButton" disable="true" layoutX="738.0" layoutY="164.0" mnemonicParsing="false" onAction="#handleImageRightButton" text="&gt;" />
-                        <Label fx:id="imageNumberLabel" layoutX="662.0" layoutY="169.0" text="0 ud af 0" textAlignment="CENTER" />
+								<Button fx:id="imageLeftButton" disable="true" layoutX="614.0" layoutY="164.0" mnemonicParsing="false" onAction="#handleLeftImageButton" text="&lt;" />
+								<Button fx:id="imageRightButton" disable="true" layoutX="738.0" layoutY="164.0" mnemonicParsing="false" onAction="#handleImageRightButton" text="&gt;" />
+								<Label fx:id="imageNumberLabel" layoutX="662.0" layoutY="169.0" text="0 ud af 0" textAlignment="CENTER" />
 							</children>
 						</AnchorPane>
 					</content>
@@ -168,31 +167,31 @@
 								<Label layoutX="351.0" layoutY="59.0" text="Kategori:" />
 								<ChoiceBox fx:id="imageCategoryChoiceBox" layoutX="435.0" layoutY="54.0" prefHeight="31.0" prefWidth="228.0" />
 								<TextField fx:id="imageTitleTextField" layoutX="61.0" layoutY="54.0" prefHeight="31.0" prefWidth="275.0" />
-                        <ListView fx:id="DAMListView" layoutX="17.0" layoutY="139.0" prefHeight="404.0" prefWidth="764.0" />
-                        <Button fx:id="DAMDeleteButton" layoutX="134.0" layoutY="96.0" mnemonicParsing="false" onAction="#handleDAMDeleteButton" prefHeight="31.0" prefWidth="95.0" text="Slet" />
-                        <Label layoutX="260.0" layoutY="117.0" text="Titel" />
-                        <Label layoutX="418.0" layoutY="117.0" text="Kategori" />
+								<ListView fx:id="DAMListView" layoutX="17.0" layoutY="139.0" prefHeight="404.0" prefWidth="764.0" />
+								<Button fx:id="DAMDeleteButton" layoutX="134.0" layoutY="96.0" mnemonicParsing="false" onAction="#handleDAMDeleteButton" prefHeight="31.0" prefWidth="95.0" text="Slet" />
+								<Label layoutX="260.0" layoutY="117.0" text="Titel" />
+								<Label layoutX="418.0" layoutY="117.0" text="Kategori" />
 							</children>
 						</AnchorPane>
 					</content>
 				</Tab>
-            <Tab text="PIM">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab text="Database">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Button fx:id="dbCreateButton" layoutX="152.0" layoutY="196.0" mnemonicParsing="false" onAction="#handledbCreateButton" text="Create" />
-                        <Button fx:id="dbDropButton" layoutX="244.0" layoutY="196.0" mnemonicParsing="false" onAction="#handledbDropButton" text="Drop" />
-                        <Button fx:id="dbInsertButton" layoutX="335.0" layoutY="196.0" mnemonicParsing="false" onAction="#handledbInsertButton" text="Insert" />
-                        <Button fx:id="updateButton" layoutX="233.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleUpdateButton" text="Update" />
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
+				<Tab text="PIM">
+					<content>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+					</content>
+				</Tab>
+				<Tab text="Database">
+					<content>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+							<children>
+								<Button fx:id="dbCreateButton" layoutX="152.0" layoutY="196.0" mnemonicParsing="false" onAction="#handledbCreateButton" text="Create" />
+								<Button fx:id="dbDropButton" layoutX="244.0" layoutY="196.0" mnemonicParsing="false" onAction="#handledbDropButton" text="Drop" />
+								<Button fx:id="dbInsertButton" layoutX="335.0" layoutY="196.0" mnemonicParsing="false" onAction="#handledbInsertButton" text="Insert" />
+								<Button fx:id="updateButton" layoutX="233.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleUpdateButton" text="Update" />
+							</children>
+						</AnchorPane>
+					</content>
+				</Tab>
 			</tabs>
 		</TabPane>
 		<ToggleButton fx:id="testLogInOutButton" layoutX="728.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleTestLogInOutButton" prefHeight="25.0" prefWidth="70.0" text="Log ind" />

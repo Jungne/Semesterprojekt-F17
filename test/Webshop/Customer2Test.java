@@ -43,7 +43,7 @@ public class Customer2Test {
 	@Test
 	public void testGetId() {
 		System.out.println("getId");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		int expResult = 0;
 		int result = instance.getId();
 		assertEquals(expResult, result);
@@ -57,7 +57,7 @@ public class Customer2Test {
 	@Test
 	public void testGetEmail() {
 		System.out.println("getEmail");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		String expResult = "";
 		String result = instance.getEmail();
 		assertEquals(expResult, result);
@@ -71,7 +71,7 @@ public class Customer2Test {
 	@Test
 	public void testGetCode() {
 		System.out.println("getCode");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		String expResult = "";
 		String result = instance.getCode();
 		assertEquals(expResult, result);
@@ -85,7 +85,7 @@ public class Customer2Test {
 	@Test
 	public void testGetFirstName() {
 		System.out.println("getFirstName");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		String expResult = "";
 		String result = instance.getFirstName();
 		assertEquals(expResult, result);
@@ -99,7 +99,7 @@ public class Customer2Test {
 	@Test
 	public void testGetLastName() {
 		System.out.println("getLastName");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		String expResult = "";
 		String result = instance.getLastName();
 		assertEquals(expResult, result);
@@ -113,7 +113,7 @@ public class Customer2Test {
 	@Test
 	public void testGetPhoneNumber() {
 		System.out.println("getPhoneNumber");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		int expResult = 0;
 		int result = instance.getPhoneNumber();
 		assertEquals(expResult, result);
@@ -127,7 +127,7 @@ public class Customer2Test {
 	@Test
 	public void testGetMobilePhoneNumber() {
 		System.out.println("getMobilePhoneNumber");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		int expResult = 0;
 		int result = instance.getMobilePhoneNumber();
 		assertEquals(expResult, result);
@@ -141,7 +141,7 @@ public class Customer2Test {
 	@Test
 	public void testGetAddress() {
 		System.out.println("getAddress");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		String expResult = "";
 		String result = instance.getAddress();
 		assertEquals(expResult, result);
@@ -155,7 +155,7 @@ public class Customer2Test {
 	@Test
 	public void testGetPostalCode() {
 		System.out.println("getPostalCode");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		String expResult = "";
 		String result = instance.getPostalCode();
 		assertEquals(expResult, result);
@@ -169,7 +169,7 @@ public class Customer2Test {
 	@Test
 	public void testGetCity() {
 		System.out.println("getCity");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		String expResult = "";
 		String result = instance.getCity();
 		assertEquals(expResult, result);
@@ -183,7 +183,7 @@ public class Customer2Test {
 	@Test
 	public void testGetCountry() {
 		System.out.println("getCountry");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		String expResult = "";
 		String result = instance.getCountry();
 		assertEquals(expResult, result);
@@ -197,7 +197,7 @@ public class Customer2Test {
 	@Test
 	public void testGetShoppingBasket() {
 		System.out.println("getShoppingBasket");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		ShoppingBasket expResult = null;
 		ShoppingBasket result = instance.getShoppingBasket();
 		assertEquals(expResult, result);
@@ -211,7 +211,7 @@ public class Customer2Test {
 	@Test
 	public void testIsRegisted() {
 		System.out.println("isRegisted");
-		Customer2 instance = new Customer2();
+		Customer instance = new Customer();
 		boolean expResult = false;
 		boolean result = instance.isRegisted();
 		assertEquals(expResult, result);

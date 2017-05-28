@@ -49,7 +49,7 @@ public class DAMManagerTest {
 		String title = "";
 		int category = 0;
 		DAMManager instance = new DAMManager();
-		instance.addImage(imagePath, title, category);
+		instance.createImage(imagePath, title, category);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}

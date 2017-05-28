@@ -9,89 +9,85 @@ import javafx.scene.layout.HBox;
 
 public class ProductHBoxCell extends HBox {
 
-    ImageView imageView = new ImageView();
-    Label name = new Label();
-    Label price = new Label();
-    Label amountLabel = new Label();
-    Label totalPrice = new Label();
-    private int id;
+	ImageView imageView = new ImageView();
+	Label name = new Label();
+	Label price = new Label();
+	Label amountLabel = new Label();
+	Label totalPrice = new Label();
+	private int id;
 
-    public ProductHBoxCell(Product product) {
-	//Sets the padding and spacing.
-	super();
-	this.setSpacing(10);
+	public ProductHBoxCell(Product product) {
+		//Sets the padding and spacing.
+		super();
+		this.setSpacing(10);
 
-	id = product.getId();
+		id = product.getId();
 
-	imageView.setImage(product.getImageList().get(0));
+		imageView.setImage(new Image(product.getImageFiles().get(0)));
 
-	name.setText(product.getName());
-	name.setPrefWidth(
-		150);
-	price.setText(Double.toString(product.getPrice()) + "kr");
+		name.setText(product.getName());
+		name.setPrefWidth(150);
+		price.setText(Double.toString(product.getPrice()) + "kr");
 
-	imageView.setFitWidth(
-		100);
-	imageView.setPreserveRatio(
-		true);
+		imageView.setFitWidth(100);
+		imageView.setPreserveRatio(true);
 
-	this.getChildren()
-		.addAll(imageView, name, price);
-    }
+		this.getChildren().addAll(imageView, name, price);
+	}
 
-    public ProductHBoxCell(OrderLine orderLine) {
-	//Sets the padding and spacing.
-	super();
-	this.setSpacing(10);
+	public ProductHBoxCell(OrderLine orderLine) {
+		//Sets the padding and spacing.
+		super();
+		this.setSpacing(10);
 
-	Product product = orderLine.getProduct();
-	int amount = orderLine.getAmount();
+		Product product = orderLine.getProduct();
+		int amount = orderLine.getAmount();
 
-	id = product.getId();
+		id = product.getId();
 
-	imageView.setImage(product.getImageList().get(0));
-	name.setText(product.getName());
-	price.setText(Double.toString(product.getPrice()) + "kr");
-	amountLabel.setText(Integer.toString(amount));
-	totalPrice.setText(Double.toString(product.getPrice() * amount) + "kr");
+		imageView.setImage(new Image(product.getImageFiles().get(0)));
+		name.setText(product.getName());
+		price.setText(Double.toString(product.getPrice()) + "kr");
+		amountLabel.setText(Integer.toString(amount));
+		totalPrice.setText(Double.toString(product.getPrice() * amount) + "kr");
 
-	name.setPrefWidth(150);
-	price.setPrefWidth(100);
-	amountLabel.setPrefWidth(100);
-	imageView.setFitWidth(100);
-	imageView.setPreserveRatio(true);
+		name.setPrefWidth(150);
+		price.setPrefWidth(100);
+		amountLabel.setPrefWidth(100);
+		imageView.setFitWidth(100);
+		imageView.setPreserveRatio(true);
 
-	this.getChildren().addAll(imageView, name, price, amountLabel, totalPrice);
-    }
+		this.getChildren().addAll(imageView, name, price, amountLabel, totalPrice);
+	}
 
-    public ProductHBoxCell(DAMImage damImage) {
-	//Sets the padding and spacing.
-	super();
-	this.setSpacing(10);
+	public ProductHBoxCell(DAMImage damImage) {
+		//Sets the padding and spacing.
+		super();
+		this.setSpacing(10);
 
-	Label category = new Label();
+		Label category = new Label();
 
-	id = damImage.getId();
+		id = damImage.getId();
 
-	imageView.setImage(damImage.getImage());
-	name.setText(damImage.getTitle());
-	name.setPrefWidth(150);
+		imageView.setImage(new Image(damImage.getImageFile()));
+		name.setText(damImage.getName());
+		name.setPrefWidth(150);
 
-	category.setText(damImage.getCategory());
-	category.setPrefWidth(150);
+		category.setText(damImage.getCategory());
+		category.setPrefWidth(150);
 
-	imageView.setFitWidth(200);
-	imageView.setPreserveRatio(true);
+		imageView.setFitWidth(200);
+		imageView.setPreserveRatio(true);
 
-	this.getChildren().addAll(imageView, name, category);
-    }
+		this.getChildren().addAll(imageView, name, category);
+	}
 
-    public int getProductId() {
-	return id;
-    }
+	public int getProductId() {
+		return id;
+	}
 
-    @Override
-    public String toString() {
-	return id + name.getText();
-    }
+	@Override
+	public String toString() {
+		return id + name.getText();
+	}
 }

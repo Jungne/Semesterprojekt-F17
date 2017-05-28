@@ -2,8 +2,13 @@ package DAM;
 
 import DBManager.DBManager;
 import DBManager.DatabaseInterface;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import javafx.scene.image.Image;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DAMManager {
 
@@ -13,27 +18,26 @@ public class DAMManager {
 		databaseInterface = DBManager.getInstance();
 	}
 
-	public void addImage(String imagePath, String title, int category) {
-		databaseInterface.createImage(imagePath, title, category);
-	}
-
-	public Image getImage(int id) {
-		return databaseInterface.getImage(id);
-	}
-
-	public ArrayList<Image> getImages() {
-		return databaseInterface.getImages();
-	}
-
-	public DAMImage getDAMImage(int id) {
-		return databaseInterface.getDAMImage(id);
+	public DAMImage getImage(int imageId) {
+		return databaseInterface.getImage(imageId);
 	}
 
 	public ArrayList<DAMImage> getDAMImages() {
-		return databaseInterface.getDAMImages();
+		return databaseInterface.getAllImages();
 	}
 
-	public void deleteImage(int id) {
-		databaseInterface.deleteImage(id);
+	public boolean createImage(String name, String category, String imagePath) {
+		try {
+			InputStream imageFile = new FileInputStream(new File(imagePath));
+			return databaseInterface.createImage(name, category, imageFile);
+		} catch (FileNotFoundException ex) {
+			Logger.getLogger(DAMManager.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
+		}
 	}
+
+	public boolean deleteImage(int imageId) {
+		return databaseInterface.deleteImage(imageId);
+	}
+
 }

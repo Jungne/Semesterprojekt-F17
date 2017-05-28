@@ -10,10 +10,6 @@ public class OrderLine {
 		this.amount = amount;
 	}
 
-	public OrderLine(OrderLine orderLine) {
-		this(orderLine.product, orderLine.amount);
-	}
-
 	/**
 	 * @return the product
 	 */
@@ -38,8 +34,4 @@ public class OrderLine {
 		this.amount = amount < 0 ? 0 : amount;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		return this.product.equals(((OrderLine) o).product) && this.amount == ((OrderLine) o).amount;
-	}
 }

@@ -123,7 +123,7 @@ public class ImageHandlerTest {
 		System.out.println("getDAMImages");
 		Connection connection = null;
 		ArrayList<DAMImage> expResult = null;
-		ArrayList<DAMImage> result = ImageHandler.getDAMImages(connection);
+		ArrayList<DAMImage> result = ImageHandler.getAllImageFiles(connection);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

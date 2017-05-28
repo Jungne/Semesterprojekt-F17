@@ -1,134 +1,140 @@
 package DBManager;
 
 import Webshop.Product;
-import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ProductHandler {
 
-    public ResultSet getProduct(Connection connection, int productID) {
+	private Connection connection;
+	private ImageHandler imageHandler;
 
-	ResultSet productResultSet = null;
-	try {
-	    PreparedStatement ps = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
-		    + "FROM products\n"
-		    + "NATURAL JOIN categories\n"
-		    + "WHERE productid = " + productID);
-	    productResultSet = ps.executeQuery();
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	public ProductHandler(Connection connection) {
+		this.connection = connection;
+		this.imageHandler = new ImageHandler(connection);
 	}
-	return productResultSet;
-    }
 
-    public ResultSet getAllProducts(Connection connection) {
-	ResultSet productsResultSet = null;
-	ArrayList<Product> products = null;
-	try {
-	    PreparedStatement ps = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
-		    + "FROM products\n"
-		    + "NATURAL JOIN categories");
-	    productsResultSet = ps.executeQuery();
-
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	private void executeUpdate(String query) throws SQLException {
+		try (Statement statement = connection.createStatement()) {
+			statement.executeUpdate(query);
+		}
 	}
-	return productsResultSet;
-    }
 
-    public ResultSet findProducts(Connection connection, String query) {
-	ResultSet productsResultSet = null;
-	try {
-	    PreparedStatement ps = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
-		    + "FROM Products\n"
-		    + "NATURAL JOIN categories\n"
-		    + "WHERE LOWER(productName) LIKE '%" + query.toLowerCase() + "%'");
-	    productsResultSet = ps.executeQuery();
-
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	private ResultSet executeQuery(String query) throws SQLException {
+		return connection.createStatement().executeQuery(query);
 	}
-	return productsResultSet;
-    }
 
-    public ResultSet findProducts(Connection connection, String query, int categoryID) {
-	ResultSet productsResultSet = null;
-	try {
-	    PreparedStatement ps = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
-		    + "FROM Products\n"
-		    + "NATURAL JOIN categories\n"
-		    + "WHERE LOWER(productName) LIKE '%" + query.toLowerCase() + "%' AND categoryID = " + categoryID);
-	    productsResultSet = ps.executeQuery();
+	public Product getProduct(int productID) {
+		try {
+			ResultSet productSet = executeQuery("SELECT productId, productName, "
+							+ "categoryName, description, price FROM Products NATURAL JOIN "
+							+ "Categories WHERE productId = " + productID + ";");
 
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			ArrayList<InputStream> imageFiles = imageHandler.getImageFiles(productID);
+
+			return new Product(productSet.getInt(1), productSet.getString(2), productSet.getString(3), productSet.getString(4), productSet.getDouble(5), imageFiles);
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
 	}
-	return productsResultSet;
-    }
 
-    public LinkedHashMap<String, Integer> getCategories(Connection connection) {
-	LinkedHashMap<String, Integer> categories = new LinkedHashMap<>();
-	try {
-	    PreparedStatement ps = connection.prepareStatement("SELECT categoryName, categoryid FROM categories");
-	    ResultSet components = ps.executeQuery();
-	    while (components.next()) {
-		categories.put(components.getString(1), components.getInt(2));
-	    }
+	public ArrayList<Product> getAllProducts() {
+		try {
+			ResultSet productSet = executeQuery("SELECT productId, productName, categoryName, description, price FROM Products NATURAL JOIN Categories");
 
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-	    System.out.println("Error");
+			ArrayList<Product> products = new ArrayList<>();
+			while (productSet.next()) {
+				ArrayList<InputStream> imageFiles = imageHandler.getImageFiles(productSet.getInt(1));
+				products.add(new Product(productSet.getInt(1), productSet.getString(2), productSet.getString(3), productSet.getString(4), productSet.getDouble(5), imageFiles));
+			}
+
+			return products;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
 	}
-	return categories;
-    }
 
-    public ResultSet getProductsInCategory(Connection connection, String category) {
-	ResultSet productsResultSet = null;
-	try {
-	    PreparedStatement ps = connection.prepareStatement("SELECT productName, productid, categoryName, description, price\n"
-		    + "FROM Products\n"
-		    + "NATURAL JOIN categories\n"
-		    + "WHERE categoryName = '" + category + "'");
-	    productsResultSet = ps.executeQuery();
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-	    System.out.println("error");
+	public ArrayList<Product> findProducts(String query, int categoryID) {
+		try {
+			ResultSet productSet;
+			if (categoryID == -1) {
+				productSet = executeQuery("SELECT productId, productName, categoryName, description, price FROM Products NATURAL JOIN Categories "
+								+ "WHERE LOWER(productName) LIKE '%" + query.toLowerCase() + "%' AND categoryId = " + categoryID);
+			} else {
+				productSet = executeQuery("SELECT productId, productName, categoryName, description, price FROM Products NATURAL JOIN Categories "
+								+ "WHERE LOWER(productName) LIKE '%" + query.toLowerCase() + "%'");
+			}
+
+			ArrayList<Product> products = new ArrayList<>();
+			while (productSet.next()) {
+				ArrayList<InputStream> imageFiles = imageHandler.getImageFiles(productSet.getInt(1));
+				products.add(new Product(productSet.getInt(1), productSet.getString(2), productSet.getString(3), productSet.getString(4), productSet.getDouble(5), imageFiles));
+			}
+
+			return products;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
 	}
-	return productsResultSet;
-    }
 
-    public void addProduct(Connection connection, int category, double price, String description, String name, ArrayList<Integer> imageList) {
-	try {
-	    //Getting new id for product 
-	    PreparedStatement psId = connection.prepareStatement("SELECT max(id) FROM Products;");
+	public LinkedHashMap<String, Integer> getCategories() {
+		try {
+			LinkedHashMap<String, Integer> categories = new LinkedHashMap<>();
+			ResultSet categorySet = executeQuery("SELECT categoryId, categoryName FROM categories");
 
-	    ResultSet maxProductId = psId.executeQuery();
-	    maxProductId.next();
-	    int productId = 1 + maxProductId.getInt(1);
+			while (categorySet.next()) {
+				categories.put(categorySet.getString(2), categorySet.getInt(1));
+			}
 
-	    //Query inserting products  
-	    PreparedStatement ps = connection.prepareStatement("INSERT INTO Products (id, productName, categoryId, description, price) VALUES (" + productId + ", " + name + ", " + category + ", " + description + ", " + price + ")");
-	    ps.executeUpdate();
-
-	    //Query inserting images
-	    PreparedStatement psImages = connection.prepareStatement("UPDATE Images SET productId = '" + productId + "' WHERE id = '?'");
-
-	    for (Integer i : imageList) {
-		psImages.setInt(1, i);
-		psImages.executeUpdate();
-	    }
-
-	} catch (SQLException ex) {
-	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return categories;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			System.out.println("Error");
+			return null;
+		}
 	}
-    }
+
+	public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
+		try {
+			//Creates new category if not exists
+			ResultSet categoryNameSet = executeQuery("SELECT categoryName FROM Categories WHERE categoryName = '" + category + "'");
+			if (!categoryNameSet.next()) {
+				executeUpdate("INSERT INTO Categories (categoryName) VALUES ('" + category + "')");
+			}
+
+			//Gets the categoryId
+			ResultSet categoryIdSet = executeQuery("SELECT categoryId FROM Categories WHERE categoryName = '" + category + "'");
+			categoryIdSet.next();
+			int categoryId = categoryIdSet.getInt(1);
+
+			//Inserts the product
+			executeUpdate("INSERT INTO Products (productName, categoryId, description, price) VALUES ('" + name + "', " + categoryId + ", '" + description + "', " + price + ")");
+
+			//Gets the productId
+			ResultSet productIdSet = executeQuery("SELECT productId FROM Products WHERE productName = '" + name + "'");
+			productIdSet.next();
+			int productId = productIdSet.getInt(1);
+
+			//Update Images to references to this product
+			for (int imageId : imageIdList) {
+				executeUpdate("UPDATE Images SET productId = " + productId + " WHERE imageId = " + imageId);
+			}
+
+			return true;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
+		}
+	}
 
 }
