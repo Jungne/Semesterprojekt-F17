@@ -12,13 +12,8 @@ public class FileHandler {
 
     private static DatabaseInterface databaseInterface = DBManager.getInstance();
 
-    public FileHandler() {
-        databaseInterface = DBManager.getInstance();
-    }
-
-    public ArrayList<DAMImage> getDAMImages() {
-        ArrayList<DAMImage> damImageList = new ArrayList<>();
-        LinkedList<HashMap<String, String>> damImageMapList = databaseInterface.getAllImages();
+    public static ArrayList<DAMImage> createDAMImages(LinkedList<HashMap<String, String>> damImageMapList) {
+	ArrayList<DAMImage> damImageList = new ArrayList<>();
 
         for (HashMap<String, String> damImageMap : damImageMapList) {
             int imageID = Integer.parseInt(damImageMap.get("imageID"));
