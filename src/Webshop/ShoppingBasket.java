@@ -44,7 +44,7 @@ public class ShoppingBasket {
 	 */
 	private OrderLine getExistingOrderLine(Product product) {
 		for (OrderLine orderLine : getOrderLines()) {
-			if (orderLine.getProduct().equals(product)) {
+			if (orderLine.getProduct().getId() == product.getId()) {
 				return orderLine;
 			}
 		}

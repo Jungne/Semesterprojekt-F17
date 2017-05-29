@@ -221,7 +221,7 @@ public class FXMLDocumentController implements Initializable {
 
 	updateChoiceBoxes();
     }
-
+    
     private void showProducts(ArrayList<Product> products, ListView listview) {
 	List<ProductHBoxCell> list = new ArrayList<>();
 	for (Product product : products) {
