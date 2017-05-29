@@ -45,10 +45,12 @@ public interface WebshopInterface {
 
 	public void emptyShoppingBasket(int basketId);
 
+	public Order getLatestOrder(int customerId);
+
 	//CheckOut for guests
-	public Order checkOut(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country);
+	public int checkOut(String email, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country);
 
 	//CheckOut for customers
-	public Order checkOut(int basketId);
+	public boolean checkOut(int basketId);
 
 }

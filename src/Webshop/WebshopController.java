@@ -9,14 +9,10 @@ import java.util.LinkedHashMap;
 public class WebshopController implements WebshopInterface {
 
 	private DatabaseInterface databaseInterface;
-	private Catalog catalog;
-	private OrderHistory orderHistory;
 	private Customer customer;
 
 	public WebshopController() throws IOException {
 		this.databaseInterface = DBManager.getInstance();
-		this.catalog = new Catalog();
-		this.orderHistory = new OrderHistory();
 		this.customer = new Customer();
 	}
 
@@ -59,12 +55,12 @@ public class WebshopController implements WebshopInterface {
 		}
 
 		//Saves the customer in the database
-		if (!databaseInterface.createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket)) {
+		if (!databaseInterface.createCustomer(new Customer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country), shoppingBasket)) {
 			return false;
 		}
 
 		//Sets the current customer to the newly signed up customer
-		this.customer = databaseInterface.getCustomer(email, code);
+		this.customer = databaseInterface.getCustomer(email);
 		return true;
 	}
 
@@ -148,33 +144,60 @@ public class WebshopController implements WebshopInterface {
 	}
 
 	@Override
-	public Order checkOut(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
-		//If code is given
-		//
-		//Check if all information is valid (also is email unique?)and then check if there is anything in basket
-		//Fill and createCustomer and then return customerId (create customer without any baskets)
-		//Create order from customerid and basket and then return orderInfo -> createOrder(customerId, shoppingBasket)
-		//Destroy local customer and initiate new unregisted customer
-		//
+	public Order getLatestOrder(int customerId) {
+		return databaseInterface.getLatestOrder(customerId);
+	}
+
+	/**
+	 * Checkouts an unregisted customer. When checkout happens a customer is
+	 * created. That customers id is returned. -1 is returned if checkout failes.
+	 *
+	 * @param email
+	 * @param firstName
+	 * @param lastName
+	 * @param phoneNumber
+	 * @param mobilePhoneNumber
+	 * @param address
+	 * @param postalCode
+	 * @param city
+	 * @param country
+	 * @return the customerId of the customer that was created when checkout
+	 * happened. -1 is returned if checkout failes.
+	 */
+	@Override
+	public int checkOut(String email, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
 		//Check if any information is null and if there is anything in basket
 		if (email == null || firstName == null || lastName == null || address == null || postalCode == null || city == null || country == null || customer.getFirstShoppingBasket().isEmpty()) {
-			return null;
+			return -1;
 		}
 
 		//Tries to create the customer
-		if (!databaseInterface.createCustomer(email, null, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, null)) {
-
+		if (!databaseInterface.createCustomer(new Customer(email, null, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country), null)) {
+			return -1;
 		}
 
-		return null;
+		//Gets the newly signed up customer
+		Customer newCustomer = databaseInterface.getCustomer(email);
+
+		//Creates and saves the order in database and returnes the information about the order
+		if (!OrderHistory.createOrder(newCustomer, customer.getFirstShoppingBasket())) {
+			return -1;
+		}
+		//Still needs to fix getLatestOrder() and createOrder() back in OrderHandler
+
+		//Destroy local customer and initiate new unregisted customer
+		//TODO
+		//
+		//Returns the customerId of the newly signed up customer
+		return databaseInterface.getCustomerId(email);
 	}
 
 	@Override
-	public Order checkOut(int basketId) {
+	public boolean checkOut(int basketId) {
 		//Check if there is anything in the basket
 		//Create order from local customer and shoppingBasket(gained from basketId) and then return the orderInfo -> createOrder(customerid, shoppingBasket)
 		//Delete that basket locally and in the datebase
-		return null;
+		return false;
 	}
 
 }

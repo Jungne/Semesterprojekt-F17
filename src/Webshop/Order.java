@@ -18,6 +18,14 @@ public class Order {
 		this.shoppingBasket = shoppingBasket;
 	}
 
+	public Order(Customer customer, ShoppingBasket shoppingBasket) {
+		this.id = -1;
+		this.customer = customer;
+		this.date = null;
+		this.orderStatus = OrderStatus.SENT;
+		this.shoppingBasket = shoppingBasket;
+	}
+
 	/**
 	 * @return the id
 	 */

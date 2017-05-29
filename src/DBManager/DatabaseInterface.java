@@ -21,6 +21,8 @@ public interface DatabaseInterface {
 
 	public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList);
 
+	public Order getLatestOrder(int customerId);
+	
 	public boolean createOrder(Order order);
 
 	public DAMImage getImage(int imageId);
@@ -31,8 +33,12 @@ public interface DatabaseInterface {
 
 	public boolean deleteImage(int imageId);
 
+	public int getCustomerId(String email);
+	
+	public Customer getCustomer(String email);
+
 	public Customer getCustomer(String email, String code);
 
-	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket);
+	public boolean createCustomer(Customer customer, ShoppingBasket shoppingBasket);
 
 }

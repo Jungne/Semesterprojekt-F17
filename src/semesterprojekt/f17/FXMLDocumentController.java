@@ -305,17 +305,20 @@ public class FXMLDocumentController implements Initializable {
 	private void handleCheckOut_ConfirmOrderButton(ActionEvent event) {
 		CheckOut_PaymentPane.setVisible(true);
 		CheckOut_InformationPane.setVisible(false);
-		Order order = isLoggedIn ? webshopController.checkOut(1) : webshopController.checkOut(
-						CheckOut_URCPane_EmailTextField.getText(),
-						"code",
-						CheckOut_URCPane_FirstnameTextField.getText(),
-						CheckOut_URCPane_LastnameTextField.getText(),
-						Integer.parseInt(CheckOut_URCPane_PhoneTextField.getText()),
-						88888888,
-						"address",
-						"postalCode",
-						"city",
-						"country");
+		if (isLoggedIn) {
+			webshopController.checkOut(1);
+		} else {
+			webshopController.checkOut(
+							CheckOut_URCPane_EmailTextField.getText(),
+							CheckOut_URCPane_FirstnameTextField.getText(),
+							CheckOut_URCPane_LastnameTextField.getText(),
+							Integer.parseInt(CheckOut_URCPane_PhoneTextField.getText()),
+							88888888,
+							"address",
+							"postalCode",
+							"city",
+							"country");
+		}
 
 		CheckOut_URCPane_FirstnameTextField.setText("");
 		CheckOut_URCPane_LastnameTextField.setText("");
@@ -324,6 +327,9 @@ public class FXMLDocumentController implements Initializable {
 		String text = "Ordrekvittering\n"
 						+ "-------------------------------\n"
 						+ "\n";
+
+		Order order = webshopController.getLatestOrder(1);
+
 		for (OrderLine item : order.getShoppingBasket().getOrderLines()) {
 			text += "" + item.getAmount() + "x " + item.getProduct().getName() + " : " + item.getProduct().getPrice() + "kr\n";
 		}
