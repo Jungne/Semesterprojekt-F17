@@ -13,11 +13,11 @@ import java.util.logging.Logger;
 public class DAMManager {
 
 	private DatabaseInterface databaseInterface;
-        private FileHandler fileHandler;
+	private FileHandler fileHandler;
 
 	public DAMManager() {
 		databaseInterface = DBManager.getInstance();
-                fileHandler = new FileHandler();
+		fileHandler = new FileHandler();
 	}
 
 	public boolean createImage(String name, String category, String imagePath) {
@@ -37,4 +37,5 @@ public class DAMManager {
 	public boolean deleteImage(int imageId) {
 		return databaseInterface.deleteImage(imageId);
 	}
+
 }

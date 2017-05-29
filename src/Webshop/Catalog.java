@@ -10,47 +10,45 @@ import java.util.LinkedList;
 
 public class Catalog {
 
-    private static DatabaseInterface databaseInterface = DBManager.getInstance();
+	private static DatabaseInterface databaseInterface = DBManager.getInstance();
 
-    public static ArrayList<Product> getAllProducts() {
-	return mapProducts(databaseInterface.getAllProducts());
-    }
-
-    public static Product getProduct(int productId) {
-	return mapProduct(databaseInterface.getProduct(productId));
-    }
-
-    /**
-     * @return a TreeSet<String> of all categories that exist.
-     */
-    public static LinkedHashMap<String, Integer> getCategories() {
-	return databaseInterface.getCategories();
-    }
-
-    public static ArrayList<Product> findProducts(String query, int categoryID) {
-	return mapProducts(databaseInterface.findProducts(query, categoryID));
-    }
-
-    private static Product mapProduct(HashMap<String, String> productMap) {
-	String productName = productMap.get("productName");
-	int productID = Integer.parseInt(productMap.get("productID"));
-	String categoryName = productMap.get("categoryName");
-	String description = productMap.get("description");
-	double price = Double.parseDouble(productMap.get("price"));
-	ArrayList<InputStream> images = databaseInterface.getImages(productID);
-	Product product = new Product(productID, productName, categoryName, description, price, images);
-	return product;
-    }
-
-    private static ArrayList<Product> mapProducts(LinkedList<HashMap<String, String>> productsMapList) {
-	ArrayList<Product> products = new ArrayList<>();
-
-	//Iterates through the list to create the products.
-	for (HashMap<String, String> productMap : productsMapList) {
-	    //Adds the product to the list of products
-	    products.add(mapProduct(productMap));
+	public static ArrayList<Product> getAllProducts() {
+		return mapProducts(databaseInterface.getAllProducts());
 	}
 
-	return products;
-    }
+	public static Product getProduct(int productId) {
+		return mapProduct(databaseInterface.getProduct(productId));
+	}
+
+	public static LinkedHashMap<String, Integer> getCategories() {
+		return databaseInterface.getCategories();
+	}
+
+	public static ArrayList<Product> findProducts(String query, int categoryID) {
+		return mapProducts(databaseInterface.findProducts(query, categoryID));
+	}
+
+	private static Product mapProduct(HashMap<String, String> productMap) {
+		String productName = productMap.get("productName");
+		int productID = Integer.parseInt(productMap.get("productID"));
+		String categoryName = productMap.get("categoryName");
+		String description = productMap.get("description");
+		double price = Double.parseDouble(productMap.get("price"));
+		ArrayList<InputStream> images = databaseInterface.getImages(productID);
+		Product product = new Product(productID, productName, categoryName, description, price, images);
+		return product;
+	}
+
+	private static ArrayList<Product> mapProducts(LinkedList<HashMap<String, String>> productsMapList) {
+		ArrayList<Product> products = new ArrayList<>();
+
+		//Iterates through the list to create the products.
+		for (HashMap<String, String> productMap : productsMapList) {
+			//Adds the product to the list of products
+			products.add(mapProduct(productMap));
+		}
+
+		return products;
+	}
+
 }
