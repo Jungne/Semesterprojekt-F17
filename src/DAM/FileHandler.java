@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import javafx.scene.image.Image;
 
 public class FileHandler {
 
@@ -15,15 +14,16 @@ public class FileHandler {
     public static ArrayList<DAMImage> createDAMImages(LinkedList<HashMap<String, String>> damImageMapList) {
 	ArrayList<DAMImage> damImageList = new ArrayList<>();
 
-        for (HashMap<String, String> damImageMap : damImageMapList) {
-            int imageID = Integer.parseInt(damImageMap.get("imageID"));
-            String imageName = damImageMap.get("imageName");
-            String categoryName = damImageMap.get("categoryName");
-            InputStream image = databaseInterface.getImage(imageID);
-            
-            damImageList.add(new DAMImage(imageID, imageName, categoryName, image));
-        }
+	for (HashMap<String, String> damImageMap : damImageMapList) {
+	    int imageID = Integer.parseInt(damImageMap.get("imageID"));
+	    String imageName = damImageMap.get("imageName");
+	    String categoryName = damImageMap.get("categoryName");
+	    InputStream image = databaseInterface.getImage(imageID);
 
-        return damImageList;
+	    damImageList.add(new DAMImage(imageID, imageName, categoryName, image));
+	}
+
+	return damImageList;
     }
+
 }
