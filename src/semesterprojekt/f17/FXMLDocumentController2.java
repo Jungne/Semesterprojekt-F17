@@ -182,7 +182,7 @@ public class FXMLDocumentController2 implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		//TODO
 	}
 	
   // <editor-fold defaultstate="collapsed" desc="MenuPane - Methods">
