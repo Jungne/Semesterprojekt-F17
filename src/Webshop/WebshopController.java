@@ -81,14 +81,31 @@ public class WebshopController implements WebshopInterface {
 
 	private Customer getCustomer(String email) {
 		HashMap<String, String> customerMap = databaseInterface.getCustomer(email);
-
 		Customer customer = Converter.toCustomer(customerMap);
-		return null; //TODO
+
+		//Checks if there is any basketIds
+		String basketIdsString = customerMap.get("basketIds");
+		if (basketIdsString.equals("")) {
+			return customer;
+		}
+
+		//Creates a ShoppingBasket for each basketId
+		for (String basketIdString : basketIdsString.split("-")) {
+			int basketId = Integer.parseInt(basketIdString);
+			ShoppingBasket shoppingBasket = getShoppingBasket(basketId);
+			customer.getShoppingBaskets().add(shoppingBasket);
+		}
+
+		return customer;
+	}
+
+	private ShoppingBasket getShoppingBasket(int basketId) {
+		return null;
 	}
 
 	@Override
 	public Customer getCustomer() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return this.customer;
 	}
 
 	@Override
