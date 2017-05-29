@@ -89,11 +89,11 @@ public class ImageHandler {
 		try {
 			LinkedList<HashMap<String, String>> DAMImageMapList = new LinkedList<>();
 
-			ResultSet imageSet = executeQuery("SELECT imageId, imageName, categoryName FROM Images NATURAL JOIN Categories");
+			ResultSet imageSet = executeQuery("SELECT imageID, imageName, categoryName FROM Images NATURAL JOIN Categories");
 
 			while (imageSet.next()) {
 				HashMap<String, String> DAMImageMap = new HashMap<>();
-				DAMImageMap.put("imageId", imageSet.getString(1));
+				DAMImageMap.put("imageID", imageSet.getString(1));
 				DAMImageMap.put("imageName", imageSet.getString(2));
 				DAMImageMap.put("categoryName", imageSet.getString(3));
 
