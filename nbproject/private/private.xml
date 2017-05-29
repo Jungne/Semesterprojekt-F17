@@ -17,10 +17,15 @@
         <group>
             <file>file:/E:/Documents/NetBeansProjects/Semesterprojekt-F17/src/Webshop/Customer2.java</file>
             <file>file:/E:/Documents/NetBeansProjects/Semesterprojekt-F17/src/DBManager/DBManager.java</file>
-            <file>file:/E:/Documents/NetBeansProjects/Semesterprojekt-F17/src/Webshop/Customer.java</file>
             <file>file:/E:/Documents/NetBeansProjects/Semesterprojekt-F17/src/Webshop/WebshopController.java</file>
+            <file>file:/E:/Documents/NetBeansProjects/Semesterprojekt-F17/src/Webshop/OrderHistory.java</file>
             <file>file:/E:/Documents/NetBeansProjects/Semesterprojekt-F17/src/DBManager/DatabaseInterface.java</file>
             <file>file:/E:/Documents/NetBeansProjects/Semesterprojekt-F17/src/DBManager/Data.java</file>
+            <file>file:/E:/Documents/NetBeansProjects/Semesterprojekt-F17/src/Webshop/ShoppingBasket.java</file>
+            <file>file:/E:/Documents/NetBeansProjects/Semesterprojekt-F17/src/Webshop/Catalog.java</file>
+            <file>file:/E:/Documents/NetBeansProjects/Semesterprojekt-F17/src/Webshop/WebshopInterface.java</file>
+            <file>file:/E:/Documents/NetBeansProjects/Semesterprojekt-F17/src/DBManager/ProductHandler.java</file>
+            <file>file:/E:/Documents/NetBeansProjects/Semesterprojekt-F17/src/PIM/PIMProduct.java</file>
         </group>
     </open-files>
 </project-private>

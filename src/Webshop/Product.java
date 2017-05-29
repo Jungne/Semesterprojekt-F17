@@ -1,87 +1,66 @@
 package Webshop;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import javafx.scene.image.Image;
-import javax.imageio.ImageIO;
 
 public class Product {
 
-    private String name;
-    private int id;
-    private String category;
-    private String description;
-    private double price;
-    private String imagePath;
-    private ArrayList<Image> imageList = new ArrayList<>();
+	private int id;
+	private String name;
+	private String category;
+	private String description;
+	private double price;
+	private ArrayList<InputStream> imageFiles;
 
-    public Product(String name, int id, String category, String description, double price, String imagePath) throws IOException {
-	this.name = name;
-	this.id = id;
-	this.category = category;
-	this.description = description;
-	this.price = price;
-	this.imagePath = imagePath;
-    }
-
-    public Product(String name, int id, String category, String description, double price) {
-	this.name = name;
-	this.id = id;
-	this.category = category;
-	this.description = description;
-	this.price = price;
-	this.imagePath = "test.jpeg";
-    }
-
-    public Product(String name, int id, String category, String description, double price, ArrayList<Image> images) {
-	this.name = name;
-	this.id = id;
-	this.category = category;
-	this.description = description;
-	this.price = price;
-	this.imageList = images;
-
-	if (imageList.isEmpty()) {
-	    imageList.add(new Image("images/test.jpeg"));
+	public Product(int id, String name, String category, String description, double price, ArrayList<InputStream> imageFiles) {
+		this.name = name;
+		this.id = id;
+		this.category = category;
+		this.description = description;
+		this.price = price;
+		this.imageFiles = imageFiles;
 	}
-    }
 
-    public String getName() {
-	return name;
-    }
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
 
-    public int getId() {
-	return id;
-    }
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
 
-    public String getCategory() {
-	return category;
-    }
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
 
-    public String getDescription() {
-	return description;
-    }
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
 
-    public double getPrice() {
-	return price;
-    }
+	/**
+	 * @return the price
+	 */
+	public double getPrice() {
+		return price;
+	}
 
-    public String getImagePath() {
-	return imagePath;
-    }
+	/**
+	 * @return the imageFiles
+	 */
+	public ArrayList<InputStream> getImageFiles() {
+		return imageFiles;
+	}
 
-    public ArrayList<Image> getImageList() {
-	return imageList;
-    }
-
-    @Override
-    public String toString() {
-	return "Product{" + "name=" + name + ", id=" + id + ", category=" + category + ", description=" + description + ", price=" + price + '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-	return this.id == ((Product) o).id;
-    }
 }

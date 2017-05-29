@@ -6,7 +6,7 @@
 package DBManager;
 
 import DAM.DAMImage;
-import Webshop.Customer2;
+import Webshop.Customer;
 import Webshop.Order;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -214,7 +214,7 @@ public class DatabaseInterfaceTest {
 		System.out.println("getDAMImages");
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
 		ArrayList<DAMImage> expResult = null;
-		ArrayList<DAMImage> result = instance.getDAMImages();
+		ArrayList<DAMImage> result = instance.getAllImages();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -266,8 +266,8 @@ public class DatabaseInterfaceTest {
 		String email = "";
 		String code = "";
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		Customer2 expResult = null;
-		Customer2 result = instance.getCustomer(email, code);
+		Customer expResult = null;
+		Customer result = instance.getCustomer(email, code);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -285,7 +285,7 @@ public class DatabaseInterfaceTest {
 		String titel = "";
 		ArrayList<Integer> imageList = null;
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		instance.addProduct(category, price, description, titel, imageList);
+		instance.createProduct(category, price, description, titel, imageList);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -335,7 +335,7 @@ public class DatabaseInterfaceTest {
 			return null;
 		}
 
-		public ArrayList<DAMImage> getDAMImages() {
+		public ArrayList<DAMImage> getAllImages() {
 			return null;
 		}
 
@@ -346,11 +346,11 @@ public class DatabaseInterfaceTest {
 			return false;
 		}
 
-		public Customer2 getCustomer(String email, String code) {
+		public Customer getCustomer(String email, String code) {
 			return null;
 		}
 
-		public void addProduct(int category, double price, String description, String titel, ArrayList<Integer> imageList) {
+		public void createProduct(int category, double price, String description, String titel, ArrayList<Integer> imageList) {
 		}
 	}
 	

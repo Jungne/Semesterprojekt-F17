@@ -3,21 +3,16 @@ package Webshop;
 import DBManager.DatabaseInterface;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.TreeSet;
 import DBManager.DBManager;
 import java.util.LinkedHashMap;
 
 public class WebshopController implements WebshopInterface {
 
 	private DatabaseInterface databaseInterface;
-	private Catalog catalog;
-	private OrderHistory orderHistory;
 	private Customer customer;
 
 	public WebshopController() throws IOException {
 		this.databaseInterface = DBManager.getInstance();
-		this.catalog = new Catalog();
-		this.orderHistory = new OrderHistory();
 		this.customer = new Customer();
 	}
 
@@ -29,7 +24,7 @@ public class WebshopController implements WebshopInterface {
 	 */
 	@Override
 	public Product getProduct(int productId) {
-		return catalog.getProduct(productId);
+		return Catalog.getProduct(productId);
 	}
 
 	/**
@@ -39,114 +34,17 @@ public class WebshopController implements WebshopInterface {
 	 */
 	@Override
 	public ArrayList<Product> getAllProduct() {
-		return catalog.getAllProducts();
+		return Catalog.getAllProducts();
 	}
 
-	/**
-	 * Returns an ArrayList containing the results of the search with the input
-	 * String as query.
-	 *
-	 * @param query a String to be compared to the names of the products.
-	 * @return arraylist containing all products with part of the query in the
-	 * name.
-	 */
-	@Override
-	public ArrayList<Product> findProducts(String query) {
-		return catalog.findProducts(query);
-	}
-	
 	@Override
 	public ArrayList<Product> findProducts(String query, int categoryID) {
-	    return catalog.findProducts(query, categoryID);
+		return Catalog.findProducts(query, categoryID);
 	}
 
-	/**
-	 * Returns a treeSet containing all the product categories as strings.
-	 *
-	 * @return a treeset containing all the product categories as strings.
-	 */
 	@Override
 	public LinkedHashMap<String, Integer> getCategories() {
-		return catalog.getCategories();
-	}
-
-	/**
-	 * Returns an arraylist containing all products in the specified category.
-	 *
-	 * @param category the category of which all products wil be returned.
-	 * @return an arraylist containing all the products in the specified category.
-	 */
-	@Override
-	public ArrayList<Product> getCategory(String category) {
-		return catalog.getProductsInCategory(category);
-	}
-
-	/**
-	 * Adds a product to the customers shoppingbasket.
-	 *
-	 * @param productId the id of the product to be added.
-	 * @param amount the amount to be added.
-	 * @return
-	 */
-	@Override
-	public boolean addProductToBasket(int productId, int amount) {
-		return customer.getShoppingBasket().addProduct(getProduct(productId), amount);
-	}
-
-	/**
-	 * Removes the product with the specified id from the shoppingbasket.
-	 *
-	 * @param productId the id of the product to be removed.
-	 */
-	@Override
-	public void removeProduct(int productId) {
-		customer.getShoppingBasket().removeProduct(getProduct(productId));
-	}
-
-	/**
-	 * Sets the amount of a product in the basket.
-	 *
-	 * @param productId the id of the product to be set.
-	 * @param amount the amount to be set.
-	 * @return
-	 */
-	@Override
-	public boolean setProductAmount(int productId, int amount) {
-		return customer.getShoppingBasket().setProductAmount(getProduct(productId), amount);
-	}
-
-	/**
-	 * Returns the customers shoppingbasket.
-	 *
-	 * @return the shoppingbasket of the customer.
-	 */
-	@Override
-	public ShoppingBasket getShoppingBasket() {
-		return customer.getShoppingBasket();
-	}
-
-	/**
-	 * Returns an order created from the shoppingbasket of the customer.
-	 *
-	 * @return an order with the products in the customers shoppingbasket.
-	 */
-	@Override
-	public Order checkOut() {
-		Order order = customer.checkOut();
-		orderHistory.saveOrder(customer, order);
-		return order;
-	}
-
-	@Override
-	public Order checkOut(String name, String email, int phoneNumber, ShoppingBasket shoppingBasket) {
-		customer = new Customer(name, email, phoneNumber, shoppingBasket);
-		// TODO - Save customer
-		return checkOut();
-	}
-
-	@Override
-	public void emptyShoppingBasket() {
-		customer.getShoppingBasket().empty();
+		return Catalog.getCategories();
 	}
 
 	@Override
@@ -157,18 +55,149 @@ public class WebshopController implements WebshopInterface {
 		}
 
 		//Saves the customer in the database
-		if (!databaseInterface.createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket)) {
+		if (!databaseInterface.createCustomer(new Customer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country), shoppingBasket)) {
 			return false;
 		}
 
 		//Sets the current customer to the newly signed up customer
-		//this.customer = databaseInterface.getCustomer(email, code);
+		this.customer = databaseInterface.getCustomer(email);
 		return true;
 	}
 
 	@Override
 	public boolean login(String email, String code) {
+		Customer customer = databaseInterface.getCustomer(email, code);
+
+		//Checks if email/code combination was valid
+		if (customer == null) {
+			return false;
+		}
+
+		//Sets the current customer to the now logged in customer
+		this.customer = customer;
+		return true;
+	}
+
+	@Override
+	public Customer getCustomer() {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public ShoppingBasket getShoppingBasket() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public boolean addProductToBasket(int productId, int amount) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public boolean setProductAmount(int productId, int amount) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void removeProduct(int productId) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void emptyShoppingBasket() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public ArrayList<ShoppingBasket> getShoppingBaskets() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void createBasket() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void removeBasket(int basketId) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public boolean addProductToBasket(int basketId, int productId, int amount) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public boolean setProductAmount(int basketId, int productId, int amount) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public boolean removeProduct(int basketId, int productId) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void emptyShoppingBasket(int basketId) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public Order getLatestOrder(int customerId) {
+		return databaseInterface.getLatestOrder(customerId);
+	}
+
+	/**
+	 * Checkouts an unregisted customer. When checkout happens a customer is
+	 * created. That customers id is returned. -1 is returned if checkout failes.
+	 *
+	 * @param email
+	 * @param firstName
+	 * @param lastName
+	 * @param phoneNumber
+	 * @param mobilePhoneNumber
+	 * @param address
+	 * @param postalCode
+	 * @param city
+	 * @param country
+	 * @return the customerId of the customer that was created when checkout
+	 * happened. -1 is returned if checkout failes.
+	 */
+	@Override
+	public int checkOut(String email, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
+		//Check if any information is null and if there is anything in basket
+		if (email == null || firstName == null || lastName == null || address == null || postalCode == null || city == null || country == null || customer.getFirstShoppingBasket().isEmpty()) {
+			return -1;
+		}
+
+		//Tries to create the customer
+		if (!databaseInterface.createCustomer(new Customer(email, null, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country), null)) {
+			return -1;
+		}
+
+		//Gets the newly signed up customer
+		Customer newCustomer = databaseInterface.getCustomer(email);
+
+		//Creates and saves the order in database and returnes the information about the order
+		if (!OrderHistory.createOrder(newCustomer, customer.getFirstShoppingBasket())) {
+			return -1;
+		}
+		//Still needs to fix getLatestOrder() and createOrder() back in OrderHandler
+
+		//Destroy local customer and initiate new unregisted customer
+		//TODO
+		//
+		//Returns the customerId of the newly signed up customer
+		return databaseInterface.getCustomerId(email);
+	}
+
+	@Override
+	public boolean checkOut(int basketId) {
+		//Check if there is anything in the basket
+		//Create order from local customer and shoppingBasket(gained from basketId) and then return the orderInfo -> createOrder(customerid, shoppingBasket)
+		//Delete that basket locally and in the datebase
+		return false;
 	}
 
 }

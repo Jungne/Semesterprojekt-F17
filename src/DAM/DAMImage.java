@@ -1,29 +1,19 @@
 package DAM;
 
 import java.io.InputStream;
-import javafx.scene.image.Image;
 
 public class DAMImage {
 
-	private String title;
 	private int id;
+	private String name;
 	private String category;
-	private Image image;
-	private int productID;
+	private InputStream imageFile;
 
-	public DAMImage(String title, int id, String category, Image image, int productID) {
-		this.title = title;
+	public DAMImage(int id, String name, String category, InputStream imageFile) {
 		this.id = id;
+		this.name = name;
 		this.category = category;
-		this.image = image;
-		this.productID = productID;
-	}
-
-	/**
-	 * @return the title
-	 */
-	public String getTitle() {
-		return title;
+		this.imageFile = imageFile;
 	}
 
 	/**
@@ -34,6 +24,13 @@ public class DAMImage {
 	}
 
 	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
 	 * @return the category
 	 */
 	public String getCategory() {
@@ -41,18 +38,10 @@ public class DAMImage {
 	}
 
 	/**
-	 * @return the image
+	 * @return the imageFile
 	 */
-	public Image getImage() {
-		return image;
+	public InputStream getImageFile() {
+		return imageFile;
 	}
-	
-	public int getProductID() {
-	    return productID;
-	}
-	
-	@Override
-	public String toString() {
-	    return "ID: " + id + "\nTitle: " + title + "\nCategory: " + category + "\nProduct ID: " +productID;
-	}
+
 }

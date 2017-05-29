@@ -1,13 +1,13 @@
 package DBManager;
 
-import Webshop.Customer2;
+import Webshop.Customer;
 import Webshop.Order;
 import Webshop.ShoppingBasket;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import javafx.scene.image.Image;
 
 public interface DatabaseInterface {
 
@@ -15,33 +15,34 @@ public interface DatabaseInterface {
 
     public LinkedList<HashMap<String, String>> getAllProducts();
 
-    public LinkedList<HashMap<String, String>> findProducts(String query);
-
     public LinkedList<HashMap<String, String>> findProducts(String query, int categoryID);
 
     public LinkedHashMap<String, Integer> getCategories();
 
-    public LinkedList<HashMap<String, String>> getProductsInCategory(String category);
-
     public boolean createOrder(Order order);
 
-    public void createImage(String imagePath, String title, int category);
+    public HashMap<String, String> getDAMImage(int imageId);
+    
+    public InputStream getImage(int imageID);
+    
+    public ArrayList<InputStream> getImages(int productID);
 
-    public Image getImage(int id);
+    public LinkedList<HashMap<String, String>> getAllImages();
 
-    public ArrayList<Image> getImages();
+    public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList);
 
-    public ArrayList<Image> getImages(int productID);
+    public Order getLatestOrder(int customerId);
 
-    public HashMap<String, String> getDAMImage(int id);
+    public boolean createImage(String name, String category, InputStream imageFile);
 
-    public LinkedList<HashMap<String, String>> getDAMImages();
+    public boolean deleteImage(int imageId);
 
-    public void deleteImage(int id);
+    public int getCustomerId(String email);
 
-    public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket);
+    public Customer getCustomer(String email);
 
-    public Customer2 getCustomer(String email, String code);
+    public Customer getCustomer(String email, String code);
 
-    public void addProduct(int category, double price, String description, String titel, ArrayList<Integer> imageList);
+    public boolean createCustomer(Customer customer, ShoppingBasket shoppingBasket);
+
 }

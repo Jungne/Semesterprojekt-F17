@@ -15,4 +15,5 @@ public class Payment {
 	public void pay(Order order, Customer customer) {
 		//TODO
 	}
+
 }

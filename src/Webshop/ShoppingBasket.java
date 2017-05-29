@@ -4,10 +4,35 @@ import java.util.ArrayList;
 
 public class ShoppingBasket {
 
-	private ArrayList<OrderLine> basket;
+	private int id;
+	private ArrayList<OrderLine> orderLines;
 
 	public ShoppingBasket() {
-		basket = new ArrayList<>();
+		this.id = -1;
+		this.orderLines = new ArrayList<>();
+	}
+
+	public ShoppingBasket(int id, ArrayList<OrderLine> orderLines) {
+		this.id = id;
+		this.orderLines = orderLines;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @return the orderLines
+	 */
+	public ArrayList<OrderLine> getOrderLines() {
+		return orderLines;
+	}
+
+	public boolean isEmpty() {
+		return getOrderLines().isEmpty();
 	}
 
 	/**
@@ -18,25 +43,12 @@ public class ShoppingBasket {
 	 * @return
 	 */
 	private OrderLine getExistingOrderLine(Product product) {
-		for (OrderLine orderLine : basket) {
+		for (OrderLine orderLine : getOrderLines()) {
 			if (orderLine.getProduct().equals(product)) {
 				return orderLine;
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * Creates a ArrayList of the current content of the basket.
-	 *
-	 * @return returns the current content of the basket.
-	 */
-	public ArrayList<OrderLine> getBasketContent() {
-		ArrayList<OrderLine> returnBasket = new ArrayList<>();
-		for (OrderLine orderLine : basket) {
-			returnBasket.add(new OrderLine(orderLine));
-		}
-		return returnBasket;
 	}
 
 	/**
@@ -53,24 +65,12 @@ public class ShoppingBasket {
 		}
 		OrderLine existingOrderLine = getExistingOrderLine(product);
 		if (existingOrderLine == null) {
-			basket.add(new OrderLine(product, amount));
+			getOrderLines().add(new OrderLine(product, amount));
 		} else {
 			int currentAmount = existingOrderLine.getAmount();
 			existingOrderLine.setAmount(currentAmount + amount);
 		}
 		return true;
-	}
-
-	/**
-	 * Adds OrderLine to basket. If the basket already contains the product that
-	 * that OrderLine contains, then add the new amount in the OrderLine to the
-	 * previous amount.
-	 *
-	 * @param orderLine
-	 * @return
-	 */
-	public boolean addProduct(OrderLine orderLine) {
-		return addProduct(orderLine.getProduct(), orderLine.getAmount());
 	}
 
 	public boolean setProductAmount(Product product, int amount) {
@@ -79,7 +79,7 @@ public class ShoppingBasket {
 			return false;
 		}
 		if (amount <= 0) {
-			basket.remove(existingOrderLine);
+			getOrderLines().remove(existingOrderLine);
 		} else {
 			existingOrderLine.setAmount(amount);
 		}
@@ -92,26 +92,23 @@ public class ShoppingBasket {
 	 * @param product
 	 */
 	public void removeProduct(Product product) {
-		basket.remove(getExistingOrderLine(product));
-	}
-
-	public boolean isEmpty() {
-		return basket.isEmpty();
+		getOrderLines().remove(getExistingOrderLine(product));
 	}
 
 	public void empty() {
-		basket = new ArrayList<>();;
+		orderLines = new ArrayList<>();
 	}
 
 	public double getTotalPrice() {
 		double totalPrice = 0;
 		double productPrice = 0;
 		double productAmount = 0;
-		for (OrderLine orderLine : basket) {
+		for (OrderLine orderLine : orderLines) {
 			productPrice = orderLine.getProduct().getPrice();
 			productAmount = orderLine.getAmount();
 			totalPrice += productPrice * productAmount;
 		}
 		return totalPrice;
 	}
+
 }

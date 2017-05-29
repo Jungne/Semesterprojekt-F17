@@ -49,7 +49,7 @@ public class ShoppingBasketTest {
 		basket.addProduct(testOrderLine);
 		ArrayList<OrderLine> expResult = new ArrayList<OrderLine>();
 		expResult.add(testOrderLine);
-		ArrayList<OrderLine> result = basket.getBasketContent();
+		ArrayList<OrderLine> result = basket.getOrderLines();
 		assertEquals(expResult, result);
 	}
 

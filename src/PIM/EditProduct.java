@@ -1,21 +1,15 @@
 package PIM;
 
-import DBManager.ProductHandler;
 import java.util.ArrayList;
-import javafx.scene.image.Image;
 
-/**
- *
- *
- */
 public class EditProduct {
 
-    public static void newProduct(int category, double price, String description, String titel, ArrayList<Integer> imageList) {
-       DBManager.DBManager.getInstance().addProduct(category, price, description, titel, imageList);
-    }
+	public static boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
+		return DBManager.DBManager.getInstance().createProduct(name, category, description, price, imageIdList);
+	}
 
-    public void editProduct(int id) {
+	public void editProduct(int id) {
 
-    }
+	}
 
 }

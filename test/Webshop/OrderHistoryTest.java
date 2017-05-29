@@ -47,7 +47,7 @@ public class OrderHistoryTest {
 		Order order = null;
 		OrderHistory instance = null;
 		boolean expResult = false;
-		boolean result = instance.saveOrder(customer, order);
+		boolean result = instance.createOrder(customer, order);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

@@ -5,13 +5,9 @@ import DBManager.DatabaseInterface;
 
 public class OrderHistory {
 
-	private DatabaseInterface databaseInterface;
+	private static DatabaseInterface databaseInterface = DBManager.getInstance();
 
-	public OrderHistory() {
-		this.databaseInterface = DBManager.getInstance();
-	}
-
-	public boolean saveOrder(Customer customer, Order order) {
-		return databaseInterface.createOrder(order);
+	public static boolean createOrder(Customer customer, ShoppingBasket shoppingBasket) {
+		return databaseInterface.createOrder(new Order(customer, shoppingBasket));
 	}
 }
