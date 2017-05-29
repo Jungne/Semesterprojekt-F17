@@ -39,7 +39,7 @@ public interface DatabaseInterface {
 
 	public int getCustomerId(String email);
 
-	public Customer getCustomer(String email);
+	public HashMap<String, String> getCustomer(String email);
 
 	public Customer getCustomer(String email, String code);
 

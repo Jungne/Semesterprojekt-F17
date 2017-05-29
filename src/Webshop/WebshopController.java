@@ -4,6 +4,7 @@ import DBManager.DatabaseInterface;
 import java.io.IOException;
 import java.util.ArrayList;
 import DBManager.DBManager;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class WebshopController implements WebshopInterface {
@@ -60,7 +61,7 @@ public class WebshopController implements WebshopInterface {
 		}
 
 		//Sets the current customer to the newly signed up customer
-		this.customer = databaseInterface.getCustomer(email);
+		//this.customer = databaseInterface.getCustomer(email);
 		return true;
 	}
 
@@ -76,6 +77,13 @@ public class WebshopController implements WebshopInterface {
 		//Sets the current customer to the now logged in customer
 		this.customer = customer;
 		return true;
+	}
+
+	private Customer getCustomer(String email) {
+		HashMap<String, String> customerMap = databaseInterface.getCustomer(email);
+
+		Customer customer = Converter.toCustomer(customerMap);
+		return null; //TODO
 	}
 
 	@Override
@@ -177,14 +185,13 @@ public class WebshopController implements WebshopInterface {
 		}
 
 		//Gets the newly signed up customer
-		Customer newCustomer = databaseInterface.getCustomer(email);
-
+		//Customer newCustomer = databaseInterface.getCustomer(email);
+		//
 		//Creates and saves the order in database and returnes the information about the order
-		if (!OrderHistory.createOrder(newCustomer, customer.getFirstShoppingBasket())) {
-			return -1;
-		}
+		//if (!OrderHistory.createOrder(newCustomer, customer.getFirstShoppingBasket())) {
+		//	return -1;
+		//}
 		//Still needs to fix getLatestOrder() and createOrder() back in OrderHandler
-
 		//Destroy local customer and initiate new unregisted customer
 		//TODO
 		//

@@ -159,32 +159,46 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public Customer getCustomer(String email) {
+	public HashMap<String, String> getCustomer(String email) {
 		try {
+			HashMap<String, String> customerMap = new HashMap<>();
+
 			//Gets customer and stores the attributes for later
 			ResultSet customerSet = executeQuery("SELECT * FROM Customers WHERE email = '" + email + "'");
 			if (!customerSet.next()) {
 				return null;
 			}
 
-			int customerId, phoneNumber, mobilePhoneNumber;
-			String code, firstName, lastName, address, postalCode, city, country;
+			int customerId = customerSet.getInt("customerId");
 
-			customerId = customerSet.getInt("customerId");
-			code = customerSet.getString("code");
-			firstName = customerSet.getString("firstName");
-			lastName = customerSet.getString("lastName");
-			phoneNumber = customerSet.getInt("phoneNumber");
-			mobilePhoneNumber = customerSet.getInt("mobilePhoneNumber");
-			address = customerSet.getString("address");
-			postalCode = customerSet.getString("postalCode");
-			city = customerSet.getString("city");
-			country = customerSet.getString("country");
+			//Adds all attributes except basketIds to customerMap
+			customerMap.put("customerId", customerId + "");
+			customerMap.put("code", customerSet.getString("code"));
+			customerMap.put("firstName", customerSet.getString("firstName"));
+			customerMap.put("lastName", customerSet.getString("lastName"));
+			customerMap.put("phoneNumber", customerSet.getString("phoneNumber"));
+			customerMap.put("mobilePhoneNumber", customerSet.getString("mobilePhoneNumber"));
+			customerMap.put("address", customerSet.getString("address"));
+			customerMap.put("postalCode", customerSet.getString("postalCode"));
+			customerMap.put("city", customerSet.getString("city"));
+			customerMap.put("country", customerSet.getString("country"));
 
-			ArrayList<ShoppingBasket> shoppingBaskets = getShoppingBaskets(customerId);
+			//Gets basketIds for this customer
+			ResultSet basketIdSet = executeQuery("SELECT basketId FROM Baskets WHERE customerId = " + customerId);
 
-			return new Customer(customerId, email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBaskets);
+			//Stores all basketIds in a String in the form "1-2-3-4" where each number is an id
+			String basketIds = "";
+			while (basketIdSet.next()) {
+				basketIds += basketIdSet.getString(1) + "-";
+			}
+			if (!basketIds.equals("")) {
+				basketIds = basketIds.substring(0, basketIds.length() - 1);
+			}
 
+			//Adds basketIds to customerMap
+			customerMap.put("basketIds", basketIds);
+
+			return customerMap;
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 			return null;
