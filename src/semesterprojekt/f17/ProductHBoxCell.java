@@ -49,12 +49,14 @@ public class ProductHBoxCell extends HBox {
 
 	id = product.getId();
 
+	Image image;
 	if (!product.getImageFiles().isEmpty()) {
-	    imageView.setImage(new Image(product.getImageFiles().get(0)));
+	    image = new Image(product.getImageFiles().get(0));
 	} else {
-	    imageView.setImage(new Image("images/test.jpeg"));
+	    image = new Image("images/test.jpeg");
 	}
 	
+	imageView.setImage(image);
 	name.setText(product.getName());
 	price.setText(Double.toString(product.getPrice()) + "kr");
 	amountLabel.setText(Integer.toString(amount));
