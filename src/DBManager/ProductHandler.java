@@ -38,7 +38,7 @@ public class ProductHandler {
 			ResultSet productResultSet = executeQuery("SELECT productId, productName, "
 							+ "categoryName, description, price FROM Products NATURAL JOIN "
 							+ "Categories WHERE productId = " + productID + ";");
-
+			productResultSet.next();
 			//Maps the resultset to a hashmap
 			productMap = mapProduct(productResultSet);
 
