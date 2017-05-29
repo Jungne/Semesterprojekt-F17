@@ -114,7 +114,47 @@ public class FXMLDocumentController2 implements Initializable {
 	@FXML
 	private Pane PIMPane;
 	// <editor-fold defaultstate="collapsed" desc="PIMPane - Elements">
-
+	@FXML
+	private Pane PIMPane_NavigationPane;
+	// <editor-fold defaultstate="collapsed" desc="PIMPane_NavigationPane - Elements">
+	@FXML
+	private ChoiceBox<?> PIMPane_NavigationPane_CategoryChoiceBox;
+	@FXML
+	private TextField PIMPane_NavigationPane_SearchBar;
+	@FXML
+	private Button PIMPane_NavigationPane_ShowProductsButton;
+	@FXML
+	private Button PIMPane_NavigationPane_SearchButton;
+	@FXML
+	private Button PIMPane_NavigationPane_CreateProductButton;
+	@FXML
+	private Button PIMPane_NavigationPane_UpdateProductButton;
+	@FXML
+	private Button PIMPane_NavigationPane_RemoveProductButton;
+	@FXML
+	private ListView<?> PIMPane_NavigationPane_ProductListView;
+	// </editor-fold>
+	
+	@FXML
+	private Pane PIMPane_InformationPane;
+	// <editor-fold defaultstate="collapsed" desc="PIMPane_InformationPane - Elements">
+	@FXML
+	private TextField PIMPane_InformationPane_NameTextField;
+	@FXML
+	private TextField PIMPane_InformationPane_DescriptionTextArea;
+	@FXML
+	private ChoiceBox<?> PIMPane_InformationPane_CategoryChoiceBox;
+	@FXML
+	private ListView<?> PIMPane_InformationPane_CategoryImageListView;
+	@FXML
+	private Button PIMPane_InformationPane_LinkButton;
+	@FXML
+	private ListView<?> PIMPane_InformationPane_ProductImageListView;
+	@FXML
+	private Button PIMPane_InformationPane_RemoveButton;
+	@FXML
+	private Button PIMPane_InformationPane_SaveButton;
+	// </editor-fold>
 	// </editor-fold>
 	
 	@FXML
@@ -139,7 +179,6 @@ public class FXMLDocumentController2 implements Initializable {
 	@FXML
 	private ImageView DAMPane_ImageView;
 	// </editor-fold>
-
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -186,9 +225,44 @@ public class FXMLDocumentController2 implements Initializable {
 	}
 	// </editor-fold>
 	
+  // <editor-fold defaultstate="collapsed" desc="PIMPane - Methods">
+	@FXML
+	private void handle_PIMPane_NavigationPane_Buttons(ActionEvent event) {
+		Button source = (Button)event.getSource();
+		if(source.equals(PIMPane_NavigationPane_ShowProductsButton)){
+			
+		}else if(source.equals(PIMPane_NavigationPane_SearchButton)){
+			
+		}else if(source.equals(PIMPane_NavigationPane_CreateProductButton)){
+			PIMPane_NavigationPane.setVisible(false);
+			PIMPane_InformationPane.setVisible(true);
+		}else if(source.equals(PIMPane_NavigationPane_UpdateProductButton)){
+			PIMPane_NavigationPane.setVisible(false);
+			PIMPane_InformationPane.setVisible(true);
+		}else if(source.equals(PIMPane_NavigationPane_RemoveProductButton)){
+			
+		}
+	}
+	
+	@FXML
+	private void handle_PIMPane_InformationPane_Buttons(ActionEvent event) {
+		Button source = (Button)event.getSource();
+		if(source.equals(PIMPane_InformationPane_LinkButton)){
+			
+		}else if(source.equals(PIMPane_InformationPane_RemoveButton)){
+			
+		}else if(source.equals(PIMPane_InformationPane_SaveButton)){
+			PIMPane_InformationPane.setVisible(false);
+			PIMPane_NavigationPane.setVisible(true);
+		}
+	}
+	// </editor-fold>
+	
   // <editor-fold defaultstate="collapsed" desc="DAMPane - Methods">
 	@FXML
 	private void handle_DAMPane_Buttons(ActionEvent event) {
 	}
 	// </editor-fold>
+
+
 }
