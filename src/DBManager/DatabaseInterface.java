@@ -1,44 +1,48 @@
 package DBManager;
 
-import DAM.DAMImage;
 import Webshop.Customer;
 import Webshop.Order;
-import Webshop.Product;
 import Webshop.ShoppingBasket;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 public interface DatabaseInterface {
 
-	public Product getProduct(int productId);
+    public HashMap<String, String> getProduct(int productId);
 
-	public ArrayList<Product> getAllProducts();
+    public LinkedList<HashMap<String, String>> getAllProducts();
 
-	public ArrayList<Product> findProducts(String query, int categoryID);
+    public LinkedList<HashMap<String, String>> findProducts(String query, int categoryID);
 
-	public LinkedHashMap<String, Integer> getCategories();
+    public LinkedHashMap<String, Integer> getCategories();
 
-	public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList);
+    public boolean createOrder(Order order);
 
-	public Order getLatestOrder(int customerId);
-	
-	public boolean createOrder(Order order);
+    public HashMap<String, String> getDAMImage(int imageId);
+    
+    public InputStream getImage(int imageID);
+    
+    public ArrayList<InputStream> getImages(int productID);
 
-	public DAMImage getImage(int imageId);
+    public LinkedList<HashMap<String, String>> getAllImages();
 
-	public ArrayList<DAMImage> getAllImages();
+    public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList);
 
-	public boolean createImage(String name, String category, InputStream imageFile);
+    public Order getLatestOrder(int customerId);
 
-	public boolean deleteImage(int imageId);
+    public boolean createImage(String name, String category, InputStream imageFile);
 
-	public int getCustomerId(String email);
-	
-	public Customer getCustomer(String email);
+    public boolean deleteImage(int imageId);
 
-	public Customer getCustomer(String email, String code);
+    public int getCustomerId(String email);
 
-	public boolean createCustomer(Customer customer, ShoppingBasket shoppingBasket);
+    public Customer getCustomer(String email);
+
+    public Customer getCustomer(String email, String code);
+
+    public boolean createCustomer(Customer customer, ShoppingBasket shoppingBasket);
 
 }

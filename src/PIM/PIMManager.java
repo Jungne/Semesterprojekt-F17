@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class PIMManager {
 
-	private ArrayList<Product> currentProductList;
+	private ArrayList<PIMProduct> currentProductList;
 
-	public ArrayList<Product> getAllProducts() {
+	public ArrayList<PIMProduct> getAllProducts() {
 		this.currentProductList = ProductSearch.getAllProducts();
 
 		return currentProductList;
