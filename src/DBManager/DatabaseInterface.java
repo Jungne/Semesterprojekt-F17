@@ -19,8 +19,6 @@ public interface DatabaseInterface {
 
 	public LinkedHashMap<String, Integer> getCategories();
 
-	public boolean createOrder(Order order);
-
 	public HashMap<String, String> getDAMImage(int imageId);
 
 	public byte[] getImage(int imageID);
@@ -30,8 +28,6 @@ public interface DatabaseInterface {
 	public LinkedList<HashMap<String, String>> getAllImages();
 
 	public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList);
-
-	public Order getLatestOrder(int customerId);
 
 	public boolean createImage(String name, String category, InputStream imageFile);
 
@@ -43,12 +39,20 @@ public interface DatabaseInterface {
 
 	public ArrayList<Integer> getBasketIds(int customerId);
 
-	public LinkedList<HashMap<String, String>> getOrderLines(int basketId);
+	public LinkedList<HashMap<String, String>> getBasketsOrderLines(int basketId);
 
 	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country);
 
 	public void createBasket(int customerId);
 
 	public boolean addProductToBasket(int basketId, int productId, int amount);
+
+	public HashMap<String, String> getLatestOrder(int customerId);
+
+	public LinkedList<HashMap<String, String>> getOrdersOrderLines(int orderId);
+
+	public boolean createOrder(int customerId, String orderStatus);
+
+	public boolean addProductToOrder(int orderId, int productId, int amount);
 
 }

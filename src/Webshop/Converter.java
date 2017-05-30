@@ -1,8 +1,13 @@
 package Webshop;
 
-import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Converter {
 
@@ -24,7 +29,21 @@ public class Converter {
 	}
 
 	public static Order toOrder(HashMap<String, String> orderMap) {
-		return null;//TODO
+		int orderId = Integer.parseInt(orderMap.get("orderId"));
+
+		//Sets the date by converting the given StringDate from String to Date
+		DateFormat format = new SimpleDateFormat("MMMM d, yyyy");//TODO - Should be adjusted to the dateformat from postgreSQL
+		Date date;
+		try {
+			date = format.parse(orderMap.get("date"));
+		} catch (ParseException ex) {
+			Logger.getLogger(Converter.class.getName()).log(Level.SEVERE, null, ex);
+			date = null;
+		}
+
+		OrderStatus orderStatus = OrderStatus.toOrderStaus(orderMap.get("orderStatus"));
+
+		return new Order(orderId, null, date, orderStatus, new ShoppingBasket());
 	}
 
 	public static Product toProduct(HashMap<String, String> productMap) {

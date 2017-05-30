@@ -127,7 +127,7 @@ public class WebshopController implements WebshopInterface {
 	}
 
 	private ShoppingBasket getShoppingBasket(int basketId) {
-		LinkedList<HashMap<String, String>> orderLinesMap = databaseInterface.getOrderLines(basketId);
+		LinkedList<HashMap<String, String>> orderLinesMap = databaseInterface.getBasketsOrderLines(basketId);
 		ShoppingBasket shoppingBasket = new ShoppingBasket(basketId, new ArrayList<>());
 
 		for (HashMap<String, String> orderLineMap : orderLinesMap) {

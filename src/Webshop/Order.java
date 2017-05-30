@@ -41,6 +41,13 @@ public class Order {
 	}
 
 	/**
+	 * @param customer the customer to set
+	 */
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	/**
 	 * @return the date
 	 */
 	public Date getDate() {

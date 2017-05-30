@@ -105,16 +105,6 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public Order getLatestOrder(int customerId) {
-		return orderHandler.getLatestOrder(customerId);
-	}
-
-	@Override
-	public boolean createOrder(Order order) {
-		return orderHandler.createOrder(order);
-	}
-
-	@Override
 	public byte[] getImage(int imageID) {
 		return imageHandler.getImageFile(imageID);
 	}
@@ -209,16 +199,16 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public LinkedList<HashMap<String, String>> getOrderLines(int basketId) {
+	public LinkedList<HashMap<String, String>> getBasketsOrderLines(int basketId) {
 		try {
 			LinkedList<HashMap<String, String>> orderLinesMap = new LinkedList<>();
 
-			//Gets basketIds for this customer
+			//Gets orderLines for this basket
 			ResultSet orderLineSet = executeQuery("SELECT productId, amount FROM ProductsInBaskets WHERE basketId = " + basketId);
 			while (orderLineSet.next()) {
 				HashMap<String, String> orderLineMap = new HashMap<>();
-				orderLineMap.put("productId", "");
-				orderLineMap.put("amount", "");
+				orderLineMap.put("productId", orderLineSet.getString(1));
+				orderLineMap.put("amount", orderLineSet.getString(2));
 				orderLinesMap.add(orderLineMap);
 			}
 
@@ -293,6 +283,26 @@ public class DBManager implements DatabaseInterface {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 			return false;
 		}
+	}
+
+	@Override
+	public HashMap<String, String> getLatestOrder(int customerId) {
+		return orderHandler.getLatestOrder(customerId);
+	}
+
+	@Override
+	public LinkedList<HashMap<String, String>> getOrdersOrderLines(int orderId) {
+		return orderHandler.getOrdersOrderLines(orderId);
+	}
+
+	@Override
+	public boolean createOrder(int customerId, String orderStatus) {
+		return orderHandler.createOrder(customerId, orderStatus);
+	}
+
+	@Override
+	public boolean addProductToOrder(int orderId, int productId, int amount) {
+		return orderHandler.addProductToOrder(orderId, productId, amount);
 	}
 
 	/**
