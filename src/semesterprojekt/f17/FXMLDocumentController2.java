@@ -38,6 +38,7 @@ public class FXMLDocumentController2 implements Initializable {
 	private ArrayList<Image> currentProductImages = new ArrayList<>();
 	private LinkedHashMap<String, Integer> categoriesMap;
 	private ShoppingBasket guestBasket = new ShoppingBasket();
+	private ShoppingBasket currentBasket = new ShoppingBasket();
 	private boolean isLoggedIn = false;
 
 	@FXML
@@ -101,6 +102,8 @@ public class FXMLDocumentController2 implements Initializable {
 	private Button WebshopPane_BasketTab_DeleteButton;
 	@FXML
 	private Button WebshopPane_BasketTab_CheckOutButton;
+	@FXML
+	private ChoiceBox<String> WebshopPane_BasketTab_BasketChoiceBox;
 	// </editor-fold>
 
 	@FXML
@@ -115,7 +118,19 @@ public class FXMLDocumentController2 implements Initializable {
 	@FXML
 	private TextField WebshopPane_CheckoutTab_InformationPane_LastnameTextField;
 	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_AddressTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_PostalCodeTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_CityTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_CountryTextField;
+	@FXML
 	private TextField WebshopPane_CheckoutTab_InformationPane_EmailTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_PhoneNumberTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_MobilePhoneNumberTextField;
 	@FXML
 	private Pane WebshopPane_CheckoutTab_PaymentPane;
 	@FXML
@@ -124,6 +139,8 @@ public class FXMLDocumentController2 implements Initializable {
 	private Pane WebshopPane_CheckoutTab_EndPane;
 	@FXML
 	private Label WebshopPane_CheckoutTab_EndPane_ReceiptLabel;
+	@FXML
+	private Button WebshopPane_CheckoutTab_CancelOrderButton;
 	@FXML
 	private Button WebshopPane_CheckoutTab_EndPane_DoneButton;
 	// </editor-fold>
@@ -277,6 +294,11 @@ public class FXMLDocumentController2 implements Initializable {
 	}
 
 	@FXML
+	private void handle_WebshopPane_CatalogTab_SearchBar(ActionEvent event) {
+		WebshopPane_CatalogTab_SearchButton.fire();
+	}
+
+	@FXML
 	private void handle_WebshopPane_BasketTab_Buttons(ActionEvent event) {
 		Button source = (Button) event.getSource();
 		if (source.equals(WebshopPane_BasketTab_SetAmountButton)) {
@@ -307,7 +329,7 @@ public class FXMLDocumentController2 implements Initializable {
 			WebshopPane.getSelectionModel().select(WebshopPane_CheckoutTab);
 			WebshopPane_BasketTab_CheckOutButton.setDisable(true);
 			if (isLoggedIn) {
-				//TODO: handleCheckOut_ConfirmOrderButton(null);
+				handle_WebshopPane_CheckoutTab_InformationPane_Buttons(null);
 			} else {
 				WebshopPane_CheckoutTab_PaymentPane.setVisible(false);
 				WebshopPane_CheckoutTab_InformationPane.setVisible(true);
@@ -317,18 +339,51 @@ public class FXMLDocumentController2 implements Initializable {
 
 	@FXML
 	private void handle_WebshopPane_CheckoutTab_InformationPane_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(WebshopPane_CheckoutTab_ConfirmOrderButton)) {
+
+			Order order = null;
+
+			if (isLoggedIn) {
+				webshopController.checkOut(1); //TODO: Needs to be basketId
+				order = webshopController.getLatestOrder(); //TODO: Use information
+			} else {
+				order = webshopController.checkOut(
+								WebshopPane_CheckoutTab_InformationPane_EmailTextField.getText(),
+								WebshopPane_CheckoutTab_InformationPane_FirstnameTextField.getText(),
+								WebshopPane_CheckoutTab_InformationPane_LastnameTextField.getText(),
+								Integer.parseInt(WebshopPane_CheckoutTab_InformationPane_PhoneNumberTextField.getText()),
+								Integer.parseInt(WebshopPane_CheckoutTab_InformationPane_MobilePhoneNumberTextField.getText()),
+								WebshopPane_CheckoutTab_InformationPane_AddressTextField.getText(),
+								WebshopPane_CheckoutTab_InformationPane_PostalCodeTextField.getText(),
+								WebshopPane_CheckoutTab_InformationPane_CityTextField.getText(),
+								WebshopPane_CheckoutTab_InformationPane_CountryTextField.getText(),
+								guestBasket);
+				if (order == null) {
+					return;
+				}
+				resetCheckOutTabInformationPane();
+			}
+
+			resetCheckOutTabReceiptPane(order);
+
+			WebshopPane_CheckoutTab_PaymentPane.setVisible(true);
+			WebshopPane_CheckoutTab_InformationPane.setVisible(false);
+
+		} else if (source.equals(WebshopPane_CheckoutTab_CancelOrderButton)) {
+			resetWebshopPane();
+		}
 	}
 
 	@FXML
 	private void handle_WebshopPane_CheckoutTab_PaymentPane_Buttons(ActionEvent event) {
+		WebshopPane_CheckoutTab_PaymentPane.setVisible(false);
+		WebshopPane_CheckoutTab_EndPane.setVisible(true);
 	}
 
 	@FXML
 	private void handle_WebshopPane_CheckoutTab_EndPane_Buttons(ActionEvent event) {
-	}
-
-	@FXML
-	private void handle_WebshopPane_CatalogTab_SearchBar(ActionEvent event) {
+		resetWebshopPane();
 	}
 
 	private void updateImageNavigationItems() {
@@ -451,5 +506,43 @@ public class FXMLDocumentController2 implements Initializable {
 
 	private int getCategoryID(String category) {
 		return categoriesMap.get(category);
+	}
+
+	private void resetCheckOutTabInformationPane() {
+		WebshopPane_CheckoutTab_InformationPane_EmailTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_FirstnameTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_LastnameTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_PhoneNumberTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_MobilePhoneNumberTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_AddressTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_PostalCodeTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_CityTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_CountryTextField.setText("");
+	}
+
+	private void resetCheckOutTabReceiptPane(Order order) {
+		String text = "Ordrekvittering\n"
+						+ "-------------------------------\n"
+						+ "\n";
+
+		for (OrderLine item : order.getShoppingBasket().getOrderLines()) {
+			text += "" + item.getAmount() + "x " + item.getProduct().getName() + " : " + item.getProduct().getPrice() + "kr\n";
+		}
+
+		text += "Total Pris: " + order.getTotalPrice() + "kr.\n"
+						+ "-------------------------------\n"
+						+ "Ha' en god dag!";
+
+		WebshopPane_CheckoutTab_EndPane_ReceiptLabel.setText(text);
+		guestBasket.empty();
+		updateBasketTabItems();
+	}
+
+	private void resetWebshopPane() {
+		WebshopPane_CheckoutTab.setDisable(true);
+		WebshopPane_CheckoutTab_EndPane.setVisible(false);
+		WebshopPane.getSelectionModel().select(WebshopPane_CatalogTab);
+		WebshopPane_BasketTab_CheckOutButton.setDisable(false);
+		WebshopPane_CheckoutTab_EndPane_ReceiptLabel.setText("");
 	}
 }

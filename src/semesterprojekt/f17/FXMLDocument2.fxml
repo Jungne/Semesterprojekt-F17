@@ -25,14 +25,14 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="semesterprojekt.f17.FXMLDocumentController2">
 	<children>
-		<Pane fx:id="MenuPane" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<Pane fx:id="MenuPane" prefHeight="600.0" prefWidth="800.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<children>
 				<Button fx:id="MenuPane_WebshopButton" layoutX="176.0" layoutY="268.0" mnemonicParsing="false" onAction="#handle_MenuPane_Buttons" prefHeight="64.0" prefWidth="128.0" text="Webshop" />
 				<Button fx:id="MenuPane_PIMButton" layoutX="336.0" layoutY="268.0" mnemonicParsing="false" onAction="#handle_MenuPane_Buttons" prefHeight="64.0" prefWidth="128.0" text="PIM" />
 				<Button fx:id="MenuPane_DAMButton" layoutX="496.0" layoutY="268.0" mnemonicParsing="false" onAction="#handle_MenuPane_Buttons" prefHeight="64.0" prefWidth="128.0" text="DAM" />
 			</children>
 		</Pane>
-		<TabPane fx:id="WebshopPane" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<TabPane fx:id="WebshopPane" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<tabs>
 				<Tab fx:id="WebshopPane_CatalogTab" text="Produktkatalog">
 					<content>
@@ -51,7 +51,6 @@
 								<Button fx:id="WebshopPane_CatalogTab_SearchButton" layoutX="298.0" layoutY="48.0" mnemonicParsing="false" onAction="#handle_WebshopPane_CatalogTab_Buttons" text="Søg" />
 								<ChoiceBox fx:id="WebshopPane_CatalogTab_CategoryChoiceBox" layoutX="447.0" layoutY="14.0" prefHeight="31.0" prefWidth="135.0" />
 								<Label layoutX="373.0" layoutY="19.0" text="Kategorier:" />
-								<Button layoutX="447.0" layoutY="48.0" mnemonicParsing="false" onAction="#handle_WebshopPane_CatalogTab_Buttons" prefHeight="31.0" prefWidth="135.0" text="Filter" />
 								<Button fx:id="WebshopPane_CatalogTab_AddToBasketButton" layoutX="250.0" layoutY="14.0" mnemonicParsing="false" onAction="#handle_WebshopPane_CatalogTab_Buttons" text="Tilføj til kurv" />
 								<Button fx:id="WebshopPane_CatalogTab_ImageLeftButton" disable="true" layoutX="614.0" layoutY="164.0" mnemonicParsing="false" onAction="#handle_WebshopPane_CatalogTab_Buttons" text="&lt;" />
 								<Button fx:id="WebshopPane_CatalogTab_ImageRightButton" disable="true" layoutX="738.0" layoutY="164.0" mnemonicParsing="false" onAction="#handle_WebshopPane_CatalogTab_Buttons" text="&gt;" />
@@ -69,12 +68,13 @@
 								<Label layoutX="291.0" layoutY="83.0" text="Pris" />
 								<Label layoutX="379.0" layoutY="83.0" text="Mængde" />
 								<Label layoutX="515.0" layoutY="83.0" text="Subtotal" />
-								<Button fx:id="WebshopPane_BasketTab_SetAmountButton" layoutX="128.0" layoutY="34.0" mnemonicParsing="false" onAction="#handle_WebshopPane_BasketTab_Buttons" text="Sæt mængde" />
-								<Button fx:id="WebshopPane_BasketTab_DeleteButton" layoutX="240.0" layoutY="34.0" mnemonicParsing="false" onAction="#handle_WebshopPane_BasketTab_Buttons" text="Slet" />
-								<TextField fx:id="WebshopPane_BasketTab_AmountTextField" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="34.0" prefHeight="25.0" prefWidth="87.0" text="1" />
-								<Label layoutX="450.0" layoutY="39.0" text="Total pris:" />
-								<TextField fx:id="WebshopPane_BasketTab_TotalPriceTextField" editable="false" layoutX="526.0" layoutY="34.0" />
-								<Button fx:id="WebshopPane_BasketTab_CheckOutButton" disable="true" layoutX="692.0" layoutY="34.0" mnemonicParsing="false" onAction="#handle_WebshopPane_BasketTab_Buttons" prefHeight="25.0" prefWidth="95.0" text="Gå til kasse" />
+								<Button fx:id="WebshopPane_BasketTab_SetAmountButton" layoutX="128.0" layoutY="16.0" mnemonicParsing="false" onAction="#handle_WebshopPane_BasketTab_Buttons" text="Sæt mængde" />
+								<Button fx:id="WebshopPane_BasketTab_DeleteButton" layoutX="240.0" layoutY="16.0" mnemonicParsing="false" onAction="#handle_WebshopPane_BasketTab_Buttons" text="Slet" />
+								<TextField fx:id="WebshopPane_BasketTab_AmountTextField" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="16.0" prefHeight="25.0" prefWidth="87.0" text="1" />
+								<Label layoutX="450.0" layoutY="16.0" prefHeight="25.0" text="Total pris:" />
+								<TextField fx:id="WebshopPane_BasketTab_TotalPriceTextField" editable="false" layoutX="526.0" layoutY="16.0" />
+								<Button fx:id="WebshopPane_BasketTab_CheckOutButton" disable="true" layoutX="692.0" layoutY="16.0" mnemonicParsing="false" onAction="#handle_WebshopPane_BasketTab_Buttons" prefHeight="25.0" prefWidth="95.0" text="Gå til kasse" />
+                        <ChoiceBox fx:id="WebshopPane_BasketTab_BasketChoiceBox" disable="true" layoutX="637.0" layoutY="71.0" prefWidth="150.0" />
 							</children>
 						</AnchorPane>
 					</content>
@@ -111,18 +111,18 @@
 											<children>
 												<VBox prefHeight="200.0" prefWidth="100.0">
 													<children>
-														<Label prefHeight="25.0" text="Addresse" />
-														<Label prefHeight="25.0" text="Postnummer" />
-														<Label prefHeight="25.0" text="By" />
-														<Label prefHeight="25.0" text="Land" />
+														<Label prefHeight="25.0" text="Adresse*" />
+														<Label prefHeight="25.0" text="Postnummer*" />
+														<Label prefHeight="25.0" text="By*" />
+														<Label prefHeight="25.0" text="Land*" />
 													</children>
 												</VBox>
 												<VBox prefHeight="200.0" prefWidth="205.0">
 													<children>
-														<TextField disable="true" prefHeight="25.0" prefWidth="120.0" />
-														<TextField disable="true" />
-														<TextField disable="true" />
-														<TextField disable="true" />
+														<TextField fx:id="WebshopPane_CheckoutTab_InformationPane_AddressTextField" prefHeight="25.0" prefWidth="120.0" />
+														<TextField fx:id="WebshopPane_CheckoutTab_InformationPane_PostalCodeTextField" />
+														<TextField fx:id="WebshopPane_CheckoutTab_InformationPane_CityTextField" />
+														<TextField fx:id="WebshopPane_CheckoutTab_InformationPane_CountryTextField" />
 													</children>
 												</VBox>
 											</children>
@@ -139,13 +139,14 @@
 												<VBox prefHeight="200.0" prefWidth="205.0">
 													<children>
 														<TextField fx:id="WebshopPane_CheckoutTab_InformationPane_EmailTextField" prefHeight="25.0" prefWidth="120.0" />
-														<TextField disable="true" />
-														<TextField disable="true" />
+														<TextField fx:id="WebshopPane_CheckoutTab_InformationPane_PhoneNumberTextField" />
+														<TextField fx:id="WebshopPane_CheckoutTab_InformationPane_MobilePhoneNumberTextField" />
 													</children>
 												</VBox>
 											</children>
 										</HBox>
 										<Label layoutX="349.0" layoutY="428.0" text="* Skal udfyldes" />
+                              <Button fx:id="WebshopPane_CheckoutTab_CancelOrderButton" layoutX="348.0" layoutY="450.0" mnemonicParsing="false" onAction="#handle_WebshopPane_CheckoutTab_InformationPane_Buttons" prefWidth="93.0" text="Fortryd Ordre" />
 									</children>
 								</Pane>
 								<Pane fx:id="WebshopPane_CheckoutTab_PaymentPane" prefHeight="571.0" prefWidth="800.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

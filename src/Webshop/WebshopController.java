@@ -292,7 +292,7 @@ public class WebshopController implements WebshopInterface {
 	@Override
 	public Order checkOut(String email, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket) {
 		//Check if any information is null and if there is anything in shoppingBasket
-		if (email == null || firstName == null || lastName == null || address == null || postalCode == null || city == null || country == null || shoppingBasket == null || shoppingBasket.isEmpty()) {
+		if (email == null || firstName == null || lastName == null || phoneNumber < 0 || mobilePhoneNumber < 0 || address == null || postalCode == null || city == null || country == null || shoppingBasket == null || shoppingBasket.isEmpty()) {
 			return null;
 		}
 

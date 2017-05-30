@@ -32,10 +32,11 @@ public class Converter {
 		int orderId = Integer.parseInt(orderMap.get("orderId"));
 
 		//Sets the date by converting the given StringDate from String to Date
-		DateFormat format = new SimpleDateFormat("MMMM d, yyyy");//TODO - Should be adjusted to the dateformat from postgreSQL
+		DateFormat format = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss.mmm");//TODO - Should be adjusted to the dateformat from postgreSQL
 		Date date;
 		try {
-			date = format.parse(orderMap.get("date"));
+			String sqlDateString = orderMap.get("date");
+			date = format.parse(sqlDateString.substring(0, sqlDateString.length() - 3));
 		} catch (ParseException ex) {
 			Logger.getLogger(Converter.class.getName()).log(Level.SEVERE, null, ex);
 			date = null;
