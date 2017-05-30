@@ -12,12 +12,14 @@ public class Catalog {
 
 	private static DatabaseInterface databaseInterface = DBManager.getInstance();
 
-	public static ArrayList<Product> getAllProducts() {
-		return mapProducts(databaseInterface.getAllProducts());
+	public static Product getProduct(int productId) {
+		Product product = Converter.toProduct(databaseInterface.getProduct(productId));
+		//Should now add imageFiles
+		ArrayList<InputStream> images = databaseInterface.getImages(productId);
 	}
 
-	public static Product getProduct(int productId) {
-		return mapProduct(databaseInterface.getProduct(productId));
+	public static ArrayList<Product> getAllProducts() {
+		return mapProducts(databaseInterface.getAllProducts());
 	}
 
 	public static LinkedHashMap<String, Integer> getCategories() {

@@ -35,6 +35,7 @@ public class ProductHandler {
 	public HashMap<String, String> getProduct(int productID) {
 		try {
 			HashMap<String, String> productMap = new HashMap<>();
+
 			ResultSet productResultSet = executeQuery("SELECT productId, productName, "
 							+ "categoryName, description, price FROM Products NATURAL JOIN "
 							+ "Categories WHERE productId = " + productID + ";");
@@ -145,7 +146,7 @@ public class ProductHandler {
 
 		try {
 			//Maps the resultset to a HashMap.
-			productMap.put("productID", productsResultSet.getString(1));
+			productMap.put("productId", productsResultSet.getString(1));
 			productMap.put("productName", productsResultSet.getString(2));
 			productMap.put("categoryName", productsResultSet.getString(3));
 			productMap.put("description", productsResultSet.getString(4));

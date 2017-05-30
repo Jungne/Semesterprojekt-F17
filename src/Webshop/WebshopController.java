@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import DBManager.DBManager;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 public class WebshopController implements WebshopInterface {
 
@@ -39,8 +40,8 @@ public class WebshopController implements WebshopInterface {
 	}
 
 	@Override
-	public ArrayList<Product> findProducts(String query, int categoryID) {
-		return Catalog.findProducts(query, categoryID);
+	public ArrayList<Product> findProducts(String query, int categoryId) {
+		return Catalog.findProducts(query, categoryId);
 	}
 
 	@Override
@@ -67,75 +68,63 @@ public class WebshopController implements WebshopInterface {
 
 	@Override
 	public boolean login(String email, String code) {
-		Customer customer = databaseInterface.getCustomer(email, code);
+		Customer customer = getCustomer(email);
 
 		//Checks if email/code combination was valid
-		if (customer == null) {
-			return false;
-		}
-
+		//TODO
 		//Sets the current customer to the now logged in customer
 		this.customer = customer;
 		return true;
 	}
 
 	private Customer getCustomer(String email) {
+		//Gets the customer as a map and is then converted to Customer
 		HashMap<String, String> customerMap = databaseInterface.getCustomer(email);
+		if (customerMap == null) {
+			return null;
+		}
 		Customer customer = Converter.toCustomer(customerMap);
 
-		//Checks if there is any basketIds
-		String basketIdsString = customerMap.get("basketIds");
-		if (basketIdsString.equals("")) {
+		//Gets all basketIds for that customer
+		ArrayList<Integer> basketIds = databaseInterface.getBasketIds(customer.getId());
+		if (basketIds == null || basketIds.isEmpty()) {
 			return customer;
 		}
 
-		//Creates a ShoppingBasket for each basketId
-		for (String basketIdString : basketIdsString.split("-")) {
-			int basketId = Integer.parseInt(basketIdString);
-			ShoppingBasket shoppingBasket = getShoppingBasket(basketId);
-			customer.getShoppingBaskets().add(shoppingBasket);
+		for (int basketId : basketIds) {
+			customer.getShoppingBaskets().add(getShoppingBasket(basketId));
 		}
 
 		return customer;
 	}
 
 	private ShoppingBasket getShoppingBasket(int basketId) {
-		return null;
+		LinkedList<HashMap<String, String>> orderLinesMap = databaseInterface.getOrderLines(basketId);
+		ShoppingBasket shoppingBasket = new ShoppingBasket(basketId, new ArrayList<>());
+
+		for (HashMap<String, String> orderLineMap : orderLinesMap) {
+			int productId = Integer.parseInt(orderLineMap.get("productId"));
+			int amount = Integer.parseInt(orderLineMap.get("amount"));
+			shoppingBasket.addProduct(Catalog.getProduct(productId), amount);
+		}
+
+		return shoppingBasket;
 	}
 
 	@Override
 	public Customer getCustomer() {
-		return this.customer;
-	}
-
-	@Override
-	public ShoppingBasket getShoppingBasket() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public boolean addProductToBasket(int productId, int amount) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public boolean setProductAmount(int productId, int amount) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public void removeProduct(int productId) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public void emptyShoppingBasket() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		if (this.customer.isRegisted()) {
+			return this.customer;
+		}
+		return null;
 	}
 
 	@Override
 	public ArrayList<ShoppingBasket> getShoppingBaskets() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		if (this.customer.isRegisted()) {
+			return this.customer.getShoppingBaskets();
+		}
+		return null;
 	}
 
 	@Override
@@ -169,13 +158,14 @@ public class WebshopController implements WebshopInterface {
 	}
 
 	@Override
-	public Order getLatestOrder(int customerId) {
-		return databaseInterface.getLatestOrder(customerId);
+	public Order getLatestOrder() {
+		return OrderHistory.getLatestOrder(this.customer);
 	}
 
 	/**
-	 * Checkouts an unregisted customer. When checkout happens a customer is
-	 * created. That customers id is returned. -1 is returned if checkout failes.
+	 * Checkout for an unregisted customer. The ShoppingBasket is exoected to be
+	 * recieved from the GUI. The order that was made doing this checkout is
+	 * returned. Null is returned if checkout failed.
 	 *
 	 * @param email
 	 * @param firstName
@@ -186,19 +176,19 @@ public class WebshopController implements WebshopInterface {
 	 * @param postalCode
 	 * @param city
 	 * @param country
-	 * @return the customerId of the customer that was created when checkout
-	 * happened. -1 is returned if checkout failes.
+	 * @param shoppingBasket
+	 * @return
 	 */
 	@Override
-	public int checkOut(String email, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
+	public Order checkOut(String email, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket) {
 		//Check if any information is null and if there is anything in basket
-		if (email == null || firstName == null || lastName == null || address == null || postalCode == null || city == null || country == null || customer.getFirstShoppingBasket().isEmpty()) {
-			return -1;
+		if (email == null || firstName == null || lastName == null || address == null || postalCode == null || city == null || country == null || shoppingBasket.isEmpty()) {
+			return null;
 		}
 
 		//Tries to create the customer
 		if (!databaseInterface.createCustomer(new Customer(email, null, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country), null)) {
-			return -1;
+			return null;
 		}
 
 		//Gets the newly signed up customer
@@ -213,7 +203,8 @@ public class WebshopController implements WebshopInterface {
 		//TODO
 		//
 		//Returns the customerId of the newly signed up customer
-		return databaseInterface.getCustomerId(email);
+		//return databaseInterface.getCustomerId(email);
+		return null;
 	}
 
 	@Override

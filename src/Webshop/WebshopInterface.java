@@ -19,18 +19,6 @@ public interface WebshopInterface {
 
 	public Customer getCustomer();
 
-	//Basket methods for guests
-	public ShoppingBasket getShoppingBasket();
-
-	public boolean addProductToBasket(int productId, int amount);
-
-	public boolean setProductAmount(int productId, int amount);
-
-	public void removeProduct(int productId);
-
-	public void emptyShoppingBasket();
-
-	//Basket methods for customers
 	public ArrayList<ShoppingBasket> getShoppingBaskets();
 
 	public void createBasket();
@@ -45,10 +33,10 @@ public interface WebshopInterface {
 
 	public void emptyShoppingBasket(int basketId);
 
-	public Order getLatestOrder(int customerId);
+	public Order getLatestOrder();
 
 	//CheckOut for guests
-	public int checkOut(String email, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country);
+	public Order checkOut(String email, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket);
 
 	//CheckOut for customers
 	public boolean checkOut(int basketId);

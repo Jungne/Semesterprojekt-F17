@@ -10,4 +10,8 @@ public class OrderHistory {
 	public static boolean createOrder(Customer customer, ShoppingBasket shoppingBasket) {
 		return databaseInterface.createOrder(new Order(customer, shoppingBasket));
 	}
+
+	public static Order getLatestOrder(Customer customer) {
+		//TODO
+	}
 }

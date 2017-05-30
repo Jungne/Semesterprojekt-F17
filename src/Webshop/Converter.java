@@ -1,5 +1,6 @@
 package Webshop;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,15 +24,18 @@ public class Converter {
 	}
 
 	public static Order toOrder(HashMap<String, String> orderMap) {
-		return null; //TODO
+		return null;//TODO
 	}
 
 	public static Product toProduct(HashMap<String, String> productMap) {
-		return null; //TODO
-	}
+		int productId = Integer.parseInt(productMap.get("productId"));
+		String productName = productMap.get("productName");
+		String categoryName = productMap.get("categoryName");
+		String description = productMap.get("description");
+		double price = Double.parseDouble(productMap.get("price"));
+		ArrayList<InputStream> imageFiles = new ArrayList<>();
 
-	public static ShoppingBasket toShoppingBasket(HashMap<String, String> basketMap) {
-		return null; //TODO
+		return new Product(productId, productName, categoryName, description, price, imageFiles);
 	}
 
 }

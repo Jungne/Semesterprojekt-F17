@@ -31,26 +31,6 @@ public class ShoppingBasket {
 		return orderLines;
 	}
 
-	public boolean isEmpty() {
-		return getOrderLines().isEmpty();
-	}
-
-	/**
-	 * Finds and return an existing OrderLine in the basket, that contains the
-	 * given product. Null is returned if the OrderLine does not exist.
-	 *
-	 * @param product
-	 * @return
-	 */
-	private OrderLine getExistingOrderLine(Product product) {
-		for (OrderLine orderLine : getOrderLines()) {
-			if (orderLine.getProduct().getId() == product.getId()) {
-				return orderLine;
-			}
-		}
-		return null;
-	}
-
 	/**
 	 * Adds a product and a product amount to the basket. If the basket already
 	 * contains the product, then add the new amount to the previous amount.
@@ -73,6 +53,10 @@ public class ShoppingBasket {
 		return true;
 	}
 
+	public boolean addProduct(OrderLine orderLine) {
+		return addProduct(orderLine.getProduct(), orderLine.getAmount());
+	}
+
 	public boolean setProductAmount(Product product, int amount) {
 		OrderLine existingOrderLine = getExistingOrderLine(product);
 		if (existingOrderLine == null) {
@@ -87,6 +71,22 @@ public class ShoppingBasket {
 	}
 
 	/**
+	 * Finds and return an existing OrderLine in the basket, that contains the
+	 * given product. Null is returned if the OrderLine does not exist.
+	 *
+	 * @param product
+	 * @return
+	 */
+	private OrderLine getExistingOrderLine(Product product) {
+		for (OrderLine orderLine : getOrderLines()) {
+			if (orderLine.getProduct().getId() == product.getId()) {
+				return orderLine;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Removes the given product from the basket.
 	 *
 	 * @param product
@@ -97,6 +97,10 @@ public class ShoppingBasket {
 
 	public void empty() {
 		orderLines = new ArrayList<>();
+	}
+
+	public boolean isEmpty() {
+		return getOrderLines().isEmpty();
 	}
 
 	public double getTotalPrice() {

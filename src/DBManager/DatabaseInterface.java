@@ -41,7 +41,9 @@ public interface DatabaseInterface {
 
 	public HashMap<String, String> getCustomer(String email);
 
-	public Customer getCustomer(String email, String code);
+	public ArrayList<Integer> getBasketIds(int customerId);
+	
+	public LinkedList<HashMap<String, String>> getOrderLines(int basketId);
 
 	public boolean createCustomer(Customer customer, ShoppingBasket shoppingBasket);
 

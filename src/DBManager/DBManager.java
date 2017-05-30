@@ -183,21 +183,6 @@ public class DBManager implements DatabaseInterface {
 			customerMap.put("city", customerSet.getString("city"));
 			customerMap.put("country", customerSet.getString("country"));
 
-			//Gets basketIds for this customer
-			ResultSet basketIdSet = executeQuery("SELECT basketId FROM Baskets WHERE customerId = " + customerId);
-
-			//Stores all basketIds in a String in the form "1-2-3-4" where each number is an id
-			String basketIds = "";
-			while (basketIdSet.next()) {
-				basketIds += basketIdSet.getString(1) + "-";
-			}
-			if (!basketIds.equals("")) {
-				basketIds = basketIds.substring(0, basketIds.length() - 1);
-			}
-
-			//Adds basketIds to customerMap
-			customerMap.put("basketIds", basketIds);
-
 			return customerMap;
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -206,68 +191,38 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public Customer getCustomer(String email, String code) {
+	public ArrayList<Integer> getBasketIds(int customerId) {
 		try {
-			//Gets customer and stores the attributes for later
-			ResultSet customerSet = executeQuery("SELECT * FROM Customers WHERE email = '" + email + "' AND code = '" + code + "'");
-			if (!customerSet.next()) {
-				return null;
+			ArrayList<Integer> basketIds = new ArrayList<>();
+
+			//Gets basketIds for this customer
+			ResultSet basketIdSet = executeQuery("SELECT basketId FROM Baskets WHERE customerId = " + customerId);
+			while (basketIdSet.next()) {
+				basketIds.add(basketIdSet.getInt(1));
 			}
 
-			int customerId, phoneNumber, mobilePhoneNumber;
-			String firstName, lastName, address, postalCode, city, country;
-
-			customerId = customerSet.getInt("customerId");
-			firstName = customerSet.getString("firstName");
-			lastName = customerSet.getString("lastName");
-			phoneNumber = customerSet.getInt("phoneNumber");
-			mobilePhoneNumber = customerSet.getInt("mobilePhoneNumber");
-			address = customerSet.getString("address");
-			postalCode = customerSet.getString("postalCode");
-			city = customerSet.getString("city");
-			country = customerSet.getString("country");
-
-			ArrayList<ShoppingBasket> shoppingBaskets = getShoppingBaskets(customerId);
-
-			return new Customer(customerId, email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBaskets);
-
+			return basketIds;
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 			return null;
 		}
 	}
 
-	private ArrayList<ShoppingBasket> getShoppingBaskets(int customerId) {
+	@Override
+	public LinkedList<HashMap<String, String>> getOrderLines(int basketId) {
 		try {
-			ResultSet basketSet = executeQuery("SELECT basketId FROM Baskets WHERE customerId = " + customerId);
+			LinkedList<HashMap<String, String>> orderLinesMap = new LinkedList<>();
 
-			ArrayList<ShoppingBasket> shoppingBaskets = new ArrayList<>();
-			while (basketSet.next()) {
-				shoppingBaskets.add(getShoppingBasket(basketSet.getInt(1)));
-			}
-
-			return shoppingBaskets;
-
-		} catch (SQLException ex) {
-			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
-			return null;
-		}
-	}
-
-	private ShoppingBasket getShoppingBasket(int basketId) {
-		try {
+			//Gets basketIds for this customer
 			ResultSet orderLineSet = executeQuery("SELECT productId, amount FROM ProductsInBaskets WHERE basketId = " + basketId);
-
-			ArrayList<OrderLine> orderLines = new ArrayList<>();
 			while (orderLineSet.next()) {
-				int productId = orderLineSet.getInt(1);
-				int amount = orderLineSet.getInt(2);
-				//TODO
-				//orderLines.add(new OrderLine(getProduct(productId), amount));
+				HashMap<String, String> orderLineMap = new HashMap<>();
+				orderLineMap.put("productId", "");
+				orderLineMap.put("amount", "");
+				orderLinesMap.add(orderLineMap);
 			}
 
-			return new ShoppingBasket(basketId, orderLines);
-
+			return orderLinesMap;
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 			return null;
@@ -386,4 +341,5 @@ public class DBManager implements DatabaseInterface {
 			System.out.println("Failed dropping tables: " + ex);
 		}
 	}
+
 }
