@@ -13,10 +13,6 @@ public class PIMManager {
 
     public PIMManager() {
 	dbm = DBManager.getInstance();
-	
-	//Testing of editingProduct
-	editingProduct = true;
-	productToEdit = Converter.createPIMProduct(dbm.getProduct(1));
     }
 
     public ArrayList<PIMProduct> getAllProducts() {
