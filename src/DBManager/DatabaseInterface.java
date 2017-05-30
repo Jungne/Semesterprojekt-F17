@@ -14,7 +14,7 @@ public interface DatabaseInterface {
 	public HashMap<String, String> getProduct(int productId);
 
 	public LinkedList<HashMap<String, String>> getAllProducts();
-	
+
 	public LinkedList<HashMap<String, String>> getAllEnrichedProducts();
 
 	public LinkedList<HashMap<String, String>> findProducts(String query, int categoryID);
@@ -28,13 +28,13 @@ public interface DatabaseInterface {
 	public ArrayList<byte[]> getImages(int productID);
 
 	public LinkedList<HashMap<String, String>> getAllImages();
-	
+
 	public LinkedList<HashMap<String, String>> getUnassignedImages();
-	
+
 	public LinkedList<HashMap<String, String>> getPImages(int productId);
 
 	public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList);
-	
+
 	public boolean editProduct(int productID, String name, String category, String description, double price, ArrayList<Integer> imageIdList);
 
 	public boolean createImage(String name, String category, InputStream imageFile);
@@ -52,6 +52,8 @@ public interface DatabaseInterface {
 	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, boolean includesEmptyBasket);
 
 	public void createBasket(int customerId);
+
+	public void remove(int basketId);
 
 	public boolean addProductToBasket(int basketId, int productId, int amount);
 

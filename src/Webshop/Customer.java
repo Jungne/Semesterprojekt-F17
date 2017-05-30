@@ -165,4 +165,19 @@ public class Customer {
 		return isRegisted;
 	}
 
+	public ShoppingBasket getShoppingBasket(int basketId) {
+		for (ShoppingBasket shoppingBasket : shoppingBaskets) {
+			if (basketId == shoppingBasket.getId()) {
+				return shoppingBasket;
+			}
+		}
+		return null;
+	}
+
+	public void removeShoppingBasket(ShoppingBasket shoppingBasket) {;
+		if (shoppingBasket != null) {
+			shoppingBaskets.remove(shoppingBasket);
+		}
+	}
+
 }

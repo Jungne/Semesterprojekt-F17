@@ -38,7 +38,7 @@ public class WebshopController implements WebshopInterface {
 	public ArrayList<Product> getAllProduct() {
 		return Catalog.getAllProducts();
 	}
-	
+
 	@Override
 	public ArrayList<Product> getAllEnrichedProducts() {
 		return Catalog.getAllEnrichedProducts();
@@ -146,7 +146,7 @@ public class WebshopController implements WebshopInterface {
 
 	@Override
 	public Customer getCustomer() {
-		if (this.customer.isRegisted()) {
+		if (this.customer != null || this.customer.isRegisted()) {
 			return this.customer;
 		}
 		return null;
@@ -154,7 +154,7 @@ public class WebshopController implements WebshopInterface {
 
 	@Override
 	public ArrayList<ShoppingBasket> getShoppingBaskets() {
-		if (this.customer.isRegisted()) {
+		if (this.customer != null || this.customer.isRegisted()) {
 			return this.customer.getShoppingBaskets();
 		}
 		return null;
@@ -162,22 +162,39 @@ public class WebshopController implements WebshopInterface {
 
 	@Override
 	public void createBasket() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		if (this.customer != null || this.customer.isRegisted()) {
+			//Creates a new empty shoppingBasket
+			databaseInterface.createBasket(this.customer.getId());
+
+			//Reloads the customer (preferably a new shoppingBasket should just be created direcly, but I don't know how to get the basketId that is just created)
+			this.customer = getCustomer(this.customer.getEmail());
+		}
 	}
 
 	@Override
 	public void removeBasket(int basketId) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		if (this.customer != null || this.customer.isRegisted()) {
+			//Removes the basket from the database
+			databaseInterface.remove(basketId);
+
+			//Finds the shoppingBasket that is refered to
+			ShoppingBasket shoppingBasket = this.customer.getShoppingBasket(basketId);
+
+			//Removes that shoppingBasket
+			this.customer.removeShoppingBasket(shoppingBasket);
+		}
 	}
 
 	@Override
 	public boolean addProductToBasket(int basketId, int productId, int amount) {
+		//Adds product to database
 		databaseInterface.addProductToBasket(basketId, productId, amount);
-		for (ShoppingBasket shoppingBasket : this.customer.getShoppingBaskets()) {
-			if (shoppingBasket.getId() == basketId) {
-				shoppingBasket.addProduct(Catalog.getProduct(productId), amount);
-			}
-		}
+
+		//Finds the shoppingBasket that is refered to
+		ShoppingBasket shoppingBasket2 = this.customer.getShoppingBasket(basketId);
+
+		//Adds product to that shoppingBasket
+		shoppingBasket2.addProduct(Catalog.getProduct(productId), amount);
 		return true;
 	}
 
@@ -242,10 +259,28 @@ public class WebshopController implements WebshopInterface {
 
 	@Override
 	public boolean checkOut(int basketId) {
-		//Check if there is anything in the basket
-		//Create order from local customer and shoppingBasket(gained from basketId) and then return the orderInfo -> createOrder(customerid, shoppingBasket)
-		//Delete that basket locally and in the datebase
-		return false;
+		//Gets the shoppingBasket that is refered to by basketId
+		ShoppingBasket shoppingBasket = null;
+		for (ShoppingBasket s : this.customer.getShoppingBaskets()) {
+			if (basketId == s.getId()) {
+				shoppingBasket = s;
+			}
+		}
+
+		//Checks if the basket exist and if there is anything in the basket
+		if (shoppingBasket == null || shoppingBasket.isEmpty()) {
+			return false;
+		}
+
+		//Create order from local customer and shoppingBasket(gained from basketId)
+		boolean isCreated = OrderHistory.createOrder(customer, shoppingBasket);
+		if (!isCreated) {
+			return false;
+		}
+
+		//Deletes the shoppingBasket locally
+		removeBasket(basketId);
+		return true;
 	}
 
 }

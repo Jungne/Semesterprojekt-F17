@@ -85,10 +85,10 @@ public class DBManager implements DatabaseInterface {
 	public LinkedList<HashMap<String, String>> getAllProducts() {
 		return productHandler.getAllProducts();
 	}
-	
+
 	@Override
 	public LinkedList<HashMap<String, String>> getAllEnrichedProducts() {
-	   return productHandler.getAllEnrichedProducts();
+		return productHandler.getAllEnrichedProducts();
 	}
 
 	@Override
@@ -294,9 +294,31 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
+	public void remove(int basketId) {
+		try {
+			executeUpdate("DELETE FROM ProductsInBaskets WHERE basketId = " + basketId);
+			executeUpdate("DELETE FROM Baskets WHERE basketId = " + basketId);
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	@Override
 	public boolean addProductToBasket(int basketId, int productId, int amount) {
 		try {
-			executeUpdate("INSERT INTO ProductsInBaskets (basketId, productId, amount) VALUES (" + basketId + ", " + productId + ", " + amount + ")");
+			//TODO - Should add to existing orderLine if product already exists
+			ResultSet orderLineSet = executeQuery("SELECT amount FROM ProductsInBaskets WHERE basketId = " + basketId + " AND productId = " + productId);
+
+			//Checks if an orderLine with that product already exists. Inserts new orderLine if it doesn't
+			if (!orderLineSet.next()) {
+				executeUpdate("INSERT INTO ProductsInBaskets (basketId, productId, amount) VALUES (" + basketId + ", " + productId + ", " + amount + ")");
+				return true;
+			}
+
+			//Changes the current orderLine by adding the given amount to the existing amount
+			int newAmount = amount + orderLineSet.getInt(3);
+			executeUpdate("UPDATE ProductsInBaskets SET amount = " + newAmount + " WHERE basketId = " + basketId + " AND productId = " + productId);
+
 			return true;
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
