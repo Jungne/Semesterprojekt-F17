@@ -1,6 +1,8 @@
 package semesterprojekt.f17;
 
 import DAM.DAMImage;
+import PIM.PIMProduct;
+import PIM.PIMage;
 import Webshop.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -95,11 +97,37 @@ public class ProductHBoxCell extends HBox {
 
 	this.getChildren().addAll(imageView, name, category);
     }
+    
+    public ProductHBoxCell(PIMProduct pimProduct) {
+	
+    }
+    
+    public ProductHBoxCell(PIMage pimage) {
+	//Sets the padding and spacing.
+	super();
+	this.setSpacing(10);
+
+	id = pimage.getId();
+	
+	InputStream inputStream = new ByteArrayInputStream(pimage.getImageFile());
+	imageView.setImage(new Image(inputStream));
+	name.setText(pimage.getName());
+	name.setPrefWidth(150);
+
+	imageView.setFitWidth(100);
+	imageView.setPreserveRatio(true);
+
+	this.getChildren().addAll(imageView, name);
+    }
 
     public int getProductId() {
 	return id;
     }
-
+    
+    public int getImageId() {
+	return id;
+    }
+    
     @Override
     public String toString() {
 	return id + name.getText();

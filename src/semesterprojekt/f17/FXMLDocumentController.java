@@ -3,6 +3,7 @@ package semesterprojekt.f17;
 import DAM.DAMImage;
 import DAM.DAMManager;
 import DBManager.DBManager;
+import PIM.PIMManager;
 import Webshop.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -20,7 +21,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -35,6 +38,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class FXMLDocumentController implements Initializable {
@@ -42,6 +46,7 @@ public class FXMLDocumentController implements Initializable {
     private WebshopInterface webshopController;
     private DAMManager DAM;
     private DBManager dbm;
+    private PIMManager pimManager;
 
     private LinkedHashMap<String, Integer> categoriesMap;
     private boolean isLoggedIn = false;
@@ -165,11 +170,11 @@ public class FXMLDocumentController implements Initializable {
 	if (productHBoxCell == null) {
 	    return;
 	}
-	
+
 	//Gets the id for the selected product.
 	int id = productHBoxCell.getProductId();
 	currentProduct = webshopController.getProduct(id);
-	
+
 	//Sets the current image to the first if any, else it is set to the default image.
 	if (!currentProduct.getImageFiles().isEmpty()) {
 	    InputStream inputStream = new ByteArrayInputStream(currentProduct.getImageFiles().get(0));
@@ -177,7 +182,7 @@ public class FXMLDocumentController implements Initializable {
 	} else {
 	    catalogTestImageView.setImage(new Image("images/test.jpeg"));
 	}
-	
+
 	//Sets the text under the image to display the number of images for the selected product.
 	if (currentProduct.getImageFiles().size() == 1) {
 	    imageLeftButton.setDisable(true);
@@ -215,6 +220,7 @@ public class FXMLDocumentController implements Initializable {
 	    webshopController = new WebshopController();
 	    DAM = new DAMManager();
 	    dbm = DBManager.getInstance();
+	    pimManager = new PIMManager();
 	} catch (IOException ex) {
 	    //Do something about this.
 	    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -222,7 +228,7 @@ public class FXMLDocumentController implements Initializable {
 
 	updateChoiceBoxes();
     }
-    
+
     private void showProducts(ArrayList<Product> products, ListView listview) {
 	List<ProductHBoxCell> list = new ArrayList<>();
 	for (Product product : products) {
@@ -486,4 +492,24 @@ public class FXMLDocumentController implements Initializable {
 	imageLeftButton.setDisable(false);
     }
 
+    @FXML
+    private void handlePIMNewProductButton(ActionEvent event) {
+	try {
+	    FXMLLoader fxmlLoader = new FXMLLoader();
+	    fxmlLoader.setLocation(getClass().getResource("NewProductWindow.fxml"));
+	    /* 
+         * if "fx:controller" is not set in fxml
+         * fxmlLoader.setController(NewWindowController);
+	     */
+	    Scene scene = new Scene(fxmlLoader.load());
+	    Stage stage = new Stage();
+	    stage.setTitle("Nyt produkt");
+	    stage.initModality(Modality.APPLICATION_MODAL);
+	    stage.setScene(scene);
+	    stage.show();
+	} catch (IOException e) {
+	    Logger logger = Logger.getLogger(getClass().getName());
+	    logger.log(Level.SEVERE, "Failed to create new Window.", e);
+	}
+    }
 }

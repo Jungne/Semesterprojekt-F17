@@ -184,7 +184,7 @@
                         <Button fx:id="PIMEditProductButton" layoutX="133.0" layoutY="14.0" mnemonicParsing="false" text="Rediger" />
                         <TextField layoutX="213.0" layoutY="14.0" prefHeight="31.0" prefWidth="374.0" />
                         <Button layoutX="594.0" layoutY="14.0" mnemonicParsing="false" text="Søg" />
-                        <Button fx:id="PIMNewProductButton" layoutX="680.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Nyt produkt" />
+                        <Button fx:id="PIMNewProductButton" layoutX="680.0" layoutY="14.0" mnemonicParsing="false" onAction="#handlePIMNewProductButton" prefHeight="31.0" prefWidth="106.0" text="Nyt produkt" />
                      </children></AnchorPane>
 					</content>
 				</Tab>

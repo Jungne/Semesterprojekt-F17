@@ -28,6 +28,8 @@ public interface DatabaseInterface {
 	public ArrayList<byte[]> getImages(int productID);
 
 	public LinkedList<HashMap<String, String>> getAllImages();
+	
+	public LinkedList<HashMap<String, String>> getUnassignedImages();
 
 	public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList);
 

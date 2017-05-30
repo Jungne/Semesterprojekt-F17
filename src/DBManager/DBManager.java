@@ -133,6 +133,11 @@ public class DBManager implements DatabaseInterface {
 	public LinkedList<HashMap<String, String>> getAllImages() {
 		return imageHandler.getAllImages();
 	}
+	
+	@Override
+	public LinkedList<HashMap<String, String>> getUnassignedImages() {
+	    return imageHandler.getUnassignedImages();
+	}
 
 	@Override
 	public boolean createImage(String name, String category, InputStream imageFile) {

@@ -105,6 +105,27 @@ public class ImageHandler {
 			return null;
 		}
 	}
+	
+	public LinkedList<HashMap<String, String>> getUnassignedImages() {
+	    try {
+			LinkedList<HashMap<String, String>> PIMImageMapList = new LinkedList<>();
+
+			ResultSet imageSet = executeQuery("SELECT imageID, imageName, categoryName FROM Images NATURAL JOIN Categories WHERE productID IS NULL");
+
+			while (imageSet.next()) {
+				HashMap<String, String> PIMImageMap = new HashMap<>();
+				PIMImageMap.put("imageID", imageSet.getString(1));
+				PIMImageMap.put("imageName", imageSet.getString(2));
+				PIMImageMap.put("categoryName", imageSet.getString(3));
+
+				PIMImageMapList.add(PIMImageMap);
+			}
+			return PIMImageMapList;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
+	}
 
 	public boolean createImage(String name, String category, InputStream imageFile) {
 		try {
