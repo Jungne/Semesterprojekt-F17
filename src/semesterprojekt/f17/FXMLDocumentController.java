@@ -4,6 +4,7 @@ import DAM.DAMImage;
 import DAM.DAMManager;
 import DBManager.DBManager;
 import PIM.PIMManager;
+import PIM.PIMProduct;
 import Webshop.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -156,6 +157,8 @@ public class FXMLDocumentController implements Initializable {
     private Button PIMEditProductButton;
     @FXML
     private Button PIMNewProductButton;
+    @FXML
+    private ListView<ProductHBoxCell> PIMListView;
 
     @FXML
     private void handleCatalogTestShowProductsButton(ActionEvent e) {
@@ -220,7 +223,7 @@ public class FXMLDocumentController implements Initializable {
 	    webshopController = new WebshopController();
 	    DAM = new DAMManager();
 	    dbm = DBManager.getInstance();
-	    pimManager = new PIMManager();
+	    pimManager = PIMManager.getInstance();
 	} catch (IOException ex) {
 	    //Do something about this.
 	    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -495,6 +498,29 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handlePIMNewProductButton(ActionEvent event) {
+	pimManager.setEditingProduct(false);
+	showProductEditWindow("Nyt produkt");
+    }
+
+    @FXML
+    private void handlePIMShowProductsButton(ActionEvent event) {
+	List<ProductHBoxCell> list = new ArrayList<>();
+	for (PIMProduct pimProduct : pimManager.getAllProducts()) {
+	    list.add(new ProductHBoxCell(pimProduct));
+	}
+	ObservableList observableList = FXCollections.observableArrayList(list);
+	PIMListView.setItems(observableList);
+    }
+
+    @FXML
+    private void handlePIMEditProductButton(ActionEvent event) {
+	pimManager.setEditingProduct(true);
+	pimManager.setProductToEdit(PIMListView.getSelectionModel().getSelectedItem().getProductId());
+	
+	showProductEditWindow("Rediger produkt");
+    }
+    
+    private void showProductEditWindow(String title) {
 	try {
 	    FXMLLoader fxmlLoader = new FXMLLoader();
 	    fxmlLoader.setLocation(getClass().getResource("NewProductWindow.fxml"));
@@ -504,7 +530,7 @@ public class FXMLDocumentController implements Initializable {
 	     */
 	    Scene scene = new Scene(fxmlLoader.load());
 	    Stage stage = new Stage();
-	    stage.setTitle("Nyt produkt");
+	    stage.setTitle(title);
 	    stage.initModality(Modality.APPLICATION_MODAL);
 	    stage.setScene(scene);
 	    stage.show();

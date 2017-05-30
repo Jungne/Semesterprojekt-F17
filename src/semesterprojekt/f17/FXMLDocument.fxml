@@ -179,9 +179,9 @@
 					<content>
 						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="14.0" layoutY="62.0" prefHeight="484.0" prefWidth="772.0" />
-                        <Button fx:id="PIMShowProductsButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Vis produkter" />
-                        <Button fx:id="PIMEditProductButton" layoutX="133.0" layoutY="14.0" mnemonicParsing="false" text="Rediger" />
+                        <ListView fx:id="PIMListView" layoutX="14.0" layoutY="62.0" prefHeight="484.0" prefWidth="772.0" />
+                        <Button fx:id="PIMShowProductsButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handlePIMShowProductsButton" text="Vis produkter" />
+                        <Button fx:id="PIMEditProductButton" layoutX="133.0" layoutY="14.0" mnemonicParsing="false" onAction="#handlePIMEditProductButton" text="Rediger" />
                         <TextField layoutX="213.0" layoutY="14.0" prefHeight="31.0" prefWidth="374.0" />
                         <Button layoutX="594.0" layoutY="14.0" mnemonicParsing="false" text="Søg" />
                         <Button fx:id="PIMNewProductButton" layoutX="680.0" layoutY="14.0" mnemonicParsing="false" onAction="#handlePIMNewProductButton" prefHeight="31.0" prefWidth="106.0" text="Nyt produkt" />

@@ -26,6 +26,14 @@ public class Converter {
 
 	return new PIMProduct(productId, productName, categoryName, description, price, imageFiles);
     }
+    
+    public static ArrayList<PIMProduct> createPIMProducts(LinkedList<HashMap<String, String>> productsMapList) {
+	ArrayList<PIMProduct> pimProducts = new ArrayList<>();
+	for (HashMap<String, String> productMap : productsMapList) {
+	    pimProducts.add(createPIMProduct(productMap));
+	}
+	return pimProducts;
+    }
 
     public static PIMage createPIMage(HashMap<String, String> pimImageMap) {
 	int imageID = Integer.parseInt(pimImageMap.get("imageID"));

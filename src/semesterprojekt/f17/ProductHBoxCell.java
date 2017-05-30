@@ -105,7 +105,27 @@ public class ProductHBoxCell extends HBox {
     }
 
     public ProductHBoxCell(PIMProduct pimProduct) {
+	//Sets the padding and spacing.
+	super();
+	this.setSpacing(10);
 
+	id = pimProduct.getId();
+
+	if (!pimProduct.getImageFiles().isEmpty()) {
+	    InputStream inputStream = new ByteArrayInputStream(pimProduct.getImageFiles().get(0));
+	    imageView.setImage(new Image(inputStream));
+	} else {
+	    imageView.setImage(new Image("images/test.jpeg"));
+	}
+
+	name.setText(pimProduct.getName());
+	name.setPrefWidth(150);
+	price.setText(Double.toString(pimProduct.getPrice()) + "kr");
+
+	imageView.setFitWidth(100);
+	imageView.setPreserveRatio(true);
+
+	this.getChildren().addAll(imageView, name, price);
     }
 
     public ProductHBoxCell(PIMage pimage) {

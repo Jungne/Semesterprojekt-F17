@@ -40,7 +40,6 @@ import javafx.stage.Stage;
 public class NewProductWindowController implements Initializable {
 
     private WebshopInterface webshopController;
-    private DBManager dbm;
     private PIMManager pimManager;
 
     private PIMProduct pimProduct;
@@ -78,7 +77,7 @@ public class NewProductWindowController implements Initializable {
 	    Logger.getLogger(NewProductWindowController.class.getName()).log(Level.SEVERE, null, ex);
 	}
 
-	pimManager = new PIMManager();
+	pimManager = PIMManager.getInstance();
 
 	categoriesMap = webshopController.getCategories();
 	categoriesMap.put("Ingen", -1);
