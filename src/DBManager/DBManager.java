@@ -100,6 +100,11 @@ public class DBManager implements DatabaseInterface {
 	public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
 		return productHandler.createProduct(name, category, description, price, imageIdList);
 	}
+	
+	@Override
+	public boolean editProduct(int productID, String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
+	    return productHandler.editProduct(productID, name, category, description, price, imageIdList);
+	}
 
 	@Override
 	public Order getLatestOrder(int customerId) {
@@ -134,6 +139,11 @@ public class DBManager implements DatabaseInterface {
 	@Override
 	public LinkedList<HashMap<String, String>> getUnassignedImages() {
 	    return imageHandler.getUnassignedImages();
+	}
+	
+	@Override
+	public LinkedList<HashMap<String, String>> getPImages(int productId) {
+	    return imageHandler.getPImages(productId);
 	}
 
 	@Override

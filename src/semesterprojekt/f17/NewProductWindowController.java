@@ -74,11 +74,11 @@ public class NewProductWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 	try {
 	    webshopController = new WebshopController();
-	    dbm = DBManager.getInstance();
-	    pimManager = new PIMManager();
 	} catch (IOException ex) {
 	    Logger.getLogger(NewProductWindowController.class.getName()).log(Level.SEVERE, null, ex);
 	}
+
+	pimManager = new PIMManager();
 
 	categoriesMap = webshopController.getCategories();
 	categoriesMap.put("Ingen", -1);
@@ -92,13 +92,32 @@ public class NewProductWindowController implements Initializable {
 	categoriesChoiceBox.setValue(categoriesChoiceBox.getItems().get(0));
 
 	ArrayList<PIMage> pimages = pimManager.getUnassignedPIMages();
-	List<ProductHBoxCell> list = new ArrayList<>();
+	List<ProductHBoxCell> pimagesList = new ArrayList<>();
 
 	for (PIMage pimage : pimages) {
-	    list.add(new ProductHBoxCell(pimage));
+	    pimagesList.add(new ProductHBoxCell(pimage));
 	}
-	ObservableList observableList = FXCollections.observableArrayList(list);
-	availableImagesListView.setItems(observableList);
+	ObservableList pimagesObservableList = FXCollections.observableArrayList(pimagesList);
+	availableImagesListView.setItems(pimagesObservableList);
+
+	//If editing an existing product it gets the product object and sets the textfields to the products values.
+	if (pimManager.isEditingProduct()) {
+	    pimProduct = pimManager.getProductToEdit();
+	    nameTextField.setText(pimProduct.getName());
+	    categoriesChoiceBox.setValue(pimProduct.getCategory());
+	    priceTextField.setText(Double.toString(pimProduct.getPrice()));
+	    descriptionTextArea.setText(pimProduct.getDescription());
+
+	    //Shows the assigned images in the listview.
+	    ArrayList<PIMage> productPimages = pimManager.getPImages(pimProduct.getId());
+	    List<ProductHBoxCell> productPimagesList = new ArrayList<>();
+
+	    for (PIMage pimage : productPimages) {
+		productPimagesList.add(new ProductHBoxCell(pimage));
+	    }
+	    ObservableList productPimagesObservableList = FXCollections.observableArrayList(productPimagesList);
+	    assignedImagesListView.setItems(productPimagesObservableList);
+	}
     }
 
     @FXML
@@ -123,24 +142,28 @@ public class NewProductWindowController implements Initializable {
     private void handleSaveButton(ActionEvent event) {
 	ArrayList<Integer> imageIdList = new ArrayList<>();
 	for (ProductHBoxCell imageCell : assignedImagesListView.getItems()) {
-	   imageIdList.add(imageCell.getImageId());
-	} 
-	
+	    imageIdList.add(imageCell.getImageId());
+	}
+
 	String name = nameTextField.getText();
 	String category = categoriesChoiceBox.getValue();
 	String description = descriptionTextArea.getText();
 	double price = Double.parseDouble(priceTextField.getText());
-	
-	
-	pimManager.createProduct(name, category, description, price, imageIdList);
-	
+
+	if (pimManager.isEditingProduct()) {
+	    pimManager.editProduct(pimProduct.getId(), name, category, description, price, imageIdList);
+	} else {
+	    pimManager.createProduct(name, category, description, price, imageIdList);
+	}
+
 	Stage stage = (Stage) saveButton.getScene().getWindow();
 	stage.close();
     }
 
     @FXML
     private void handleCancelButton(ActionEvent event) {
-
+	Stage stage = (Stage) cancelButton.getScene().getWindow();
+	stage.close();
     }
 
 }

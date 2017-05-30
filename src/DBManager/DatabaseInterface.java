@@ -30,8 +30,12 @@ public interface DatabaseInterface {
 	public LinkedList<HashMap<String, String>> getAllImages();
 	
 	public LinkedList<HashMap<String, String>> getUnassignedImages();
+	
+	public LinkedList<HashMap<String, String>> getPImages(int productId);
 
 	public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList);
+	
+	public boolean editProduct(int productID, String name, String category, String description, double price, ArrayList<Integer> imageIdList);
 
 	public Order getLatestOrder(int customerId);
 

@@ -19,7 +19,7 @@
       <Label layoutX="13.0" layoutY="126.0" text="Pris:" />
       <TextField fx:id="priceTextField" layoutX="14.0" layoutY="147.0" prefHeight="31.0" prefWidth="296.0" />
       <ChoiceBox fx:id="categoriesChoiceBox" layoutX="14.0" layoutY="90.0" prefHeight="31.0" prefWidth="296.0" />
-      <TextArea fx:id="descriptionTextArea" layoutX="338.0" layoutY="33.0" prefHeight="146.0" prefWidth="296.0" />
+      <TextArea fx:id="descriptionTextArea" layoutX="338.0" layoutY="33.0" prefHeight="146.0" prefWidth="296.0" wrapText="true" />
       <Label layoutX="14.0" layoutY="192.0" text="Billeder:" />
       <Button fx:id="addImageButton" layoutX="96.0" layoutY="580.0" mnemonicParsing="false" onAction="#handleAddImageButton" text="Tilføj billede &gt;&gt;" />
       <ListView fx:id="availableImagesListView" layoutX="15.0" layoutY="241.0" prefHeight="325.0" prefWidth="296.0" />

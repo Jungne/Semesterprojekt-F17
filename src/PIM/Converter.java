@@ -13,15 +13,36 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Converter {
+
     private static DatabaseInterface databaseInterface = DBManager.getInstance();
 
-    public static ArrayList<PIMage> createPIMages(LinkedList<HashMap<String, String>> damImageMapList) {
+    public static PIMProduct createPIMProduct(HashMap<String, String> productMap) {
+	int productId = Integer.parseInt(productMap.get("productId"));
+	String productName = productMap.get("productName");
+	String categoryName = productMap.get("categoryName");
+	String description = productMap.get("description");
+	double price = Double.parseDouble(productMap.get("price"));
+	ArrayList<byte[]> imageFiles = new ArrayList<>();
+
+	return new PIMProduct(productId, productName, categoryName, description, price, imageFiles);
+    }
+
+    public static PIMage createPIMage(HashMap<String, String> pimImageMap) {
+	int imageID = Integer.parseInt(pimImageMap.get("imageID"));
+	String imageName = pimImageMap.get("imageName");
+	String categoryName = pimImageMap.get("categoryName");
+	byte[] image = databaseInterface.getImage(imageID);
+
+	return new PIMage(imageID, imageName, categoryName, image);
+    }
+
+    public static ArrayList<PIMage> createPIMages(LinkedList<HashMap<String, String>> pimImageMapList) {
 	ArrayList<PIMage> PIMImageList = new ArrayList<>();
 
-	for (HashMap<String, String> damImageMap : damImageMapList) {
-	    int imageID = Integer.parseInt(damImageMap.get("imageID"));
-	    String imageName = damImageMap.get("imageName");
-	    String categoryName = damImageMap.get("categoryName");
+	for (HashMap<String, String> pimImageMap : pimImageMapList) {
+	    int imageID = Integer.parseInt(pimImageMap.get("imageID"));
+	    String imageName = pimImageMap.get("imageName");
+	    String categoryName = pimImageMap.get("categoryName");
 	    byte[] image = databaseInterface.getImage(imageID);
 
 	    PIMImageList.add(new PIMage(imageID, imageName, categoryName, image));
