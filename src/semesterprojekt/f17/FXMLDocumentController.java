@@ -236,7 +236,7 @@ public class FXMLDocumentController implements Initializable {
 	private void handleAddToBasketButton(ActionEvent e) {
 		int id = catalogTestListView.getSelectionModel().getSelectedItem().getProductId();
 		if (isLoggedIn) {
-			webshopController.addProductToBasket(id, 1);
+			webshopController.addProductToBasket(webshopController.getCustomer().getShoppingBaskets().get(0).getId(), id, 1);
 		} else {
 			guestBasket.addProduct(webshopController.getProduct(id), 1);
 		}
@@ -248,7 +248,7 @@ public class FXMLDocumentController implements Initializable {
 	private void handleDeleteButton(ActionEvent e) {
 		int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
 		if (isLoggedIn) {
-			webshopController.removeProduct(id);
+			webshopController.removeProduct(webshopController.getCustomer().getShoppingBaskets().get(0).getId(), id);
 		} else {
 			guestBasket.removeProduct(webshopController.getProduct(id));
 		}
@@ -262,7 +262,7 @@ public class FXMLDocumentController implements Initializable {
 			int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
 			int amount = Integer.parseInt(amountTextField.getText());
 			if (isLoggedIn) {
-				webshopController.setProductAmount(id, amount);
+				webshopController.setProductAmount(webshopController.getCustomer().getShoppingBaskets().get(0).getId(), id, amount);
 			} else {
 				guestBasket.setProductAmount(webshopController.getProduct(id), amount);
 			}
@@ -276,7 +276,7 @@ public class FXMLDocumentController implements Initializable {
 	private void updateShoppingBasket() {
 		double totalPrice = 0;
 
-		ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBasket().getOrderLines() : guestBasket.getOrderLines();
+		ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getCustomer().getShoppingBaskets().get(0).getOrderLines() : guestBasket.getOrderLines();
 		List<ProductHBoxCell> list = new ArrayList<>();
 		for (OrderLine orderLine : orderLines) {
 			list.add(new ProductHBoxCell(orderLine));
@@ -334,7 +334,8 @@ public class FXMLDocumentController implements Initializable {
 							"address",
 							"postalCode",
 							"city",
-							"country");
+							"country",
+							guestBasket);
 		}
 
 		CheckOut_URCPane_FirstnameTextField.setText("");
@@ -345,7 +346,7 @@ public class FXMLDocumentController implements Initializable {
 						+ "-------------------------------\n"
 						+ "\n";
 
-		Order order = webshopController.getLatestOrder(1);
+		Order order = webshopController.getLatestOrder();
 
 		for (OrderLine item : order.getShoppingBasket().getOrderLines()) {
 			text += "" + item.getAmount() + "x " + item.getProduct().getName() + " : " + item.getProduct().getPrice() + "kr\n";
@@ -355,7 +356,7 @@ public class FXMLDocumentController implements Initializable {
 						+ "Ha' en god dag!";
 		CheckOut_EndPane_Receipt.setText(text);
 		guestBasket.empty();
-		webshopController.emptyShoppingBasket();
+		webshopController.emptyShoppingBasket(webshopController.getCustomer().getShoppingBaskets().get(0).getId());
 		updateShoppingBasket();
 	}
 
