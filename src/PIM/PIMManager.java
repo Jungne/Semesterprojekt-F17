@@ -12,6 +12,10 @@ public class PIMManager {
     private PIMProduct productToEdit;
     private boolean editingProduct;
 
+    private PIMManager() {
+	dbm = DBManager.getInstance();
+    }
+    
     public static PIMManager getInstance() {
 	if (pimManager == null) {
 	    pimManager = new PIMManager();

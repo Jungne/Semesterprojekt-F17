@@ -24,6 +24,17 @@ public class Catalog {
 
 		return products;
 	}
+	
+	public static ArrayList<Product> getAllEnrichedProducts() {
+	    ArrayList<Product> products = new ArrayList<>();
+
+		for (HashMap<String, String> productMap : databaseInterface.getAllEnrichedProducts()) {
+			//Adds the product to the list of products
+			products.add(getProductIncludingImageFiles(productMap));
+		}
+
+		return products;
+	}
 
 	public static LinkedHashMap<String, Integer> getCategories() {
 		return databaseInterface.getCategories();

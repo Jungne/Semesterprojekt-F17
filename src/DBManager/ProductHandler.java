@@ -63,6 +63,20 @@ public class ProductHandler {
 	    return null;
 	}
     }
+    
+    public LinkedList<HashMap<String, String>> getAllEnrichedProducts() {
+	try {
+	    LinkedList<HashMap<String, String>> productsMapList = new LinkedList<>();
+	    ResultSet productsResultSet = executeQuery("SELECT productId, productName, categoryName, description, price FROM Products NATURAL JOIN Categories WHERE NOT description = '' ORDER BY productId");
+
+	    //Maps the resultset to a HashMap.
+	    productsMapList = mapProducts(productsResultSet);
+	    return productsMapList;
+	} catch (SQLException ex) {
+	    Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+	    return null;
+	}
+    }
 
     public LinkedList<HashMap<String, String>> findProducts(String query, int categoryID) {
 	try {
