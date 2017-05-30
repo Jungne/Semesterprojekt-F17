@@ -32,7 +32,7 @@ import javafx.scene.layout.Pane;
 public class FXMLDocumentController2 implements Initializable {
 
 	private WebshopInterface webshopController;
-	
+
 	private Product currentProduct;
 	private int imageNumber;
 	private ArrayList<Image> currentProductImages = new ArrayList<>();
@@ -128,7 +128,7 @@ public class FXMLDocumentController2 implements Initializable {
 	private Button WebshopPane_CheckoutTab_EndPane_DoneButton;
 	// </editor-fold>
 	// </editor-fold>
-	
+
 	@FXML
 	private Pane PIMPane;
 	// <editor-fold defaultstate="collapsed" desc="PIMPane - Elements">
@@ -152,7 +152,7 @@ public class FXMLDocumentController2 implements Initializable {
 	@FXML
 	private ListView<?> PIMPane_NavigationPane_ProductListView;
 	// </editor-fold>
-	
+
 	@FXML
 	private Pane PIMPane_InformationPane;
 	// <editor-fold defaultstate="collapsed" desc="PIMPane_InformationPane - Elements">
@@ -174,7 +174,7 @@ public class FXMLDocumentController2 implements Initializable {
 	private Button PIMPane_InformationPane_SaveButton;
 	// </editor-fold>
 	// </editor-fold>
-	
+
 	@FXML
 	private Pane DAMPane;
 	// <editor-fold defaultstate="collapsed" desc="DAMPane - Elements">
@@ -201,36 +201,36 @@ public class FXMLDocumentController2 implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
-			webshopController =  new WebshopController();
+			webshopController = new WebshopController();
 		} catch (IOException ex) {
 			Logger.getLogger(FXMLDocumentController2.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		updateChoiceBoxes();
 	}
-	
-  // <editor-fold defaultstate="collapsed" desc="MenuPane - Methods">
+
+	// <editor-fold defaultstate="collapsed" desc="MenuPane - Methods">
 	@FXML
 	private void handle_MenuPane_Buttons(ActionEvent event) {
 		MenuPane.setVisible(false);
-		if(event.getSource().equals(MenuPane_WebshopButton)){
+		if (event.getSource().equals(MenuPane_WebshopButton)) {
 			WebshopPane.setVisible(true);
-		} else if (event.getSource().equals(MenuPane_PIMButton)){
+		} else if (event.getSource().equals(MenuPane_PIMButton)) {
 			PIMPane.setVisible(true);
-		} else if (event.getSource().equals(MenuPane_DAMButton)){
+		} else if (event.getSource().equals(MenuPane_DAMButton)) {
 			DAMPane.setVisible(true);
 		}
 	}
 	// </editor-fold>
-	
+
 	// <editor-fold defaultstate="collapsed" desc="WebshopPane - Methods">
 	@FXML
 	private void handle_WebshopPane_CatalogTab_Buttons(ActionEvent event) {
-		Button source = (Button)event.getSource();
+		Button source = (Button) event.getSource();
 		if (source.equals(WebshopPane_CatalogTab_ShowProductsButton)) {
 			ArrayList<Product> products = webshopController.getAllProduct();
 			showProducts(products, WebshopPane_CatalogTab_ProductsListView);
 			WebshopPane_CatalogTab_SearchTextField.clear();
-			
+
 		} else if (source.equals(WebshopPane_CatalogTab_ShowInfoButton)) {
 			ProductHBoxCell productHBoxCell = WebshopPane_CatalogTab_ProductsListView.getSelectionModel().getSelectedItem();
 			if (productHBoxCell == null) {
@@ -251,29 +251,29 @@ public class FXMLDocumentController2 implements Initializable {
 
 			//Sets the descriptive text for the selected product.
 			updateDescriptiveProductText();
-			
+
 		} else if (source.equals(WebshopPane_CatalogTab_SearchButton)) {
 			ArrayList<Product> products = webshopController.findProducts(WebshopPane_CatalogTab_SearchTextField.getText(), getCategoryID(WebshopPane_CatalogTab_CategoryChoiceBox.getValue()));
 			showProducts(products, WebshopPane_CatalogTab_ProductsListView);
-			
+
 		} else if (source.equals(WebshopPane_CatalogTab_AddToBasketButton)) {
 			int id = WebshopPane_CatalogTab_ProductsListView.getSelectionModel().getSelectedItem().getProductId();
 			if (isLoggedIn) {
 				webshopController.addProductToBasket(webshopController.getCustomer().getShoppingBaskets().get(0).getId(), id, 1);
-			}	else {
+			} else {
 				guestBasket.addProduct(webshopController.getProduct(id), 1);
 			}
 			updateBasketTabItems();
-			
+
 		} else if (source.equals(WebshopPane_CatalogTab_ImageLeftButton)) {
 			imageNumber += imageNumber == 1 ? 0 : -1;
 			updateImageNavigationItems();
-			
+
 		} else if (source.equals(WebshopPane_CatalogTab_ImageRightButton)) {
 			imageNumber += imageNumber == currentProductImages.size() ? 0 : 1;
 			updateImageNavigationItems();
-			
-		} 
+
+		}
 	}
 
 	@FXML
@@ -292,7 +292,7 @@ public class FXMLDocumentController2 implements Initializable {
 			} catch (Exception ex) {
 				WebshopPane_BasketTab_AmountTextField.setText("1");
 			}
-			
+
 		} else if (source.equals(WebshopPane_BasketTab_DeleteButton)) {
 			int id = WebshopPane_BasketTab_BasketListView.getSelectionModel().getSelectedItem().getProductId();
 			if (isLoggedIn) {
@@ -301,7 +301,7 @@ public class FXMLDocumentController2 implements Initializable {
 				guestBasket.removeProduct(webshopController.getProduct(id));
 			}
 			updateBasketTabItems();
-			
+
 		} else if (source.equals(WebshopPane_BasketTab_CheckOutButton)) {
 			WebshopPane_CheckoutTab.setDisable(false);
 			WebshopPane.getSelectionModel().select(WebshopPane_CheckoutTab);
@@ -330,7 +330,7 @@ public class FXMLDocumentController2 implements Initializable {
 	@FXML
 	private void handle_WebshopPane_CatalogTab_SearchBar(ActionEvent event) {
 	}
-	
+
 	private void updateImageNavigationItems() {
 		int imageAmount = currentProductImages.size();
 		if (imageAmount == 1) {
@@ -387,41 +387,41 @@ public class FXMLDocumentController2 implements Initializable {
 		}
 	}
 	// </editor-fold>
-	
-  // <editor-fold defaultstate="collapsed" desc="PIMPane - Methods">
+
+	// <editor-fold defaultstate="collapsed" desc="PIMPane - Methods">
 	@FXML
 	private void handle_PIMPane_NavigationPane_Buttons(ActionEvent event) {
-		Button source = (Button)event.getSource();
-		if(source.equals(PIMPane_NavigationPane_ShowProductsButton)){
-			
-		}else if(source.equals(PIMPane_NavigationPane_SearchButton)){
-			
-		}else if(source.equals(PIMPane_NavigationPane_CreateProductButton)){
+		Button source = (Button) event.getSource();
+		if (source.equals(PIMPane_NavigationPane_ShowProductsButton)) {
+
+		} else if (source.equals(PIMPane_NavigationPane_SearchButton)) {
+
+		} else if (source.equals(PIMPane_NavigationPane_CreateProductButton)) {
 			PIMPane_NavigationPane.setVisible(false);
 			PIMPane_InformationPane.setVisible(true);
-		}else if(source.equals(PIMPane_NavigationPane_UpdateProductButton)){
+		} else if (source.equals(PIMPane_NavigationPane_UpdateProductButton)) {
 			PIMPane_NavigationPane.setVisible(false);
 			PIMPane_InformationPane.setVisible(true);
-		}else if(source.equals(PIMPane_NavigationPane_RemoveProductButton)){
-			
+		} else if (source.equals(PIMPane_NavigationPane_RemoveProductButton)) {
+
 		}
 	}
-	
+
 	@FXML
 	private void handle_PIMPane_InformationPane_Buttons(ActionEvent event) {
-		Button source = (Button)event.getSource();
-		if(source.equals(PIMPane_InformationPane_LinkButton)){
-			
-		}else if(source.equals(PIMPane_InformationPane_RemoveButton)){
-			
-		}else if(source.equals(PIMPane_InformationPane_SaveButton)){
+		Button source = (Button) event.getSource();
+		if (source.equals(PIMPane_InformationPane_LinkButton)) {
+
+		} else if (source.equals(PIMPane_InformationPane_RemoveButton)) {
+
+		} else if (source.equals(PIMPane_InformationPane_SaveButton)) {
 			PIMPane_InformationPane.setVisible(false);
 			PIMPane_NavigationPane.setVisible(true);
 		}
 	}
 	// </editor-fold>
-	
-  // <editor-fold defaultstate="collapsed" desc="DAMPane - Methods">
+
+	// <editor-fold defaultstate="collapsed" desc="DAMPane - Methods">
 	@FXML
 	private void handle_DAMPane_Buttons(ActionEvent event) {
 	}
@@ -435,7 +435,7 @@ public class FXMLDocumentController2 implements Initializable {
 		ObservableList observableList = FXCollections.observableArrayList(list);
 		listview.setItems(observableList);
 	}
-	
+
 	private void updateChoiceBoxes() {
 		categoriesMap = webshopController.getCategories();
 		categoriesMap.put("Ingen", -1);

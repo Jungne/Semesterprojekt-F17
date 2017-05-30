@@ -1,7 +1,5 @@
 package DAM;
 
-import java.io.InputStream;
-
 public class DAMImage {
 
 	private int id;

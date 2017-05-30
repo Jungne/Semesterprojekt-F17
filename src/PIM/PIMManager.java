@@ -6,59 +6,59 @@ import java.util.ArrayList;
 
 public class PIMManager {
 
-    private static PIMManager pimManager = null;
-    private ArrayList<PIMProduct> currentProductList;
-    private DatabaseInterface dbm;
-    private PIMProduct productToEdit;
-    private boolean editingProduct;
+	private static PIMManager pimManager = null;
+	private ArrayList<PIMProduct> currentProductList;
+	private DatabaseInterface dbm;
+	private PIMProduct productToEdit;
+	private boolean editingProduct;
 
-    private PIMManager() {
-	dbm = DBManager.getInstance();
-    }
-    
-    public static PIMManager getInstance() {
-	if (pimManager == null) {
-	    pimManager = new PIMManager();
+	private PIMManager() {
+		dbm = DBManager.getInstance();
 	}
-	return pimManager;
-    }
 
-    public ArrayList<PIMProduct> getAllProducts() {
-	this.currentProductList = ProductSearch.getAllProducts();
+	public static PIMManager getInstance() {
+		if (pimManager == null) {
+			pimManager = new PIMManager();
+		}
+		return pimManager;
+	}
 
-	return currentProductList;
-    }
+	public ArrayList<PIMProduct> getAllProducts() {
+		this.currentProductList = ProductSearch.getAllProducts();
 
-    public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
-	return EditProduct.createProduct(name, category, description, price, imageIdList);
-    }
+		return currentProductList;
+	}
 
-    public boolean editProduct(int productID, String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
-	return EditProduct.editProduct(productID, name, category, description, price, imageIdList);
-    }
+	public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
+		return EditProduct.createProduct(name, category, description, price, imageIdList);
+	}
 
-    public ArrayList<PIMage> getUnassignedPIMages() {
-	return Converter.createPIMages(dbm.getUnassignedImages());
-    }
+	public boolean editProduct(int productID, String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
+		return EditProduct.editProduct(productID, name, category, description, price, imageIdList);
+	}
 
-    public ArrayList<PIMage> getPImages(int productID) {
-	return Converter.createPIMages(dbm.getPImages(productID));
-    }
+	public ArrayList<PIMage> getUnassignedPIMages() {
+		return Converter.createPIMages(dbm.getUnassignedImages());
+	}
 
-    public void setProductToEdit(int productID) {
-	productToEdit = Converter.createPIMProduct(dbm.getProduct(productID));
-    }
+	public ArrayList<PIMage> getPImages(int productID) {
+		return Converter.createPIMages(dbm.getPImages(productID));
+	}
 
-    public PIMProduct getProductToEdit() {
-	return productToEdit;
-    }
+	public void setProductToEdit(int productID) {
+		productToEdit = Converter.createPIMProduct(dbm.getProduct(productID));
+	}
 
-    public boolean isEditingProduct() {
-	return editingProduct;
-    }
+	public PIMProduct getProductToEdit() {
+		return productToEdit;
+	}
 
-    public void setEditingProduct(boolean editingProduct) {
-	this.editingProduct = editingProduct;
-    }
+	public boolean isEditingProduct() {
+		return editingProduct;
+	}
+
+	public void setEditingProduct(boolean editingProduct) {
+		this.editingProduct = editingProduct;
+	}
 
 }

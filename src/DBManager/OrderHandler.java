@@ -1,17 +1,9 @@
 package DBManager;
 
-import Webshop.Customer;
-import Webshop.Order;
-import Webshop.OrderLine;
-import Webshop.OrderStatus;
-import Webshop.ShoppingBasket;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.logging.Level;

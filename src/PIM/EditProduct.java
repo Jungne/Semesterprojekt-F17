@@ -10,7 +10,7 @@ public class EditProduct {
 	}
 
 	public static boolean editProduct(int id, String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
-	    return DBManager.getInstance().editProduct(id, name, category, description, price, imageIdList);
+		return DBManager.getInstance().editProduct(id, name, category, description, price, imageIdList);
 	}
 
 }

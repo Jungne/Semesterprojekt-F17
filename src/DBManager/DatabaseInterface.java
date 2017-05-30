@@ -1,8 +1,5 @@
 package DBManager;
 
-import Webshop.Customer;
-import Webshop.Order;
-import Webshop.ShoppingBasket;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
