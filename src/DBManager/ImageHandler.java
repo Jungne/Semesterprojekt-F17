@@ -31,14 +31,14 @@ public class ImageHandler {
 		return connection.createStatement().executeQuery(query);
 	}
 
-	public InputStream getImage(int imageID) {
+	public byte[] getImageFile(int imageID) {
 		try {
-			InputStream inputStream = null;
+			byte[] imageFile = null;
 			ResultSet imageFileSet = executeQuery("SELECT imageFile FROM imageFiles WHERE imageID = " + imageID);
 			if (imageFileSet.next()) {
-				inputStream = imageFileSet.getBinaryStream(1);
+				imageFile = imageFileSet.getBytes(1);
 			}
-			return inputStream;
+			return imageFile;
 		} catch (SQLException ex) {
 			Logger.getLogger(ImageHandler.class.getName()).log(Level.SEVERE, null, ex);
 			return null;
@@ -46,13 +46,13 @@ public class ImageHandler {
 
 	}
 
-	public ArrayList<InputStream> getImageFiles(int productID) {
+	public ArrayList<byte[]> getImageFiles(int productID) {
 		try {
 			ResultSet imageFileSet = executeQuery("SELECT imageFile FROM Images NATURAL JOIN ImageFiles WHERE productId = " + productID);
 
-			ArrayList<InputStream> imageFiles = new ArrayList<>();
+			ArrayList<byte[]> imageFiles = new ArrayList<>();
 			while (imageFileSet.next()) {
-				imageFiles.add(imageFileSet.getBinaryStream(1));
+				imageFiles.add(imageFileSet.getBytes(1));
 			}
 
 			return imageFiles;

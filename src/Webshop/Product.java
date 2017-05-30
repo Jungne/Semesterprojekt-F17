@@ -10,9 +10,9 @@ public class Product {
 	private String category;
 	private String description;
 	private double price;
-	private ArrayList<InputStream> imageFiles;
+	private ArrayList<byte[]> imageFiles;
 
-	public Product(int id, String name, String category, String description, double price, ArrayList<InputStream> imageFiles) {
+	public Product(int id, String name, String category, String description, double price, ArrayList<byte[]> imageFiles) {
 		this.name = name;
 		this.id = id;
 		this.category = category;
@@ -59,7 +59,7 @@ public class Product {
 	/**
 	 * @return the imageFiles
 	 */
-	public ArrayList<InputStream> getImageFiles() {
+	public ArrayList<byte[]> getImageFiles() {
 		return imageFiles;
 	}
 
