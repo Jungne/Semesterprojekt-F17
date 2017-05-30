@@ -15,7 +15,7 @@ public class WebshopController implements WebshopInterface {
 
 	public WebshopController() throws IOException {
 		this.databaseInterface = DBManager.getInstance();
-		this.customer = new Customer();
+		this.customer = null;
 	}
 
 	/**
@@ -146,71 +146,116 @@ public class WebshopController implements WebshopInterface {
 
 	@Override
 	public Customer getCustomer() {
-		if (this.customer != null || this.customer.isRegisted()) {
-			return this.customer;
+		if (this.customer == null || !this.customer.isRegisted()) {
+			return null;
 		}
-		return null;
+		return this.customer;
 	}
 
 	@Override
 	public ArrayList<ShoppingBasket> getShoppingBaskets() {
-		if (this.customer != null || this.customer.isRegisted()) {
-			return this.customer.getShoppingBaskets();
+		if (this.customer == null || !this.customer.isRegisted()) {
+			return null;
 		}
-		return null;
+		return this.customer.getShoppingBaskets();
 	}
 
 	@Override
 	public void createBasket() {
-		if (this.customer != null || this.customer.isRegisted()) {
-			//Creates a new empty shoppingBasket
-			databaseInterface.createBasket(this.customer.getId());
-
-			//Reloads the customer (preferably a new shoppingBasket should just be created direcly, but I don't know how to get the basketId that is just created)
-			this.customer = getCustomer(this.customer.getEmail());
+		if (this.customer == null || !this.customer.isRegisted()) {
+			return;
 		}
+		//Creates a new empty shoppingBasket
+		databaseInterface.createBasket(this.customer.getId());
+
+		//Reloads the customer (preferably a new shoppingBasket should just be created direcly, but I don't know how to get the basketId that is just created)
+		this.customer = getCustomer(this.customer.getEmail());
 	}
 
 	@Override
 	public void removeBasket(int basketId) {
-		if (this.customer != null || this.customer.isRegisted()) {
-			//Removes the basket from the database
-			databaseInterface.remove(basketId);
-
-			//Finds the shoppingBasket that is refered to
-			ShoppingBasket shoppingBasket = this.customer.getShoppingBasket(basketId);
-
-			//Removes that shoppingBasket
-			this.customer.removeShoppingBasket(shoppingBasket);
+		if (this.customer == null || !this.customer.isRegisted()) {
+			return;
 		}
+		//Removes the basket from the database
+		databaseInterface.removeBasket(basketId);
+
+		//Finds the shoppingBasket that is refered to
+		ShoppingBasket shoppingBasket = this.customer.getShoppingBasket(basketId);
+
+		//Removes that shoppingBasket
+		this.customer.removeShoppingBasket(shoppingBasket);
 	}
 
 	@Override
 	public boolean addProductToBasket(int basketId, int productId, int amount) {
+		if (this.customer == null || !this.customer.isRegisted()) {
+			return false;
+		}
 		//Adds product to database
 		databaseInterface.addProductToBasket(basketId, productId, amount);
 
 		//Finds the shoppingBasket that is refered to
-		ShoppingBasket shoppingBasket2 = this.customer.getShoppingBasket(basketId);
+		ShoppingBasket shoppingBasket = this.customer.getShoppingBasket(basketId);
 
 		//Adds product to that shoppingBasket
-		shoppingBasket2.addProduct(Catalog.getProduct(productId), amount);
+		shoppingBasket.addProduct(Catalog.getProduct(productId), amount);
 		return true;
 	}
 
 	@Override
 	public boolean setProductAmount(int basketId, int productId, int amount) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		if (this.customer == null || !this.customer.isRegisted()) {
+			return false;
+		}
+
+		//Removes orderLine instead if amount is zero or less
+		if (amount <= 0) {
+			return removeProduct(basketId, productId);
+		}
+
+		//Sets product amount in database
+		databaseInterface.setProductAmount(basketId, productId, amount);
+
+		//Finds the shoppingBasket that is refered to
+		ShoppingBasket shoppingBasket = this.customer.getShoppingBasket(basketId);
+
+		//Sets the product amount in that shoppingBasket
+		shoppingBasket.setProductAmount(Catalog.getProduct(productId), amount);
+		return true;
 	}
 
 	@Override
 	public boolean removeProduct(int basketId, int productId) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		if (this.customer == null || !this.customer.isRegisted()) {
+			return false;
+		}
+
+		//Removes the product in the basket from the database
+		databaseInterface.removeProduct(basketId, productId);
+
+		//Finds the shoppingBasket that is refered to
+		ShoppingBasket shoppingBasket = this.customer.getShoppingBasket(basketId);
+
+		//Removes the product from the given shoppingBasket
+		shoppingBasket.removeProduct(Catalog.getProduct(productId));
+		return true;
 	}
 
 	@Override
 	public void emptyShoppingBasket(int basketId) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		if (this.customer == null || !this.customer.isRegisted()) {
+			return;
+		}
+
+		//Removes the products in the basket from the database
+		databaseInterface.emptyBasket(basketId);
+
+		//Finds the shoppingBasket that is refered to
+		ShoppingBasket shoppingBasket = this.customer.getShoppingBasket(basketId);
+
+		//Empties the shoppingBasket
+		shoppingBasket.empty();
 	}
 
 	@Override

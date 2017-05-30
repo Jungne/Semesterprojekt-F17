@@ -53,9 +53,15 @@ public interface DatabaseInterface {
 
 	public void createBasket(int customerId);
 
-	public void remove(int basketId);
+	public void removeBasket(int basketId);
 
 	public boolean addProductToBasket(int basketId, int productId, int amount);
+
+	public boolean setProductAmount(int basketId, int productId, int amount);
+
+	public void removeProduct(int basketId, int productId);
+
+	public void emptyBasket(int basketId);
 
 	public HashMap<String, String> getLatestOrder(int customerId);
 

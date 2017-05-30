@@ -294,7 +294,7 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public void remove(int basketId) {
+	public void removeBasket(int basketId) {
 		try {
 			executeUpdate("DELETE FROM ProductsInBaskets WHERE basketId = " + basketId);
 			executeUpdate("DELETE FROM Baskets WHERE basketId = " + basketId);
@@ -306,7 +306,6 @@ public class DBManager implements DatabaseInterface {
 	@Override
 	public boolean addProductToBasket(int basketId, int productId, int amount) {
 		try {
-			//TODO - Should add to existing orderLine if product already exists
 			ResultSet orderLineSet = executeQuery("SELECT amount FROM ProductsInBaskets WHERE basketId = " + basketId + " AND productId = " + productId);
 
 			//Checks if an orderLine with that product already exists. Inserts new orderLine if it doesn't
@@ -323,6 +322,43 @@ public class DBManager implements DatabaseInterface {
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 			return false;
+		}
+	}
+
+	@Override
+	public boolean setProductAmount(int basketId, int productId, int amount) {
+		try {
+			//Checks if the orderLine that should be made changes to even exist and returns false if it doesn't
+			ResultSet orderLineSet = executeQuery("SELECT amount FROM ProductsInBaskets WHERE basketId = " + basketId + " AND productId = " + productId);
+			if (!orderLineSet.next()) {
+				return false;
+			}
+
+			//Sets the amount to the given amount
+			executeUpdate("UPDATE ProductsInBaskets SET amount = " + amount + " WHERE basketId = " + basketId + " AND productId = " + productId);
+
+			return true;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
+		}
+	}
+
+	@Override
+	public void removeProduct(int basketId, int productId) {
+		try {
+			executeUpdate("DELETE FROM ProductsInBaskets WHERE basketId = " + basketId + " AND productId = " + productId);
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	@Override
+	public void emptyBasket(int basketId) {
+		try {
+			executeUpdate("DELETE FROM ProductsInBaskets WHERE basketId = " + basketId);
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
