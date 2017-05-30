@@ -11,97 +11,97 @@ import javafx.scene.layout.HBox;
 
 public class ProductHBoxCell extends HBox {
 
-    ImageView imageView = new ImageView();
-    Label name = new Label();
-    Label price = new Label();
-    Label amountLabel = new Label();
-    Label totalPrice = new Label();
-    private int id;
+	ImageView imageView = new ImageView();
+	Label name = new Label();
+	Label price = new Label();
+	Label amountLabel = new Label();
+	Label totalPrice = new Label();
+	private int id;
 
-    public ProductHBoxCell(Product product) {
-	//Sets the padding and spacing.
-	super();
-	this.setSpacing(10);
+	public ProductHBoxCell(Product product) {
+		//Sets the padding and spacing.
+		super();
+		this.setSpacing(10);
 
-	id = product.getId();
+		id = product.getId();
 
-	if (!product.getImageFiles().isEmpty()) {
-	    InputStream inputStream = new ByteArrayInputStream(product.getImageFiles().get(0));
-	    imageView.setImage(new Image(inputStream));
-	} else {
-	    imageView.setImage(new Image("images/test.jpeg"));
+		if (!product.getImageFiles().isEmpty()) {
+			InputStream inputStream = new ByteArrayInputStream(product.getImageFiles().get(0));
+			imageView.setImage(new Image(inputStream));
+		} else {
+			imageView.setImage(new Image("images/test.jpeg"));
+		}
+
+		name.setText(product.getName());
+		name.setPrefWidth(150);
+		price.setText(Double.toString(product.getPrice()) + "kr");
+
+		imageView.setFitWidth(100);
+		imageView.setPreserveRatio(true);
+
+		this.getChildren().addAll(imageView, name, price);
 	}
 
-	name.setText(product.getName());
-	name.setPrefWidth(150);
-	price.setText(Double.toString(product.getPrice()) + "kr");
+	public ProductHBoxCell(OrderLine orderLine) {
+		//Sets the padding and spacing.
+		super();
+		this.setSpacing(10);
 
-	imageView.setFitWidth(100);
-	imageView.setPreserveRatio(true);
+		Product product = orderLine.getProduct();
+		int amount = orderLine.getAmount();
 
-	this.getChildren().addAll(imageView, name, price);
-    }
+		id = product.getId();
 
-    public ProductHBoxCell(OrderLine orderLine) {
-	//Sets the padding and spacing.
-	super();
-	this.setSpacing(10);
+		if (!product.getImageFiles().isEmpty()) {
+			InputStream inputStream = new ByteArrayInputStream(product.getImageFiles().get(0));
+			imageView.setImage(new Image(inputStream));
+		} else {
+			imageView.setImage(new Image("images/test.jpeg"));
+		}
 
-	Product product = orderLine.getProduct();
-	int amount = orderLine.getAmount();
+		name.setText(product.getName());
+		price.setText(Double.toString(product.getPrice()) + "kr");
+		amountLabel.setText(Integer.toString(amount));
+		totalPrice.setText(Double.toString(product.getPrice() * amount) + "kr");
 
-	id = product.getId();
+		name.setPrefWidth(150);
+		price.setPrefWidth(100);
+		amountLabel.setPrefWidth(100);
+		imageView.setFitWidth(100);
+		imageView.setPreserveRatio(true);
 
-	if (!product.getImageFiles().isEmpty()) {
-	    InputStream inputStream = new ByteArrayInputStream(product.getImageFiles().get(0));
-	    imageView.setImage(new Image(inputStream));
-	} else {
-	    imageView.setImage(new Image("images/test.jpeg"));
+		this.getChildren().addAll(imageView, name, price, amountLabel, totalPrice);
 	}
 
-	name.setText(product.getName());
-	price.setText(Double.toString(product.getPrice()) + "kr");
-	amountLabel.setText(Integer.toString(amount));
-	totalPrice.setText(Double.toString(product.getPrice() * amount) + "kr");
+	public ProductHBoxCell(DAMImage damImage) {
+		//Sets the padding and spacing.
+		super();
+		this.setSpacing(10);
 
-	name.setPrefWidth(150);
-	price.setPrefWidth(100);
-	amountLabel.setPrefWidth(100);
-	imageView.setFitWidth(100);
-	imageView.setPreserveRatio(true);
+		Label category = new Label();
 
-	this.getChildren().addAll(imageView, name, price, amountLabel, totalPrice);
-    }
+		id = damImage.getId();
 
-    public ProductHBoxCell(DAMImage damImage) {
-	//Sets the padding and spacing.
-	super();
-	this.setSpacing(10);
+		InputStream inputStream = new ByteArrayInputStream(damImage.getImageFile());
+		imageView.setImage(new Image(inputStream));
+		name.setText(damImage.getName());
+		name.setPrefWidth(150);
 
-	Label category = new Label();
+		category.setText(damImage.getCategory());
+		category.setPrefWidth(150);
 
-	id = damImage.getId();
-	
-	InputStream inputStream = new ByteArrayInputStream(damImage.getImageFile());
-	imageView.setImage(new Image(inputStream));
-	name.setText(damImage.getName());
-	name.setPrefWidth(150);
+		imageView.setFitWidth(200);
+		imageView.setPreserveRatio(true);
 
-	category.setText(damImage.getCategory());
-	category.setPrefWidth(150);
+		this.getChildren().addAll(imageView, name, category);
+	}
 
-	imageView.setFitWidth(200);
-	imageView.setPreserveRatio(true);
+	public int getProductId() {
+		return id;
+	}
 
-	this.getChildren().addAll(imageView, name, category);
-    }
-
-    public int getProductId() {
-	return id;
-    }
-
-    @Override
-    public String toString() {
-	return id + name.getText();
-    }
+	@Override
+	public String toString() {
+		return id + name.getText();
+	}
 }
