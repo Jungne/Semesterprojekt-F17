@@ -8,7 +8,7 @@ public interface WebshopInterface {
 	public Product getProduct(int id);
 
 	public ArrayList<Product> getAllProduct();
-	
+
 	public ArrayList<Product> getAllEnrichedProducts();
 
 	public ArrayList<Product> findProducts(String query, int categoryID);
@@ -18,6 +18,8 @@ public interface WebshopInterface {
 	public boolean signUp(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket);
 
 	public boolean login(String email, String code);
+
+	public boolean logOut();
 
 	public Customer getCustomer();
 

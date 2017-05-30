@@ -90,6 +90,15 @@ public class WebshopController implements WebshopInterface {
 		return true;
 	}
 
+	@Override
+	public boolean logOut() {
+		if (this.customer == null || !this.customer.isRegisted()) {
+			return false;
+		}
+		this.customer = null;
+		return true;
+	}
+
 	private boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket, boolean includesEmptyBasket) {
 		//Creates customer if email is unique
 		boolean isCreated = databaseInterface.createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, includesEmptyBasket);
