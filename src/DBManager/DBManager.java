@@ -100,10 +100,10 @@ public class DBManager implements DatabaseInterface {
 	public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
 		return productHandler.createProduct(name, category, description, price, imageIdList);
 	}
-	
+
 	@Override
 	public boolean editProduct(int productID, String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
-	    return productHandler.editProduct(productID, name, category, description, price, imageIdList);
+		return productHandler.editProduct(productID, name, category, description, price, imageIdList);
 	}
 
 	@Override
@@ -125,15 +125,15 @@ public class DBManager implements DatabaseInterface {
 	public LinkedList<HashMap<String, String>> getAllImages() {
 		return imageHandler.getAllImages();
 	}
-	
+
 	@Override
 	public LinkedList<HashMap<String, String>> getUnassignedImages() {
-	    return imageHandler.getUnassignedImages();
+		return imageHandler.getUnassignedImages();
 	}
-	
+
 	@Override
 	public LinkedList<HashMap<String, String>> getPImages(int productId) {
-	    return imageHandler.getPImages(productId);
+		return imageHandler.getPImages(productId);
 	}
 
 	@Override
@@ -232,7 +232,7 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
+	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, boolean includesEmptyBasket) {
 		try {
 			//Checks if email is unique
 			ResultSet existingEmail = executeQuery("SELECT email FROM Customers WHERE email = '" + email + "'");
@@ -255,8 +255,10 @@ public class DBManager implements DatabaseInterface {
 
 			preparedStatement.executeUpdate();
 
-			//Creates an empty basket
-			createBasket(getCustomerId(email));
+			//Creates an empty basket if includesEmptyBasket=true
+			if (includesEmptyBasket) {
+				createBasket(getCustomerId(email));
+			}
 
 			return true;
 		} catch (SQLException ex) {

@@ -57,7 +57,7 @@ public class WebshopController implements WebshopInterface {
 		}
 
 		//Saves the customer and the given shoppingBasket in the database
-		if (!createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket)) {
+		if (!createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket, true)) {
 			return false;
 		}
 
@@ -85,9 +85,9 @@ public class WebshopController implements WebshopInterface {
 		return true;
 	}
 
-	private boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket) {
+	private boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket, boolean includesEmptyBasket) {
 		//Creates customer if email is unique
-		boolean isCreated = databaseInterface.createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country);
+		boolean isCreated = databaseInterface.createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, includesEmptyBasket);
 		if (!isCreated) {
 			return false;
 		}
@@ -168,9 +168,9 @@ public class WebshopController implements WebshopInterface {
 	@Override
 	public boolean addProductToBasket(int basketId, int productId, int amount) {
 		databaseInterface.addProductToBasket(basketId, productId, amount);
-		for (ShoppingBasket b : this.customer.getShoppingBaskets()) {
-			if (b.getId() == basketId) {
-				b.addProduct(Catalog.getProduct(productId), amount);
+		for (ShoppingBasket shoppingBasket : this.customer.getShoppingBaskets()) {
+			if (shoppingBasket.getId() == basketId) {
+				shoppingBasket.addProduct(Catalog.getProduct(productId), amount);
 			}
 		}
 		return true;
@@ -215,29 +215,24 @@ public class WebshopController implements WebshopInterface {
 	 */
 	@Override
 	public Order checkOut(String email, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket) {
-		//Check if any information is null and if there is anything in basket
-		if (email == null || firstName == null || lastName == null || address == null || postalCode == null || city == null || country == null || shoppingBasket.isEmpty()) {
+		//Check if any information is null and if there is anything in shoppingBasket
+		if (email == null || firstName == null || lastName == null || address == null || postalCode == null || city == null || country == null || shoppingBasket == null || shoppingBasket.isEmpty()) {
 			return null;
 		}
 
 		//Tries to create the customer
-		//if (!databaseInterface.createCustomer(new Customer(email, null, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country), null)) {
-		//	return null;
-		//}
+		if (!createCustomer(email, null, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, null, false)) {
+			return null;
+		}
+
 		//Gets the newly signed up customer
-		//Customer newCustomer = databaseInterface.getCustomer(email);
-		//
-		//Creates and saves the order in database and returnes the information about the order
-		//if (!OrderHistory.createOrder(newCustomer, customer.getFirstShoppingBasket())) {
-		//	return -1;
-		//}
-		//Still needs to fix getLatestOrder() and createOrder() back in OrderHandler
-		//Destroy local customer and initiate new unregisted customer
-		//TODO
-		//
-		//Returns the customerId of the newly signed up customer
-		//return databaseInterface.getCustomerId(email);
-		return null;
+		Customer customer = getCustomer(email);
+
+		//Creates the order
+		OrderHistory.createOrder(customer, shoppingBasket);
+
+		//Returns the latest order on that customer, which is the order just created
+		return OrderHistory.getLatestOrder(customer);
 	}
 
 	@Override

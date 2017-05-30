@@ -10,14 +10,25 @@ public class OrderHistory {
 	private static DatabaseInterface databaseInterface = DBManager.getInstance();
 
 	public static boolean createOrder(Customer customer, ShoppingBasket shoppingBasket) {
+		//Checks if there is any products for the order
+		if (shoppingBasket == null || shoppingBasket.isEmpty()) {
+			return false;
+		}
+
 		//Creates a new order without products in it yet
 		boolean isCreated = databaseInterface.createOrder(customer.getId(), "Delivered");
 		if (!isCreated) {
 			return false;
 		}
 
-		//TODO
-		return false;
+		int orderId = getLatestOrder(customer).getId();
+
+		//Adds the products from shoppingBasket to the new order in database
+		for (OrderLine orderLine : shoppingBasket.getOrderLines()) {
+			databaseInterface.addProductToOrder(orderId, orderLine.getProduct().getId(), orderLine.getAmount());
+		}
+
+		return true;
 	}
 
 	public static Order getLatestOrder(Customer customer) {
@@ -37,4 +48,5 @@ public class OrderHistory {
 
 		return order;
 	}
+
 }

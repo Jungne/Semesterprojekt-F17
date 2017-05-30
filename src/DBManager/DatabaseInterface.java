@@ -47,7 +47,7 @@ public interface DatabaseInterface {
 
 	public LinkedList<HashMap<String, String>> getBasketsOrderLines(int basketId);
 
-	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country);
+	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, boolean includesEmptyBasket);
 
 	public void createBasket(int customerId);
 
