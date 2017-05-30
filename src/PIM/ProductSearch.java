@@ -13,19 +13,7 @@ public class ProductSearch {
 
     public static ArrayList<PIMProduct> getAllProducts() {
 	databaseInterface = DBManager.getInstance();
-	ArrayList<PIMProduct> productList = new ArrayList<PIMProduct>();
-	LinkedList<HashMap<String, String>> productsMapList = databaseInterface.getAllProducts();
-
-	for (HashMap<String, String> productMap : productsMapList) {
-	    int productID = Integer.parseInt(productMap.get("productID"));
-	    String productName = productMap.get("productName");
-	    String categoryName = productMap.get("categoryName");
-	    String description = productMap.get("description");
-	    double price = Double.parseDouble(productMap.get("price"));
-	    ArrayList<byte[]> images = databaseInterface.getImages(productID);
-	    productList.add(new PIMProduct(productID, productName, categoryName, description, price, images));
-	}
+	ArrayList<PIMProduct> productList = Converter.createPIMProducts(databaseInterface.getAllProducts());
 	return productList;
     }
-
 }

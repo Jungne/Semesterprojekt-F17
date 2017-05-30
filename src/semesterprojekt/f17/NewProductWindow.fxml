@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="676.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="semesterprojekt.f17.NewProductWindowController">
+   <children>
+      <Button fx:id="saveButton" layoutX="191.0" layoutY="631.0" mnemonicParsing="false" onAction="#handleSaveButton" text="Gem" />
+      <Button fx:id="cancelButton" layoutX="366.0" layoutY="631.0" mnemonicParsing="false" onAction="#handleCancelButton" text="Annuller" />
+      <Label layoutX="13.0" layoutY="11.0" text="Navn:" />
+      <TextField fx:id="nameTextField" layoutX="14.0" layoutY="32.0" prefHeight="31.0" prefWidth="296.0" />
+      <Label layoutX="13.0" layoutY="69.0" text="Kategori:" />
+      <Label layoutX="338.0" layoutY="11.0" text="Beskrivelse:" />
+      <Label layoutX="13.0" layoutY="126.0" text="Pris:" />
+      <TextField fx:id="priceTextField" layoutX="14.0" layoutY="147.0" prefHeight="31.0" prefWidth="296.0" />
+      <ChoiceBox fx:id="categoriesChoiceBox" layoutX="14.0" layoutY="90.0" prefHeight="31.0" prefWidth="296.0" />
+      <TextArea fx:id="descriptionTextArea" layoutX="338.0" layoutY="33.0" prefHeight="146.0" prefWidth="296.0" wrapText="true" />
+      <Label layoutX="14.0" layoutY="192.0" text="Billeder:" />
+      <Button fx:id="addImageButton" layoutX="96.0" layoutY="580.0" mnemonicParsing="false" onAction="#handleAddImageButton" text="Tilføj billede &gt;&gt;" />
+      <ListView fx:id="availableImagesListView" layoutX="15.0" layoutY="241.0" prefHeight="325.0" prefWidth="296.0" />
+      <ListView fx:id="assignedImagesListView" layoutX="338.0" layoutY="241.0" prefHeight="325.0" prefWidth="296.0" />
+      <Label layoutX="110.0" layoutY="217.0" text="Ledige billeder" />
+      <Label layoutX="460.0" layoutY="217.0" text="Produkt" />
+      <Button fx:id="removeImageButton" layoutX="424.0" layoutY="580.0" mnemonicParsing="false" onAction="#handleRemoveImageButton" text="&lt;&lt; Fjern billede" />
+   </children>
+</AnchorPane>
