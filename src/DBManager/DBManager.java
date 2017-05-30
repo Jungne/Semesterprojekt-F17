@@ -1,9 +1,6 @@
 package DBManager;
 
-import Webshop.Customer;
 import Webshop.Order;
-import Webshop.OrderLine;
-import Webshop.ShoppingBasket;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
