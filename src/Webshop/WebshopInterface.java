@@ -8,6 +8,8 @@ public interface WebshopInterface {
 	public Product getProduct(int id);
 
 	public ArrayList<Product> getAllProduct();
+	
+	public ArrayList<Product> getAllEnrichedProducts();
 
 	public ArrayList<Product> findProducts(String query, int categoryID);
 

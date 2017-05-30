@@ -162,7 +162,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleCatalogTestShowProductsButton(ActionEvent e) {
-	ArrayList<Product> products = webshopController.getAllProduct();
+	ArrayList<Product> products = webshopController.getAllEnrichedProducts();
 	showProducts(products, catalogTestListView);
 	searchTextField.clear();
     }

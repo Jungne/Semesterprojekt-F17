@@ -14,6 +14,8 @@ public interface DatabaseInterface {
 	public HashMap<String, String> getProduct(int productId);
 
 	public LinkedList<HashMap<String, String>> getAllProducts();
+	
+	public LinkedList<HashMap<String, String>> getAllEnrichedProducts();
 
 	public LinkedList<HashMap<String, String>> findProducts(String query, int categoryID);
 

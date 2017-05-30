@@ -38,6 +38,11 @@ public class WebshopController implements WebshopInterface {
 	public ArrayList<Product> getAllProduct() {
 		return Catalog.getAllProducts();
 	}
+	
+	@Override
+	public ArrayList<Product> getAllEnrichedProducts() {
+		return Catalog.getAllEnrichedProducts();
+	}
 
 	@Override
 	public ArrayList<Product> findProducts(String query, int categoryId) {

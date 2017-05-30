@@ -85,6 +85,11 @@ public class DBManager implements DatabaseInterface {
 	public LinkedList<HashMap<String, String>> getAllProducts() {
 		return productHandler.getAllProducts();
 	}
+	
+	@Override
+	public LinkedList<HashMap<String, String>> getAllEnrichedProducts() {
+	   return productHandler.getAllEnrichedProducts();
+	}
 
 	@Override
 	public LinkedList<HashMap<String, String>> findProducts(String query, int categoryID) {
