@@ -8,10 +8,6 @@ package PIM;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-/**
- *
- * @author jungn
- */
 public class PIMProduct {
 
     private int id;

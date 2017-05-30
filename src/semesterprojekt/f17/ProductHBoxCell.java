@@ -83,7 +83,7 @@ public class ProductHBoxCell extends HBox {
 	Label category = new Label();
 
 	id = damImage.getId();
-	
+
 	InputStream inputStream = new ByteArrayInputStream(damImage.getImageFile());
 	imageView.setImage(new Image(inputStream));
 	name.setText(damImage.getName());
@@ -95,20 +95,26 @@ public class ProductHBoxCell extends HBox {
 	imageView.setFitWidth(200);
 	imageView.setPreserveRatio(true);
 
+	category.setText(damImage.getCategory());
+	category.setPrefWidth(150);
+
+	imageView.setFitWidth(200);
+	imageView.setPreserveRatio(true);
+
 	this.getChildren().addAll(imageView, name, category);
     }
-    
+
     public ProductHBoxCell(PIMProduct pimProduct) {
-	
+
     }
-    
+
     public ProductHBoxCell(PIMage pimage) {
 	//Sets the padding and spacing.
 	super();
 	this.setSpacing(10);
 
 	id = pimage.getId();
-	
+
 	InputStream inputStream = new ByteArrayInputStream(pimage.getImageFile());
 	imageView.setImage(new Image(inputStream));
 	name.setText(pimage.getName());
@@ -123,11 +129,11 @@ public class ProductHBoxCell extends HBox {
     public int getProductId() {
 	return id;
     }
-    
+
     public int getImageId() {
 	return id;
     }
-    
+
     @Override
     public String toString() {
 	return id + name.getText();

@@ -2,53 +2,54 @@ package Webshop;
 
 import DBManager.DBManager;
 import DBManager.DatabaseInterface;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 
 public class Catalog {
 
 	private static DatabaseInterface databaseInterface = DBManager.getInstance();
 
-	public static ArrayList<Product> getAllProducts() {
-		return mapProducts(databaseInterface.getAllProducts());
+	public static Product getProduct(int productId) {
+		return getProductIncludingImageFiles(databaseInterface.getProduct(productId));
 	}
 
-	public static Product getProduct(int productId) {
-		return mapProduct(databaseInterface.getProduct(productId));
+	public static ArrayList<Product> getAllProducts() {
+		ArrayList<Product> products = new ArrayList<>();
+
+		for (HashMap<String, String> productMap : databaseInterface.getAllProducts()) {
+			//Adds the product to the list of products
+			products.add(getProductIncludingImageFiles(productMap));
+		}
+
+		return products;
 	}
 
 	public static LinkedHashMap<String, Integer> getCategories() {
 		return databaseInterface.getCategories();
 	}
 
-	public static ArrayList<Product> findProducts(String query, int categoryID) {
-		return mapProducts(databaseInterface.findProducts(query, categoryID));
-	}
-
-	private static Product mapProduct(HashMap<String, String> productMap) {
-		String productName = productMap.get("productName");
-		int productID = Integer.parseInt(productMap.get("productID"));
-		String categoryName = productMap.get("categoryName");
-		String description = productMap.get("description");
-		double price = Double.parseDouble(productMap.get("price"));
-		ArrayList<byte[]> images = databaseInterface.getImages(productID);
-		Product product = new Product(productID, productName, categoryName, description, price, images);
-		return product;
-	}
-
-	private static ArrayList<Product> mapProducts(LinkedList<HashMap<String, String>> productsMapList) {
+	public static ArrayList<Product> findProducts(String query, int categoryId) {
 		ArrayList<Product> products = new ArrayList<>();
 
-		//Iterates through the list to create the products.
-		for (HashMap<String, String> productMap : productsMapList) {
+		for (HashMap<String, String> productMap : databaseInterface.findProducts(query, categoryId)) {
 			//Adds the product to the list of products
-			products.add(mapProduct(productMap));
+			products.add(getProductIncludingImageFiles(productMap));
 		}
 
 		return products;
+	}
+
+	private static Product getProductIncludingImageFiles(HashMap<String, String> productMap) {
+		Product product = Converter.toProduct(productMap);
+
+		//Should now add imageFiles
+		ArrayList<byte[]> imageFiles = databaseInterface.getImages(product.getId());
+		for (byte[] imageFile : imageFiles) {
+			product.addImageFile(imageFile);
+		}
+
+		return product;
 	}
 
 }
