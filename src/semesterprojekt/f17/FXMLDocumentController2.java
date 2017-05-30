@@ -1,8 +1,19 @@
 package semesterprojekt.f17;
 
 import Webshop.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +25,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -21,6 +33,10 @@ import javafx.scene.layout.Pane;
 public class FXMLDocumentController2 implements Initializable {
 
 	private WebshopInterface webshopController;
+	
+	private Product currentProduct;
+	private int imageNumber;
+	private LinkedHashMap<String, Integer> categoriesMap;
 
 	@FXML
 	private AnchorPane anchorPane;
@@ -45,7 +61,7 @@ public class FXMLDocumentController2 implements Initializable {
 	@FXML
 	private Button WebshopPane_CatalogTab_ShowProductsButton;
 	@FXML
-	private ListView<?> WebshopPane_CatalogTab_ProductsListView;
+	private ListView<ProductHBoxCell> WebshopPane_CatalogTab_ProductsListView;
 	@FXML
 	private Button WebshopPane_CatalogTab_ShowInfoButton;
 	@FXML
@@ -57,7 +73,7 @@ public class FXMLDocumentController2 implements Initializable {
 	@FXML
 	private Button WebshopPane_CatalogTab_SearchButton;
 	@FXML
-	private ChoiceBox<?> WebshopPane_CatalogTab_CategoryChoiceBox;
+	private ChoiceBox<String> WebshopPane_CatalogTab_CategoryChoiceBox;
 	@FXML
 	private Button WebshopPane_CatalogTab_AddToBasketButton;
 	@FXML
@@ -182,7 +198,12 @@ public class FXMLDocumentController2 implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//TODO
+		try {
+			webshopController =  new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(FXMLDocumentController2.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		updateChoiceBoxes();
 	}
 	
   // <editor-fold defaultstate="collapsed" desc="MenuPane - Methods">
@@ -202,6 +223,64 @@ public class FXMLDocumentController2 implements Initializable {
 	// <editor-fold defaultstate="collapsed" desc="WebshopPane - Methods">
 	@FXML
 	private void handle_WebshopPane_CatalogTab_Buttons(ActionEvent event) {
+		Button source = (Button)event.getSource();
+		if (source.equals(WebshopPane_CatalogTab_ShowProductsButton)) {
+			ArrayList<Product> products = webshopController.getAllProduct();
+			showProducts(products, WebshopPane_CatalogTab_ProductsListView);
+			WebshopPane_CatalogTab_SearchTextField.clear();
+		} else if (source.equals(WebshopPane_CatalogTab_ShowInfoButton)) {
+		ProductHBoxCell productHBoxCell = WebshopPane_CatalogTab_ProductsListView.getSelectionModel().getSelectedItem();
+			if (productHBoxCell == null) {
+				return;
+			}
+
+			//Gets the id for the selected product.
+			int id = productHBoxCell.getProductId();
+			currentProduct = webshopController.getProduct(id);
+
+			//Sets the current image to the first if any, else it is set to the default image.
+			if (!currentProduct.getImageFiles().isEmpty()) {
+				InputStream inputStream = new ByteArrayInputStream(currentProduct.getImageFiles().get(0));
+				WebshopPane_CatalogTab_ProductImageView.setImage(new Image(inputStream));
+			} else {
+				WebshopPane_CatalogTab_ProductImageView.setImage(new Image("images/test.jpeg"));
+			}
+
+			//Sets the text under the image to display the number of images for the selected product.
+			if (currentProduct.getImageFiles().size() == 1) {
+				WebshopPane_CatalogTab_ImageLeftButton.setDisable(true);
+				WebshopPane_CatalogTab_ImageRightButton.setDisable(true);
+				WebshopPane_CatalogTab_ImageNumberLabel.setText("1 ud af 1");
+			} else if (currentProduct.getImageFiles().size() > 1) {
+				imageNumber = 1;
+				WebshopPane_CatalogTab_ImageLeftButton.setDisable(true);
+				WebshopPane_CatalogTab_ImageRightButton.setDisable(false);
+				WebshopPane_CatalogTab_ImageNumberLabel.setText(imageNumber + " ud af " + currentProduct.getImageFiles().size());
+			} else {
+				WebshopPane_CatalogTab_ImageLeftButton.setDisable(true);
+				WebshopPane_CatalogTab_ImageRightButton.setDisable(true);
+				WebshopPane_CatalogTab_ImageNumberLabel.setText("0 ud af 0");
+			}
+
+			//Sets the descriptive text for the selected product.
+			String text = "";
+			text = "Name: " + currentProduct.getName() + "\n";
+			text += "Category: " + currentProduct.getCategory() + "\n";
+			text += "Price: " + Double.toString(currentProduct.getPrice()) + "\n";
+			text += "Description: " + currentProduct.getDescription();
+			WebshopPane_CatalogTab_ProductTextArea.setText(text);
+			
+		} else if (source.equals(WebshopPane_CatalogTab_SearchButton)) {
+			ArrayList<Product> products = webshopController.findProducts(WebshopPane_CatalogTab_SearchTextField.getText(), getCategoryID(WebshopPane_CatalogTab_CategoryChoiceBox.getValue()));
+			showProducts(products, WebshopPane_CatalogTab_ProductsListView);
+			
+		} else if (source.equals(WebshopPane_CatalogTab_AddToBasketButton)) {
+			
+		} else if (source.equals(WebshopPane_CatalogTab_ImageLeftButton)) {
+			
+		} else if (source.equals(WebshopPane_CatalogTab_ImageRightButton)) {
+			
+		}
 	}
 
 	@FXML
@@ -264,5 +343,29 @@ public class FXMLDocumentController2 implements Initializable {
 	}
 	// </editor-fold>
 
+	private void showProducts(ArrayList<Product> products, ListView listview) {
+		List<ProductHBoxCell> list = new ArrayList<>();
+		for (Product product : products) {
+			list.add(new ProductHBoxCell(product));
+		}
+		ObservableList observableList = FXCollections.observableArrayList(list);
+		listview.setItems(observableList);
+	}
+	
+	private void updateChoiceBoxes() {
+		categoriesMap = webshopController.getCategories();
+		categoriesMap.put("Ingen", -1);
+		ArrayList<String> categoryList = new ArrayList<>();
 
+		for (Map.Entry<String, Integer> entry : categoriesMap.entrySet()) {
+			categoryList.add(entry.getKey());
+		}
+		//populates categoriesChoiceBox.
+		WebshopPane_CatalogTab_CategoryChoiceBox.setItems(FXCollections.observableArrayList(categoryList));
+		WebshopPane_CatalogTab_CategoryChoiceBox.setValue(WebshopPane_CatalogTab_CategoryChoiceBox.getItems().get(0));
+	}
+
+	private int getCategoryID(String category) {
+		return categoriesMap.get(category);
+	}
 }
