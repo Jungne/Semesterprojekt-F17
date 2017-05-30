@@ -70,7 +70,12 @@ public class WebshopController implements WebshopInterface {
 	public boolean login(String email, String code) {
 		Customer customer = getCustomer(email);
 
-		//Checks if email/code combination was valid
+		//Checks if email if exist
+		if (customer == null) {
+			return false;
+		}
+
+		//Checks if code is correct
 		if (code.equals(customer.getCode())) {
 			return false;
 		}
