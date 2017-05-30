@@ -4,6 +4,7 @@ import DAM.DAMImage;
 import DAM.DAMManager;
 import DBManager.DBManager;
 import Webshop.*;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,7 +47,6 @@ public class FXMLDocumentController implements Initializable {
     private boolean isLoggedIn = false;
     private ShoppingBasket guestBasket = new ShoppingBasket();
     private int imageNumber;
-    private ArrayList<Image> currentProductImages;
     private Product currentProduct;
 
     @FXML
@@ -145,6 +145,12 @@ public class FXMLDocumentController implements Initializable {
     private Button imageRightButton;
     @FXML
     private Label imageNumberLabel;
+    @FXML
+    private Button PIMShowProductsButton;
+    @FXML
+    private Button PIMEditProductButton;
+    @FXML
+    private Button PIMNewProductButton;
 
     @FXML
     private void handleCatalogTestShowProductsButton(ActionEvent e) {
@@ -164,15 +170,10 @@ public class FXMLDocumentController implements Initializable {
 	int id = productHBoxCell.getProductId();
 	currentProduct = webshopController.getProduct(id);
 	
-	//Gets the images for the selected product and saves them to an arraylist.
-	currentProductImages = new ArrayList<>();
-	for (InputStream inputStream : currentProduct.getImageFiles()) {
-	    currentProductImages.add(new Image(inputStream));
-	}
-
 	//Sets the current image to the first if any, else it is set to the default image.
-	if (!currentProductImages.isEmpty()) {
-	    catalogTestImageView.setImage(currentProductImages.get(0));
+	if (!currentProduct.getImageFiles().isEmpty()) {
+	    InputStream inputStream = new ByteArrayInputStream(currentProduct.getImageFiles().get(0));
+	    catalogTestImageView.setImage(new Image(inputStream));
 	} else {
 	    catalogTestImageView.setImage(new Image("images/test.jpeg"));
 	}
@@ -462,7 +463,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleLeftImageButton(ActionEvent event) {
 	imageNumber--;
-	catalogTestImageView.setImage(currentProductImages.get(imageNumber - 1));
+	InputStream inputStream = new ByteArrayInputStream(currentProduct.getImageFiles().get(imageNumber - 1));
+	catalogTestImageView.setImage(new Image(inputStream));
 	imageNumberLabel.setText((imageNumber) + " ud af " + currentProduct.getImageFiles().size());
 
 	if (imageNumber == 1) {
@@ -474,7 +476,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleImageRightButton(ActionEvent event) {
 	imageNumber++;
-	catalogTestImageView.setImage(currentProductImages.get(imageNumber - 1));
+	InputStream inputStream = new ByteArrayInputStream(currentProduct.getImageFiles().get(imageNumber - 1));
+	catalogTestImageView.setImage(new Image(inputStream));
 	imageNumberLabel.setText((imageNumber) + " ud af " + currentProduct.getImageFiles().size());
 
 	if (imageNumber == currentProduct.getImageFiles().size()) {

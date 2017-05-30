@@ -23,9 +23,9 @@ public interface DatabaseInterface {
 
 	public HashMap<String, String> getDAMImage(int imageId);
 
-	public InputStream getImage(int imageID);
+	public byte[] getImage(int imageID);
 
-	public ArrayList<InputStream> getImages(int productID);
+	public ArrayList<byte[]> getImages(int productID);
 
 	public LinkedList<HashMap<String, String>> getAllImages();
 

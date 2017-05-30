@@ -115,12 +115,12 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public InputStream getImage(int imageID) {
-		return imageHandler.getImage(imageID);
+	public byte[] getImage(int imageID) {
+		return imageHandler.getImageFile(imageID);
 	}
 
 	@Override
-	public ArrayList<InputStream> getImages(int productID) {
+	public ArrayList<byte[]> getImages(int productID) {
 		return imageHandler.getImageFiles(productID);
 	}
 

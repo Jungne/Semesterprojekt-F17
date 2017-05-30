@@ -18,7 +18,7 @@ public class FileHandler {
 	    int imageID = Integer.parseInt(damImageMap.get("imageID"));
 	    String imageName = damImageMap.get("imageName");
 	    String categoryName = damImageMap.get("categoryName");
-	    InputStream image = databaseInterface.getImage(imageID);
+	    byte[] image = databaseInterface.getImage(imageID);
 
 	    damImageList.add(new DAMImage(imageID, imageName, categoryName, image));
 	}

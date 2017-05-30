@@ -2,6 +2,8 @@ package semesterprojekt.f17;
 
 import DAM.DAMImage;
 import Webshop.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,7 +26,8 @@ public class ProductHBoxCell extends HBox {
 	id = product.getId();
 
 	if (!product.getImageFiles().isEmpty()) {
-	    imageView.setImage(new Image(product.getImageFiles().get(0)));
+	    InputStream inputStream = new ByteArrayInputStream(product.getImageFiles().get(0));
+	    imageView.setImage(new Image(inputStream));
 	} else {
 	    imageView.setImage(new Image("images/test.jpeg"));
 	}
@@ -49,14 +52,13 @@ public class ProductHBoxCell extends HBox {
 
 	id = product.getId();
 
-	Image image;
 	if (!product.getImageFiles().isEmpty()) {
-	    image = new Image(product.getImageFiles().get(0));
+	    InputStream inputStream = new ByteArrayInputStream(product.getImageFiles().get(0));
+	    imageView.setImage(new Image(inputStream));
 	} else {
-	    image = new Image("images/test.jpeg");
+	    imageView.setImage(new Image("images/test.jpeg"));
 	}
-	
-	imageView.setImage(image);
+
 	name.setText(product.getName());
 	price.setText(Double.toString(product.getPrice()) + "kr");
 	amountLabel.setText(Integer.toString(amount));
@@ -79,8 +81,9 @@ public class ProductHBoxCell extends HBox {
 	Label category = new Label();
 
 	id = damImage.getId();
-
-	imageView.setImage(new Image(damImage.getImageFile()));
+	
+	InputStream inputStream = new ByteArrayInputStream(damImage.getImageFile());
+	imageView.setImage(new Image(inputStream));
 	name.setText(damImage.getName());
 	name.setPrefWidth(150);
 

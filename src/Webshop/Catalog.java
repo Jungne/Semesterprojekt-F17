@@ -34,7 +34,7 @@ public class Catalog {
 		String categoryName = productMap.get("categoryName");
 		String description = productMap.get("description");
 		double price = Double.parseDouble(productMap.get("price"));
-		ArrayList<InputStream> images = databaseInterface.getImages(productID);
+		ArrayList<byte[]> images = databaseInterface.getImages(productID);
 		Product product = new Product(productID, productName, categoryName, description, price, images);
 		return product;
 	}

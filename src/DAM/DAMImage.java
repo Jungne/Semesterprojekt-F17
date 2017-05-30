@@ -7,9 +7,9 @@ public class DAMImage {
 	private int id;
 	private String name;
 	private String category;
-	private InputStream imageFile;
+	private byte[] imageFile;
 
-	public DAMImage(int id, String name, String category, InputStream imageFile) {
+	public DAMImage(int id, String name, String category, byte[] imageFile) {
 		this.id = id;
 		this.name = name;
 		this.category = category;
@@ -40,7 +40,7 @@ public class DAMImage {
 	/**
 	 * @return the imageFile
 	 */
-	public InputStream getImageFile() {
+	public byte[] getImageFile() {
 		return imageFile;
 	}
 
