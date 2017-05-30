@@ -12,6 +12,6 @@ public class OrderHistory {
 	}
 
 	public static Order getLatestOrder(Customer customer) {
-		//TODO
+		return null;//TODO
 	}
 }

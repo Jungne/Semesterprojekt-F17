@@ -63,4 +63,8 @@ public class Product {
 		return imageFiles;
 	}
 
+	public void addImageFile(byte[] imageFile) {
+		imageFiles.add(imageFile);
+	}
+
 }

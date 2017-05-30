@@ -33,7 +33,7 @@ public class Converter {
 		String categoryName = productMap.get("categoryName");
 		String description = productMap.get("description");
 		double price = Double.parseDouble(productMap.get("price"));
-		ArrayList<InputStream> imageFiles = new ArrayList<>();
+		ArrayList<byte[]> imageFiles = new ArrayList<>();
 
 		return new Product(productId, productName, categoryName, description, price, imageFiles);
 	}

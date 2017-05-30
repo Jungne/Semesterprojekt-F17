@@ -230,59 +230,31 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public boolean createCustomer(Customer customer, ShoppingBasket shoppingBasket) {
+	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
 		try {
 			//Checks if email is unique
-			ResultSet existingEmail = executeQuery("SELECT email FROM Customers WHERE email = '" + customer.getEmail() + "'");
+			ResultSet existingEmail = executeQuery("SELECT email FROM Customers WHERE email = '" + email + "'");
 			if (existingEmail.next()) {
 				return false;
 			}
 
 			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Customers "
 							+ "(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country) "
-							+ "VALUES (email, ?, ?, ?, phoneNumber, mobilePhoneNumber, ?, ?, ?, ?)");
+							+ "VALUES ('" + email + "', ?, ?, ?, " + phoneNumber + ", " + mobilePhoneNumber + ", ?, ?, ?, ?)");
 
 			//Checks for all attributes whether they are null are not
-			setStringParameter(preparedStatement, 1, customer.getCode());
-			setStringParameter(preparedStatement, 2, customer.getFirstName());
-			setStringParameter(preparedStatement, 3, customer.getLastName());
-			setStringParameter(preparedStatement, 4, customer.getAddress());
-			setStringParameter(preparedStatement, 5, customer.getPostalCode());
-			setStringParameter(preparedStatement, 6, customer.getCity());
-			setStringParameter(preparedStatement, 7, customer.getCountry());
+			setStringParameter(preparedStatement, 1, code);
+			setStringParameter(preparedStatement, 2, firstName);
+			setStringParameter(preparedStatement, 3, lastName);
+			setStringParameter(preparedStatement, 4, address);
+			setStringParameter(preparedStatement, 5, postalCode);
+			setStringParameter(preparedStatement, 6, city);
+			setStringParameter(preparedStatement, 7, country);
 
 			preparedStatement.executeUpdate();
 
-			//Gets the customerId
-			ResultSet customerSet = executeQuery("SELECT customerId FROM Customers WHERE email = '" + customer.getEmail() + "'");
-			customerSet.next();
-			int customerId = customerSet.getInt(1);
-
-			//Check if shoppingBasket is null. If null then it means that this is a unregisted customer made via checkOut. Otherwise it's made via SignUp
-			if (shoppingBasket == null) {
-				return true;
-			}
-
-			//Insert the new basket to the database
-			executeUpdate("INSERT INTO Baskets (customerId) VALUES (" + customerId + ")");
-
-			//Returns if shoppingBasket is empty
-			if (shoppingBasket.isEmpty()) {
-				return true;
-			}
-
-			//Get the basketId
-			ResultSet basketSet = executeQuery("SELECT basketId FROM Baskets WHERE customerId = " + customerId);
-			basketSet.next();
-			int basketId = basketSet.getInt(1);
-
-			//Insert the products from the shoppingBasket into to the database
-			for (OrderLine orderLine : shoppingBasket.getOrderLines()) {
-				executeUpdate("INSERT INTO ProductsInBaskets (basketId, productId, amount) VALUES ("
-								+ basketId + ", "
-								+ orderLine.getProduct().getId() + ", "
-								+ orderLine.getAmount() + ")");
-			}
+			//Creates an empty basket
+			createBasket(getCustomerId(email));
 
 			return true;
 		} catch (SQLException ex) {
@@ -300,6 +272,26 @@ public class DBManager implements DatabaseInterface {
 			}
 		} catch (SQLException ex) {
 			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	@Override
+	public void createBasket(int customerId) {
+		try {
+			executeUpdate("INSERT INTO Baskets (customerId) VALUES (" + customerId + ")");
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	@Override
+	public boolean addProductToBasket(int basketId, int productId, int amount) {
+		try {
+			executeUpdate("INSERT INTO ProductsInBaskets (basketId, productId, amount) VALUES (" + basketId + ", " + productId + ", " + amount + ")");
+			return true;
+		} catch (SQLException ex) {
+			Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
 		}
 	}
 

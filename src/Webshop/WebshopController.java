@@ -56,13 +56,13 @@ public class WebshopController implements WebshopInterface {
 			return false;
 		}
 
-		//Saves the customer in the database
-		if (!databaseInterface.createCustomer(new Customer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country), shoppingBasket)) {
+		//Saves the customer and the given shoppingBasket in the database
+		if (!createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket)) {
 			return false;
 		}
 
 		//Sets the current customer to the newly signed up customer
-		//this.customer = databaseInterface.getCustomer(email);
+		this.customer = getCustomer(email);
 		return true;
 	}
 
@@ -71,9 +71,32 @@ public class WebshopController implements WebshopInterface {
 		Customer customer = getCustomer(email);
 
 		//Checks if email/code combination was valid
-		//TODO
+		if (code.equals(customer.getCode())) {
+			return false;
+		}
+
 		//Sets the current customer to the now logged in customer
 		this.customer = customer;
+		return true;
+	}
+
+	private boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket) {
+		//Creates customer if email is unique
+		boolean isCreated = databaseInterface.createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country);
+		if (!isCreated) {
+			return false;
+		}
+
+		this.customer = getCustomer(email);
+
+		//Adds the orderLines to the new Basket if there is any
+		if (shoppingBasket == null || shoppingBasket.isEmpty()) {
+			return true;
+		}
+		for (OrderLine orderLine : shoppingBasket.getOrderLines()) {
+			addProductToBasket(customer.getFirstShoppingBasket().getId(), orderLine.getProduct().getId(), orderLine.getAmount());
+		}
+
 		return true;
 	}
 
@@ -139,7 +162,13 @@ public class WebshopController implements WebshopInterface {
 
 	@Override
 	public boolean addProductToBasket(int basketId, int productId, int amount) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		databaseInterface.addProductToBasket(basketId, productId, amount);
+		for (ShoppingBasket b : this.customer.getShoppingBaskets()) {
+			if (b.getId() == basketId) {
+				b.addProduct(Catalog.getProduct(productId), amount);
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -187,10 +216,9 @@ public class WebshopController implements WebshopInterface {
 		}
 
 		//Tries to create the customer
-		if (!databaseInterface.createCustomer(new Customer(email, null, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country), null)) {
-			return null;
-		}
-
+		//if (!databaseInterface.createCustomer(new Customer(email, null, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country), null)) {
+		//	return null;
+		//}
 		//Gets the newly signed up customer
 		//Customer newCustomer = databaseInterface.getCustomer(email);
 		//
