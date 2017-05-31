@@ -32,6 +32,7 @@ public class OrderHistory {
 	}
 
 	public static Order getLatestOrder(Customer customer) {
+
 		//Contructs the order, but without customer and shoppingBasket
 		Order order = Converter.toOrder(databaseInterface.getLatestOrder(customer.getId()));
 

@@ -56,7 +56,7 @@ public class OrderHandler {
 			LinkedList<HashMap<String, String>> orderLinesMap = new LinkedList<>();
 
 			//Gets orderLines for this order
-			ResultSet orderLineSet = executeQuery("SELECT productId, amount FROM ProductsInOrders WHERE basketId = " + orderId);
+			ResultSet orderLineSet = executeQuery("SELECT productId, amount FROM ProductsInOrders WHERE orderId = " + orderId);
 			while (orderLineSet.next()) {
 				HashMap<String, String> orderLineMap = new HashMap<>();
 				orderLineMap.put("productId", orderLineSet.getString(1));
