@@ -161,6 +161,7 @@ public class ProductHandler {
 							+ "WHERE productId = " + productId);
 
 			//Update Images to references to this product
+			executeUpdate("UPDATE Images SET productId = NULL WHERE productId = " + productId);
 			for (int imageId : imageIdList) {
 				executeUpdate("UPDATE Images SET productId = " + productId + " WHERE imageId = " + imageId);
 			}
