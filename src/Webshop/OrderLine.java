@@ -5,7 +5,7 @@ public class OrderLine {
 	private Product product;
 	private int amount;
 
-	public OrderLine(Product product, int amount) {
+	protected OrderLine(Product product, int amount) {
 		this.product = product;
 		this.amount = amount;
 	}
@@ -30,7 +30,7 @@ public class OrderLine {
 	 *
 	 * @param amount the amount to set
 	 */
-	public void setAmount(int amount) {
+	protected void setAmount(int amount) {
 		this.amount = amount < 0 ? 0 : amount;
 	}
 

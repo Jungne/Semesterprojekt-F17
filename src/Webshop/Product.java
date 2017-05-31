@@ -1,6 +1,5 @@
 package Webshop;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class Product {
@@ -12,7 +11,7 @@ public class Product {
 	private double price;
 	private ArrayList<byte[]> imageFiles;
 
-	public Product(int id, String name, String category, String description, double price, ArrayList<byte[]> imageFiles) {
+	protected Product(int id, String name, String category, String description, double price, ArrayList<byte[]> imageFiles) {
 		this.name = name;
 		this.id = id;
 		this.category = category;
@@ -63,7 +62,7 @@ public class Product {
 		return imageFiles;
 	}
 
-	public void addImageFile(byte[] imageFile) {
+	protected void addImageFile(byte[] imageFile) {
 		imageFiles.add(imageFile);
 	}
 

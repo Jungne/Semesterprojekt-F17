@@ -10,11 +10,11 @@ public class Catalog {
 
 	private static DatabaseInterface databaseInterface = DBManager.getInstance();
 
-	public static Product getProduct(int productId) {
+	protected static Product getProduct(int productId) {
 		return getProductIncludingImageFiles(databaseInterface.getProduct(productId));
 	}
 
-	public static ArrayList<Product> getAllProducts() {
+	protected static ArrayList<Product> getAllProducts() {
 		ArrayList<Product> products = new ArrayList<>();
 
 		for (HashMap<String, String> productMap : databaseInterface.getAllProducts()) {
@@ -25,7 +25,7 @@ public class Catalog {
 		return products;
 	}
 	
-	public static ArrayList<Product> getAllEnrichedProducts() {
+	protected static ArrayList<Product> getAllEnrichedProducts() {
 	    ArrayList<Product> products = new ArrayList<>();
 
 		for (HashMap<String, String> productMap : databaseInterface.getAllEnrichedProducts()) {
@@ -36,11 +36,11 @@ public class Catalog {
 		return products;
 	}
 
-	public static LinkedHashMap<String, Integer> getCategories() {
+	protected static LinkedHashMap<String, Integer> getCategories() {
 		return databaseInterface.getCategories();
 	}
 
-	public static ArrayList<Product> findProducts(String query, int categoryId) {
+	protected static ArrayList<Product> findProducts(String query, int categoryId) {
 		ArrayList<Product> products = new ArrayList<>();
 
 		for (HashMap<String, String> productMap : databaseInterface.findProducts(query, categoryId)) {

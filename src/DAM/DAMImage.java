@@ -7,7 +7,7 @@ public class DAMImage {
 	private String category;
 	private byte[] imageFile;
 
-	public DAMImage(int id, String name, String category, byte[] imageFile) {
+	protected DAMImage(int id, String name, String category, byte[] imageFile) {
 		this.id = id;
 		this.name = name;
 		this.category = category;

@@ -236,7 +236,7 @@ public class DBManager implements DatabaseInterface {
 	}
 
 	@Override
-	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, boolean includesEmptyBasket) {
+	public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
 		try {
 			//Checks if email is unique
 			ResultSet existingEmail = executeQuery("SELECT email FROM Customers WHERE email = '" + email + "'");
@@ -260,9 +260,7 @@ public class DBManager implements DatabaseInterface {
 			preparedStatement.executeUpdate();
 
 			//Creates an empty basket if includesEmptyBasket=true
-			if (includesEmptyBasket) {
-				createBasket(getCustomerId(email));
-			}
+			createBasket(getCustomerId(email));
 
 			return true;
 		} catch (SQLException ex) {
@@ -384,7 +382,7 @@ public class DBManager implements DatabaseInterface {
 	/**
 	 * Sets up all tables in the database if they not already exists.
 	 */
-	public void setUpTables() {
+	private void setUpTables() {
 		try {
 			for (String query : Data.createTableQueries) {
 				execute(query);
@@ -397,7 +395,7 @@ public class DBManager implements DatabaseInterface {
 	/**
 	 * Drops all tables in the database.
 	 */
-	public void dropTables() {
+	private void dropTables() {
 		try {
 			for (String query : Data.dropTableQueries) {
 				execute(query);
@@ -410,7 +408,7 @@ public class DBManager implements DatabaseInterface {
 	/**
 	 * Inserts categories and products into the database.
 	 */
-	public void insertData() {
+	private void insertData() {
 		try {
 			for (String query : Data.insertIntoQueries) {
 				executeUpdate(query);

@@ -10,19 +10,11 @@ public class Order {
 	private OrderStatus orderStatus;
 	private ShoppingBasket shoppingBasket;
 
-	public Order(int id, Customer customer, Date date, OrderStatus orderStatus, ShoppingBasket shoppingBasket) {
+	protected Order(int id, Customer customer, Date date, OrderStatus orderStatus, ShoppingBasket shoppingBasket) {
 		this.id = id;
 		this.customer = customer;
 		this.date = date;
 		this.orderStatus = orderStatus;
-		this.shoppingBasket = shoppingBasket;
-	}
-
-	public Order(Customer customer, ShoppingBasket shoppingBasket) {
-		this.id = -1;
-		this.customer = customer;
-		this.date = null;
-		this.orderStatus = OrderStatus.SENT;
 		this.shoppingBasket = shoppingBasket;
 	}
 
@@ -43,7 +35,7 @@ public class Order {
 	/**
 	 * @param customer the customer to set
 	 */
-	public void setCustomer(Customer customer) {
+	protected void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 

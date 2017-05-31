@@ -10,7 +10,7 @@ public class FileHandler {
 
 	private static DatabaseInterface databaseInterface = DBManager.getInstance();
 
-	public static ArrayList<DAMImage> createDAMImages(LinkedList<HashMap<String, String>> damImageMapList) {
+	protected static ArrayList<DAMImage> createDAMImages(LinkedList<HashMap<String, String>> damImageMapList) {
 		ArrayList<DAMImage> damImageList = new ArrayList<>();
 
 		for (HashMap<String, String> damImageMap : damImageMapList) {

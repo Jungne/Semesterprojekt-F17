@@ -17,7 +17,7 @@ public class ProductHandler {
 	private Connection connection;
 	private ImageHandler imageHandler;
 
-	public ProductHandler(Connection connection) {
+	protected ProductHandler(Connection connection) {
 		this.connection = connection;
 		this.imageHandler = new ImageHandler(connection);
 	}
@@ -32,7 +32,7 @@ public class ProductHandler {
 		return connection.createStatement().executeQuery(query);
 	}
 
-	public HashMap<String, String> getProduct(int productID) {
+	protected HashMap<String, String> getProduct(int productID) {
 		try {
 			HashMap<String, String> productMap = new HashMap<>();
 
@@ -50,7 +50,7 @@ public class ProductHandler {
 		}
 	}
 
-	public LinkedList<HashMap<String, String>> getAllProducts() {
+	protected LinkedList<HashMap<String, String>> getAllProducts() {
 		try {
 			LinkedList<HashMap<String, String>> productsMapList = new LinkedList<>();
 			ResultSet productsResultSet = executeQuery("SELECT productId, productName, categoryName, description, price FROM Products NATURAL JOIN Categories");
@@ -64,7 +64,7 @@ public class ProductHandler {
 		}
 	}
 
-	public LinkedList<HashMap<String, String>> getAllEnrichedProducts() {
+	protected LinkedList<HashMap<String, String>> getAllEnrichedProducts() {
 		try {
 			LinkedList<HashMap<String, String>> productsMapList = new LinkedList<>();
 			ResultSet productsResultSet = executeQuery("SELECT productId, productName, categoryName, description, price FROM Products NATURAL JOIN Categories WHERE NOT description = '' ORDER BY productId");
@@ -78,7 +78,7 @@ public class ProductHandler {
 		}
 	}
 
-	public LinkedList<HashMap<String, String>> findProducts(String query, int categoryID) {
+	protected LinkedList<HashMap<String, String>> findProducts(String query, int categoryID) {
 		try {
 			LinkedList<HashMap<String, String>> productsMapList = new LinkedList<>();
 			ResultSet productsResultSet;
@@ -100,7 +100,7 @@ public class ProductHandler {
 		}
 	}
 
-	public LinkedHashMap<String, Integer> getCategories() {
+	protected LinkedHashMap<String, Integer> getCategories() {
 		LinkedHashMap<String, Integer> categories = new LinkedHashMap<>();
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT categoryName, categoryid FROM categories");
@@ -115,7 +115,7 @@ public class ProductHandler {
 		return categories;
 	}
 
-	public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
+	protected boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
 		try {
 			//Creates new category if not exists
 			ResultSet categoryNameSet = executeQuery("SELECT categoryName FROM Categories WHERE categoryName = '" + category + "'");
@@ -148,7 +148,7 @@ public class ProductHandler {
 		}
 	}
 
-	public boolean editProduct(int productId, String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
+	protected boolean editProduct(int productId, String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
 		try {
 			//Gets the categoryId
 			ResultSet categoryIdSet = executeQuery("SELECT categoryId FROM Categories WHERE categoryName = '" + category + "'");
@@ -180,7 +180,7 @@ public class ProductHandler {
 	 * @param productsResultSet
 	 * @return a Product mapped to a HashMap
 	 */
-	public HashMap<String, String> mapProduct(ResultSet productsResultSet) {
+	protected HashMap<String, String> mapProduct(ResultSet productsResultSet) {
 		HashMap<String, String> productMap = new HashMap<>();
 
 		try {
@@ -205,7 +205,7 @@ public class ProductHandler {
 	 * @param productsResultSet
 	 * @return a LinkedList containing products mapped to HashMaps.
 	 */
-	public LinkedList<HashMap<String, String>> mapProducts(ResultSet productsResultSet) {
+	protected LinkedList<HashMap<String, String>> mapProducts(ResultSet productsResultSet) {
 		LinkedList<HashMap<String, String>> productsMapList = new LinkedList<>();
 
 		try {

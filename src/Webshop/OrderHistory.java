@@ -9,7 +9,7 @@ public class OrderHistory {
 
 	private static DatabaseInterface databaseInterface = DBManager.getInstance();
 
-	public static boolean createOrder(Customer customer, ShoppingBasket shoppingBasket) {
+	protected static boolean createOrder(Customer customer, ShoppingBasket shoppingBasket) {
 		//Checks if there is any products for the order
 		if (shoppingBasket == null || shoppingBasket.isEmpty()) {
 			return false;
@@ -31,7 +31,7 @@ public class OrderHistory {
 		return true;
 	}
 
-	public static Order getLatestOrder(Customer customer) {
+	protected static Order getLatestOrder(Customer customer) {
 
 		//Contructs the order, but without customer and shoppingBasket
 		Order order = Converter.toOrder(databaseInterface.getLatestOrder(customer.getId()));

@@ -62,7 +62,7 @@ public class WebshopController implements WebshopInterface {
 		}
 
 		//Saves the customer and the given shoppingBasket in the database
-		if (!createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket, true)) {
+		if (!createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket)) {
 			return false;
 		}
 
@@ -99,9 +99,9 @@ public class WebshopController implements WebshopInterface {
 		return true;
 	}
 
-	private boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket, boolean includesEmptyBasket) {
+	private boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ShoppingBasket shoppingBasket) {
 		//Creates customer if email is unique
-		boolean isCreated = databaseInterface.createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, includesEmptyBasket);
+		boolean isCreated = databaseInterface.createCustomer(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country);
 		if (!isCreated) {
 			return false;
 		}
@@ -142,7 +142,7 @@ public class WebshopController implements WebshopInterface {
 
 	private ShoppingBasket getShoppingBasket(int basketId) {
 		LinkedList<HashMap<String, String>> orderLinesMap = databaseInterface.getBasketsOrderLines(basketId);
-		ShoppingBasket shoppingBasket = new ShoppingBasket(basketId, new ArrayList<>());
+		ShoppingBasket shoppingBasket = new ShoppingBasket(basketId);
 
 		for (HashMap<String, String> orderLineMap : orderLinesMap) {
 			int productId = Integer.parseInt(orderLineMap.get("productId"));
@@ -297,15 +297,20 @@ public class WebshopController implements WebshopInterface {
 		}
 
 		//Tries to create the customer
-		if (!createCustomer(email, null, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, null, false)) {
+		if (!createCustomer(email, null, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket)) {
 			return null;
 		}
 
 		//Gets the newly signed up customer
 		Customer customer = getCustomer(email);
+		//Does checkOut on the new customer with his new shopping basket
+		boolean isCreated = customer.checkOut();
+		if (!isCreated) {
+			return null;
+		}
 
-		//Creates the order
-		OrderHistory.createOrder(customer, shoppingBasket);
+		//Deletes the shoppingasket in the database and locally
+		removeBasket(customer.getFirstShoppingBasket().getId());
 
 		//Returns the latest order on that customer, which is the order just created
 		return OrderHistory.getLatestOrder(customer);
@@ -314,12 +319,7 @@ public class WebshopController implements WebshopInterface {
 	@Override
 	public boolean checkOut(int basketId) {
 		//Gets the shoppingBasket that is refered to by basketId
-		ShoppingBasket shoppingBasket = null;
-		for (ShoppingBasket s : this.customer.getShoppingBaskets()) {
-			if (basketId == s.getId()) {
-				shoppingBasket = s;
-			}
-		}
+		ShoppingBasket shoppingBasket = this.customer.getShoppingBasket(basketId);
 
 		//Checks if the basket exist and if there is anything in the basket
 		if (shoppingBasket == null || shoppingBasket.isEmpty()) {
@@ -327,12 +327,12 @@ public class WebshopController implements WebshopInterface {
 		}
 
 		//Create order from local customer and shoppingBasket(gained from basketId)
-		boolean isCreated = OrderHistory.createOrder(customer, shoppingBasket);
+		boolean isCreated = customer.checkOut(shoppingBasket);
 		if (!isCreated) {
 			return false;
 		}
 
-		//Deletes the shoppingBasket locally
+		//Deletes the shoppingasket in the database and locally
 		removeBasket(basketId);
 		return true;
 	}

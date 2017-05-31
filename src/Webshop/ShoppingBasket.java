@@ -12,9 +12,9 @@ public class ShoppingBasket {
 		this.orderLines = new ArrayList<>();
 	}
 
-	public ShoppingBasket(int id, ArrayList<OrderLine> orderLines) {
+	protected ShoppingBasket(int id) {
 		this.id = id;
-		this.orderLines = orderLines;
+		this.orderLines = new ArrayList<>();
 	}
 
 	/**
@@ -113,6 +113,10 @@ public class ShoppingBasket {
 			totalPrice += productPrice * productAmount;
 		}
 		return totalPrice;
+	}
+
+	protected boolean equals(ShoppingBasket shoppingBasket) {
+		return this.id == shoppingBasket.getId();
 	}
 
 }
