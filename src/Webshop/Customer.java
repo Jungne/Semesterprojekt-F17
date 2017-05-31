@@ -18,7 +18,7 @@ public class Customer {
 	private ArrayList<ShoppingBasket> shoppingBaskets;
 	private boolean isRegisted;
 
-	public Customer(int id, String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ArrayList<ShoppingBasket> shoppingBaskets) {
+	protected Customer(int id, String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country, ArrayList<ShoppingBasket> shoppingBaskets) {
 		this.id = id;
 		this.email = email;
 		this.code = code;
@@ -145,6 +145,23 @@ public class Customer {
 		if (shoppingBasket != null) {
 			shoppingBaskets.remove(shoppingBasket);
 		}
+	}
+
+	protected boolean checkOut() {
+		if (shoppingBaskets.size() == 1) {
+			return checkOut(shoppingBaskets.get(0));
+		}
+		return false;
+	}
+
+	protected boolean checkOut(ShoppingBasket shoppingBasket) {
+		//Checks if such shoppingBasket is on the customer
+		for (ShoppingBasket s : shoppingBaskets) {
+			if (shoppingBasket.equals(s)) {
+				return OrderHistory.createOrder(this, shoppingBasket);
+			}
+		}
+		return false;
 	}
 
 }

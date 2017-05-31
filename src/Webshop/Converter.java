@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class Converter {
 
-	public static Customer toCustomer(HashMap<String, String> customerMap) {
+	protected static Customer toCustomer(HashMap<String, String> customerMap) {
 		int customerId = Integer.parseInt(customerMap.get("customerId"));
 		String email = customerMap.get("email");
 		String code = customerMap.get("code");
@@ -28,7 +28,7 @@ public class Converter {
 		return new Customer(customerId, email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBaskets);
 	}
 
-	public static Order toOrder(HashMap<String, String> orderMap) {
+	protected static Order toOrder(HashMap<String, String> orderMap) {
 		int orderId = Integer.parseInt(orderMap.get("orderId"));
 
 		//Sets the date by converting the given StringDate from String to Date
@@ -47,7 +47,7 @@ public class Converter {
 		return new Order(orderId, null, date, orderStatus, new ShoppingBasket());
 	}
 
-	public static Product toProduct(HashMap<String, String> productMap) {
+	protected static Product toProduct(HashMap<String, String> productMap) {
 		int productId = Integer.parseInt(productMap.get("productId"));
 		String productName = productMap.get("productName");
 		String categoryName = productMap.get("categoryName");

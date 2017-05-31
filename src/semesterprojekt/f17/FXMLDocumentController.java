@@ -439,17 +439,17 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void handledbCreateButton(ActionEvent event) {
-		dbm.setUpTables();
+		//dbm.setUpTables();
 	}
 
 	@FXML
 	private void handledbDropButton(ActionEvent event) {
-		dbm.dropTables();
+		//dbm.dropTables();
 	}
 
 	@FXML
 	private void handledbInsertButton(ActionEvent event) {
-		dbm.insertData();
+		//dbm.insertData();
 	}
 
 	@FXML

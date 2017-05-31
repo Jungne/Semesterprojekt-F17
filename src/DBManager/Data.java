@@ -93,7 +93,7 @@ public class Data {
 					+ "FOREIGN KEY (imageId) REFERENCES Images(imageId)"
 					+ ");";
 
-	public static String[] createTableQueries = {
+	protected static String[] createTableQueries = {
 		categoriesTable,
 		customersTable,
 		productsTable,
@@ -105,7 +105,7 @@ public class Data {
 		imageFiles
 	};
 
-	public static String[] dropTableQueries = {
+	protected static String[] dropTableQueries = {
 		"DROP TABLE IF EXISTS ImageFiles;",
 		"DROP TABLE IF EXISTS Images;",
 		"DROP TABLE IF EXISTS ProductsInOrders;",
@@ -117,14 +117,14 @@ public class Data {
 		"DROP TABLE IF EXISTS Categories;"
 	};
 
-	public static String insertCategories
+	private static String insertCategories
 					= "INSERT INTO Categories (categoryName) VALUES "
 					+ "('Appliances'), "
 					+ "('PC'), "
 					+ "('TV'), "
 					+ "('Mobil')";
 
-	public static String insertProducts
+	private static String insertProducts
 					= "INSERT INTO Products (productName, categoryId, description, price) VALUES "
 					+ "('Blender', 1, 'Blender fra Electrolux. Blender ting om til mindre stykker.', 299.00), "
 					+ "('Computeren', 2, 'En computer.', 999.99), "
@@ -132,7 +132,7 @@ public class Data {
 					+ "('LG TV 43', 3, 'Et 43 tommer LG TV', 2499.00), "
 					+ "('Samsung Galaxy s9', 4, 'The newest member in the Galaxy family.', 5999.42)";
 
-	public static String[] insertIntoQueries = {
+	protected static String[] insertIntoQueries = {
 		insertCategories,
 		insertProducts
 	};

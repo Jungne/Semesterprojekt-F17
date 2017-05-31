@@ -13,7 +13,7 @@ public class OrderHandler {
 
 	private Connection connection;
 
-	public OrderHandler(Connection connection) {
+	protected OrderHandler(Connection connection) {
 		this.connection = connection;
 	}
 
@@ -27,7 +27,7 @@ public class OrderHandler {
 		return connection.createStatement().executeQuery(query);
 	}
 
-	public HashMap<String, String> getLatestOrder(int customerId) {
+	protected HashMap<String, String> getLatestOrder(int customerId) {
 		try {
 			HashMap<String, String> orderMap = new HashMap<>();
 
@@ -51,7 +51,7 @@ public class OrderHandler {
 		}
 	}
 
-	public LinkedList<HashMap<String, String>> getOrdersOrderLines(int orderId) {
+	protected LinkedList<HashMap<String, String>> getOrdersOrderLines(int orderId) {
 		try {
 			LinkedList<HashMap<String, String>> orderLinesMap = new LinkedList<>();
 
@@ -79,7 +79,7 @@ public class OrderHandler {
 	 * @param orderStatus
 	 * @return
 	 */
-	public boolean createOrder(int customerId, String orderStatus) {
+	protected boolean createOrder(int customerId, String orderStatus) {
 		try {
 			executeUpdate("INSERT INTO Orders (customerId, date, orderStatus) VALUES ("
 							+ customerId
@@ -93,7 +93,7 @@ public class OrderHandler {
 		}
 	}
 
-	public boolean addProductToOrder(int orderId, int productId, int amount) {
+	protected boolean addProductToOrder(int orderId, int productId, int amount) {
 		try {
 			executeUpdate("INSERT INTO ProductsInOrders (orderId, productId, amount) VALUES (" + orderId + ", " + productId + ", " + amount + ")");
 
