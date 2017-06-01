@@ -114,7 +114,7 @@ public class Customer {
 	/**
 	 * @return the shoppingBaskets
 	 */
-	public ArrayList<ShoppingBasket> getShoppingBaskets() {
+	protected ArrayList<ShoppingBasket> getShoppingBaskets() {
 		return shoppingBaskets;
 	}
 

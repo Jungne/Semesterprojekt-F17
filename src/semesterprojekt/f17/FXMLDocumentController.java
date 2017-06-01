@@ -245,7 +245,7 @@ public class FXMLDocumentController implements Initializable {
 	private void handleAddToBasketButton(ActionEvent e) {
 		int id = catalogTestListView.getSelectionModel().getSelectedItem().getProductId();
 		if (isLoggedIn) {
-			webshopController.addProductToBasket(webshopController.getCustomer().getShoppingBaskets().get(0).getId(), id, 1);
+			webshopController.addProductToBasket(webshopController.getShoppingBaskets().get(0).getId(), id, 1);
 		} else {
 			guestBasket.addProduct(webshopController.getProduct(id), 1);
 		}
@@ -257,7 +257,7 @@ public class FXMLDocumentController implements Initializable {
 	private void handleDeleteButton(ActionEvent e) {
 		int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
 		if (isLoggedIn) {
-			webshopController.removeProduct(webshopController.getCustomer().getShoppingBaskets().get(0).getId(), id);
+			webshopController.removeProduct(webshopController.getShoppingBaskets().get(0).getId(), id);
 		} else {
 			guestBasket.removeProduct(webshopController.getProduct(id));
 		}
@@ -271,7 +271,7 @@ public class FXMLDocumentController implements Initializable {
 			int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
 			int amount = Integer.parseInt(amountTextField.getText());
 			if (isLoggedIn) {
-				webshopController.setProductAmount(webshopController.getCustomer().getShoppingBaskets().get(0).getId(), id, amount);
+				webshopController.setProductAmount(webshopController.getShoppingBaskets().get(0).getId(), id, amount);
 			} else {
 				guestBasket.setProductAmount(webshopController.getProduct(id), amount);
 			}
@@ -285,7 +285,7 @@ public class FXMLDocumentController implements Initializable {
 	private void updateShoppingBasket() {
 		double totalPrice = 0;
 
-		ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getCustomer().getShoppingBaskets().get(0).getOrderLines() : guestBasket.getOrderLines();
+		ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBaskets().get(0).getOrderLines() : guestBasket.getOrderLines();
 		List<ProductHBoxCell> list = new ArrayList<>();
 		for (OrderLine orderLine : orderLines) {
 			list.add(new ProductHBoxCell(orderLine));
@@ -365,7 +365,7 @@ public class FXMLDocumentController implements Initializable {
 						+ "Ha' en god dag!";
 		CheckOut_EndPane_Receipt.setText(text);
 		guestBasket.empty();
-		webshopController.emptyShoppingBasket(webshopController.getCustomer().getShoppingBaskets().get(0).getId());
+		webshopController.emptyShoppingBasket(webshopController.getShoppingBaskets().get(0).getId());
 		updateShoppingBasket();
 	}
 

@@ -2,7 +2,6 @@ package semesterprojekt.f17;
 
 import DAM.DAMImage;
 import DAM.DAMManager;
-import DBManager.DBManager;
 import PIM.PIMManager;
 import PIM.PIMProduct;
 import PIM.PIMage;
@@ -21,12 +20,15 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -36,6 +38,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -43,7 +46,6 @@ public class FXMLDocumentController2 implements Initializable {
 
 	private WebshopInterface webshopController;
 	private DAMManager DAM;
-	private DBManager dbm;
 	private PIMManager pimManager;
 
 	private Product currentProduct;
@@ -51,12 +53,17 @@ public class FXMLDocumentController2 implements Initializable {
 	private int imageNumber;
 	private ArrayList<Image> currentProductImages = new ArrayList<>();
 	private LinkedHashMap<String, Integer> categoriesMap;
+	private LinkedHashMap<String, Integer> basketsMap;
 	private ShoppingBasket guestBasket = new ShoppingBasket();
 	private ShoppingBasket currentBasket = new ShoppingBasket();
 	private boolean isLoggedIn = false;
 
 	@FXML
 	private AnchorPane anchorPane;
+	@FXML
+	private Button MenuButton;
+	@FXML
+	private Line MenuLine;
 
 	@FXML
 	private Pane MenuPane;
@@ -70,8 +77,17 @@ public class FXMLDocumentController2 implements Initializable {
 	// </editor-fold>
 
 	@FXML
-	private TabPane WebshopPane;
+	private Pane WebshopPane;
+
 	// <editor-fold defaultstate="collapsed" desc="WebshopPane - Elements">
+	@FXML
+	private TabPane WebshopTabPane;
+
+	@FXML
+	private Button WebshopPane_LogInOutButton;
+	@FXML
+	private Button WebshopPane_SignUpButton;
+
 	@FXML
 	private Tab WebshopPane_CatalogTab;
 	// <editor-fold defaultstate="collapsed" desc="WebshopPane_CatalogTab - Elements">
@@ -158,6 +174,37 @@ public class FXMLDocumentController2 implements Initializable {
 	@FXML
 	private Button WebshopPane_CheckoutTab_EndPane_DoneButton;
 	// </editor-fold>
+
+	@FXML
+	private Tab WebshopPane_SignUpTab;
+
+	@FXML
+	private Button WebshopPane_SignUpTab_RegisterButton;
+	@FXML
+	private Button WebshopPane_SignUpTab_CancelButton;
+	@FXML
+	private TextField WebshopPane_SignUpTab_EmailTextField;
+	@FXML
+	private PasswordField WebshopPane_SignUpTab_PasswordTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_FirstNameTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_LastNameTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_AddressTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_CountryTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_CityTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_PostalCodeTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_PhoneNumberTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_MobilePhoneNumberTextField;
+
+	@FXML
+	private Tab WebshopPane_AccountTab;
 	// </editor-fold>
 
 	@FXML
@@ -228,17 +275,33 @@ public class FXMLDocumentController2 implements Initializable {
 	@FXML
 	private ImageView DAMPane_ImageView;
 	// </editor-fold>
+	@FXML
+	private Pane WebshopPane_AccountTab_LogInPane;
+	@FXML
+	private Pane WebshopPane_AccountTab_AccountPane;
+	@FXML
+	private PasswordField WebshopPane_AccountTab_AccountPane_PasswordTextField;
+	@FXML
+	private TextField WebshopPane_AccountTab_AccountPane_EmailTextField;
+	@FXML
+	private Button WebshopPane_AccountTab_AccountPane_LogInButton;
+	@FXML
+	private Button WebshopPane_AccountTab_AccountPane_CancelButton;
+	@FXML
+	private Label WebshopPane_AccountTab_AccountPane_OutputLabel;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
 			webshopController = new WebshopController();
 			DAM = new DAMManager();
-			dbm = DBManager.getInstance();
 			pimManager = PIMManager.getInstance();
 		} catch (IOException ex) {
 			Logger.getLogger(FXMLDocumentController2.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		MenuButton.toFront();
+		WebshopPane_LogInOutButton.toFront();
+		WebshopPane_SignUpButton.toFront();
 		updateChoiceBoxes();
 	}
 
@@ -246,17 +309,50 @@ public class FXMLDocumentController2 implements Initializable {
 	@FXML
 	private void handle_MenuPane_Buttons(ActionEvent event) {
 		MenuPane.setVisible(false);
+		MenuButton.setVisible(true);
 		if (event.getSource().equals(MenuPane_WebshopButton)) {
 			WebshopPane.setVisible(true);
+			MenuLine.setVisible(false);
 		} else if (event.getSource().equals(MenuPane_PIMButton)) {
 			PIMPane.setVisible(true);
+			MenuLine.setVisible(true);
 		} else if (event.getSource().equals(MenuPane_DAMButton)) {
 			DAMPane.setVisible(true);
+			MenuLine.setVisible(true);
 		}
 	}
 	// </editor-fold>
 
 	// <editor-fold defaultstate="collapsed" desc="WebshopPane - Methods">
+	@FXML
+	private void handle_WebshopPane_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(WebshopPane_SignUpButton)) {
+			WebshopPane_CatalogTab.setDisable(true);
+			WebshopPane_BasketTab.setDisable(true);
+			WebshopPane_SignUpTab.setDisable(false);
+			WebshopTabPane.getSelectionModel().select(WebshopPane_SignUpTab);
+			WebshopPane_SignUpButton.setDisable(true);
+			WebshopPane_LogInOutButton.setDisable(true);
+			MenuButton.setDisable(true);
+
+		} else if (source.equals(WebshopPane_LogInOutButton)) {
+			if (isLoggedIn) {
+				WebshopPane_LogInOutButton.setText("Log ind");
+				webshopController.logOut();
+				isLoggedIn = false;
+				resetWebshopPaneItems();
+
+			} else {
+				disableWebshopPaneItems();
+				WebshopPane_AccountTab.setDisable(false);
+				WebshopTabPane.getSelectionModel().select(WebshopPane_AccountTab);
+
+			}
+
+		}
+	}
+
 	@FXML
 	private void handle_WebshopPane_CatalogTab_Buttons(ActionEvent event) {
 		Button source = (Button) event.getSource();
@@ -293,7 +389,7 @@ public class FXMLDocumentController2 implements Initializable {
 		} else if (source.equals(WebshopPane_CatalogTab_AddToBasketButton)) {
 			int id = WebshopPane_CatalogTab_ProductsListView.getSelectionModel().getSelectedItem().getProductId();
 			if (isLoggedIn) {
-				webshopController.addProductToBasket(webshopController.getCustomer().getShoppingBaskets().get(0).getId(), id, 1);
+				webshopController.addProductToBasket(webshopController.getShoppingBaskets().get(0).getId(), id, 1);
 			} else {
 				guestBasket.addProduct(webshopController.getProduct(id), 1);
 			}
@@ -323,7 +419,7 @@ public class FXMLDocumentController2 implements Initializable {
 				int id = WebshopPane_BasketTab_BasketListView.getSelectionModel().getSelectedItem().getProductId();
 				int amount = Integer.parseInt(WebshopPane_BasketTab_AmountTextField.getText());
 				if (isLoggedIn) {
-					webshopController.setProductAmount(webshopController.getCustomer().getShoppingBaskets().get(0).getId(), id, amount);
+					webshopController.setProductAmount(webshopController.getShoppingBaskets().get(0).getId(), id, amount);
 				} else {
 					guestBasket.setProductAmount(webshopController.getProduct(id), amount);
 				}
@@ -335,18 +431,20 @@ public class FXMLDocumentController2 implements Initializable {
 		} else if (source.equals(WebshopPane_BasketTab_DeleteButton)) {
 			int id = WebshopPane_BasketTab_BasketListView.getSelectionModel().getSelectedItem().getProductId();
 			if (isLoggedIn) {
-				webshopController.removeProduct(webshopController.getCustomer().getShoppingBaskets().get(0).getId(), id);
+				webshopController.removeProduct(webshopController.getShoppingBaskets().get(0).getId(), id);
 			} else {
 				guestBasket.removeProduct(webshopController.getProduct(id));
 			}
 			updateBasketTabItems();
 
 		} else if (source.equals(WebshopPane_BasketTab_CheckOutButton)) {
+			disableWebshopPaneItems();
 			WebshopPane_CheckoutTab.setDisable(false);
-			WebshopPane.getSelectionModel().select(WebshopPane_CheckoutTab);
+			WebshopTabPane.getSelectionModel().select(WebshopPane_CheckoutTab);
 			WebshopPane_BasketTab_CheckOutButton.setDisable(true);
+
 			if (isLoggedIn) {
-				handle_WebshopPane_CheckoutTab_InformationPane_Buttons(null);
+				WebshopPane_CheckoutTab_ConfirmOrderButton.fire();
 			} else {
 				WebshopPane_CheckoutTab_PaymentPane.setVisible(false);
 				WebshopPane_CheckoutTab_InformationPane.setVisible(true);
@@ -382,13 +480,15 @@ public class FXMLDocumentController2 implements Initializable {
 				resetCheckOutTabInformationPane();
 			}
 
-			resetCheckOutTabReceiptPane(order);
+			updateCheckOutTabReceiptPane(order);
 
 			WebshopPane_CheckoutTab_PaymentPane.setVisible(true);
 			WebshopPane_CheckoutTab_InformationPane.setVisible(false);
 
 		} else if (source.equals(WebshopPane_CheckoutTab_CancelOrderButton)) {
-			resetWebshopPane();
+			resetCheckOutTabInformationPane();
+
+			resetWebshopPaneItems();
 		}
 	}
 
@@ -404,7 +504,7 @@ public class FXMLDocumentController2 implements Initializable {
 		WebshopPane_CheckoutTab_InformationPane_CountryTextField.setText("");
 	}
 
-	private void resetCheckOutTabReceiptPane(Order order) {
+	private void updateCheckOutTabReceiptPane(Order order) {
 		String text = "Ordrekvittering\n"
 						+ "-------------------------------\n"
 						+ "\n";
@@ -422,14 +522,6 @@ public class FXMLDocumentController2 implements Initializable {
 		updateBasketTabItems();
 	}
 
-	private void resetWebshopPane() {
-		WebshopPane_CheckoutTab.setDisable(true);
-		WebshopPane_CheckoutTab_EndPane.setVisible(false);
-		WebshopPane.getSelectionModel().select(WebshopPane_CatalogTab);
-		WebshopPane_BasketTab_CheckOutButton.setDisable(false);
-		WebshopPane_CheckoutTab_EndPane_ReceiptLabel.setText("");
-	}
-
 	@FXML
 	private void handle_WebshopPane_CheckoutTab_PaymentPane_Buttons(ActionEvent event) {
 		WebshopPane_CheckoutTab_PaymentPane.setVisible(false);
@@ -438,7 +530,7 @@ public class FXMLDocumentController2 implements Initializable {
 
 	@FXML
 	private void handle_WebshopPane_CheckoutTab_EndPane_Buttons(ActionEvent event) {
-		resetWebshopPane();
+		resetWebshopPaneItems();
 	}
 
 	private void updateImageNavigationItems() {
@@ -481,7 +573,7 @@ public class FXMLDocumentController2 implements Initializable {
 	private void updateBasketTabItems() {
 		double totalPrice = 0;
 
-		ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getCustomer().getShoppingBaskets().get(0).getOrderLines() : guestBasket.getOrderLines();
+		ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBaskets().get(0).getOrderLines() : guestBasket.getOrderLines();
 		List<ProductHBoxCell> list = new ArrayList<>();
 		for (OrderLine orderLine : orderLines) {
 			list.add(new ProductHBoxCell(orderLine));
@@ -494,6 +586,59 @@ public class FXMLDocumentController2 implements Initializable {
 			WebshopPane_BasketTab_CheckOutButton.setDisable(true);
 		} else {
 			WebshopPane_BasketTab_CheckOutButton.setDisable(false);
+		}
+	}
+
+	@FXML
+	private void handle_WebshopPane_SignUpTab_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(WebshopPane_SignUpTab_RegisterButton)) {
+			boolean isRegistered;
+			isRegistered = webshopController.signUp(
+							WebshopPane_SignUpTab_EmailTextField.getText(),
+							WebshopPane_SignUpTab_PasswordTextField.getText(),
+							WebshopPane_SignUpTab_FirstNameTextField.getText(),
+							WebshopPane_SignUpTab_LastNameTextField.getText(),
+							Integer.parseInt(WebshopPane_SignUpTab_PhoneNumberTextField.getText()),
+							Integer.parseInt(WebshopPane_SignUpTab_MobilePhoneNumberTextField.getText()),
+							WebshopPane_SignUpTab_AddressTextField.getText(),
+							WebshopPane_SignUpTab_PostalCodeTextField.getText(),
+							WebshopPane_SignUpTab_CityTextField.getText(),
+							WebshopPane_SignUpTab_CountryTextField.getText(),
+							guestBasket);
+
+			if (!isRegistered) {
+				System.out.println("Error! User was not registered. Try again!");
+			}
+
+			WebshopPane_LogInOutButton.setDisable(false);
+			WebshopPane_LogInOutButton.fire();
+
+		} else if (source.equals(WebshopPane_SignUpTab_CancelButton)) {
+			resetWebshopPaneItems();
+
+		}
+	}
+
+	@FXML
+	private void handle_WebshopPane_AccountTab_AccountPane_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(WebshopPane_AccountTab_AccountPane_LogInButton)) {
+			System.out.println(WebshopPane_AccountTab_AccountPane_EmailTextField.getText());
+			System.out.println(WebshopPane_AccountTab_AccountPane_PasswordTextField.getText());
+			isLoggedIn = webshopController.login(
+							WebshopPane_AccountTab_AccountPane_EmailTextField.getText(),
+							WebshopPane_AccountTab_AccountPane_PasswordTextField.getText());
+
+			if (isLoggedIn) {
+				
+			} else {
+
+			}
+			System.out.println(webshopController.getCustomer().getFirstName());
+
+		} else if (source.equals(WebshopPane_AccountTab_AccountPane_CancelButton)) {
+			resetWebshopPaneItems();
 		}
 	}
 	// </editor-fold>
@@ -682,9 +827,87 @@ public class FXMLDocumentController2 implements Initializable {
 		PIMPane_InformationPane_CategoryChoiceBox.setValue(PIMPane_InformationPane_CategoryChoiceBox.getItems().get(0));
 		DAMPane_ImageCategoryChoiceBox.setItems(FXCollections.observableArrayList(categoryList));
 		DAMPane_ImageCategoryChoiceBox.setValue(DAMPane_ImageCategoryChoiceBox.getItems().get(0));
+
+		if (webshopController.getCustomer() != null) {
+			ArrayList<String> basketList = new ArrayList<>();
+
+			for (ShoppingBasket basket : webshopController.getShoppingBaskets()) {
+				basketList.add("Kurv #" + basket.getId());
+			}
+
+			WebshopPane_BasketTab_BasketChoiceBox.setItems(FXCollections.observableArrayList(categoryList));
+			WebshopPane_BasketTab_BasketChoiceBox.setValue(WebshopPane_BasketTab_BasketChoiceBox.getItems().get(0));
+		}
+
 	}
 
 	private int getCategoryID(String category) {
 		return categoriesMap.get(category);
+	}
+
+	@FXML
+	private void handleMenuButton(ActionEvent event) {
+		MenuPane.setVisible(true);
+		MenuButton.setVisible(false);
+		MenuLine.setVisible(false);
+		WebshopPane.setVisible(false);
+		PIMPane.setVisible(false);
+		DAMPane.setVisible(false);
+		resetToMenu();
+	}
+
+	private void resetToMenu() {
+		resetPIMPane();
+		resetWebshopPaneItems();
+	}
+
+	private void disableWebshopPaneItems() {
+		WebshopPane_CatalogTab.setDisable(true);
+		WebshopPane_BasketTab.setDisable(true);
+		WebshopPane_CheckoutTab.setDisable(true);
+		WebshopPane_SignUpTab.setDisable(true);
+		WebshopPane_AccountTab.setDisable(true);
+		WebshopPane_SignUpButton.setDisable(true);
+		WebshopPane_LogInOutButton.setDisable(true);
+		MenuButton.setDisable(true);
+	}
+
+	private void resetWebshopPaneItems() {
+		WebshopPane_CatalogTab.setDisable(false);
+		WebshopPane_BasketTab.setDisable(false);
+		WebshopPane_BasketTab_CheckOutButton.setDisable(false);
+		WebshopPane_CheckoutTab.setDisable(true);
+		WebshopPane_CheckoutTab_EndPane.setVisible(false);
+		WebshopPane_SignUpTab.setDisable(true);
+		WebshopPane_AccountTab.setDisable(true);
+		WebshopPane_SignUpButton.setDisable(isLoggedIn ? true : false);
+		WebshopPane_LogInOutButton.setDisable(false);
+		MenuButton.setDisable(true);
+		WebshopTabPane.getSelectionModel().select(WebshopPane_CatalogTab);
+
+		WebshopPane_CheckoutTab_EndPane_ReceiptLabel.setText("");
+		resetSignUpTab();
+		resetAccountTabLogInPane();
+		resetCheckOutTabInformationPane();
+	}
+
+	private void resetSignUpTab() {
+		WebshopPane_SignUpTab_EmailTextField.setText("");
+		WebshopPane_SignUpTab_PasswordTextField.setText("");
+		WebshopPane_SignUpTab_FirstNameTextField.setText("");
+		WebshopPane_SignUpTab_LastNameTextField.setText("");
+		WebshopPane_SignUpTab_PhoneNumberTextField.setText("");
+		WebshopPane_SignUpTab_MobilePhoneNumberTextField.setText("");
+		WebshopPane_SignUpTab_AddressTextField.setText("");
+		WebshopPane_SignUpTab_PostalCodeTextField.setText("");
+		WebshopPane_SignUpTab_CityTextField.setText("");
+		WebshopPane_SignUpTab_CountryTextField.setText("");
+	}
+
+	private void resetAccountTabLogInPane() {
+		WebshopPane_AccountTab_AccountPane_EmailTextField.setText("");
+		WebshopPane_AccountTab_AccountPane_PasswordTextField.setText("");
+		WebshopPane_AccountTab_AccountPane_OutputLabel.setText("");
+
 	}
 }
