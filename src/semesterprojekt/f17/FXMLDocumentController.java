@@ -2,14 +2,13 @@ package semesterprojekt.f17;
 
 import DAM.DAMImage;
 import DAM.DAMManager;
-import DBManager.DBManager;
 import PIM.PIMManager;
 import PIM.PIMProduct;
+import PIM.PIMage;
 import Webshop.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -22,385 +21,827 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class FXMLDocumentController implements Initializable {
 
 	private WebshopInterface webshopController;
 	private DAMManager DAM;
-	private DBManager dbm;
 	private PIMManager pimManager;
 
-	private LinkedHashMap<String, Integer> categoriesMap;
-	private boolean isLoggedIn = false;
-	private ShoppingBasket guestBasket = new ShoppingBasket();
-	private int imageNumber;
 	private Product currentProduct;
+	private PIMProduct pimProduct;
+	private int imageNumber;
+	private ArrayList<Image> currentProductImages = new ArrayList<>();
+	private LinkedHashMap<String, Integer> categoriesMap;
+	private ShoppingBasket guestBasket = new ShoppingBasket();
+	private ShoppingBasket currentBasket = new ShoppingBasket();
+	private boolean isLoggedIn = false;
 
-	@FXML
-	private Button CatalogTestShowProductsButton;
-	@FXML
-	private ListView<ProductHBoxCell> catalogTestListView;
-	@FXML
-	private TabPane tabPane;
-	@FXML
-	private Tab catalogTestTab;
-	@FXML
-	private AnchorPane catalogTestAnchorPane;
-	@FXML
-	private Button catalogTestShowInfoButton;
-	@FXML
-	private ImageView catalogTestImageView;
-	@FXML
-	private TextArea catalogTestTextArea;
-	@FXML
-	private TextField searchTextField;
-	@FXML
-	private Button searchButton;
-	@FXML
-	private ChoiceBox<String> categoriesChoiceBox;
-	@FXML
-	private Button addToBasketButton;
-	@FXML
-	private ListView<ProductHBoxCell> shoppingBasketListView;
-	@FXML
-	private Button setAmountButton;
-	@FXML
-	private Button deleteButton;
-	@FXML
-	private TextField amountTextField;
-	@FXML
-	private TextField totalPriceTextField;
-	@FXML
-	private ToggleButton testLogInOutButton;
-	@FXML
-	private Button ShoppingBasket_CheckOutButton;
-	@FXML
-	private Tab CheckOut_Tab;
-	@FXML
-	private Pane CheckOut_InformationPane;
-	@FXML
-	private Pane CheckOut_PaymentPane;
-	@FXML
-	private Button CheckOut_ConfirmOrderButton;
-	@FXML
-	private Button CheckOut_PayButton;
-	@FXML
-	private Button CheckOut_DoneButton;
-	@FXML
-	private Pane CheckOut_EndPane;
-	@FXML
-	private TextField CheckOut_URCPane_FirstnameTextField;
-	@FXML
-	private TextField CheckOut_URCPane_LastnameTextField;
-	@FXML
-	private TextField CheckOut_URCPane_EmailTextField;
-	@FXML
-	private TextField CheckOut_URCPane_PhoneTextField;
-	@FXML
-	private Label CheckOut_EndPane_Receipt;
-	@FXML
-	private ImageView DAMImageView;
-	@FXML
-	private Button browseButton;
-	@FXML
-	private TextField imagePathTextField;
-	@FXML
-	private Button saveImageButton;
-	@FXML
-	private Button openImageButton;
 	@FXML
 	private AnchorPane anchorPane;
 	@FXML
-	private TextField imageTitleTextField;
+	private Button MenuButton;
 	@FXML
-	private ChoiceBox<String> imageCategoryChoiceBox;
-	@FXML
-	private Button dbCreateButton;
-	@FXML
-	private Button dbDropButton;
-	@FXML
-	private Button dbInsertButton;
-	@FXML
-	private Button updateButton;
-	@FXML
-	private ListView<ProductHBoxCell> DAMListView;
-	@FXML
-	private Button DAMDeleteButton;
-	@FXML
-	private Button imageLeftButton;
-	@FXML
-	private Button imageRightButton;
-	@FXML
-	private Label imageNumberLabel;
-	@FXML
-	private Button PIMShowProductsButton;
-	@FXML
-	private Button PIMEditProductButton;
-	@FXML
-	private Button PIMNewProductButton;
-	@FXML
-	private ListView<ProductHBoxCell> PIMListView;
+	private Line MenuLine;
 
 	@FXML
-	private void handleCatalogTestShowProductsButton(ActionEvent e) {
-		ArrayList<Product> products = webshopController.getAllEnrichedProducts();
-		showProducts(products, catalogTestListView);
-		searchTextField.clear();
+	private Pane MenuPane;
+	// <editor-fold defaultstate="collapsed" desc="MenuPane - Elements">
+	@FXML
+	private Button MenuPane_WebshopButton;
+	@FXML
+	private Button MenuPane_PIMButton;
+	@FXML
+	private Button MenuPane_DAMButton;
+	// </editor-fold>
+
+	@FXML
+	private Pane WebshopPane;
+
+	// <editor-fold defaultstate="collapsed" desc="WebshopPane - Elements">
+	@FXML
+	private TabPane WebshopTabPane;
+
+	@FXML
+	private Button WebshopPane_LogInOutButton;
+	@FXML
+	private Button WebshopPane_SignUpButton;
+
+	@FXML
+	private Tab WebshopPane_CatalogTab;
+	// <editor-fold defaultstate="collapsed" desc="WebshopPane_CatalogTab - Elements">
+	@FXML
+	private Button WebshopPane_CatalogTab_ShowProductsButton;
+	@FXML
+	private ListView<ProductHBoxCell> WebshopPane_CatalogTab_ProductsListView;
+	@FXML
+	private Button WebshopPane_CatalogTab_ShowInfoButton;
+	@FXML
+	private ImageView WebshopPane_CatalogTab_ProductImageView;
+	@FXML
+	private TextArea WebshopPane_CatalogTab_ProductTextArea;
+	@FXML
+	private TextField WebshopPane_CatalogTab_SearchTextField;
+	@FXML
+	private Button WebshopPane_CatalogTab_SearchButton;
+	@FXML
+	private ChoiceBox<String> WebshopPane_CatalogTab_CategoryChoiceBox;
+	@FXML
+	private Button WebshopPane_CatalogTab_AddToBasketButton;
+	@FXML
+	private Button WebshopPane_CatalogTab_ImageLeftButton;
+	@FXML
+	private Button WebshopPane_CatalogTab_ImageRightButton;
+	@FXML
+	private Label WebshopPane_CatalogTab_ImageNumberLabel;
+	// </editor-fold>
+
+	@FXML
+	private Tab WebshopPane_BasketTab;
+	// <editor-fold defaultstate="collapsed" desc="WebshopPane_BasketTab - Elements">
+	@FXML
+	private ListView<ProductHBoxCell> WebshopPane_BasketTab_BasketListView;
+	@FXML
+	private TextField WebshopPane_BasketTab_AmountTextField;
+	@FXML
+	private TextField WebshopPane_BasketTab_TotalPriceTextField;
+	@FXML
+	private Button WebshopPane_BasketTab_SetAmountButton;
+	@FXML
+	private Button WebshopPane_BasketTab_DeleteButton;
+	@FXML
+	private Button WebshopPane_BasketTab_CheckOutButton;
+	@FXML
+	private Button WebshopPane_BasketTab_LoadBasketButton;
+	@FXML
+	private ChoiceBox<String> WebshopPane_BasketTab_BasketChoiceBox;
+	// </editor-fold>
+
+	@FXML
+	private Tab WebshopPane_CheckoutTab;
+	// <editor-fold defaultstate="collapsed" desc="WebshopPane_CheckoutTab - Elements">
+	@FXML
+	private Pane WebshopPane_CheckoutTab_InformationPane;
+	@FXML
+	private Button WebshopPane_CheckoutTab_ConfirmOrderButton;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_FirstnameTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_LastnameTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_AddressTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_PostalCodeTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_CityTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_CountryTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_EmailTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_PhoneNumberTextField;
+	@FXML
+	private TextField WebshopPane_CheckoutTab_InformationPane_MobilePhoneNumberTextField;
+	@FXML
+	private Pane WebshopPane_CheckoutTab_PaymentPane;
+	@FXML
+	private Button WebshopPane_CheckoutTab_PaymentPane_PayButton;
+	@FXML
+	private Pane WebshopPane_CheckoutTab_EndPane;
+	@FXML
+	private Label WebshopPane_CheckoutTab_EndPane_ReceiptLabel;
+	@FXML
+	private Button WebshopPane_CheckoutTab_CancelOrderButton;
+	@FXML
+	private Button WebshopPane_CheckoutTab_EndPane_DoneButton;
+	// </editor-fold>
+
+	@FXML
+	private Tab WebshopPane_SignUpTab;
+	// <editor-fold defaultstate="collapsed" desc="WebshopPane_SignUpTab - Elements">
+
+	@FXML
+	private Button WebshopPane_SignUpTab_RegisterButton;
+	@FXML
+	private Button WebshopPane_SignUpTab_CancelButton;
+	@FXML
+	private TextField WebshopPane_SignUpTab_EmailTextField;
+	@FXML
+	private PasswordField WebshopPane_SignUpTab_PasswordTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_FirstNameTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_LastNameTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_AddressTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_CountryTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_CityTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_PostalCodeTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_PhoneNumberTextField;
+	@FXML
+	private TextField WebshopPane_SignUpTab_MobilePhoneNumberTextField;
+	// </editor-fold>
+
+	@FXML
+	private Tab WebshopPane_AccountTab;
+	// <editor-fold defaultstate="collapsed" desc="WebshopPane_AccountTab - Elements">
+	@FXML
+	private Pane WebshopPane_AccountTab_LogInPane;
+	@FXML
+	private PasswordField WebshopPane_AccountTab_LogInPane_PasswordTextField;
+	@FXML
+	private TextField WebshopPane_AccountTab_LogInPane_EmailTextField;
+	@FXML
+	private Button WebshopPane_AccountTab_LogInPane_LogInButton;
+	@FXML
+	private Button WebshopPane_AccountTab_LogInPane_CancelButton;
+	@FXML
+	private Label WebshopPane_AccountTab_LogInPane_OutputLabel;
+	@FXML
+	private Pane WebshopPane_AccountTab_AccountPane;
+	@FXML
+	private TextField WebshopPane_AccountTab_AccountPane_FirstNameTextField;
+	@FXML
+	private TextField WebshopPane_AccountTab_AccountPane_LastNameTextField;
+	@FXML
+	private TextField WebshopPane_AccountTab_AccountPane_EmailTextField;
+	@FXML
+	private TextField WebshopPane_AccountTab_AccountPane_PhoneNumberTextField;
+	@FXML
+	private TextField WebshopPane_AccountTab_AccountPane_MobilePhoneNumberTextField;
+	@FXML
+	private TextField WebshopPane_AccountTab_AccountPane_AddressTextField;
+	@FXML
+	private TextField WebshopPane_AccountTab_AccountPane_PostalCodeTextField;
+	@FXML
+	private TextField WebshopPane_AccountTab_AccountPane_CityTextField;
+	@FXML
+	private TextField WebshopPane_AccountTab_AccountPane_CountryTextField;
+	// </editor-fold>
+	// </editor-fold>
+
+	@FXML
+	private Pane PIMPane;
+	// <editor-fold defaultstate="collapsed" desc="PIMPane - Elements">
+	@FXML
+	private Pane PIMPane_NavigationPane;
+	// <editor-fold defaultstate="collapsed" desc="PIMPane_NavigationPane - Elements">
+	@FXML
+	private ChoiceBox<String> PIMPane_NavigationPane_CategoryChoiceBox;
+	@FXML
+	private TextField PIMPane_NavigationPane_SearchBar;
+	@FXML
+	private Button PIMPane_NavigationPane_ShowProductsButton;
+	@FXML
+	private Button PIMPane_NavigationPane_SearchButton;
+	@FXML
+	private Button PIMPane_NavigationPane_UpdateProductButton;
+	@FXML
+	private ListView<ProductHBoxCell> PIMPane_NavigationPane_ProductListView;
+	// </editor-fold>
+
+	@FXML
+	private Pane PIMPane_InformationPane;
+	// <editor-fold defaultstate="collapsed" desc="PIMPane_InformationPane - Elements">
+	@FXML
+	private TextField PIMPane_InformationPane_NameTextField;
+	@FXML
+	private TextField PIMPane_InformationPane_PriceTextField;
+	@FXML
+	private TextArea PIMPane_InformationPane_DescriptionTextArea;
+	@FXML
+	private ChoiceBox<String> PIMPane_InformationPane_CategoryChoiceBox;
+	@FXML
+	private ListView<ProductHBoxCell> PIMPane_InformationPane_CategoryImageListView;
+	@FXML
+	private Button PIMPane_InformationPane_LinkButton;
+	@FXML
+	private ListView<ProductHBoxCell> PIMPane_InformationPane_ProductImageListView;
+	@FXML
+	private Button PIMPane_InformationPane_RemoveButton;
+	@FXML
+	private Button PIMPane_InformationPane_SaveButton;
+	@FXML
+	private Button PIMPane_InformationPane_CancelButton;
+	// </editor-fold>
+	// </editor-fold>
+
+	@FXML
+	private Pane DAMPane;
+	// <editor-fold defaultstate="collapsed" desc="DAMPane - Elements">
+	@FXML
+	private Button DAMPane_SaveImageButton;
+	@FXML
+	private Button DAMPane_OpenButton;
+	@FXML
+	private ListView<ProductHBoxCell> DAMPane_ImageListView;
+	@FXML
+	private Button DAMPane_BrowseButton;
+	@FXML
+	private ChoiceBox<String> DAMPane_ImageCategoryChoiceBox;
+	@FXML
+	private TextField DAMPane_ImageTitleTextField;
+	@FXML
+	private Button DAMPane_DeleteButton;
+	@FXML
+	private TextField DAMPane_ImagePathTextField;
+	@FXML
+	private ImageView DAMPane_ImageView;
+	// </editor-fold>
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		try {
+			webshopController = new WebshopController();
+			DAM = new DAMManager();
+			pimManager = PIMManager.getInstance();
+		} catch (IOException ex) {
+			Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		MenuButton.toFront();
+		WebshopPane_LogInOutButton.toFront();
+		WebshopPane_SignUpButton.toFront();
+		updateChoiceBoxes();
 	}
 
 	@FXML
-	private void handleCatalogTestShowInfoButton(ActionEvent e) {
-		ProductHBoxCell productHBoxCell = catalogTestListView.getSelectionModel().getSelectedItem();
-		if (productHBoxCell == null) {
-			return;
+	private void handleMenuButton(ActionEvent event) {
+		MenuPane.setVisible(true);
+		MenuButton.setVisible(false);
+		MenuLine.setVisible(false);
+		WebshopPane.setVisible(false);
+		PIMPane.setVisible(false);
+		DAMPane.setVisible(false);
+		resetToMenu();
+	}
+
+	// <editor-fold defaultstate="collapsed" desc="MenuPane - Methods">
+	@FXML
+	private void handle_MenuPane_Buttons(ActionEvent event) {
+		MenuPane.setVisible(false);
+		MenuButton.setVisible(true);
+		if (event.getSource().equals(MenuPane_WebshopButton)) {
+			WebshopPane.setVisible(true);
+			MenuLine.setVisible(false);
+		} else if (event.getSource().equals(MenuPane_PIMButton)) {
+			PIMPane.setVisible(true);
+			MenuLine.setVisible(true);
+		} else if (event.getSource().equals(MenuPane_DAMButton)) {
+			DAMPane.setVisible(true);
+			MenuLine.setVisible(true);
 		}
+	}
+	// </editor-fold>
 
-		//Gets the id for the selected product.
-		int id = productHBoxCell.getProductId();
-		currentProduct = webshopController.getProduct(id);
+	// <editor-fold defaultstate="collapsed" desc="WebshopPane - Methods">
+	@FXML
+	private void handle_WebshopPane_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(WebshopPane_SignUpButton)) {
+			WebshopPane_CatalogTab.setDisable(true);
+			WebshopPane_BasketTab.setDisable(true);
+			WebshopPane_SignUpTab.setDisable(false);
+			WebshopTabPane.getSelectionModel().select(WebshopPane_SignUpTab);
+			WebshopPane_SignUpButton.setDisable(true);
+			WebshopPane_LogInOutButton.setDisable(true);
+			MenuButton.setDisable(true);
 
-		//Sets the current image to the first if any, else it is set to the default image.
-		if (!currentProduct.getImageFiles().isEmpty()) {
-			InputStream inputStream = new ByteArrayInputStream(currentProduct.getImageFiles().get(0));
-			catalogTestImageView.setImage(new Image(inputStream));
-		} else {
-			catalogTestImageView.setImage(new Image("images/test.jpeg"));
+		} else if (source.equals(WebshopPane_LogInOutButton)) {
+			if (isLoggedIn) {
+				WebshopPane_LogInOutButton.setText("Log ind");
+				webshopController.logOut();
+				isLoggedIn = false;
+				resetWebshopPaneItems();
+
+			} else {
+				disableWebshopPaneItems();
+				WebshopPane_AccountTab.setDisable(false);
+				WebshopTabPane.getSelectionModel().select(WebshopPane_AccountTab);
+				WebshopPane_AccountTab_AccountPane.setVisible(false);
+				WebshopPane_AccountTab_LogInPane.setVisible(true);
+
+			}
+
 		}
+	}
 
-		//Sets the text under the image to display the number of images for the selected product.
-		if (currentProduct.getImageFiles().size() == 1) {
-			imageLeftButton.setDisable(true);
-			imageRightButton.setDisable(true);
-			imageNumberLabel.setText("1 ud af 1");
-		} else if (currentProduct.getImageFiles().size() > 1) {
+	@FXML
+	private void handle_WebshopPane_CatalogTab_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(WebshopPane_CatalogTab_ShowProductsButton)) {
+			ArrayList<Product> products = webshopController.getAllProduct();
+			showProducts(products, WebshopPane_CatalogTab_ProductsListView);
+			WebshopPane_CatalogTab_SearchTextField.clear();
+
+		} else if (source.equals(WebshopPane_CatalogTab_ShowInfoButton)) {
+			ProductHBoxCell productHBoxCell = WebshopPane_CatalogTab_ProductsListView.getSelectionModel().getSelectedItem();
+			if (productHBoxCell == null) {
+				return;
+			}
+
+			//Gets the id for the selected product.
+			int id = productHBoxCell.getProductId();
+			currentProduct = webshopController.getProduct(id);
+
+			//Updates currentProductImages and displays first image from the list.
+			updateCurrentProductImages();
+			WebshopPane_CatalogTab_ProductImageView.setImage(currentProductImages.get(0));
+
+			//Sets the text under the image to display the number of images for the selected product.
 			imageNumber = 1;
-			imageLeftButton.setDisable(true);
-			imageRightButton.setDisable(false);
-			imageNumberLabel.setText(imageNumber + " ud af " + currentProduct.getImageFiles().size());
-		} else {
-			imageLeftButton.setDisable(true);
-			imageRightButton.setDisable(true);
-			imageNumberLabel.setText("0 ud af 0");
+			updateImageNavigationItems();
+
+			//Sets the descriptive text for the selected product.
+			updateDescriptiveProductText();
+
+		} else if (source.equals(WebshopPane_CatalogTab_SearchButton)) {
+			ArrayList<Product> products = webshopController.findProducts(WebshopPane_CatalogTab_SearchTextField.getText(), getCategoryID(WebshopPane_CatalogTab_CategoryChoiceBox.getValue()));
+			showProducts(products, WebshopPane_CatalogTab_ProductsListView);
+
+		} else if (source.equals(WebshopPane_CatalogTab_AddToBasketButton)) {
+			int id = WebshopPane_CatalogTab_ProductsListView.getSelectionModel().getSelectedItem().getProductId();
+			if (isLoggedIn) {
+				webshopController.addProductToBasket(webshopController.getShoppingBaskets().get(0).getId(), id, 1);
+			} else {
+				guestBasket.addProduct(webshopController.getProduct(id), 1);
+			}
+			updateBasketTabItems();
+
+		} else if (source.equals(WebshopPane_CatalogTab_ImageLeftButton)) {
+			imageNumber += imageNumber == 1 ? 0 : -1;
+			updateImageNavigationItems();
+
+		} else if (source.equals(WebshopPane_CatalogTab_ImageRightButton)) {
+			imageNumber += imageNumber == currentProductImages.size() ? 0 : 1;
+			updateImageNavigationItems();
+
+		}
+	}
+
+	@FXML
+	private void handle_WebshopPane_CatalogTab_SearchBar(ActionEvent event) {
+		WebshopPane_CatalogTab_SearchButton.fire();
+	}
+
+	@FXML
+	private void handle_WebshopPane_BasketTab_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(WebshopPane_BasketTab_SetAmountButton)) {
+			try {
+				int id = WebshopPane_BasketTab_BasketListView.getSelectionModel().getSelectedItem().getProductId();
+				int amount = Integer.parseInt(WebshopPane_BasketTab_AmountTextField.getText());
+				if (isLoggedIn) {
+					webshopController.setProductAmount(webshopController.getShoppingBaskets().get(0).getId(), id, amount);
+				} else {
+					guestBasket.setProductAmount(webshopController.getProduct(id), amount);
+				}
+				updateBasketTabItems();
+			} catch (Exception ex) {
+				WebshopPane_BasketTab_AmountTextField.setText("1");
+			}
+
+		} else if (source.equals(WebshopPane_BasketTab_DeleteButton)) {
+			int id = WebshopPane_BasketTab_BasketListView.getSelectionModel().getSelectedItem().getProductId();
+			if (isLoggedIn) {
+				webshopController.removeProduct(webshopController.getShoppingBaskets().get(0).getId(), id);
+			} else {
+				guestBasket.removeProduct(webshopController.getProduct(id));
+			}
+			updateBasketTabItems();
+
+		} else if (source.equals(WebshopPane_BasketTab_CheckOutButton)) {
+			disableWebshopPaneItems();
+			WebshopPane_CheckoutTab.setDisable(false);
+			WebshopTabPane.getSelectionModel().select(WebshopPane_CheckoutTab);
+			WebshopPane_BasketTab_CheckOutButton.setDisable(true);
+
+			if (isLoggedIn) {
+				WebshopPane_CheckoutTab_ConfirmOrderButton.fire();
+			} else {
+				WebshopPane_CheckoutTab_PaymentPane.setVisible(false);
+				WebshopPane_CheckoutTab_InformationPane.setVisible(true);
+			}
+		} else if (source.equals(WebshopPane_BasketTab_LoadBasketButton)) {
+			if (isLoggedIn) {
+				int basketId = Integer.parseInt(WebshopPane_BasketTab_BasketChoiceBox.getValue().substring(6));
+				for (ShoppingBasket basket : webshopController.getShoppingBaskets()) {
+					if (basket.getId() == basketId) {
+						currentBasket = basket;
+					}
+				}
+				updateBasketTabItems();
+			}
+		}
+	}
+
+	@FXML
+	private void handle_WebshopPane_CheckoutTab_InformationPane_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(WebshopPane_CheckoutTab_ConfirmOrderButton)) {
+
+			Order order = null;
+
+			if (isLoggedIn) {
+				webshopController.checkOut(1); //TODO: Needs to be basketId
+				order = webshopController.getLatestOrder(); //TODO: Use information
+			} else {
+				order = webshopController.checkOut(
+								WebshopPane_CheckoutTab_InformationPane_EmailTextField.getText(),
+								WebshopPane_CheckoutTab_InformationPane_FirstnameTextField.getText(),
+								WebshopPane_CheckoutTab_InformationPane_LastnameTextField.getText(),
+								Integer.parseInt(WebshopPane_CheckoutTab_InformationPane_PhoneNumberTextField.getText()),
+								Integer.parseInt(WebshopPane_CheckoutTab_InformationPane_MobilePhoneNumberTextField.getText()),
+								WebshopPane_CheckoutTab_InformationPane_AddressTextField.getText(),
+								WebshopPane_CheckoutTab_InformationPane_PostalCodeTextField.getText(),
+								WebshopPane_CheckoutTab_InformationPane_CityTextField.getText(),
+								WebshopPane_CheckoutTab_InformationPane_CountryTextField.getText(),
+								guestBasket);
+				if (order == null) {
+					return;
+				}
+				resetCheckOutTabInformationPane();
+			}
+
+			updateCheckOutTabReceiptPane(order);
+
+			WebshopPane_CheckoutTab_PaymentPane.setVisible(true);
+			WebshopPane_CheckoutTab_InformationPane.setVisible(false);
+
+		} else if (source.equals(WebshopPane_CheckoutTab_CancelOrderButton)) {
+			resetCheckOutTabInformationPane();
+
+			resetWebshopPaneItems();
+		}
+	}
+
+	private void resetCheckOutTabInformationPane() {
+		WebshopPane_CheckoutTab_InformationPane_EmailTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_FirstnameTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_LastnameTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_PhoneNumberTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_MobilePhoneNumberTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_AddressTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_PostalCodeTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_CityTextField.setText("");
+		WebshopPane_CheckoutTab_InformationPane_CountryTextField.setText("");
+	}
+
+	private void updateCheckOutTabReceiptPane(Order order) {
+		String text = "Ordrekvittering\n"
+						+ "-------------------------------\n"
+						+ "\n";
+
+		for (OrderLine item : order.getShoppingBasket().getOrderLines()) {
+			text += "" + item.getAmount() + "x " + item.getProduct().getName() + " : " + item.getProduct().getPrice() + "kr\n";
 		}
 
-		//Sets the descriptive text for the selected product.
+		text += "Total Pris: " + order.getTotalPrice() + "kr.\n"
+						+ "-------------------------------\n"
+						+ "Ha' en god dag!";
+
+		WebshopPane_CheckoutTab_EndPane_ReceiptLabel.setText(text);
+		guestBasket.empty();
+		updateBasketTabItems();
+	}
+
+	@FXML
+	private void handle_WebshopPane_CheckoutTab_PaymentPane_Buttons(ActionEvent event) {
+		WebshopPane_CheckoutTab_PaymentPane.setVisible(false);
+		WebshopPane_CheckoutTab_EndPane.setVisible(true);
+	}
+
+	@FXML
+	private void handle_WebshopPane_CheckoutTab_EndPane_Buttons(ActionEvent event) {
+		resetWebshopPaneItems();
+	}
+
+	private void updateImageNavigationItems() {
+		int imageAmount = currentProductImages.size();
+		if (imageAmount == 1) {
+			WebshopPane_CatalogTab_ImageLeftButton.setDisable(true);
+			WebshopPane_CatalogTab_ImageRightButton.setDisable(true);
+			WebshopPane_CatalogTab_ImageNumberLabel.setText("1 ud af 1");
+		} else if (imageAmount > 1) {
+			WebshopPane_CatalogTab_ImageLeftButton.setDisable(true);
+			WebshopPane_CatalogTab_ImageRightButton.setDisable(false);
+			WebshopPane_CatalogTab_ImageNumberLabel.setText(imageNumber + " ud af " + imageAmount);
+		} else {
+			WebshopPane_CatalogTab_ImageLeftButton.setDisable(true);
+			WebshopPane_CatalogTab_ImageRightButton.setDisable(true);
+			WebshopPane_CatalogTab_ImageNumberLabel.setText("0 ud af 0");
+		}
+	}
+
+	private void updateCurrentProductImages() {
+		currentProductImages = new ArrayList<>();
+		if (!currentProduct.getImageFiles().isEmpty()) {
+			for (byte[] imageFile : currentProduct.getImageFiles()) {
+				currentProductImages.add(new Image(new ByteArrayInputStream(imageFile)));
+			}
+		} else {
+			currentProductImages.add(new Image("images/test.jpeg"));
+		}
+	}
+
+	private void updateDescriptiveProductText() {
 		String text = "";
 		text = "Name: " + currentProduct.getName() + "\n";
 		text += "Category: " + currentProduct.getCategory() + "\n";
 		text += "Price: " + Double.toString(currentProduct.getPrice()) + "\n";
 		text += "Description: " + currentProduct.getDescription();
-		catalogTestTextArea.setText(text);
+		WebshopPane_CatalogTab_ProductTextArea.setText(text);
 	}
 
-	@FXML
-	private void handleSearchButton(ActionEvent e) {
-		ArrayList<Product> products = webshopController.findProducts(searchTextField.getText(), getCategoryID(categoriesChoiceBox.getValue()));
-		showProducts(products, catalogTestListView);
-	}
-
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-		try {
-			webshopController = new WebshopController();
-			DAM = new DAMManager();
-			dbm = DBManager.getInstance();
-			pimManager = PIMManager.getInstance();
-		} catch (IOException ex) {
-			//Do something about this.
-			Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		updateChoiceBoxes();
-	}
-
-	private void showProducts(ArrayList<Product> products, ListView listview) {
-		List<ProductHBoxCell> list = new ArrayList<>();
-		for (Product product : products) {
-			list.add(new ProductHBoxCell(product));
-		}
-		ObservableList observableList = FXCollections.observableArrayList(list);
-		listview.setItems(observableList);
-	}
-
-	@FXML
-	private void handleAddToBasketButton(ActionEvent e) {
-		int id = catalogTestListView.getSelectionModel().getSelectedItem().getProductId();
-		if (isLoggedIn) {
-			webshopController.addProductToBasket(webshopController.getShoppingBaskets().get(0).getId(), id, 1);
-		} else {
-			guestBasket.addProduct(webshopController.getProduct(id), 1);
-		}
-
-		updateShoppingBasket();
-	}
-
-	@FXML
-	private void handleDeleteButton(ActionEvent e) {
-		int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
-		if (isLoggedIn) {
-			webshopController.removeProduct(webshopController.getShoppingBaskets().get(0).getId(), id);
-		} else {
-			guestBasket.removeProduct(webshopController.getProduct(id));
-		}
-
-		updateShoppingBasket();
-	}
-
-	@FXML
-	private void handleSetAmountButton(ActionEvent e) {
-		try {
-			int id = shoppingBasketListView.getSelectionModel().getSelectedItem().getProductId();
-			int amount = Integer.parseInt(amountTextField.getText());
-			if (isLoggedIn) {
-				webshopController.setProductAmount(webshopController.getShoppingBaskets().get(0).getId(), id, amount);
-			} else {
-				guestBasket.setProductAmount(webshopController.getProduct(id), amount);
-			}
-
-			updateShoppingBasket();
-		} catch (Exception ex) {
-			amountTextField.setText("1");
-		}
-	}
-
-	private void updateShoppingBasket() {
+	private void updateBasketTabItems() {
 		double totalPrice = 0;
 
-		ArrayList<OrderLine> orderLines = isLoggedIn ? webshopController.getShoppingBaskets().get(0).getOrderLines() : guestBasket.getOrderLines();
+		ArrayList<OrderLine> orderLines = isLoggedIn ? currentBasket.getOrderLines() : guestBasket.getOrderLines();
 		List<ProductHBoxCell> list = new ArrayList<>();
 		for (OrderLine orderLine : orderLines) {
 			list.add(new ProductHBoxCell(orderLine));
 			totalPrice += (orderLine.getProduct().getPrice() * orderLine.getAmount());
 		}
 		ObservableList observableList = FXCollections.observableArrayList(list);
-		shoppingBasketListView.setItems(observableList);
-		totalPriceTextField.setText(Double.toString(totalPrice));
+		WebshopPane_BasketTab_BasketListView.setItems(observableList);
+		WebshopPane_BasketTab_TotalPriceTextField.setText(Double.toString(totalPrice));
 		if (orderLines.size() == 0) {
-			ShoppingBasket_CheckOutButton.setDisable(true);
+			WebshopPane_BasketTab_CheckOutButton.setDisable(true);
 		} else {
-			ShoppingBasket_CheckOutButton.setDisable(false);
+			WebshopPane_BasketTab_CheckOutButton.setDisable(false);
 		}
 	}
 
 	@FXML
-	private void handleTestLogInOutButton(ActionEvent event) {
-		if (!isLoggedIn) {
-			testLogInOutButton.setText("Log ud");
-			guestBasket.empty();
+	private void handle_WebshopPane_SignUpTab_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(WebshopPane_SignUpTab_RegisterButton)) {
+			boolean isRegistered;
+			try {
+				isRegistered = webshopController.signUp(
+								WebshopPane_SignUpTab_EmailTextField.getText(),
+								WebshopPane_SignUpTab_PasswordTextField.getText(),
+								WebshopPane_SignUpTab_FirstNameTextField.getText(),
+								WebshopPane_SignUpTab_LastNameTextField.getText(),
+								Integer.parseInt(WebshopPane_SignUpTab_PhoneNumberTextField.getText()),
+								Integer.parseInt(WebshopPane_SignUpTab_MobilePhoneNumberTextField.getText()),
+								WebshopPane_SignUpTab_AddressTextField.getText(),
+								WebshopPane_SignUpTab_PostalCodeTextField.getText(),
+								WebshopPane_SignUpTab_CityTextField.getText(),
+								WebshopPane_SignUpTab_CountryTextField.getText(),
+								guestBasket);
+			} catch (NumberFormatException e) {
+				isRegistered = false;
+			}
+
+			if (!isRegistered) {
+				resetWebshopPaneItems();
+				WebshopPane_LogInOutButton.setDisable(false);
+				WebshopPane_LogInOutButton.fire();
+				WebshopPane_AccountTab_LogInPane_OutputLabel.setText("Error! Registration failed.");
+			} else {
+				logIn();
+			}
+
+		} else if (source.equals(WebshopPane_SignUpTab_CancelButton)) {
+			resetWebshopPaneItems();
+
+		}
+	}
+
+	@FXML
+	private void handle_WebshopPane_AccountTab_LogInPane_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(WebshopPane_AccountTab_LogInPane_LogInButton)) {
+			try {
+				isLoggedIn = webshopController.login(
+								WebshopPane_AccountTab_LogInPane_EmailTextField.getText(),
+								WebshopPane_AccountTab_LogInPane_PasswordTextField.getText());
+			} catch (Exception e) {
+				System.out.println(e);
+				isLoggedIn = false;
+			}
+			if (isLoggedIn) {
+				logIn();
+			} else {
+				resetWebshopPaneItems();
+				WebshopPane_LogInOutButton.setDisable(false);
+				WebshopPane_LogInOutButton.fire();
+				WebshopPane_AccountTab_LogInPane_OutputLabel.setText("Error! Login failed.");
+
+			}
+
+		} else if (source.equals(WebshopPane_AccountTab_LogInPane_CancelButton)) {
+			resetWebshopPaneItems();
+		}
+	}
+	// </editor-fold>
+
+	// <editor-fold defaultstate="collapsed" desc="PIMPane - Methods">
+	@FXML
+	private void handle_PIMPane_NavigationPane_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(PIMPane_NavigationPane_ShowProductsButton)) {
+			handle_PIMPane_NavigationPane(null);
+			showProducts(webshopController.getAllProduct(), PIMPane_NavigationPane_ProductListView);
+
+		} else if (source.equals(PIMPane_NavigationPane_SearchButton)) {
+			handle_PIMPane_NavigationPane(null);
+			ArrayList<Product> products = webshopController.findProducts(
+							PIMPane_NavigationPane_SearchBar.getText(),
+							getCategoryID(PIMPane_NavigationPane_CategoryChoiceBox.getValue()));
+			showProducts(products, PIMPane_NavigationPane_ProductListView);
+
+		} else if (source.equals(PIMPane_NavigationPane_UpdateProductButton)) {
+			PIMPane_NavigationPane.setVisible(false);
+			PIMPane_InformationPane.setVisible(true);
+			pimManager.setEditingProduct(true);
+			pimManager.setProductToEdit(PIMPane_NavigationPane_ProductListView.getSelectionModel().getSelectedItem().getProductId());
+			//If editing an existing product it gets the product object and sets the textfields to the products values.
+			if (pimManager.isEditingProduct()) {
+				pimProduct = pimManager.getProductToEdit();
+				PIMPane_InformationPane_NameTextField.setText(pimProduct.getName());
+				PIMPane_InformationPane_CategoryChoiceBox.setValue(pimProduct.getCategory());
+				PIMPane_InformationPane_PriceTextField.setText(Double.toString(pimProduct.getPrice()));
+				PIMPane_InformationPane_DescriptionTextArea.setText(pimProduct.getDescription());
+
+				//Shows the assigned images in the listview.
+				ArrayList<PIMage> productPimages = pimManager.getPImages(pimProduct.getId());
+				List<ProductHBoxCell> productPimagesList = new ArrayList<>();
+
+				for (PIMage pimage : productPimages) {
+					productPimagesList.add(new ProductHBoxCell(pimage));
+				}
+				ObservableList productPimagesObservableList = FXCollections.observableArrayList(productPimagesList);
+				PIMPane_InformationPane_ProductImageListView.setItems(productPimagesObservableList);
+			}
+			updatePIMPane_InformationPane_CategoryImageListView();
+		}
+	}
+
+	@FXML
+	private void handle_PIMPane_NavigationPane(MouseEvent event) {
+		if (PIMPane_NavigationPane_ProductListView.getSelectionModel().getSelectedItem() == null || event == null) {
+			PIMPane_NavigationPane_UpdateProductButton.setDisable(true);
 		} else {
-			testLogInOutButton.setText("Log ind");
-			reset();
-		}
-		isLoggedIn = !isLoggedIn;
-		updateShoppingBasket();
-	}
-
-	@FXML
-	private void handleShoppingBasket_CheckOutButton(ActionEvent event) {
-		CheckOut_Tab.setDisable(false);
-		tabPane.getSelectionModel().select(CheckOut_Tab);
-		ShoppingBasket_CheckOutButton.setDisable(true);
-		if (isLoggedIn) {
-			handleCheckOut_ConfirmOrderButton(null);
-		} else {
-			CheckOut_PaymentPane.setVisible(false);
-			CheckOut_InformationPane.setVisible(true);
+			PIMPane_NavigationPane_UpdateProductButton.setDisable(false);
 		}
 	}
 
 	@FXML
-	private void handleCheckOut_ConfirmOrderButton(ActionEvent event) {
-		CheckOut_PaymentPane.setVisible(true);
-		CheckOut_InformationPane.setVisible(false);
-		if (isLoggedIn) {
-			webshopController.checkOut(1);
-		} else {
-			webshopController.checkOut(
-							CheckOut_URCPane_EmailTextField.getText(),
-							CheckOut_URCPane_FirstnameTextField.getText(),
-							CheckOut_URCPane_LastnameTextField.getText(),
-							Integer.parseInt(CheckOut_URCPane_PhoneTextField.getText()),
-							88888888,
-							"address",
-							"postalCode",
-							"city",
-							"country",
-							guestBasket);
+	private void handle_PIMPane_InformationPane_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(PIMPane_InformationPane_LinkButton)) {
+			ProductHBoxCell image = PIMPane_InformationPane_CategoryImageListView.getSelectionModel().getSelectedItem();
+			if (image != null) {
+				PIMPane_InformationPane_ProductImageListView.getItems().add(image);
+				PIMPane_InformationPane_CategoryImageListView.getItems().remove(image);
+			}
+
+		} else if (source.equals(PIMPane_InformationPane_RemoveButton)) {
+			ProductHBoxCell image = PIMPane_InformationPane_ProductImageListView.getSelectionModel().getSelectedItem();
+			if (image != null) {
+				PIMPane_InformationPane_CategoryImageListView.getItems().add(image);
+				PIMPane_InformationPane_ProductImageListView.getItems().remove(image);
+			}
+
+		} else if (source.equals(PIMPane_InformationPane_SaveButton)) {
+			PIMPane_InformationPane.setVisible(false);
+			PIMPane_NavigationPane.setVisible(true);
+
+			ArrayList<Integer> imageIdList = new ArrayList<>();
+			for (ProductHBoxCell imageCell : PIMPane_InformationPane_ProductImageListView.getItems()) {
+				imageIdList.add(imageCell.getImageId());
+			}
+
+			String name = PIMPane_InformationPane_NameTextField.getText();
+			String category = PIMPane_InformationPane_CategoryChoiceBox.getValue();
+			String description = PIMPane_InformationPane_DescriptionTextArea.getText();
+			double price = Double.parseDouble(PIMPane_InformationPane_PriceTextField.getText());
+
+			if (pimManager.isEditingProduct()) {
+				pimManager.editProduct(pimProduct.getId(), name, category, description, price, imageIdList);
+			} else {
+				pimManager.createProduct(name, category, description, price, imageIdList);
+			}
+			resetPIMPane();
+
+		} else if (source.equals(PIMPane_InformationPane_CancelButton)) {
+			PIMPane_InformationPane.setVisible(false);
+			PIMPane_NavigationPane.setVisible(true);
+			resetPIMPane();
 		}
+	}
 
-		CheckOut_URCPane_FirstnameTextField.setText("");
-		CheckOut_URCPane_LastnameTextField.setText("");
-		CheckOut_URCPane_EmailTextField.setText("");
-		CheckOut_URCPane_PhoneTextField.setText("");
-		String text = "Ordrekvittering\n"
-						+ "-------------------------------\n"
-						+ "\n";
+	private void resetPIMPane() {
+		PIMPane_InformationPane_NameTextField.setText("");
+		PIMPane_InformationPane_PriceTextField.setText("");
+		PIMPane_InformationPane_DescriptionTextArea.setText("");
+		PIMPane_InformationPane_CategoryImageListView.getItems().clear();
+		PIMPane_InformationPane_ProductImageListView.getItems().clear();
+		PIMPane_NavigationPane_ShowProductsButton.fire();
+	}
 
-		Order order = webshopController.getLatestOrder();
+	private void updatePIMPane_InformationPane_CategoryImageListView() {
+		ArrayList<PIMage> pimages = pimManager.getUnassignedPIMages();
+		List<ProductHBoxCell> pimagesList = new ArrayList<>();
 
-		for (OrderLine item : order.getShoppingBasket().getOrderLines()) {
-			text += "" + item.getAmount() + "x " + item.getProduct().getName() + " : " + item.getProduct().getPrice() + "kr\n";
+		for (PIMage pimage : pimages) {
+			pimagesList.add(new ProductHBoxCell(pimage));
 		}
-		text += "Total Pris: " + order.getTotalPrice() + "kr.\n"
-						+ "-------------------------------\n"
-						+ "Ha' en god dag!";
-		CheckOut_EndPane_Receipt.setText(text);
-		guestBasket.empty();
-		webshopController.emptyShoppingBasket(webshopController.getShoppingBaskets().get(0).getId());
-		updateShoppingBasket();
+		ObservableList pimagesObservableList = FXCollections.observableArrayList(pimagesList);
+		PIMPane_InformationPane_CategoryImageListView.setItems(pimagesObservableList);
 	}
+	// </editor-fold>
 
+	// <editor-fold defaultstate="collapsed" desc="DAMPane - Methods">
 	@FXML
-	private void handleCheckOut_PayButton(ActionEvent event) {
-		CheckOut_PaymentPane.setVisible(false);
-		CheckOut_EndPane.setVisible(true);
-	}
+	private void handle_DAMPane_Buttons(ActionEvent event) {
+		Button source = (Button) event.getSource();
+		if (source.equals(DAMPane_BrowseButton)) {
+			Stage stage = (Stage) anchorPane.getScene().getWindow();
+			FileChooser fileChooser = new FileChooser();
 
-	@FXML
-	private void handleCheckOut_DoneButton(ActionEvent event) {
-		reset();
-	}
+			File file = fileChooser.showOpenDialog(stage);
 
-	@FXML
-	public void handleBrowseButton(ActionEvent event) {
-		Stage stage = (Stage) anchorPane.getScene().getWindow();
-		FileChooser fileChooser = new FileChooser();
+			DAMPane_ImagePathTextField.setText(file.getPath());
 
-		File file = fileChooser.showOpenDialog(stage);
+		} else if (source.equals(DAMPane_SaveImageButton)) {
+			DAM.createImage(
+							DAMPane_ImageTitleTextField.getText(),
+							DAMPane_ImageCategoryChoiceBox.getValue(),
+							DAMPane_ImagePathTextField.getText());
+			showDAMImages();
 
-		imagePathTextField.setText(file.getPath());
-	}
+		} else if (source.equals(DAMPane_OpenButton)) {
+			showDAMImages();
 
-	@FXML
-	private void handleSaveImageButton(ActionEvent event) {
-		DAM.createImage(imageTitleTextField.getText(), imageCategoryChoiceBox.getValue(), imagePathTextField.getText());
-		showDAMImages();
-	}
-
-	@FXML
-	public void handleOpenImageButton(ActionEvent event) {
-		//DAMImageView.setImage(DAM.getImage(0));
-		showDAMImages();
-
+		} else if (source.equals(DAMPane_DeleteButton)) {
+			int id = DAMPane_ImageListView.getSelectionModel().getSelectedItem().getProductId();
+			DAM.deleteImage(id);
+			showDAMImages();
+		}
 	}
 
 	private void showDAMImages() {
@@ -411,132 +852,154 @@ public class FXMLDocumentController implements Initializable {
 			damImage.toString();
 		}
 		ObservableList observableList = FXCollections.observableArrayList(list);
-		DAMListView.setItems(observableList);
+		DAMPane_ImageListView.setItems(observableList);
 	}
+	// </editor-fold>
 
-	private void reset() {
-		CheckOut_Tab.setDisable(true);
-		CheckOut_EndPane.setVisible(false);
-		tabPane.getSelectionModel().select(catalogTestTab);
-		ShoppingBasket_CheckOutButton.setDisable(false);
-		CheckOut_EndPane_Receipt.setText("");
+	private void showProducts(ArrayList<Product> products, ListView listview) {
+		List<ProductHBoxCell> list = new ArrayList<>();
+		for (Product product : products) {
+			list.add(new ProductHBoxCell(product));
+		}
+		ObservableList observableList = FXCollections.observableArrayList(list);
+		listview.setItems(observableList);
 	}
 
 	private void updateChoiceBoxes() {
 		categoriesMap = webshopController.getCategories();
 		categoriesMap.put("Ingen", -1);
-		ArrayList<String> categoriesList = new ArrayList<>();
+		ArrayList<String> categoryList = new ArrayList<>();
 
 		for (Map.Entry<String, Integer> entry : categoriesMap.entrySet()) {
-			categoriesList.add(entry.getKey());
+			categoryList.add(entry.getKey());
 		}
-		//populates categoriesChoiceBox.
-		categoriesChoiceBox.setItems(FXCollections.observableArrayList(categoriesList));
-		categoriesChoiceBox.setValue(categoriesChoiceBox.getItems().get(0));
-		imageCategoryChoiceBox.setItems(FXCollections.observableArrayList(categoriesList));
-		imageCategoryChoiceBox.setValue(imageCategoryChoiceBox.getItems().get(0));
-	}
+		//populates categoryChoiceBoxes. 
+		WebshopPane_CatalogTab_CategoryChoiceBox.setItems(FXCollections.observableArrayList(categoryList));
+		WebshopPane_CatalogTab_CategoryChoiceBox.setValue(WebshopPane_CatalogTab_CategoryChoiceBox.getItems().get(0));
+		PIMPane_NavigationPane_CategoryChoiceBox.setItems(FXCollections.observableArrayList(categoryList));
+		PIMPane_NavigationPane_CategoryChoiceBox.setValue(PIMPane_NavigationPane_CategoryChoiceBox.getItems().get(0));
+		PIMPane_InformationPane_CategoryChoiceBox.setItems(FXCollections.observableArrayList(categoryList));
+		PIMPane_InformationPane_CategoryChoiceBox.setValue(PIMPane_InformationPane_CategoryChoiceBox.getItems().get(0));
+		DAMPane_ImageCategoryChoiceBox.setItems(FXCollections.observableArrayList(categoryList));
+		DAMPane_ImageCategoryChoiceBox.setValue(DAMPane_ImageCategoryChoiceBox.getItems().get(0));
 
-	@FXML
-	private void handledbCreateButton(ActionEvent event) {
-		//dbm.setUpTables();
-	}
+		if (webshopController.getCustomer() != null) {
+			ArrayList<String> basketList = new ArrayList<>();
 
-	@FXML
-	private void handledbDropButton(ActionEvent event) {
-		//dbm.dropTables();
-	}
+			for (ShoppingBasket basket : webshopController.getShoppingBaskets()) {
+				basketList.add("Kurv #" + basket.getId());
+			}
 
-	@FXML
-	private void handledbInsertButton(ActionEvent event) {
-		//dbm.insertData();
-	}
+			WebshopPane_BasketTab_BasketChoiceBox.setItems(FXCollections.observableArrayList(basketList));
+			WebshopPane_BasketTab_BasketChoiceBox.setValue(WebshopPane_BasketTab_BasketChoiceBox.getItems().get(0));
+		}
 
-	@FXML
-	private void handleUpdateButton(ActionEvent event) {
-		updateChoiceBoxes();
-	}
-
-	@FXML
-	private void handleDAMDeleteButton(ActionEvent event) {
-		int id = DAMListView.getSelectionModel().getSelectedItem().getProductId();
-
-		DAM.deleteImage(id);
-
-		showDAMImages();
 	}
 
 	private int getCategoryID(String category) {
 		return categoriesMap.get(category);
 	}
 
-	@FXML
-	private void handleLeftImageButton(ActionEvent event) {
-		imageNumber--;
-		InputStream inputStream = new ByteArrayInputStream(currentProduct.getImageFiles().get(imageNumber - 1));
-		catalogTestImageView.setImage(new Image(inputStream));
-		imageNumberLabel.setText((imageNumber) + " ud af " + currentProduct.getImageFiles().size());
+	private void resetToMenu() {
+		resetPIMPane();
+		resetWebshopPaneItems();
+	}
 
-		if (imageNumber == 1) {
-			imageLeftButton.setDisable(true);
+	private void disableWebshopPaneItems() {
+		WebshopPane_CatalogTab.setDisable(true);
+		WebshopPane_BasketTab.setDisable(true);
+		WebshopPane_CheckoutTab.setDisable(true);
+		WebshopPane_SignUpTab.setDisable(true);
+		WebshopPane_AccountTab.setDisable(true);
+		WebshopPane_SignUpButton.setDisable(true);
+		WebshopPane_LogInOutButton.setDisable(true);
+		MenuButton.setDisable(true);
+	}
+
+	private void resetWebshopPaneItems() {
+		WebshopPane_CatalogTab.setDisable(false);
+		WebshopPane_BasketTab.setDisable(false);
+		WebshopPane_BasketTab_CheckOutButton.setDisable(false);
+		WebshopPane_BasketTab_LoadBasketButton.setDisable(!isLoggedIn);
+		WebshopPane_BasketTab_BasketChoiceBox.setDisable(!isLoggedIn);
+		WebshopPane_CheckoutTab.setDisable(true);
+		WebshopPane_CheckoutTab_EndPane.setVisible(false);
+		WebshopPane_SignUpTab.setDisable(true);
+		WebshopPane_AccountTab.setDisable(true);
+		WebshopPane_SignUpButton.setDisable(isLoggedIn);
+		WebshopPane_LogInOutButton.setDisable(false);
+		MenuButton.setDisable(false);
+		WebshopTabPane.getSelectionModel().select(WebshopPane_CatalogTab);
+
+		resetAccountPane();
+
+		if (isLoggedIn) {
+			updateChoiceBoxes();
+			updateBasketTabItems();
 		}
-		imageRightButton.setDisable(false);
+
+		WebshopPane_CheckoutTab_EndPane_ReceiptLabel.setText("");
+		resetSignUpTab();
+		resetAccountTabLogInPane();
+		resetCheckOutTabInformationPane();
 	}
 
-	@FXML
-	private void handleImageRightButton(ActionEvent event) {
-		imageNumber++;
-		InputStream inputStream = new ByteArrayInputStream(currentProduct.getImageFiles().get(imageNumber - 1));
-		catalogTestImageView.setImage(new Image(inputStream));
-		imageNumberLabel.setText((imageNumber) + " ud af " + currentProduct.getImageFiles().size());
-
-		if (imageNumber == currentProduct.getImageFiles().size()) {
-			imageRightButton.setDisable(true);
-		}
-		imageLeftButton.setDisable(false);
+	private void resetSignUpTab() {
+		WebshopPane_SignUpTab_EmailTextField.setText("");
+		WebshopPane_SignUpTab_PasswordTextField.setText("");
+		WebshopPane_SignUpTab_FirstNameTextField.setText("");
+		WebshopPane_SignUpTab_LastNameTextField.setText("");
+		WebshopPane_SignUpTab_PhoneNumberTextField.setText("");
+		WebshopPane_SignUpTab_MobilePhoneNumberTextField.setText("");
+		WebshopPane_SignUpTab_AddressTextField.setText("");
+		WebshopPane_SignUpTab_PostalCodeTextField.setText("");
+		WebshopPane_SignUpTab_CityTextField.setText("");
+		WebshopPane_SignUpTab_CountryTextField.setText("");
 	}
 
-	@FXML
-	private void handlePIMNewProductButton(ActionEvent event) {
-		pimManager.setEditingProduct(false);
-		showProductEditWindow("Nyt produkt");
+	private void resetAccountTabLogInPane() {
+		WebshopPane_AccountTab_LogInPane_EmailTextField.setText("");
+		WebshopPane_AccountTab_LogInPane_PasswordTextField.setText("");
+		WebshopPane_AccountTab_LogInPane_OutputLabel.setText("");
+
 	}
 
-	@FXML
-	private void handlePIMShowProductsButton(ActionEvent event) {
-		List<ProductHBoxCell> list = new ArrayList<>();
-		for (PIMProduct pimProduct : pimManager.getAllProducts()) {
-			list.add(new ProductHBoxCell(pimProduct));
-		}
-		ObservableList observableList = FXCollections.observableArrayList(list);
-		PIMListView.setItems(observableList);
+	private void logIn() {
+		currentBasket = webshopController.getShoppingBaskets().get(0);
+		resetWebshopPaneItems();
+		WebshopTabPane.getSelectionModel().select(WebshopPane_AccountTab);
+		WebshopPane_AccountTab.setDisable(false);
+		WebshopPane_AccountTab_LogInPane.setVisible(false);
+		WebshopPane_AccountTab_AccountPane.setVisible(true);
+		WebshopPane_SignUpButton.setDisable(true);
+		WebshopPane_LogInOutButton.setText("Log ud");
+
+		fillInAccountPane();
 	}
 
-	@FXML
-	private void handlePIMEditProductButton(ActionEvent event) {
-		pimManager.setEditingProduct(true);
-		pimManager.setProductToEdit(PIMListView.getSelectionModel().getSelectedItem().getProductId());
-
-		showProductEditWindow("Rediger produkt");
+	private void fillInAccountPane() {
+		Customer customer = webshopController.getCustomer();
+		WebshopPane_AccountTab_AccountPane_FirstNameTextField.setText(customer.getFirstName());
+		WebshopPane_AccountTab_AccountPane_LastNameTextField.setText(customer.getLastName());
+		WebshopPane_AccountTab_AccountPane_EmailTextField.setText(customer.getEmail());
+		WebshopPane_AccountTab_AccountPane_PhoneNumberTextField.setText("" + customer.getPhoneNumber());
+		WebshopPane_AccountTab_AccountPane_MobilePhoneNumberTextField.setText("" + customer.getMobilePhoneNumber());
+		WebshopPane_AccountTab_AccountPane_AddressTextField.setText(customer.getAddress());
+		WebshopPane_AccountTab_AccountPane_PostalCodeTextField.setText(customer.getPostalCode());
+		WebshopPane_AccountTab_AccountPane_CityTextField.setText(customer.getCity());
+		WebshopPane_AccountTab_AccountPane_CountryTextField.setText(customer.getCountry());
 	}
 
-	private void showProductEditWindow(String title) {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("NewProductWindow.fxml"));
-			/* 
-         * if "fx:controller" is not set in fxml
-         * fxmlLoader.setController(NewWindowController);
-			 */
-			Scene scene = new Scene(fxmlLoader.load());
-			Stage stage = new Stage();
-			stage.setTitle(title);
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setScene(scene);
-			stage.show();
-		} catch (IOException e) {
-			Logger logger = Logger.getLogger(getClass().getName());
-			logger.log(Level.SEVERE, "Failed to create new Window.", e);
-		}
+	private void resetAccountPane() {
+		WebshopPane_AccountTab_AccountPane_FirstNameTextField.setText("");
+		WebshopPane_AccountTab_AccountPane_LastNameTextField.setText("");
+		WebshopPane_AccountTab_AccountPane_EmailTextField.setText("");
+		WebshopPane_AccountTab_AccountPane_PhoneNumberTextField.setText("");
+		WebshopPane_AccountTab_AccountPane_MobilePhoneNumberTextField.setText("");
+		WebshopPane_AccountTab_AccountPane_AddressTextField.setText("");
+		WebshopPane_AccountTab_AccountPane_PostalCodeTextField.setText("");
+		WebshopPane_AccountTab_AccountPane_CityTextField.setText("");
+		WebshopPane_AccountTab_AccountPane_CountryTextField.setText("");
+		WebshopPane_AccountTab_AccountPane.setVisible(false);
 	}
 }
