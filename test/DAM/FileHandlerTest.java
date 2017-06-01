@@ -5,6 +5,9 @@
  */
 package DAM;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -37,8 +40,16 @@ public class FileHandlerTest {
 	public void tearDown() {
 	}
 
+	/**
+	 * Test of createDAMImages method, of class FileHandler.
+	 */
 	@Test
-	public void testSomeMethod() {
+	public void testCreateDAMImages() {
+		System.out.println("createDAMImages");
+		LinkedList<HashMap<String, String>> damImageMapList = null;
+		ArrayList<DAMImage> expResult = null;
+		ArrayList<DAMImage> result = FileHandler.createDAMImages(damImageMapList);
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}

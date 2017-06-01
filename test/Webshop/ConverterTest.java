@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package semesterprojekt.f17;
+package Webshop;
 
+import java.util.HashMap;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,9 +17,9 @@ import static org.junit.Assert.*;
  *
  * @author Kongen
  */
-public class ProductHBoxCellTest {
+public class ConverterTest {
 	
-	public ProductHBoxCellTest() {
+	public ConverterTest() {
 	}
 	
 	@BeforeClass
@@ -38,42 +39,42 @@ public class ProductHBoxCellTest {
 	}
 
 	/**
-	 * Test of getProductId method, of class ProductHBoxCell.
+	 * Test of toCustomer method, of class Converter.
 	 */
 	@Test
-	public void testGetProductId() {
-		System.out.println("getProductId");
-		ProductHBoxCell instance = null;
-		int expResult = 0;
-		int result = instance.getProductId();
+	public void testToCustomer() {
+		System.out.println("toCustomer");
+		HashMap<String, String> customerMap = null;
+		Customer expResult = null;
+		Customer result = Converter.toCustomer(customerMap);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of getImageId method, of class ProductHBoxCell.
+	 * Test of toOrder method, of class Converter.
 	 */
 	@Test
-	public void testGetImageId() {
-		System.out.println("getImageId");
-		ProductHBoxCell instance = null;
-		int expResult = 0;
-		int result = instance.getImageId();
+	public void testToOrder() {
+		System.out.println("toOrder");
+		HashMap<String, String> orderMap = null;
+		Order expResult = null;
+		Order result = Converter.toOrder(orderMap);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of toString method, of class ProductHBoxCell.
+	 * Test of toProduct method, of class Converter.
 	 */
 	@Test
-	public void testToString() {
-		System.out.println("toString");
-		ProductHBoxCell instance = null;
-		String expResult = "";
-		String result = instance.toString();
+	public void testToProduct() {
+		System.out.println("toProduct");
+		HashMap<String, String> productMap = null;
+		Product expResult = null;
+		Product result = Converter.toProduct(productMap);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

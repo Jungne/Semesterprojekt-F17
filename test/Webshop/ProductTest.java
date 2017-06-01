@@ -6,7 +6,6 @@
 package Webshop;
 
 import java.util.ArrayList;
-import javafx.scene.image.Image;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
 public class ProductTest {
 	
@@ -40,13 +39,15 @@ public class ProductTest {
 	}
 
 	/**
-	 * Test of loadImage method, of class Product.
+	 * Test of getId method, of class Product.
 	 */
 	@Test
-	public void testLoadImage() throws Exception {
-		System.out.println("loadImage");
+	public void testGetId() {
+		System.out.println("getId");
 		Product instance = null;
-		instance.loadImage();
+		int expResult = 0;
+		int result = instance.getId();
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -60,20 +61,6 @@ public class ProductTest {
 		Product instance = null;
 		String expResult = "";
 		String result = instance.getName();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getId method, of class Product.
-	 */
-	@Test
-	public void testGetId() {
-		System.out.println("getId");
-		Product instance = null;
-		int expResult = 0;
-		int result = instance.getId();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -122,58 +109,28 @@ public class ProductTest {
 	}
 
 	/**
-	 * Test of getImagePath method, of class Product.
+	 * Test of getImageFiles method, of class Product.
 	 */
 	@Test
-	public void testGetImagePath() {
-		System.out.println("getImagePath");
+	public void testGetImageFiles() {
+		System.out.println("getImageFiles");
 		Product instance = null;
-		String expResult = "";
-		String result = instance.getImagePath();
+		ArrayList expResult = null;
+		ArrayList result = instance.getImageFiles();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of toString method, of class Product.
+	 * Test of addImageFile method, of class Product.
 	 */
 	@Test
-	public void testToString() {
-		System.out.println("toString");
+	public void testAddImageFile() {
+		System.out.println("addImageFile");
+		byte[] imageFile = null;
 		Product instance = null;
-		String expResult = "";
-		String result = instance.toString();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of equals method, of class Product.
-	 */
-	@Test
-	public void testEquals() {
-		System.out.println("equals");
-		Product product = null;
-		Product instance = null;
-		boolean expResult = false;
-		boolean result = instance.equals(product);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getImageList method, of class Product.
-	 */
-	@Test
-	public void testGetImageList() {
-		System.out.println("getImageList");
-		Product instance = null;
-		ArrayList<Image> expResult = null;
-		ArrayList<Image> result = instance.getImageList();
-		assertEquals(expResult, result);
+		instance.addImageFile(imageFile);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}

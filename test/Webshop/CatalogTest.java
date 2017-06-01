@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
 public class CatalogTest {
 	
@@ -40,29 +40,40 @@ public class CatalogTest {
 	}
 
 	/**
-	 * Test of getAllProducts method, of class Catalog.
-	 */
-	@Test
-	public void testGetAllProducts() {
-		System.out.println("getAllProducts");
-		Catalog instance = null;
-		ArrayList<Product> expResult = null;
-		ArrayList<Product> result = instance.getAllProducts();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
 	 * Test of getProduct method, of class Catalog.
 	 */
 	@Test
 	public void testGetProduct() {
 		System.out.println("getProduct");
 		int productId = 0;
-		Catalog instance = null;
 		Product expResult = null;
-		Product result = instance.getProduct(productId);
+		Product result = Catalog.getProduct(productId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getAllProducts method, of class Catalog.
+	 */
+	@Test
+	public void testGetAllProducts() {
+		System.out.println("getAllProducts");
+		ArrayList<Product> expResult = null;
+		ArrayList<Product> result = Catalog.getAllProducts();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getAllEnrichedProducts method, of class Catalog.
+	 */
+	@Test
+	public void testGetAllEnrichedProducts() {
+		System.out.println("getAllEnrichedProducts");
+		ArrayList<Product> expResult = null;
+		ArrayList<Product> result = Catalog.getAllEnrichedProducts();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -74,24 +85,8 @@ public class CatalogTest {
 	@Test
 	public void testGetCategories() {
 		System.out.println("getCategories");
-		Catalog instance = null;
 		LinkedHashMap<String, Integer> expResult = null;
-		LinkedHashMap<String, Integer> result = instance.getCategories();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getProductsInCategory method, of class Catalog.
-	 */
-	@Test
-	public void testGetCategory() {
-		System.out.println("getCategory");
-		String category = "";
-		Catalog instance = null;
-		ArrayList<Product> expResult = null;
-		ArrayList<Product> result = instance.getProductsInCategory(category);
+		LinkedHashMap<String, Integer> result = Catalog.getCategories();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -104,24 +99,9 @@ public class CatalogTest {
 	public void testFindProducts() {
 		System.out.println("findProducts");
 		String query = "";
-		Catalog instance = null;
+		int categoryId = 0;
 		ArrayList<Product> expResult = null;
-		ArrayList<Product> result = instance.findProducts(query);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getProductsInCategory method, of class Catalog.
-	 */
-	@Test
-	public void testGetProductsInCategory() {
-		System.out.println("getProductsInCategory");
-		String category = "";
-		Catalog instance = null;
-		ArrayList<Product> expResult = null;
-		ArrayList<Product> result = instance.getProductsInCategory(category);
+		ArrayList<Product> result = Catalog.findProducts(query, categoryId);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

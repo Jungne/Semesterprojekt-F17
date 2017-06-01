@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
 public class SemesterprojektF17Test {
 	

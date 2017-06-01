@@ -14,10 +14,10 @@ import org.junit.runners.Suite;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
-@org.junit.runner.RunWith(org.junit.runners.Suite.class)
-@org.junit.runners.Suite.SuiteClasses({})
+@RunWith(Suite.class)
+@Suite.SuiteClasses({})
 public class ImagesSuite {
 
 	@BeforeClass

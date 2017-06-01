@@ -5,6 +5,7 @@
  */
 package Webshop;
 
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
 public class CustomerTest {
 	
@@ -52,33 +53,6 @@ public class CustomerTest {
 	}
 
 	/**
-	 * Test of getName method, of class Customer.
-	 */
-	@Test
-	public void testGetName() {
-		System.out.println("getName");
-		Customer instance = null;
-		String expResult = "";
-		String result = instance.getName();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of setName method, of class Customer.
-	 */
-	@Test
-	public void testSetName() {
-		System.out.println("setName");
-		String name = "";
-		Customer instance = null;
-		instance.setName(name);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
 	 * Test of getEmail method, of class Customer.
 	 */
 	@Test
@@ -93,14 +67,43 @@ public class CustomerTest {
 	}
 
 	/**
-	 * Test of setEmail method, of class Customer.
+	 * Test of getCode method, of class Customer.
 	 */
 	@Test
-	public void testSetEmail() {
-		System.out.println("setEmail");
-		String email = "";
+	public void testGetCode() {
+		System.out.println("getCode");
 		Customer instance = null;
-		instance.setEmail(email);
+		String expResult = "";
+		String result = instance.getCode();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getFirstName method, of class Customer.
+	 */
+	@Test
+	public void testGetFirstName() {
+		System.out.println("getFirstName");
+		Customer instance = null;
+		String expResult = "";
+		String result = instance.getFirstName();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getLastName method, of class Customer.
+	 */
+	@Test
+	public void testGetLastName() {
+		System.out.println("getLastName");
+		Customer instance = null;
+		String expResult = "";
+		String result = instance.getLastName();
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -120,14 +123,113 @@ public class CustomerTest {
 	}
 
 	/**
-	 * Test of setPhoneNumber method, of class Customer.
+	 * Test of getMobilePhoneNumber method, of class Customer.
 	 */
 	@Test
-	public void testSetPhoneNumber() {
-		System.out.println("setPhoneNumber");
-		int phoneNumber = 0;
+	public void testGetMobilePhoneNumber() {
+		System.out.println("getMobilePhoneNumber");
 		Customer instance = null;
-		instance.setPhoneNumber(phoneNumber);
+		int expResult = 0;
+		int result = instance.getMobilePhoneNumber();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getAddress method, of class Customer.
+	 */
+	@Test
+	public void testGetAddress() {
+		System.out.println("getAddress");
+		Customer instance = null;
+		String expResult = "";
+		String result = instance.getAddress();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getPostalCode method, of class Customer.
+	 */
+	@Test
+	public void testGetPostalCode() {
+		System.out.println("getPostalCode");
+		Customer instance = null;
+		String expResult = "";
+		String result = instance.getPostalCode();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getCity method, of class Customer.
+	 */
+	@Test
+	public void testGetCity() {
+		System.out.println("getCity");
+		Customer instance = null;
+		String expResult = "";
+		String result = instance.getCity();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getCountry method, of class Customer.
+	 */
+	@Test
+	public void testGetCountry() {
+		System.out.println("getCountry");
+		Customer instance = null;
+		String expResult = "";
+		String result = instance.getCountry();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getShoppingBaskets method, of class Customer.
+	 */
+	@Test
+	public void testGetShoppingBaskets() {
+		System.out.println("getShoppingBaskets");
+		Customer instance = null;
+		ArrayList<ShoppingBasket> expResult = null;
+		ArrayList<ShoppingBasket> result = instance.getShoppingBaskets();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getFirstShoppingBasket method, of class Customer.
+	 */
+	@Test
+	public void testGetFirstShoppingBasket() {
+		System.out.println("getFirstShoppingBasket");
+		Customer instance = null;
+		ShoppingBasket expResult = null;
+		ShoppingBasket result = instance.getFirstShoppingBasket();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of isRegisted method, of class Customer.
+	 */
+	@Test
+	public void testIsRegisted() {
+		System.out.println("isRegisted");
+		Customer instance = null;
+		boolean expResult = false;
+		boolean result = instance.isRegisted();
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -138,9 +240,37 @@ public class CustomerTest {
 	@Test
 	public void testGetShoppingBasket() {
 		System.out.println("getShoppingBasket");
+		int basketId = 0;
 		Customer instance = null;
 		ShoppingBasket expResult = null;
-		ShoppingBasket result = instance.getShoppingBasket();
+		ShoppingBasket result = instance.getShoppingBasket(basketId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of removeShoppingBasket method, of class Customer.
+	 */
+	@Test
+	public void testRemoveShoppingBasket() {
+		System.out.println("removeShoppingBasket");
+		ShoppingBasket shoppingBasket = null;
+		Customer instance = null;
+		instance.removeShoppingBasket(shoppingBasket);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of checkOut method, of class Customer.
+	 */
+	@Test
+	public void testCheckOut_0args() {
+		System.out.println("checkOut");
+		Customer instance = null;
+		boolean expResult = false;
+		boolean result = instance.checkOut();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -150,11 +280,12 @@ public class CustomerTest {
 	 * Test of checkOut method, of class Customer.
 	 */
 	@Test
-	public void testCheckOut() {
+	public void testCheckOut_ShoppingBasket() {
 		System.out.println("checkOut");
+		ShoppingBasket shoppingBasket = null;
 		Customer instance = null;
-		Order expResult = null;
-		Order result = instance.checkOut();
+		boolean expResult = false;
+		boolean result = instance.checkOut(shoppingBasket);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

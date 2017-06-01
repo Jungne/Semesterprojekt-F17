@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
 public class OrderHistoryTest {
 	
@@ -38,16 +38,29 @@ public class OrderHistoryTest {
 	}
 
 	/**
-	 * Test of saveOrder method, of class OrderHistory.
+	 * Test of createOrder method, of class OrderHistory.
 	 */
 	@Test
-	public void testSaveOrder() {
-		System.out.println("saveOrder");
+	public void testCreateOrder() {
+		System.out.println("createOrder");
 		Customer customer = null;
-		Order order = null;
-		OrderHistory instance = null;
+		ShoppingBasket shoppingBasket = null;
 		boolean expResult = false;
-		boolean result = instance.createOrder(customer, order);
+		boolean result = OrderHistory.createOrder(customer, shoppingBasket);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getLatestOrder method, of class OrderHistory.
+	 */
+	@Test
+	public void testGetLatestOrder() {
+		System.out.println("getLatestOrder");
+		Customer customer = null;
+		Order expResult = null;
+		Order result = OrderHistory.getLatestOrder(customer);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

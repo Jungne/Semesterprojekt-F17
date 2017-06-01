@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
 public class OrderTest {
 	
@@ -53,6 +53,33 @@ public class OrderTest {
 	}
 
 	/**
+	 * Test of getCustomer method, of class Order.
+	 */
+	@Test
+	public void testGetCustomer() {
+		System.out.println("getCustomer");
+		Order instance = null;
+		Customer expResult = null;
+		Customer result = instance.getCustomer();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of setCustomer method, of class Order.
+	 */
+	@Test
+	public void testSetCustomer() {
+		System.out.println("setCustomer");
+		Customer customer = null;
+		Order instance = null;
+		instance.setCustomer(customer);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
 	 * Test of getDate method, of class Order.
 	 */
 	@Test
@@ -81,28 +108,14 @@ public class OrderTest {
 	}
 
 	/**
-	 * Test of getCustomer method, of class Order.
+	 * Test of getShoppingBasket method, of class Order.
 	 */
 	@Test
-	public void testGetCustomer() {
-		System.out.println("getCustomer");
-		Order instance = null;
-		Customer expResult = null;
-		Customer result = instance.getCustomer();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getBasket method, of class Order.
-	 */
-	@Test
-	public void testGetBasket() {
-		System.out.println("getBasket");
+	public void testGetShoppingBasket() {
+		System.out.println("getShoppingBasket");
 		Order instance = null;
 		ShoppingBasket expResult = null;
-		ShoppingBasket result = instance.getBasket();
+		ShoppingBasket result = instance.getShoppingBasket();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

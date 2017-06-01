@@ -14,10 +14,10 @@ import org.junit.runners.Suite;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
-@org.junit.runner.RunWith(org.junit.runners.Suite.class)
-@	Suite.SuiteClasses({CustomerTest.class, ShoppingBasketTest.class, WebshopControllerTest.class, Customer2Test.class, OrderHistoryTest.class, ProductTest.class, OrderStatusTest.class, PaymentTest.class, WebshopInterfaceTest.class, OrderLineTest.class, ProductCategoryTest.class, CatalogTest.class, OrderTest.class})
+@RunWith(Suite.class)
+@Suite.SuiteClasses({Webshop.CustomerTest.class, Webshop.ShoppingBasketTest.class, Webshop.WebshopControllerTest.class, Webshop.ConverterTest.class, Webshop.OrderHistoryTest.class, Webshop.ProductTest.class, Webshop.OrderStatusTest.class, Webshop.PaymentTest.class, Webshop.WebshopInterfaceTest.class, Webshop.OrderLineTest.class, Webshop.ProductCategoryTest.class, Webshop.CatalogTest.class, Webshop.OrderTest.class})
 public class WebshopSuite {
 
 	@BeforeClass

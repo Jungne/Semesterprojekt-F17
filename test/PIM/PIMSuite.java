@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author Kongen
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({PIM.PIMManagerTest.class, PIM.ProductSearchTest.class, PIM.EditProductTest.class, PIM.PIMProductTest.class})
+@Suite.SuiteClasses({PIM.PIMageTest.class, PIM.PIMManagerTest.class, PIM.ProductSearchTest.class, PIM.EditProductTest.class, PIM.PIMProductTest.class, PIM.ConverterTest.class})
 public class PIMSuite {
 
 	@BeforeClass

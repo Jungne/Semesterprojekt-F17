@@ -5,10 +5,10 @@
  */
 package DBManager;
 
-import DAM.DAMImage;
-import java.sql.Connection;
+import java.io.InputStream;
 import java.util.ArrayList;
-import javafx.scene.image.Image;
+import java.util.HashMap;
+import java.util.LinkedList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -42,59 +42,30 @@ public class ImageHandlerTest {
 	}
 
 	/**
-	 * Test of createImage method, of class ImageHandler.
+	 * Test of getImageFile method, of class ImageHandler.
 	 */
 	@Test
-	public void testCreateImage() {
-		System.out.println("createImage");
-		Connection connection = null;
-		String imagePath = "";
-		String title = "";
-		int categoryid = 0;
-		ImageHandler.createImage(connection, imagePath, title, categoryid);
+	public void testGetImageFile() {
+		System.out.println("getImageFile");
+		int imageID = 0;
+		ImageHandler instance = null;
+		byte[] expResult = null;
+		byte[] result = instance.getImageFile(imageID);
+		assertArrayEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of getImage method, of class ImageHandler.
+	 * Test of getImageFiles method, of class ImageHandler.
 	 */
 	@Test
-	public void testGetImage() {
-		System.out.println("getImage");
-		Connection connection = null;
-		int id = 0;
-		Image expResult = null;
-		Image result = ImageHandler.getImage(connection, id);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getImages method, of class ImageHandler.
-	 */
-	@Test
-	public void testGetImages_Connection() {
-		System.out.println("getImages");
-		Connection connection = null;
-		ArrayList<Image> expResult = null;
-		ArrayList<Image> result = ImageHandler.getImages(connection);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getImages method, of class ImageHandler.
-	 */
-	@Test
-	public void testGetImages_Connection_int() {
-		System.out.println("getImages");
-		Connection connection = null;
+	public void testGetImageFiles() {
+		System.out.println("getImageFiles");
 		int productID = 0;
-		ArrayList<Image> expResult = null;
-		ArrayList<Image> result = ImageHandler.getImages(connection, productID);
+		ImageHandler instance = null;
+		ArrayList expResult = null;
+		ArrayList result = instance.getImageFiles(productID);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -106,24 +77,70 @@ public class ImageHandlerTest {
 	@Test
 	public void testGetDAMImage() {
 		System.out.println("getDAMImage");
-		Connection connection = null;
-		int id = 0;
-		DAMImage expResult = null;
-		DAMImage result = ImageHandler.getDAMImage(connection, id);
+		int imageId = 0;
+		ImageHandler instance = null;
+		HashMap<String, String> expResult = null;
+		HashMap<String, String> result = instance.getDAMImage(imageId);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of getDAMImages method, of class ImageHandler.
+	 * Test of getAllImages method, of class ImageHandler.
 	 */
 	@Test
-	public void testGetDAMImages() {
-		System.out.println("getDAMImages");
-		Connection connection = null;
-		ArrayList<DAMImage> expResult = null;
-		ArrayList<DAMImage> result = ImageHandler.getAllImageFiles(connection);
+	public void testGetAllImages() {
+		System.out.println("getAllImages");
+		ImageHandler instance = null;
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getAllImages();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getUnassignedImages method, of class ImageHandler.
+	 */
+	@Test
+	public void testGetUnassignedImages() {
+		System.out.println("getUnassignedImages");
+		ImageHandler instance = null;
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getUnassignedImages();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getPImages method, of class ImageHandler.
+	 */
+	@Test
+	public void testGetPImages() {
+		System.out.println("getPImages");
+		int productId = 0;
+		ImageHandler instance = null;
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getPImages(productId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of createImage method, of class ImageHandler.
+	 */
+	@Test
+	public void testCreateImage() {
+		System.out.println("createImage");
+		String name = "";
+		String category = "";
+		InputStream imageFile = null;
+		ImageHandler instance = null;
+		boolean expResult = false;
+		boolean result = instance.createImage(name, category, imageFile);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -135,9 +152,11 @@ public class ImageHandlerTest {
 	@Test
 	public void testDeleteImage() {
 		System.out.println("deleteImage");
-		Connection connection = null;
-		int id = 0;
-		ImageHandler.deleteImage(connection, id);
+		int imageId = 0;
+		ImageHandler instance = null;
+		boolean expResult = false;
+		boolean result = instance.deleteImage(imageId);
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
