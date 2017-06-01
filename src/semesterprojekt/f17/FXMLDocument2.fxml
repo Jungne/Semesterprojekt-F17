@@ -220,16 +220,16 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Pane fx:id="WebshopPane_AccountTab_LogInPane" layoutX="136.0" layoutY="86.0" prefHeight="571.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <Pane fx:id="WebshopPane_AccountTab_AccountPane" prefHeight="571.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Pane fx:id="WebshopPane_AccountTab_LogInPane" prefHeight="571.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <PasswordField fx:id="WebshopPane_AccountTab_AccountPane_PasswordTextField" layoutX="319.0" layoutY="293.0" />
-                                    <TextField fx:id="WebshopPane_AccountTab_AccountPane_EmailTextField" layoutX="319.0" layoutY="241.0" />
-                                    <Button fx:id="WebshopPane_AccountTab_AccountPane_LogInButton" layoutX="412.0" layoutY="335.0" mnemonicParsing="false" onAction="#handle_WebshopPane_AccountTab_AccountPane_Buttons" text="Log ind" />
-                                    <Button fx:id="WebshopPane_AccountTab_AccountPane_CancelButton" layoutX="319.0" layoutY="335.0" mnemonicParsing="false" onAction="#handle_WebshopPane_AccountTab_AccountPane_Buttons" text="Annuller" />
-                                    <Label fx:id="WebshopPane_AccountTab_AccountPane_OutputLabel" layoutX="276.0" layoutY="160.0" text="Label" />
+                                    <PasswordField fx:id="WebshopPane_AccountTab_LogInPane_PasswordTextField" layoutX="319.0" layoutY="293.0" />
+                                    <TextField fx:id="WebshopPane_AccountTab_LogInPane_EmailTextField" layoutX="319.0" layoutY="241.0" />
+                                    <Button fx:id="WebshopPane_AccountTab_LogInPane_LogInButton" layoutX="412.0" layoutY="335.0" mnemonicParsing="false" onAction="#handle_WebshopPane_AccountTab_LogInPane_Buttons" text="Log ind" />
+                                    <Button fx:id="WebshopPane_AccountTab_LogInPane_CancelButton" layoutX="319.0" layoutY="335.0" mnemonicParsing="false" onAction="#handle_WebshopPane_AccountTab_LogInPane_Buttons" text="Annuller" />
+                                    <Label fx:id="WebshopPane_AccountTab_LogInPane_OutputLabel" layoutX="276.0" layoutY="160.0" text="Label" />
                                  </children>
                               </Pane>
+                              <Pane fx:id="WebshopPane_AccountTab_AccountPane" layoutX="136.0" layoutY="86.0" prefHeight="571.0" prefWidth="800.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                     </content>

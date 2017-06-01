@@ -81,7 +81,7 @@ public class WebshopController implements WebshopInterface {
 		}
 
 		//Checks if code is correct
-		if (code.equals(customer.getCode())) {
+		if (!code.equals(customer.getCode())) {
 			return false;
 		}
 
