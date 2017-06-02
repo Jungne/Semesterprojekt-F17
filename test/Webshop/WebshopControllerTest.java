@@ -7,6 +7,7 @@ package Webshop;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -390,27 +391,43 @@ public class WebshopControllerTest {
 	@org.junit.Test
 	public void testCheckOut_10args() {
 		System.out.println("checkOut");
-		String email = "";
-		String firstName = "";
-		String lastName = "";
-		int phoneNumber = 0;
-		int mobilePhoneNumber = 0;
-		String address = "";
-		String postalCode = "";
-		String city = "";
-		String country = "";
-		ShoppingBasket shoppingBasket = null;
 		WebshopController instance = null;
 		try {
 			instance = new WebshopController();
 		} catch (IOException ex) {
 			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		Order expResult = null;
-		Order result = instance.checkOut(email, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		//Test customer
+		String email = "" + (int) (Math.random() * 10000);
+		String firstName = "Stefan";
+		String lastName = "Rasmussen";
+		int phoneNumber = 63343718;
+		int mobilePhoneNumber = 29381274;
+		String address = "Åvænget 3";
+		String postalCode = "3160";
+		String city = "Holmerup";
+		String country = "Danmark";
+		ShoppingBasket basket = new ShoppingBasket();
+
+		//Test orderline #1
+		Product product = instance.getProduct(1);
+		OrderLine orderLineOne = new OrderLine(product, 2);
+		basket.addProduct(orderLineOne);
+
+		//Test orderline #2
+		product = instance.getProduct(2);
+		OrderLine orderLineTwo = new OrderLine(product, 3);
+		basket.addProduct(orderLineTwo);
+
+		ArrayList<ShoppingBasket> baskets = new ArrayList<>();
+		baskets.add(basket);
+		Customer customer = new Customer(-1, email, "1234", firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, baskets);
+
+		Order expResult = new Order(-1, customer, new Date(), OrderStatus.CREATED, customer.getShoppingBasket(0));
+		Order result = instance.checkOut(email, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, basket);
+		System.out.println("expr: " + expResult.getCustomer().getFirstName());
+		System.out.println("r: " + result.getCustomer().getFirstName());
+		assertEquals(expResult.getCustomer().getFirstName(), result.getCustomer().getFirstName());
 	}
 
 	/**
@@ -430,7 +447,7 @@ public class WebshopControllerTest {
 		boolean result = instance.checkOut(basketId);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		fail("The tests case is a prototype.");
 	}
 
 }
