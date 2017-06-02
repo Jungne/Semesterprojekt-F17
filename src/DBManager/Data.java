@@ -120,17 +120,31 @@ public class Data {
 	private static String insertCategories
 					= "INSERT INTO Categories (categoryName) VALUES "
 					+ "('Appliances'), "
-					+ "('PC'), "
 					+ "('TV'), "
-					+ "('Mobil')";
+					+ "('Computer'), "
+					+ "('Videogame'), "
+					+ "('LEGO'), "
+					+ "('Phone') "
+					+ "('Bicycle')";
 
 	private static String insertProducts
 					= "INSERT INTO Products (productName, categoryId, description, price) VALUES "
-					+ "('Blender', 1, 'Blender fra Electrolux. Blender ting om til mindre stykker.', 299.00), "
-					+ "('Computeren', 2, 'En computer.', 999.99), "
-					+ "('Sony TV', 3, 'Et Sony TV', 3999.99), "
-					+ "('LG TV 43', 3, 'Et 43 tommer LG TV', 2499.00), "
-					+ "('Samsung Galaxy s9', 4, 'The newest member in the Galaxy family.', 5999.42)";
+					+ "('Sportsblender', 1, 'Blender fra Electrolux. Blender ting om til mindre stykker.', 439.00), "
+					+ "('Wilfa morgen brødrister', 1, 'Brødsrister fra Wilfa. Perfekt til brødristning af brød om morgenen', 396.00), "
+					+ "('Samsung UE65KS8005', 2, 'LED, 4K UHD (3830x2160 pixel), 2300 Hz / Smart TV', 13299.00), "
+					+ "('Philips LED TV 24PHT4000', 2, 'LED TV med Digital Crystal Clear og 100 PMR Hz', 1299.00), "
+					+ "('LG Ultra HD 65UH6157', 2, 'Bare et TV', 7777.77), "
+					+ "('name', 3, 'description', price), "
+					+ "('name', 3, 'description', price), "
+					+ "('name', 3, 'description', price), "
+					+ "('name', 4, 'description', price), "
+					+ "('name', 4, 'description', price), "
+					+ "('name', 4, 'description', price), "
+					+ "('name', 4, 'description', price), "
+					+ "('name', 5, 'description', price), "
+					+ "('name', 6, 'description', price), "
+					+ "('name', 7, 'description', price), "
+					+ "('name', 7, 'description', price)";
 
 	protected static String[] insertIntoQueries = {
 		insertCategories,
