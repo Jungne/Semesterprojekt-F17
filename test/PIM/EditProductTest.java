@@ -39,18 +39,19 @@ public class EditProductTest {
 	}
 
 	/**
-	 * Test of newProduct method, of class EditProduct.
+	 * Test of createProduct method, of class EditProduct.
 	 */
 	@Test
-	public void testNewProduct() {
-		System.out.println("newProduct");
-		int category = 0;
-		double price = 0.0;
+	public void testCreateProduct() {
+		System.out.println("createProduct");
+		String name = "";
+		String category = "";
 		String description = "";
-		String titel = "";
-		ArrayList<Integer> imageList = null;
-		EditProduct instance = new EditProduct();
-		instance.newProduct(category, price, description, titel, imageList);
+		double price = 0.0;
+		ArrayList<Integer> imageIdList = null;
+		boolean expResult = false;
+		boolean result = EditProduct.createProduct(name, category, description, price, imageIdList);
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -62,8 +63,14 @@ public class EditProductTest {
 	public void testEditProduct() {
 		System.out.println("editProduct");
 		int id = 0;
-		EditProduct instance = new EditProduct();
-		instance.editProduct(id);
+		String name = "";
+		String category = "";
+		String description = "";
+		double price = 0.0;
+		ArrayList<Integer> imageIdList = null;
+		boolean expResult = false;
+		boolean result = EditProduct.editProduct(id, name, category, description, price, imageIdList);
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}

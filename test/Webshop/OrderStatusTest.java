@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
 public class OrderStatusTest {
 	
@@ -73,6 +73,20 @@ public class OrderStatusTest {
 		OrderStatus instance = null;
 		String expResult = "";
 		String result = instance.toString();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of toOrderStaus method, of class OrderStatus.
+	 */
+	@Test
+	public void testToOrderStaus() {
+		System.out.println("toOrderStaus");
+		String orderStatusString = "";
+		OrderStatus expResult = null;
+		OrderStatus result = OrderStatus.toOrderStaus(orderStatusString);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

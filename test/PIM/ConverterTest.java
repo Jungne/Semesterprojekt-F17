@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DBManager;
+package PIM;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import org.junit.After;
@@ -18,9 +19,9 @@ import static org.junit.Assert.*;
  *
  * @author Kongen
  */
-public class OrderHandlerTest {
+public class ConverterTest {
 	
-	public OrderHandlerTest() {
+	public ConverterTest() {
 	}
 	
 	@BeforeClass
@@ -40,63 +41,56 @@ public class OrderHandlerTest {
 	}
 
 	/**
-	 * Test of getLatestOrder method, of class OrderHandler.
+	 * Test of createPIMProduct method, of class Converter.
 	 */
 	@Test
-	public void testGetLatestOrder() {
-		System.out.println("getLatestOrder");
-		int customerId = 0;
-		OrderHandler instance = null;
-		HashMap<String, String> expResult = null;
-		HashMap<String, String> result = instance.getLatestOrder(customerId);
+	public void testCreatePIMProduct() {
+		System.out.println("createPIMProduct");
+		HashMap<String, String> productMap = null;
+		PIMProduct expResult = null;
+		PIMProduct result = Converter.createPIMProduct(productMap);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of getOrdersOrderLines method, of class OrderHandler.
+	 * Test of createPIMProducts method, of class Converter.
 	 */
 	@Test
-	public void testGetOrdersOrderLines() {
-		System.out.println("getOrdersOrderLines");
-		int orderId = 0;
-		OrderHandler instance = null;
-		LinkedList<HashMap<String, String>> expResult = null;
-		LinkedList<HashMap<String, String>> result = instance.getOrdersOrderLines(orderId);
+	public void testCreatePIMProducts() {
+		System.out.println("createPIMProducts");
+		LinkedList<HashMap<String, String>> productsMapList = null;
+		ArrayList<PIMProduct> expResult = null;
+		ArrayList<PIMProduct> result = Converter.createPIMProducts(productsMapList);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of createOrder method, of class OrderHandler.
+	 * Test of createPIMage method, of class Converter.
 	 */
 	@Test
-	public void testCreateOrder() {
-		System.out.println("createOrder");
-		int customerId = 0;
-		String orderStatus = "";
-		OrderHandler instance = null;
-		boolean expResult = false;
-		boolean result = instance.createOrder(customerId, orderStatus);
+	public void testCreatePIMage() {
+		System.out.println("createPIMage");
+		HashMap<String, String> pimImageMap = null;
+		PIMage expResult = null;
+		PIMage result = Converter.createPIMage(pimImageMap);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of addProductToOrder method, of class OrderHandler.
+	 * Test of createPIMages method, of class Converter.
 	 */
 	@Test
-	public void testAddProductToOrder() {
-		System.out.println("addProductToOrder");
-		int orderId = 0;
-		int productId = 0;
-		int amount = 0;
-		OrderHandler instance = null;
-		boolean expResult = false;
-		boolean result = instance.addProductToOrder(orderId, productId, amount);
+	public void testCreatePIMages() {
+		System.out.println("createPIMages");
+		LinkedList<HashMap<String, String>> pimImageMapList = null;
+		ArrayList<PIMage> expResult = null;
+		ArrayList<PIMage> result = Converter.createPIMages(pimImageMapList);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

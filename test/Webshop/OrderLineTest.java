@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
 public class OrderLineTest {
 	
@@ -74,21 +74,6 @@ public class OrderLineTest {
 		int amount = 0;
 		OrderLine instance = null;
 		instance.setAmount(amount);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of equals method, of class OrderLine.
-	 */
-	@org.junit.Test
-	public void testEquals() {
-		System.out.println("equals");
-		Object o = null;
-		OrderLine instance = null;
-		boolean expResult = false;
-		boolean result = instance.equals(o);
-		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}

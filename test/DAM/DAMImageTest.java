@@ -5,7 +5,6 @@
  */
 package DAM;
 
-import javafx.scene.image.Image;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -39,20 +38,6 @@ public class DAMImageTest {
 	}
 
 	/**
-	 * Test of getTitle method, of class DAMImage.
-	 */
-	@Test
-	public void testGetTitle() {
-		System.out.println("getTitle");
-		DAMImage instance = null;
-		String expResult = "";
-		String result = instance.getTitle();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
 	 * Test of getId method, of class DAMImage.
 	 */
 	@Test
@@ -61,6 +46,20 @@ public class DAMImageTest {
 		DAMImage instance = null;
 		int expResult = 0;
 		int result = instance.getId();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getName method, of class DAMImage.
+	 */
+	@Test
+	public void testGetName() {
+		System.out.println("getName");
+		DAMImage instance = null;
+		String expResult = "";
+		String result = instance.getName();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -81,43 +80,15 @@ public class DAMImageTest {
 	}
 
 	/**
-	 * Test of getImage method, of class DAMImage.
+	 * Test of getImageFile method, of class DAMImage.
 	 */
 	@Test
-	public void testGetImage() {
-		System.out.println("getImage");
+	public void testGetImageFile() {
+		System.out.println("getImageFile");
 		DAMImage instance = null;
-		Image expResult = null;
-		Image result = instance.getImage();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getProductID method, of class DAMImage.
-	 */
-	@Test
-	public void testGetProductID() {
-		System.out.println("getProductID");
-		DAMImage instance = null;
-		int expResult = 0;
-		int result = instance.getProductID();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of toString method, of class DAMImage.
-	 */
-	@Test
-	public void testToString() {
-		System.out.println("toString");
-		DAMImage instance = null;
-		String expResult = "";
-		String result = instance.toString();
-		assertEquals(expResult, result);
+		byte[] expResult = null;
+		byte[] result = instance.getImageFile();
+		assertArrayEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}

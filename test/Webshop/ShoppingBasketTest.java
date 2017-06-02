@@ -15,42 +15,55 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
 public class ShoppingBasketTest {
-
+	
 	public ShoppingBasketTest() {
 	}
-
+	
 	@BeforeClass
 	public static void setUpClass() {
 	}
-
+	
 	@AfterClass
 	public static void tearDownClass() {
 	}
-
+	
 	@Before
 	public void setUp() {
 	}
-
+	
 	@After
 	public void tearDown() {
 	}
 
 	/**
-	 * Test of getBasketContent method, of class ShoppingBasket.
+	 * Test of getId method, of class ShoppingBasket.
 	 */
 	@Test
-	public void testGetBasketContent() {
-		System.out.println("getBasketContent");
-		ShoppingBasket basket = new ShoppingBasket();
-		OrderLine testOrderLine = new OrderLine(new Product("Test", 100, "TestCat", "Yo mamma so fat...", 0), 1);
-		basket.addProduct(testOrderLine);
-		ArrayList<OrderLine> expResult = new ArrayList<OrderLine>();
-		expResult.add(testOrderLine);
-		ArrayList<OrderLine> result = basket.getOrderLines();
+	public void testGetId() {
+		System.out.println("getId");
+		ShoppingBasket instance = new ShoppingBasket();
+		int expResult = 0;
+		int result = instance.getId();
 		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getOrderLines method, of class ShoppingBasket.
+	 */
+	@Test
+	public void testGetOrderLines() {
+		System.out.println("getOrderLines");
+		ShoppingBasket instance = new ShoppingBasket();
+		ArrayList<OrderLine> expResult = null;
+		ArrayList<OrderLine> result = instance.getOrderLines();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
 	}
 
 	/**
@@ -114,6 +127,18 @@ public class ShoppingBasketTest {
 	}
 
 	/**
+	 * Test of empty method, of class ShoppingBasket.
+	 */
+	@Test
+	public void testEmpty() {
+		System.out.println("empty");
+		ShoppingBasket instance = new ShoppingBasket();
+		instance.empty();
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
 	 * Test of isEmpty method, of class ShoppingBasket.
 	 */
 	@Test
@@ -123,18 +148,6 @@ public class ShoppingBasketTest {
 		boolean expResult = false;
 		boolean result = instance.isEmpty();
 		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of empty method, of class ShoppingBasket.
-	 */
-	@Test
-	public void testEmpty() {
-		System.out.println("empty");
-		ShoppingBasket instance = new ShoppingBasket();
-		instance.empty();
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -153,4 +166,19 @@ public class ShoppingBasketTest {
 		fail("The test case is a prototype.");
 	}
 
+	/**
+	 * Test of equals method, of class ShoppingBasket.
+	 */
+	@Test
+	public void testEquals() {
+		System.out.println("equals");
+		ShoppingBasket shoppingBasket = null;
+		ShoppingBasket instance = new ShoppingBasket();
+		boolean expResult = false;
+		boolean result = instance.equals(shoppingBasket);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+	
 }

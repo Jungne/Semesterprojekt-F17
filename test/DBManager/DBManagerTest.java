@@ -5,13 +5,11 @@
  */
 package DBManager;
 
-import DAM.DAMImage;
-import Webshop.Customer;
-import Webshop.Order;
-import java.sql.ResultSet;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
-import javafx.scene.image.Image;
+import java.util.LinkedList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -65,8 +63,8 @@ public class DBManagerTest {
 		System.out.println("getProduct");
 		int productID = 0;
 		DBManager instance = null;
-		ResultSet expResult = null;
-		ResultSet result = instance.getProduct(productID);
+		HashMap<String, String> expResult = null;
+		HashMap<String, String> result = instance.getProduct(productID);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -79,8 +77,22 @@ public class DBManagerTest {
 	public void testGetAllProducts() {
 		System.out.println("getAllProducts");
 		DBManager instance = null;
-		ResultSet expResult = null;
-		ResultSet result = instance.getAllProducts();
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getAllProducts();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getAllEnrichedProducts method, of class DBManager.
+	 */
+	@Test
+	public void testGetAllEnrichedProducts() {
+		System.out.println("getAllEnrichedProducts");
+		DBManager instance = null;
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getAllEnrichedProducts();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -93,9 +105,10 @@ public class DBManagerTest {
 	public void testFindProducts() {
 		System.out.println("findProducts");
 		String query = "";
+		int categoryID = 0;
 		DBManager instance = null;
-		ResultSet expResult = null;
-		ResultSet result = instance.findProducts(query);
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.findProducts(query, categoryID);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -116,99 +129,40 @@ public class DBManagerTest {
 	}
 
 	/**
-	 * Test of getProductsInCategory method, of class DBManager.
+	 * Test of createProduct method, of class DBManager.
 	 */
 	@Test
-	public void testGetProductsInCategory() {
-		System.out.println("getProductsInCategory");
-		String category = "";
-		DBManager instance = null;
-		ResultSet expResult = null;
-		ResultSet result = instance.getProductsInCategory(category);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of addProduct method, of class DBManager.
-	 */
-	@Test
-	public void testAddProduct() {
-		System.out.println("addProduct");
-		int category = 0;
-		double price = 0.0;
-		String description = "";
+	public void testCreateProduct() {
+		System.out.println("createProduct");
 		String name = "";
-		ArrayList<Integer> imageList = null;
-		DBManager instance = null;
-		instance.createProduct(category, price, description, name, imageList);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of createOrder method, of class DBManager.
-	 */
-	@Test
-	public void testCreateOrder() {
-		System.out.println("createOrder");
-		Order order = null;
+		String category = "";
+		String description = "";
+		double price = 0.0;
+		ArrayList<Integer> imageIdList = null;
 		DBManager instance = null;
 		boolean expResult = false;
-		boolean result = instance.createOrder(order);
+		boolean result = instance.createProduct(name, category, description, price, imageIdList);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of setUpTables method, of class DBManager.
+	 * Test of editProduct method, of class DBManager.
 	 */
 	@Test
-	public void testSetUpTables() {
-		System.out.println("setUpTables");
+	public void testEditProduct() {
+		System.out.println("editProduct");
+		int productID = 0;
+		String name = "";
+		String category = "";
+		String description = "";
+		double price = 0.0;
+		ArrayList<Integer> imageIdList = null;
 		DBManager instance = null;
-		instance.setUpTables();
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of dropTables method, of class DBManager.
-	 */
-	@Test
-	public void testDropTables() {
-		System.out.println("dropTables");
-		DBManager instance = null;
-		instance.dropTables();
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of insertData method, of class DBManager.
-	 */
-	@Test
-	public void testInsertData() {
-		System.out.println("insertData");
-		DBManager instance = null;
-		instance.insertData();
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of createImage method, of class DBManager.
-	 */
-	@Test
-	public void testCreateImage() {
-		System.out.println("createImage");
-		String imagePath = "";
-		String title = "";
-		int category = 0;
-		DBManager instance = null;
-		instance.createImage(imagePath, title, category);
+		boolean expResult = false;
+		boolean result = instance.editProduct(productID, name, category, description, price, imageIdList);
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -219,11 +173,11 @@ public class DBManagerTest {
 	@Test
 	public void testGetImage() {
 		System.out.println("getImage");
-		int id = 0;
+		int imageID = 0;
 		DBManager instance = null;
-		Image expResult = null;
-		Image result = instance.getImage(id);
-		assertEquals(expResult, result);
+		byte[] expResult = null;
+		byte[] result = instance.getImage(imageID);
+		assertArrayEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -232,26 +186,12 @@ public class DBManagerTest {
 	 * Test of getImages method, of class DBManager.
 	 */
 	@Test
-	public void testGetImages_0args() {
-		System.out.println("getImages");
-		DBManager instance = null;
-		ArrayList<Image> expResult = null;
-		ArrayList<Image> result = instance.getImages();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getImages method, of class DBManager.
-	 */
-	@Test
-	public void testGetImages_int() {
+	public void testGetImages() {
 		System.out.println("getImages");
 		int productID = 0;
 		DBManager instance = null;
-		ArrayList<Image> expResult = null;
-		ArrayList<Image> result = instance.getImages(productID);
+		ArrayList expResult = null;
+		ArrayList result = instance.getImages(productID);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -263,24 +203,70 @@ public class DBManagerTest {
 	@Test
 	public void testGetDAMImage() {
 		System.out.println("getDAMImage");
-		int id = 0;
+		int imageId = 0;
 		DBManager instance = null;
-		DAMImage expResult = null;
-		DAMImage result = instance.getDAMImage(id);
+		HashMap<String, String> expResult = null;
+		HashMap<String, String> result = instance.getDAMImage(imageId);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of getDAMImages method, of class DBManager.
+	 * Test of getAllImages method, of class DBManager.
 	 */
 	@Test
-	public void testGetDAMImages() {
-		System.out.println("getDAMImages");
+	public void testGetAllImages() {
+		System.out.println("getAllImages");
 		DBManager instance = null;
-		ArrayList<DAMImage> expResult = null;
-		ArrayList<DAMImage> result = instance.getAllImages();
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getAllImages();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getUnassignedImages method, of class DBManager.
+	 */
+	@Test
+	public void testGetUnassignedImages() {
+		System.out.println("getUnassignedImages");
+		DBManager instance = null;
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getUnassignedImages();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getPImages method, of class DBManager.
+	 */
+	@Test
+	public void testGetPImages() {
+		System.out.println("getPImages");
+		int productId = 0;
+		DBManager instance = null;
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getPImages(productId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of createImage method, of class DBManager.
+	 */
+	@Test
+	public void testCreateImage() {
+		System.out.println("createImage");
+		String name = "";
+		String category = "";
+		InputStream imageFile = null;
+		DBManager instance = null;
+		boolean expResult = false;
+		boolean result = instance.createImage(name, category, imageFile);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -292,9 +278,71 @@ public class DBManagerTest {
 	@Test
 	public void testDeleteImage() {
 		System.out.println("deleteImage");
-		int id = 0;
+		int imageId = 0;
 		DBManager instance = null;
-		instance.deleteImage(id);
+		boolean expResult = false;
+		boolean result = instance.deleteImage(imageId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getCustomerId method, of class DBManager.
+	 */
+	@Test
+	public void testGetCustomerId() {
+		System.out.println("getCustomerId");
+		String email = "";
+		DBManager instance = null;
+		int expResult = 0;
+		int result = instance.getCustomerId(email);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getCustomer method, of class DBManager.
+	 */
+	@Test
+	public void testGetCustomer() {
+		System.out.println("getCustomer");
+		String email = "";
+		DBManager instance = null;
+		HashMap<String, String> expResult = null;
+		HashMap<String, String> result = instance.getCustomer(email);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getBasketIds method, of class DBManager.
+	 */
+	@Test
+	public void testGetBasketIds() {
+		System.out.println("getBasketIds");
+		int customerId = 0;
+		DBManager instance = null;
+		ArrayList<Integer> expResult = null;
+		ArrayList<Integer> result = instance.getBasketIds(customerId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getBasketsOrderLines method, of class DBManager.
+	 */
+	@Test
+	public void testGetBasketsOrderLines() {
+		System.out.println("getBasketsOrderLines");
+		int basketId = 0;
+		DBManager instance = null;
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getBasketsOrderLines(basketId);
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -324,16 +372,150 @@ public class DBManagerTest {
 	}
 
 	/**
-	 * Test of getCustomer method, of class DBManager.
+	 * Test of createBasket method, of class DBManager.
 	 */
 	@Test
-	public void testGetCustomer() {
-		System.out.println("getCustomer");
-		String email = "";
-		String code = "";
+	public void testCreateBasket() {
+		System.out.println("createBasket");
+		int customerId = 0;
 		DBManager instance = null;
-		Customer expResult = null;
-		Customer result = instance.getCustomer(email, code);
+		instance.createBasket(customerId);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of removeBasket method, of class DBManager.
+	 */
+	@Test
+	public void testRemoveBasket() {
+		System.out.println("removeBasket");
+		int basketId = 0;
+		DBManager instance = null;
+		instance.removeBasket(basketId);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of addProductToBasket method, of class DBManager.
+	 */
+	@Test
+	public void testAddProductToBasket() {
+		System.out.println("addProductToBasket");
+		int basketId = 0;
+		int productId = 0;
+		int amount = 0;
+		DBManager instance = null;
+		boolean expResult = false;
+		boolean result = instance.addProductToBasket(basketId, productId, amount);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of setProductAmount method, of class DBManager.
+	 */
+	@Test
+	public void testSetProductAmount() {
+		System.out.println("setProductAmount");
+		int basketId = 0;
+		int productId = 0;
+		int amount = 0;
+		DBManager instance = null;
+		boolean expResult = false;
+		boolean result = instance.setProductAmount(basketId, productId, amount);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of removeProduct method, of class DBManager.
+	 */
+	@Test
+	public void testRemoveProduct() {
+		System.out.println("removeProduct");
+		int basketId = 0;
+		int productId = 0;
+		DBManager instance = null;
+		instance.removeProduct(basketId, productId);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of emptyBasket method, of class DBManager.
+	 */
+	@Test
+	public void testEmptyBasket() {
+		System.out.println("emptyBasket");
+		int basketId = 0;
+		DBManager instance = null;
+		instance.emptyBasket(basketId);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getLatestOrder method, of class DBManager.
+	 */
+	@Test
+	public void testGetLatestOrder() {
+		System.out.println("getLatestOrder");
+		int customerId = 0;
+		DBManager instance = null;
+		HashMap<String, String> expResult = null;
+		HashMap<String, String> result = instance.getLatestOrder(customerId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getOrdersOrderLines method, of class DBManager.
+	 */
+	@Test
+	public void testGetOrdersOrderLines() {
+		System.out.println("getOrdersOrderLines");
+		int orderId = 0;
+		DBManager instance = null;
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getOrdersOrderLines(orderId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of createOrder method, of class DBManager.
+	 */
+	@Test
+	public void testCreateOrder() {
+		System.out.println("createOrder");
+		int customerId = 0;
+		String orderStatus = "";
+		DBManager instance = null;
+		boolean expResult = false;
+		boolean result = instance.createOrder(customerId, orderStatus);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of addProductToOrder method, of class DBManager.
+	 */
+	@Test
+	public void testAddProductToOrder() {
+		System.out.println("addProductToOrder");
+		int orderId = 0;
+		int productId = 0;
+		int amount = 0;
+		DBManager instance = null;
+		boolean expResult = false;
+		boolean result = instance.addProductToOrder(orderId, productId, amount);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");

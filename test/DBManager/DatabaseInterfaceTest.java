@@ -5,13 +5,11 @@
  */
 package DBManager;
 
-import DAM.DAMImage;
-import Webshop.Customer;
-import Webshop.Order;
-import java.sql.ResultSet;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
-import javafx.scene.image.Image;
+import java.util.LinkedList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -52,8 +50,8 @@ public class DatabaseInterfaceTest {
 		System.out.println("getProduct");
 		int productId = 0;
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		ResultSet expResult = null;
-		ResultSet result = instance.getProduct(productId);
+		HashMap<String, String> expResult = null;
+		HashMap<String, String> result = instance.getProduct(productId);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -66,8 +64,22 @@ public class DatabaseInterfaceTest {
 	public void testGetAllProducts() {
 		System.out.println("getAllProducts");
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		ResultSet expResult = null;
-		ResultSet result = instance.getAllProducts();
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getAllProducts();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getAllEnrichedProducts method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testGetAllEnrichedProducts() {
+		System.out.println("getAllEnrichedProducts");
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getAllEnrichedProducts();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -80,9 +92,10 @@ public class DatabaseInterfaceTest {
 	public void testFindProducts() {
 		System.out.println("findProducts");
 		String query = "";
+		int categoryID = 0;
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		ResultSet expResult = null;
-		ResultSet result = instance.findProducts(query);
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.findProducts(query, categoryID);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -103,30 +116,127 @@ public class DatabaseInterfaceTest {
 	}
 
 	/**
-	 * Test of getProductsInCategory method, of class DatabaseInterface.
+	 * Test of getDAMImage method, of class DatabaseInterface.
 	 */
 	@Test
-	public void testGetProductsInCategory() {
-		System.out.println("getProductsInCategory");
-		String category = "";
+	public void testGetDAMImage() {
+		System.out.println("getDAMImage");
+		int imageId = 0;
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		ResultSet expResult = null;
-		ResultSet result = instance.getProductsInCategory(category);
+		HashMap<String, String> expResult = null;
+		HashMap<String, String> result = instance.getDAMImage(imageId);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of createOrder method, of class DatabaseInterface.
+	 * Test of getImage method, of class DatabaseInterface.
 	 */
 	@Test
-	public void testCreateOrder() {
-		System.out.println("createOrder");
-		Order order = null;
+	public void testGetImage() {
+		System.out.println("getImage");
+		int imageID = 0;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		byte[] expResult = null;
+		byte[] result = instance.getImage(imageID);
+		assertArrayEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getImages method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testGetImages() {
+		System.out.println("getImages");
+		int productID = 0;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		ArrayList expResult = null;
+		ArrayList result = instance.getImages(productID);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getAllImages method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testGetAllImages() {
+		System.out.println("getAllImages");
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getAllImages();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getUnassignedImages method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testGetUnassignedImages() {
+		System.out.println("getUnassignedImages");
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getUnassignedImages();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getPImages method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testGetPImages() {
+		System.out.println("getPImages");
+		int productId = 0;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getPImages(productId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of createProduct method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testCreateProduct() {
+		System.out.println("createProduct");
+		String name = "";
+		String category = "";
+		String description = "";
+		double price = 0.0;
+		ArrayList<Integer> imageIdList = null;
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
 		boolean expResult = false;
-		boolean result = instance.createOrder(order);
+		boolean result = instance.createProduct(name, category, description, price, imageIdList);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of editProduct method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testEditProduct() {
+		System.out.println("editProduct");
+		int productID = 0;
+		String name = "";
+		String category = "";
+		String description = "";
+		double price = 0.0;
+		ArrayList<Integer> imageIdList = null;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		boolean expResult = false;
+		boolean result = instance.editProduct(productID, name, category, description, price, imageIdList);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -138,83 +248,12 @@ public class DatabaseInterfaceTest {
 	@Test
 	public void testCreateImage() {
 		System.out.println("createImage");
-		String imagePath = "";
-		String title = "";
-		int category = 0;
+		String name = "";
+		String category = "";
+		InputStream imageFile = null;
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		instance.createImage(imagePath, title, category);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getImage method, of class DatabaseInterface.
-	 */
-	@Test
-	public void testGetImage() {
-		System.out.println("getImage");
-		int id = 0;
-		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		Image expResult = null;
-		Image result = instance.getImage(id);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getImages method, of class DatabaseInterface.
-	 */
-	@Test
-	public void testGetImages_0args() {
-		System.out.println("getImages");
-		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		ArrayList<Image> expResult = null;
-		ArrayList<Image> result = instance.getImages();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getImages method, of class DatabaseInterface.
-	 */
-	@Test
-	public void testGetImages_int() {
-		System.out.println("getImages");
-		int productID = 0;
-		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		ArrayList<Image> expResult = null;
-		ArrayList<Image> result = instance.getImages(productID);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getDAMImage method, of class DatabaseInterface.
-	 */
-	@Test
-	public void testGetDAMImage() {
-		System.out.println("getDAMImage");
-		int id = 0;
-		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		DAMImage expResult = null;
-		DAMImage result = instance.getDAMImage(id);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getDAMImages method, of class DatabaseInterface.
-	 */
-	@Test
-	public void testGetDAMImages() {
-		System.out.println("getDAMImages");
-		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		ArrayList<DAMImage> expResult = null;
-		ArrayList<DAMImage> result = instance.getAllImages();
+		boolean expResult = false;
+		boolean result = instance.createImage(name, category, imageFile);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -226,9 +265,71 @@ public class DatabaseInterfaceTest {
 	@Test
 	public void testDeleteImage() {
 		System.out.println("deleteImage");
-		int id = 0;
+		int imageId = 0;
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		instance.deleteImage(id);
+		boolean expResult = false;
+		boolean result = instance.deleteImage(imageId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getCustomerId method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testGetCustomerId() {
+		System.out.println("getCustomerId");
+		String email = "";
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		int expResult = 0;
+		int result = instance.getCustomerId(email);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getCustomer method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testGetCustomer() {
+		System.out.println("getCustomer");
+		String email = "";
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		HashMap<String, String> expResult = null;
+		HashMap<String, String> result = instance.getCustomer(email);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getBasketIds method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testGetBasketIds() {
+		System.out.println("getBasketIds");
+		int customerId = 0;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		ArrayList<Integer> expResult = null;
+		ArrayList<Integer> result = instance.getBasketIds(customerId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getBasketsOrderLines method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testGetBasketsOrderLines() {
+		System.out.println("getBasketsOrderLines");
+		int basketId = 0;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getBasketsOrderLines(basketId);
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -258,49 +359,170 @@ public class DatabaseInterfaceTest {
 	}
 
 	/**
-	 * Test of getCustomer method, of class DatabaseInterface.
+	 * Test of createBasket method, of class DatabaseInterface.
 	 */
 	@Test
-	public void testGetCustomer() {
-		System.out.println("getCustomer");
-		String email = "";
-		String code = "";
+	public void testCreateBasket() {
+		System.out.println("createBasket");
+		int customerId = 0;
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		Customer expResult = null;
-		Customer result = instance.getCustomer(email, code);
+		instance.createBasket(customerId);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of removeBasket method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testRemoveBasket() {
+		System.out.println("removeBasket");
+		int basketId = 0;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		instance.removeBasket(basketId);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of addProductToBasket method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testAddProductToBasket() {
+		System.out.println("addProductToBasket");
+		int basketId = 0;
+		int productId = 0;
+		int amount = 0;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		boolean expResult = false;
+		boolean result = instance.addProductToBasket(basketId, productId, amount);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of addProduct method, of class DatabaseInterface.
+	 * Test of setProductAmount method, of class DatabaseInterface.
 	 */
 	@Test
-	public void testAddProduct() {
-		System.out.println("addProduct");
-		int category = 0;
-		double price = 0.0;
-		String description = "";
-		String titel = "";
-		ArrayList<Integer> imageList = null;
+	public void testSetProductAmount() {
+		System.out.println("setProductAmount");
+		int basketId = 0;
+		int productId = 0;
+		int amount = 0;
 		DatabaseInterface instance = new DatabaseInterfaceImpl();
-		instance.createProduct(category, price, description, titel, imageList);
+		boolean expResult = false;
+		boolean result = instance.setProductAmount(basketId, productId, amount);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of removeProduct method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testRemoveProduct() {
+		System.out.println("removeProduct");
+		int basketId = 0;
+		int productId = 0;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		instance.removeProduct(basketId, productId);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of emptyBasket method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testEmptyBasket() {
+		System.out.println("emptyBasket");
+		int basketId = 0;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		instance.emptyBasket(basketId);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getLatestOrder method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testGetLatestOrder() {
+		System.out.println("getLatestOrder");
+		int customerId = 0;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		HashMap<String, String> expResult = null;
+		HashMap<String, String> result = instance.getLatestOrder(customerId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getOrdersOrderLines method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testGetOrdersOrderLines() {
+		System.out.println("getOrdersOrderLines");
+		int orderId = 0;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getOrdersOrderLines(orderId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of createOrder method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testCreateOrder() {
+		System.out.println("createOrder");
+		int customerId = 0;
+		String orderStatus = "";
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		boolean expResult = false;
+		boolean result = instance.createOrder(customerId, orderStatus);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of addProductToOrder method, of class DatabaseInterface.
+	 */
+	@Test
+	public void testAddProductToOrder() {
+		System.out.println("addProductToOrder");
+		int orderId = 0;
+		int productId = 0;
+		int amount = 0;
+		DatabaseInterface instance = new DatabaseInterfaceImpl();
+		boolean expResult = false;
+		boolean result = instance.addProductToOrder(orderId, productId, amount);
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	public class DatabaseInterfaceImpl implements DatabaseInterface {
 
-		public ResultSet getProduct(int productId) {
+		public HashMap<String, String> getProduct(int productId) {
 			return null;
 		}
 
-		public ResultSet getAllProducts() {
+		public LinkedList<HashMap<String, String>> getAllProducts() {
 			return null;
 		}
 
-		public ResultSet findProducts(String query) {
+		public LinkedList<HashMap<String, String>> getAllEnrichedProducts() {
+			return null;
+		}
+
+		public LinkedList<HashMap<String, String>> findProducts(String query, int categoryID) {
 			return null;
 		}
 
@@ -308,49 +530,100 @@ public class DatabaseInterfaceTest {
 			return null;
 		}
 
-		public ResultSet getProductsInCategory(String category) {
+		public HashMap<String, String> getDAMImage(int imageId) {
 			return null;
 		}
 
-		public boolean createOrder(Order order) {
+		public byte[] getImage(int imageID) {
+			return null;
+		}
+
+		public ArrayList<byte[]> getImages(int productID) {
+			return null;
+		}
+
+		public LinkedList<HashMap<String, String>> getAllImages() {
+			return null;
+		}
+
+		public LinkedList<HashMap<String, String>> getUnassignedImages() {
+			return null;
+		}
+
+		public LinkedList<HashMap<String, String>> getPImages(int productId) {
+			return null;
+		}
+
+		public boolean createProduct(String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
 			return false;
 		}
 
-		public void createImage(String imagePath, String title, int category) {
+		public boolean editProduct(int productID, String name, String category, String description, double price, ArrayList<Integer> imageIdList) {
+			return false;
 		}
 
-		public Image getImage(int id) {
+		public boolean createImage(String name, String category, InputStream imageFile) {
+			return false;
+		}
+
+		public boolean deleteImage(int imageId) {
+			return false;
+		}
+
+		public int getCustomerId(String email) {
+			return 0;
+		}
+
+		public HashMap<String, String> getCustomer(String email) {
 			return null;
 		}
 
-		public ArrayList<Image> getImages() {
+		public ArrayList<Integer> getBasketIds(int customerId) {
 			return null;
 		}
 
-		public ArrayList<Image> getImages(int productID) {
+		public LinkedList<HashMap<String, String>> getBasketsOrderLines(int basketId) {
 			return null;
-		}
-
-		public DAMImage getDAMImage(int id) {
-			return null;
-		}
-
-		public ArrayList<DAMImage> getAllImages() {
-			return null;
-		}
-
-		public void deleteImage(int id) {
 		}
 
 		public boolean createCustomer(String email, String code, String firstName, String lastName, int phoneNumber, int mobilePhoneNumber, String address, String postalCode, String city, String country) {
 			return false;
 		}
 
-		public Customer getCustomer(String email, String code) {
+		public void createBasket(int customerId) {
+		}
+
+		public void removeBasket(int basketId) {
+		}
+
+		public boolean addProductToBasket(int basketId, int productId, int amount) {
+			return false;
+		}
+
+		public boolean setProductAmount(int basketId, int productId, int amount) {
+			return false;
+		}
+
+		public void removeProduct(int basketId, int productId) {
+		}
+
+		public void emptyBasket(int basketId) {
+		}
+
+		public HashMap<String, String> getLatestOrder(int customerId) {
 			return null;
 		}
 
-		public void createProduct(int category, double price, String description, String titel, ArrayList<Integer> imageList) {
+		public LinkedList<HashMap<String, String>> getOrdersOrderLines(int orderId) {
+			return null;
+		}
+
+		public boolean createOrder(int customerId, String orderStatus) {
+			return false;
+		}
+
+		public boolean addProductToOrder(int orderId, int productId, int amount) {
+			return false;
 		}
 	}
 	

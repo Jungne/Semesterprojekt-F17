@@ -19,33 +19,25 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Daniel
+ * @author Kongen
  */
 public class WebshopControllerTest {
-
-	private WebshopController instance = null;
-
+	
 	public WebshopControllerTest() {
-
-		try {
-			instance = new WebshopController();
-		} catch (IOException ex) {
-			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
-		}
 	}
-
+	
 	@BeforeClass
 	public static void setUpClass() {
 	}
-
+	
 	@AfterClass
 	public static void tearDownClass() {
 	}
-
+	
 	@Before
 	public void setUp() {
 	}
-
+	
 	@After
 	public void tearDown() {
 	}
@@ -57,6 +49,12 @@ public class WebshopControllerTest {
 	public void testGetProduct() {
 		System.out.println("getProduct");
 		int productId = 0;
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		Product expResult = null;
 		Product result = instance.getProduct(productId);
 		assertEquals(expResult, result);
@@ -70,8 +68,33 @@ public class WebshopControllerTest {
 	@Test
 	public void testGetAllProduct() {
 		System.out.println("getAllProduct");
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		ArrayList<Product> expResult = null;
 		ArrayList<Product> result = instance.getAllProduct();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getAllEnrichedProducts method, of class WebshopController.
+	 */
+	@Test
+	public void testGetAllEnrichedProducts() {
+		System.out.println("getAllEnrichedProducts");
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		ArrayList<Product> expResult = null;
+		ArrayList<Product> result = instance.getAllEnrichedProducts();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -84,8 +107,15 @@ public class WebshopControllerTest {
 	public void testFindProducts() {
 		System.out.println("findProducts");
 		String query = "";
+		int categoryId = 0;
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		ArrayList<Product> expResult = null;
-		ArrayList<Product> result = instance.findProducts(query);
+		ArrayList<Product> result = instance.findProducts(query, categoryId);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -97,119 +127,15 @@ public class WebshopControllerTest {
 	@Test
 	public void testGetCategories() {
 		System.out.println("getCategories");
-		LinkedHashMap<String, Integer> expResult = null;
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		ArrayList<Product> expResult = null;
 		LinkedHashMap<String, Integer> result = instance.getCategories();
 		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getCategory method, of class WebshopController.
-	 */
-	@Test
-	public void testGetCategory() {
-		System.out.println("getCategory");
-		String category = "";
-		ArrayList<Product> expResult = null;
-		ArrayList<Product> result = instance.getCategory(category);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of checkOut method, of class WebshopController.
-	 */
-	@Test
-	public void testCheckOut_0args() {
-		System.out.println("checkOut");
-		Order expResult = null;
-		Order result = instance.checkOut();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of addProductToBasket method, of class WebshopController.
-	 */
-	@Test
-	public void testAddProductToBasket() {
-		System.out.println("addProductToBasket");
-		int productId = 0;
-		int amount = 0;
-		boolean expResult = false;
-		boolean result = instance.addProductToBasket(productId, amount);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of removeProduct method, of class WebshopController.
-	 */
-	@Test
-	public void testRemoveProduct() {
-		System.out.println("removeProduct");
-		int productId = 0;
-		instance.removeProduct(productId);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of setProductAmount method, of class WebshopController.
-	 */
-	@Test
-	public void testSetProductAmount() {
-		System.out.println("setProductAmount");
-		int productId = 0;
-		int amount = 0;
-		boolean expResult = false;
-		boolean result = instance.setProductAmount(productId, amount);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getShoppingBasket method, of class WebshopController.
-	 */
-	@Test
-	public void testGetShoppingBasket() {
-		System.out.println("getShoppingBasket");
-		ShoppingBasket expResult = null;
-		ShoppingBasket result = instance.getShoppingBasket();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of checkOut method, of class WebshopController.
-	 */
-	@Test
-	public void testCheckOut_4args() {
-		System.out.println("checkOut");
-		String name = "";
-		String email = "";
-		int phoneNumber = 0;
-		ShoppingBasket shoppingBasket = null;
-		Order expResult = null;
-		Order result = instance.checkOut(name, email, phoneNumber, shoppingBasket);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of emptyShoppingBasket method, of class WebshopController.
-	 */
-	@Test
-	public void testEmptyShoppingBasket() {
-		System.out.println("emptyShoppingBasket");
-		instance.emptyShoppingBasket();
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
@@ -230,14 +156,15 @@ public class WebshopControllerTest {
 		String postalCode = "";
 		String city = "";
 		String country = "";
+		ShoppingBasket shoppingBasket = null;
 		WebshopController instance = null;
 		try {
 			instance = new WebshopController();
 		} catch (IOException ex) {
 			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		boolean expResult = false;
-		boolean result = instance.signUp(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country);
+		ArrayList<Product> expResult = null;
+		boolean result = instance.signUp(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -257,11 +184,254 @@ public class WebshopControllerTest {
 		} catch (IOException ex) {
 			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		boolean expResult = false;
+		ArrayList<Product> expResult = null;
 		boolean result = instance.login(email, code);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
+	/**
+	 * Test of logOut method, of class WebshopController.
+	 */
+	@Test
+	public void testLogOut() {
+		System.out.println("logOut");
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		ArrayList<Product> expResult = null;
+		boolean result = instance.logOut();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getCustomer method, of class WebshopController.
+	 */
+	@Test
+	public void testGetCustomer() {
+		System.out.println("getCustomer");
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		ArrayList<Product> expResult = null;
+		Customer result = instance.getCustomer();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getShoppingBaskets method, of class WebshopController.
+	 */
+	@Test
+	public void testGetShoppingBaskets() {
+		System.out.println("getShoppingBaskets");
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		ArrayList<Product> expResult = null;
+		ArrayList<ShoppingBasket> result = instance.getShoppingBaskets();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of createBasket method, of class WebshopController.
+	 */
+	@Test
+	public void testCreateBasket() {
+		System.out.println("createBasket");
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		instance.createBasket();
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of removeBasket method, of class WebshopController.
+	 */
+	@Test
+	public void testRemoveBasket() {
+		System.out.println("removeBasket");
+		int basketId = 0;
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		instance.removeBasket(basketId);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of addProductToBasket method, of class WebshopController.
+	 */
+	@Test
+	public void testAddProductToBasket() {
+		System.out.println("addProductToBasket");
+		int basketId = 0;
+		int productId = 0;
+		int amount = 0;
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		boolean expResult = false;
+		boolean result = instance.addProductToBasket(basketId, productId, amount);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of setProductAmount method, of class WebshopController.
+	 */
+	@Test
+	public void testSetProductAmount() {
+		System.out.println("setProductAmount");
+		int basketId = 0;
+		int productId = 0;
+		int amount = 0;
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		boolean expResult = false;
+		boolean result = instance.setProductAmount(basketId, productId, amount);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of removeProduct method, of class WebshopController.
+	 */
+	@Test
+	public void testRemoveProduct() {
+		System.out.println("removeProduct");
+		int basketId = 0;
+		int productId = 0;
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		boolean expResult = false;
+		boolean result = instance.removeProduct(basketId, productId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of emptyShoppingBasket method, of class WebshopController.
+	 */
+	@Test
+	public void testEmptyShoppingBasket() {
+		System.out.println("emptyShoppingBasket");
+		int basketId = 0;
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		instance.emptyShoppingBasket(basketId);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getLatestOrder method, of class WebshopController.
+	 */
+	@Test
+	public void testGetLatestOrder() {
+		System.out.println("getLatestOrder");
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		Order expResult = null;
+		Order result = instance.getLatestOrder();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of checkOut method, of class WebshopController.
+	 */
+	@Test
+	public void testCheckOut_10args() {
+		System.out.println("checkOut");
+		String email = "";
+		String firstName = "";
+		String lastName = "";
+		int phoneNumber = 0;
+		int mobilePhoneNumber = 0;
+		String address = "";
+		String postalCode = "";
+		String city = "";
+		String country = "";
+		ShoppingBasket shoppingBasket = null;
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		Order expResult = null;
+		Order result = instance.checkOut(email, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of checkOut method, of class WebshopController.
+	 */
+	@Test
+	public void testCheckOut_int() {
+		System.out.println("checkOut");
+		int basketId = 0;
+		WebshopController instance = null;
+		try {
+			instance = new WebshopController();
+		} catch (IOException ex) {
+			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		boolean expResult = false;
+		boolean result = instance.checkOut(basketId);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+	
 }

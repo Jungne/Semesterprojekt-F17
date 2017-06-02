@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author Kongen
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({DAM.FileSearcherTest.class, DAM.DAMManagerTest.class, DAM.FileHandlerTest.class, DAM.DAMImageTest.class})
+@Suite.SuiteClasses({DAM.DAMManagerTest.class, DAM.FileHandlerTest.class, DAM.DAMImageTest.class})
 public class DAMSuite {
 
 	@BeforeClass

@@ -5,10 +5,11 @@
  */
 package DBManager;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,11 +48,10 @@ public class ProductHandlerTest {
 	@Test
 	public void testGetProduct() {
 		System.out.println("getProduct");
-		Connection connection = null;
 		int productID = 0;
-		ProductHandler instance = new ProductHandler();
-		ResultSet expResult = null;
-		ResultSet result = instance.getProduct(connection, productID);
+		ProductHandler instance = null;
+		HashMap<String, String> expResult = null;
+		HashMap<String, String> result = instance.getProduct(productID);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -63,10 +63,23 @@ public class ProductHandlerTest {
 	@Test
 	public void testGetAllProducts() {
 		System.out.println("getAllProducts");
-		Connection connection = null;
-		ProductHandler instance = new ProductHandler();
-		ResultSet expResult = null;
-		ResultSet result = instance.getAllProducts(connection);
+		ProductHandler instance = null;
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getAllProducts();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getAllEnrichedProducts method, of class ProductHandler.
+	 */
+	@Test
+	public void testGetAllEnrichedProducts() {
+		System.out.println("getAllEnrichedProducts");
+		ProductHandler instance = null;
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.getAllEnrichedProducts();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -78,11 +91,11 @@ public class ProductHandlerTest {
 	@Test
 	public void testFindProducts() {
 		System.out.println("findProducts");
-		Connection connection = null;
 		String query = "";
-		ProductHandler instance = new ProductHandler();
-		ResultSet expResult = null;
-		ResultSet result = instance.findProducts(connection, query);
+		int categoryID = 0;
+		ProductHandler instance = null;
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.findProducts(query, categoryID);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
@@ -94,45 +107,79 @@ public class ProductHandlerTest {
 	@Test
 	public void testGetCategories() {
 		System.out.println("getCategories");
-		Connection connection = null;
-		ProductHandler instance = new ProductHandler();
+		ProductHandler instance = null;
 		LinkedHashMap<String, Integer> expResult = null;
-		LinkedHashMap<String, Integer> result = instance.getCategories(connection);
+		LinkedHashMap<String, Integer> result = instance.getCategories();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of getProductsInCategory method, of class ProductHandler.
+	 * Test of createProduct method, of class ProductHandler.
 	 */
 	@Test
-	public void testGetProductsInCategory() {
-		System.out.println("getProductsInCategory");
-		Connection connection = null;
-		String category = "";
-		ProductHandler instance = new ProductHandler();
-		ResultSet expResult = null;
-		ResultSet result = instance.getProductsInCategory(connection, category);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of addProduct method, of class ProductHandler.
-	 */
-	@Test
-	public void testAddProduct() {
-		System.out.println("addProduct");
-		Connection connection = null;
-		int category = 0;
-		double price = 0.0;
-		String description = "";
+	public void testCreateProduct() {
+		System.out.println("createProduct");
 		String name = "";
-		ArrayList<Integer> imageList = null;
-		ProductHandler instance = new ProductHandler();
-		instance.addProduct(connection, category, price, description, name, imageList);
+		String category = "";
+		String description = "";
+		double price = 0.0;
+		ArrayList<Integer> imageIdList = null;
+		ProductHandler instance = null;
+		boolean expResult = false;
+		boolean result = instance.createProduct(name, category, description, price, imageIdList);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of editProduct method, of class ProductHandler.
+	 */
+	@Test
+	public void testEditProduct() {
+		System.out.println("editProduct");
+		int productId = 0;
+		String name = "";
+		String category = "";
+		String description = "";
+		double price = 0.0;
+		ArrayList<Integer> imageIdList = null;
+		ProductHandler instance = null;
+		boolean expResult = false;
+		boolean result = instance.editProduct(productId, name, category, description, price, imageIdList);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of mapProduct method, of class ProductHandler.
+	 */
+	@Test
+	public void testMapProduct() {
+		System.out.println("mapProduct");
+		ResultSet productsResultSet = null;
+		ProductHandler instance = null;
+		HashMap<String, String> expResult = null;
+		HashMap<String, String> result = instance.mapProduct(productsResultSet);
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of mapProducts method, of class ProductHandler.
+	 */
+	@Test
+	public void testMapProducts() {
+		System.out.println("mapProducts");
+		ResultSet productsResultSet = null;
+		ProductHandler instance = null;
+		LinkedList<HashMap<String, String>> expResult = null;
+		LinkedList<HashMap<String, String>> result = instance.mapProducts(productsResultSet);
+		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}

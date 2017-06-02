@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package semesterprojekt.f17;
+package PIM;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author Kongen
  */
-public class ProductHBoxCellTest {
+public class PIMageTest {
 	
-	public ProductHBoxCellTest() {
+	public PIMageTest() {
 	}
 	
 	@BeforeClass
@@ -38,43 +38,57 @@ public class ProductHBoxCellTest {
 	}
 
 	/**
-	 * Test of getProductId method, of class ProductHBoxCell.
+	 * Test of getId method, of class PIMage.
 	 */
 	@Test
-	public void testGetProductId() {
-		System.out.println("getProductId");
-		ProductHBoxCell instance = null;
+	public void testGetId() {
+		System.out.println("getId");
+		PIMage instance = null;
 		int expResult = 0;
-		int result = instance.getProductId();
+		int result = instance.getId();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
 
 	/**
-	 * Test of getImageId method, of class ProductHBoxCell.
+	 * Test of getName method, of class PIMage.
 	 */
 	@Test
-	public void testGetImageId() {
-		System.out.println("getImageId");
-		ProductHBoxCell instance = null;
-		int expResult = 0;
-		int result = instance.getImageId();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of toString method, of class ProductHBoxCell.
-	 */
-	@Test
-	public void testToString() {
-		System.out.println("toString");
-		ProductHBoxCell instance = null;
+	public void testGetName() {
+		System.out.println("getName");
+		PIMage instance = null;
 		String expResult = "";
-		String result = instance.toString();
+		String result = instance.getName();
 		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getCategory method, of class PIMage.
+	 */
+	@Test
+	public void testGetCategory() {
+		System.out.println("getCategory");
+		PIMage instance = null;
+		String expResult = "";
+		String result = instance.getCategory();
+		assertEquals(expResult, result);
+		// TODO review the generated test code and remove the default call to fail.
+		fail("The test case is a prototype.");
+	}
+
+	/**
+	 * Test of getImageFile method, of class PIMage.
+	 */
+	@Test
+	public void testGetImageFile() {
+		System.out.println("getImageFile");
+		PIMage instance = null;
+		byte[] expResult = null;
+		byte[] result = instance.getImageFile();
+		assertArrayEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
