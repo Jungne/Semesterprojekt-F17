@@ -837,6 +837,9 @@ public class FXMLDocumentController implements Initializable {
 			showDAMImages();
 
 		} else if (source.equals(DAMPane_DeleteButton)) {
+			if (DAMPane_ImageListView.getItems().isEmpty()) {
+				return;
+			}
 			int id = DAMPane_ImageListView.getSelectionModel().getSelectedItem().getProductId();
 			DAM.deleteImage(id);
 			showDAMImages();
