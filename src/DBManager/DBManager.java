@@ -45,7 +45,6 @@ public class DBManager implements DatabaseInterface {
 		productHandler = new ProductHandler(connection);
 		imageHandler = new ImageHandler(connection);
 		orderHandler = new OrderHandler(connection);
-
 	}
 
 	public static DBManager getInstance() {
