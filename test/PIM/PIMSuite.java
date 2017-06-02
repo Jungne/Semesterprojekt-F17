@@ -5,34 +5,30 @@
  */
 package PIM;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({PIM.PIMageTest.class, PIM.PIMManagerTest.class, PIM.ProductSearchTest.class, PIM.EditProductTest.class, PIM.PIMProductTest.class, PIM.ConverterTest.class})
+@org.junit.runner.RunWith(org.junit.runners.Suite.class)
+@org.junit.runners.Suite.SuiteClasses({ProductSearchTest.class, ConverterTest.class, PIMProductTest.class, EditProductTest.class, PIMageTest.class, PIMManagerTest.class})
 public class PIMSuite {
 
-	@BeforeClass
+	@org.junit.BeforeClass
 	public static void setUpClass() throws Exception {
 	}
 
-	@AfterClass
+	@org.junit.AfterClass
 	public static void tearDownClass() throws Exception {
 	}
 
-	@Before
+	@org.junit.Before
 	public void setUp() throws Exception {
 	}
 
-	@After
+	@org.junit.After
 	public void tearDown() throws Exception {
 	}
 	

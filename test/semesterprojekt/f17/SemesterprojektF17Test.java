@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class SemesterprojektF17Test {
 	
@@ -41,7 +41,7 @@ public class SemesterprojektF17Test {
 	/**
 	 * Test of start method, of class SemesterprojektF17.
 	 */
-	@Test
+	@org.junit.Test
 	public void testStart() throws Exception {
 		System.out.println("start");
 		Stage stage = null;
@@ -54,7 +54,7 @@ public class SemesterprojektF17Test {
 	/**
 	 * Test of main method, of class SemesterprojektF17.
 	 */
-	@Test
+	@org.junit.Test
 	public void testMain() throws Exception {
 		System.out.println("main");
 		String[] args = null;

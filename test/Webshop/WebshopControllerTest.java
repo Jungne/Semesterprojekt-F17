@@ -14,30 +14,29 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class WebshopControllerTest {
-	
+
 	public WebshopControllerTest() {
 	}
-	
+
 	@BeforeClass
 	public static void setUpClass() {
 	}
-	
+
 	@AfterClass
 	public static void tearDownClass() {
 	}
-	
+
 	@Before
 	public void setUp() {
 	}
-	
+
 	@After
 	public void tearDown() {
 	}
@@ -45,7 +44,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of getProduct method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetProduct() {
 		System.out.println("getProduct");
 		int productId = 0;
@@ -65,7 +64,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of getAllProduct method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllProduct() {
 		System.out.println("getAllProduct");
 		WebshopController instance = null;
@@ -84,7 +83,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of getAllEnrichedProducts method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllEnrichedProducts() {
 		System.out.println("getAllEnrichedProducts");
 		WebshopController instance = null;
@@ -103,7 +102,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of findProducts method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testFindProducts() {
 		System.out.println("findProducts");
 		String query = "";
@@ -124,7 +123,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of getCategories method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCategories() {
 		System.out.println("getCategories");
 		WebshopController instance = null;
@@ -133,7 +132,7 @@ public class WebshopControllerTest {
 		} catch (IOException ex) {
 			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		ArrayList<Product> expResult = null;
+		LinkedHashMap<String, Integer> expResult = null;
 		LinkedHashMap<String, Integer> result = instance.getCategories();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
@@ -143,7 +142,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of signUp method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testSignUp() {
 		System.out.println("signUp");
 		String email = "";
@@ -163,7 +162,7 @@ public class WebshopControllerTest {
 		} catch (IOException ex) {
 			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		ArrayList<Product> expResult = null;
+		boolean expResult = false;
 		boolean result = instance.signUp(email, code, firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, shoppingBasket);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
@@ -173,7 +172,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of login method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testLogin() {
 		System.out.println("login");
 		String email = "";
@@ -184,7 +183,7 @@ public class WebshopControllerTest {
 		} catch (IOException ex) {
 			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		ArrayList<Product> expResult = null;
+		boolean expResult = false;
 		boolean result = instance.login(email, code);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
@@ -194,7 +193,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of logOut method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testLogOut() {
 		System.out.println("logOut");
 		WebshopController instance = null;
@@ -203,7 +202,7 @@ public class WebshopControllerTest {
 		} catch (IOException ex) {
 			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		ArrayList<Product> expResult = null;
+		boolean expResult = false;
 		boolean result = instance.logOut();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
@@ -213,7 +212,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of getCustomer method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCustomer() {
 		System.out.println("getCustomer");
 		WebshopController instance = null;
@@ -222,7 +221,7 @@ public class WebshopControllerTest {
 		} catch (IOException ex) {
 			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		ArrayList<Product> expResult = null;
+		Customer expResult = null;
 		Customer result = instance.getCustomer();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
@@ -232,7 +231,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of getShoppingBaskets method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetShoppingBaskets() {
 		System.out.println("getShoppingBaskets");
 		WebshopController instance = null;
@@ -241,7 +240,7 @@ public class WebshopControllerTest {
 		} catch (IOException ex) {
 			Logger.getLogger(WebshopControllerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		ArrayList<Product> expResult = null;
+		ArrayList<ShoppingBasket> expResult = null;
 		ArrayList<ShoppingBasket> result = instance.getShoppingBaskets();
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
@@ -251,7 +250,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of createBasket method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateBasket() {
 		System.out.println("createBasket");
 		WebshopController instance = null;
@@ -268,7 +267,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of removeBasket method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testRemoveBasket() {
 		System.out.println("removeBasket");
 		int basketId = 0;
@@ -286,7 +285,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of addProductToBasket method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testAddProductToBasket() {
 		System.out.println("addProductToBasket");
 		int basketId = 0;
@@ -308,7 +307,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of setProductAmount method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testSetProductAmount() {
 		System.out.println("setProductAmount");
 		int basketId = 0;
@@ -330,7 +329,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of removeProduct method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testRemoveProduct() {
 		System.out.println("removeProduct");
 		int basketId = 0;
@@ -351,7 +350,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of emptyShoppingBasket method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testEmptyShoppingBasket() {
 		System.out.println("emptyShoppingBasket");
 		int basketId = 0;
@@ -369,7 +368,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of getLatestOrder method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetLatestOrder() {
 		System.out.println("getLatestOrder");
 		WebshopController instance = null;
@@ -388,7 +387,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of checkOut method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCheckOut_10args() {
 		System.out.println("checkOut");
 		String email = "";
@@ -417,7 +416,7 @@ public class WebshopControllerTest {
 	/**
 	 * Test of checkOut method, of class WebshopController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCheckOut_int() {
 		System.out.println("checkOut");
 		int basketId = 0;
@@ -433,5 +432,5 @@ public class WebshopControllerTest {
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
-	
+
 }

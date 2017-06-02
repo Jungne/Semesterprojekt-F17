@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class FileHandlerTest {
 	
@@ -43,7 +43,7 @@ public class FileHandlerTest {
 	/**
 	 * Test of createDAMImages method, of class FileHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateDAMImages() {
 		System.out.println("createDAMImages");
 		LinkedList<HashMap<String, String>> damImageMapList = null;

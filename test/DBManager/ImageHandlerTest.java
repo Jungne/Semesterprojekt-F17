@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class ImageHandlerTest {
 	
@@ -44,7 +44,7 @@ public class ImageHandlerTest {
 	/**
 	 * Test of getImageFile method, of class ImageHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetImageFile() {
 		System.out.println("getImageFile");
 		int imageID = 0;
@@ -59,7 +59,7 @@ public class ImageHandlerTest {
 	/**
 	 * Test of getImageFiles method, of class ImageHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetImageFiles() {
 		System.out.println("getImageFiles");
 		int productID = 0;
@@ -74,7 +74,7 @@ public class ImageHandlerTest {
 	/**
 	 * Test of getDAMImage method, of class ImageHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetDAMImage() {
 		System.out.println("getDAMImage");
 		int imageId = 0;
@@ -89,7 +89,7 @@ public class ImageHandlerTest {
 	/**
 	 * Test of getAllImages method, of class ImageHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllImages() {
 		System.out.println("getAllImages");
 		ImageHandler instance = null;
@@ -103,7 +103,7 @@ public class ImageHandlerTest {
 	/**
 	 * Test of getUnassignedImages method, of class ImageHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetUnassignedImages() {
 		System.out.println("getUnassignedImages");
 		ImageHandler instance = null;
@@ -117,7 +117,7 @@ public class ImageHandlerTest {
 	/**
 	 * Test of getPImages method, of class ImageHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetPImages() {
 		System.out.println("getPImages");
 		int productId = 0;
@@ -132,7 +132,7 @@ public class ImageHandlerTest {
 	/**
 	 * Test of createImage method, of class ImageHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateImage() {
 		System.out.println("createImage");
 		String name = "";
@@ -149,7 +149,7 @@ public class ImageHandlerTest {
 	/**
 	 * Test of deleteImage method, of class ImageHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testDeleteImage() {
 		System.out.println("deleteImage");
 		int imageId = 0;

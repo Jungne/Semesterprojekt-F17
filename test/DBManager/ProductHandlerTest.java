@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class ProductHandlerTest {
 	
@@ -45,7 +45,7 @@ public class ProductHandlerTest {
 	/**
 	 * Test of getProduct method, of class ProductHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetProduct() {
 		System.out.println("getProduct");
 		int productID = 0;
@@ -60,7 +60,7 @@ public class ProductHandlerTest {
 	/**
 	 * Test of getAllProducts method, of class ProductHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllProducts() {
 		System.out.println("getAllProducts");
 		ProductHandler instance = null;
@@ -74,7 +74,7 @@ public class ProductHandlerTest {
 	/**
 	 * Test of getAllEnrichedProducts method, of class ProductHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllEnrichedProducts() {
 		System.out.println("getAllEnrichedProducts");
 		ProductHandler instance = null;
@@ -88,7 +88,7 @@ public class ProductHandlerTest {
 	/**
 	 * Test of findProducts method, of class ProductHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testFindProducts() {
 		System.out.println("findProducts");
 		String query = "";
@@ -104,7 +104,7 @@ public class ProductHandlerTest {
 	/**
 	 * Test of getCategories method, of class ProductHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCategories() {
 		System.out.println("getCategories");
 		ProductHandler instance = null;
@@ -118,7 +118,7 @@ public class ProductHandlerTest {
 	/**
 	 * Test of createProduct method, of class ProductHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateProduct() {
 		System.out.println("createProduct");
 		String name = "";
@@ -137,7 +137,7 @@ public class ProductHandlerTest {
 	/**
 	 * Test of editProduct method, of class ProductHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testEditProduct() {
 		System.out.println("editProduct");
 		int productId = 0;
@@ -157,7 +157,7 @@ public class ProductHandlerTest {
 	/**
 	 * Test of mapProduct method, of class ProductHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testMapProduct() {
 		System.out.println("mapProduct");
 		ResultSet productsResultSet = null;
@@ -172,7 +172,7 @@ public class ProductHandlerTest {
 	/**
 	 * Test of mapProducts method, of class ProductHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testMapProducts() {
 		System.out.println("mapProducts");
 		ResultSet productsResultSet = null;

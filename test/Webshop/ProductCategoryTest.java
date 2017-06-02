@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class ProductCategoryTest {
 	
@@ -40,7 +40,7 @@ public class ProductCategoryTest {
 	/**
 	 * Test of values method, of class ProductCategory.
 	 */
-	@Test
+	@org.junit.Test
 	public void testValues() {
 		System.out.println("values");
 		ProductCategory[] expResult = null;
@@ -53,7 +53,7 @@ public class ProductCategoryTest {
 	/**
 	 * Test of valueOf method, of class ProductCategory.
 	 */
-	@Test
+	@org.junit.Test
 	public void testValueOf() {
 		System.out.println("valueOf");
 		String name = "";

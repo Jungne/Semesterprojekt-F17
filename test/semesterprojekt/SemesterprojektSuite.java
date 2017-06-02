@@ -5,34 +5,31 @@
  */
 package semesterprojekt;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import semesterprojekt.f17.F17Suite;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({semesterprojekt.f17.F17Suite.class})
+@org.junit.runner.RunWith(org.junit.runners.Suite.class)
+@org.junit.runners.Suite.SuiteClasses({F17Suite.class})
 public class SemesterprojektSuite {
 
-	@BeforeClass
+	@org.junit.BeforeClass
 	public static void setUpClass() throws Exception {
 	}
 
-	@AfterClass
+	@org.junit.AfterClass
 	public static void tearDownClass() throws Exception {
 	}
 
-	@Before
+	@org.junit.Before
 	public void setUp() throws Exception {
 	}
 
-	@After
+	@org.junit.After
 	public void tearDown() throws Exception {
 	}
 	

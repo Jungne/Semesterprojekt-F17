@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class PIMageTest {
 	
@@ -40,7 +40,7 @@ public class PIMageTest {
 	/**
 	 * Test of getId method, of class PIMage.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetId() {
 		System.out.println("getId");
 		PIMage instance = null;
@@ -54,7 +54,7 @@ public class PIMageTest {
 	/**
 	 * Test of getName method, of class PIMage.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetName() {
 		System.out.println("getName");
 		PIMage instance = null;
@@ -68,7 +68,7 @@ public class PIMageTest {
 	/**
 	 * Test of getCategory method, of class PIMage.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCategory() {
 		System.out.println("getCategory");
 		PIMage instance = null;
@@ -82,7 +82,7 @@ public class PIMageTest {
 	/**
 	 * Test of getImageFile method, of class PIMage.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetImageFile() {
 		System.out.println("getImageFile");
 		PIMage instance = null;

@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class PIMProductTest {
 	
@@ -41,7 +41,7 @@ public class PIMProductTest {
 	/**
 	 * Test of getId method, of class PIMProduct.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetId() {
 		System.out.println("getId");
 		PIMProduct instance = null;
@@ -55,7 +55,7 @@ public class PIMProductTest {
 	/**
 	 * Test of getName method, of class PIMProduct.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetName() {
 		System.out.println("getName");
 		PIMProduct instance = null;
@@ -69,7 +69,7 @@ public class PIMProductTest {
 	/**
 	 * Test of getCategory method, of class PIMProduct.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCategory() {
 		System.out.println("getCategory");
 		PIMProduct instance = null;
@@ -83,7 +83,7 @@ public class PIMProductTest {
 	/**
 	 * Test of getDescription method, of class PIMProduct.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetDescription() {
 		System.out.println("getDescription");
 		PIMProduct instance = null;
@@ -97,7 +97,7 @@ public class PIMProductTest {
 	/**
 	 * Test of getPrice method, of class PIMProduct.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetPrice() {
 		System.out.println("getPrice");
 		PIMProduct instance = null;
@@ -111,7 +111,7 @@ public class PIMProductTest {
 	/**
 	 * Test of getImageFiles method, of class PIMProduct.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetImageFiles() {
 		System.out.println("getImageFiles");
 		PIMProduct instance = null;

@@ -4,34 +4,36 @@
  * and open the template in the editor.
  */
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import DAM.DAMSuite;
+import DBManager.DBManagerSuite;
+import PIM.PIMSuite;
+import Webshop.WebshopSuite;
+import images.ImagesSuite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import semesterprojekt.SemesterprojektSuite;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({semesterprojekt.SemesterprojektSuite.class, Webshop.WebshopSuite.class, DAM.DAMSuite.class, images.ImagesSuite.class, DBManager.DBManagerSuite.class, PIM.PIMSuite.class})
+@org.junit.runner.RunWith(org.junit.runners.Suite.class)
+@org.junit.runners.Suite.SuiteClasses({WebshopSuite.class, ImagesSuite.class, SemesterprojektSuite.class, PIMSuite.class, DBManagerSuite.class, DAMSuite.class})
 public class RootSuite {
 
-	@BeforeClass
+	@org.junit.BeforeClass
 	public static void setUpClass() throws Exception {
 	}
 
-	@AfterClass
+	@org.junit.AfterClass
 	public static void tearDownClass() throws Exception {
 	}
 
-	@Before
+	@org.junit.Before
 	public void setUp() throws Exception {
 	}
 
-	@After
+	@org.junit.After
 	public void tearDown() throws Exception {
 	}
 	

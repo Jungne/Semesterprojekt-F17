@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class DBManagerTest {
 	
@@ -45,7 +45,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getInstance method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetInstance() {
 		System.out.println("getInstance");
 		DBManager expResult = null;
@@ -58,7 +58,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getProduct method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetProduct() {
 		System.out.println("getProduct");
 		int productID = 0;
@@ -73,7 +73,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getAllProducts method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllProducts() {
 		System.out.println("getAllProducts");
 		DBManager instance = null;
@@ -87,7 +87,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getAllEnrichedProducts method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllEnrichedProducts() {
 		System.out.println("getAllEnrichedProducts");
 		DBManager instance = null;
@@ -101,7 +101,7 @@ public class DBManagerTest {
 	/**
 	 * Test of findProducts method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testFindProducts() {
 		System.out.println("findProducts");
 		String query = "";
@@ -117,7 +117,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getCategories method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCategories() {
 		System.out.println("getCategories");
 		DBManager instance = null;
@@ -131,7 +131,7 @@ public class DBManagerTest {
 	/**
 	 * Test of createProduct method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateProduct() {
 		System.out.println("createProduct");
 		String name = "";
@@ -150,7 +150,7 @@ public class DBManagerTest {
 	/**
 	 * Test of editProduct method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testEditProduct() {
 		System.out.println("editProduct");
 		int productID = 0;
@@ -170,7 +170,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getImage method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetImage() {
 		System.out.println("getImage");
 		int imageID = 0;
@@ -185,7 +185,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getImages method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetImages() {
 		System.out.println("getImages");
 		int productID = 0;
@@ -200,7 +200,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getDAMImage method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetDAMImage() {
 		System.out.println("getDAMImage");
 		int imageId = 0;
@@ -215,7 +215,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getAllImages method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllImages() {
 		System.out.println("getAllImages");
 		DBManager instance = null;
@@ -229,7 +229,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getUnassignedImages method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetUnassignedImages() {
 		System.out.println("getUnassignedImages");
 		DBManager instance = null;
@@ -243,7 +243,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getPImages method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetPImages() {
 		System.out.println("getPImages");
 		int productId = 0;
@@ -258,7 +258,7 @@ public class DBManagerTest {
 	/**
 	 * Test of createImage method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateImage() {
 		System.out.println("createImage");
 		String name = "";
@@ -275,7 +275,7 @@ public class DBManagerTest {
 	/**
 	 * Test of deleteImage method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testDeleteImage() {
 		System.out.println("deleteImage");
 		int imageId = 0;
@@ -290,7 +290,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getCustomerId method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCustomerId() {
 		System.out.println("getCustomerId");
 		String email = "";
@@ -305,7 +305,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getCustomer method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCustomer() {
 		System.out.println("getCustomer");
 		String email = "";
@@ -320,7 +320,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getBasketIds method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetBasketIds() {
 		System.out.println("getBasketIds");
 		int customerId = 0;
@@ -335,7 +335,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getBasketsOrderLines method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetBasketsOrderLines() {
 		System.out.println("getBasketsOrderLines");
 		int basketId = 0;
@@ -350,7 +350,7 @@ public class DBManagerTest {
 	/**
 	 * Test of createCustomer method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateCustomer() {
 		System.out.println("createCustomer");
 		String email = "";
@@ -374,7 +374,7 @@ public class DBManagerTest {
 	/**
 	 * Test of createBasket method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateBasket() {
 		System.out.println("createBasket");
 		int customerId = 0;
@@ -387,7 +387,7 @@ public class DBManagerTest {
 	/**
 	 * Test of removeBasket method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testRemoveBasket() {
 		System.out.println("removeBasket");
 		int basketId = 0;
@@ -400,7 +400,7 @@ public class DBManagerTest {
 	/**
 	 * Test of addProductToBasket method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testAddProductToBasket() {
 		System.out.println("addProductToBasket");
 		int basketId = 0;
@@ -417,7 +417,7 @@ public class DBManagerTest {
 	/**
 	 * Test of setProductAmount method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testSetProductAmount() {
 		System.out.println("setProductAmount");
 		int basketId = 0;
@@ -434,7 +434,7 @@ public class DBManagerTest {
 	/**
 	 * Test of removeProduct method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testRemoveProduct() {
 		System.out.println("removeProduct");
 		int basketId = 0;
@@ -448,7 +448,7 @@ public class DBManagerTest {
 	/**
 	 * Test of emptyBasket method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testEmptyBasket() {
 		System.out.println("emptyBasket");
 		int basketId = 0;
@@ -461,7 +461,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getLatestOrder method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetLatestOrder() {
 		System.out.println("getLatestOrder");
 		int customerId = 0;
@@ -476,7 +476,7 @@ public class DBManagerTest {
 	/**
 	 * Test of getOrdersOrderLines method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetOrdersOrderLines() {
 		System.out.println("getOrdersOrderLines");
 		int orderId = 0;
@@ -491,7 +491,7 @@ public class DBManagerTest {
 	/**
 	 * Test of createOrder method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateOrder() {
 		System.out.println("createOrder");
 		int customerId = 0;
@@ -507,7 +507,7 @@ public class DBManagerTest {
 	/**
 	 * Test of addProductToOrder method, of class DBManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testAddProductToOrder() {
 		System.out.println("addProductToOrder");
 		int orderId = 0;
