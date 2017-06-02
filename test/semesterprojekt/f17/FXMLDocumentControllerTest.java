@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class FXMLDocumentControllerTest {
 	
@@ -42,7 +42,7 @@ public class FXMLDocumentControllerTest {
 	/**
 	 * Test of initialize method, of class FXMLDocumentController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testInitialize() {
 		System.out.println("initialize");
 		URL location = null;

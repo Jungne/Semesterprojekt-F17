@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class CatalogTest {
 	
@@ -42,7 +42,7 @@ public class CatalogTest {
 	/**
 	 * Test of getProduct method, of class Catalog.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetProduct() {
 		System.out.println("getProduct");
 		int productId = 0;
@@ -56,7 +56,7 @@ public class CatalogTest {
 	/**
 	 * Test of getAllProducts method, of class Catalog.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllProducts() {
 		System.out.println("getAllProducts");
 		ArrayList<Product> expResult = null;
@@ -69,7 +69,7 @@ public class CatalogTest {
 	/**
 	 * Test of getAllEnrichedProducts method, of class Catalog.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllEnrichedProducts() {
 		System.out.println("getAllEnrichedProducts");
 		ArrayList<Product> expResult = null;
@@ -82,7 +82,7 @@ public class CatalogTest {
 	/**
 	 * Test of getCategories method, of class Catalog.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCategories() {
 		System.out.println("getCategories");
 		LinkedHashMap<String, Integer> expResult = null;
@@ -95,7 +95,7 @@ public class CatalogTest {
 	/**
 	 * Test of findProducts method, of class Catalog.
 	 */
-	@Test
+	@org.junit.Test
 	public void testFindProducts() {
 		System.out.println("findProducts");
 		String query = "";

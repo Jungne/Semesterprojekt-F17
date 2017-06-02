@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class CustomerTest {
 	
@@ -41,7 +41,7 @@ public class CustomerTest {
 	/**
 	 * Test of getId method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetId() {
 		System.out.println("getId");
 		Customer instance = null;
@@ -55,7 +55,7 @@ public class CustomerTest {
 	/**
 	 * Test of getEmail method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetEmail() {
 		System.out.println("getEmail");
 		Customer instance = null;
@@ -69,7 +69,7 @@ public class CustomerTest {
 	/**
 	 * Test of getCode method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCode() {
 		System.out.println("getCode");
 		Customer instance = null;
@@ -83,7 +83,7 @@ public class CustomerTest {
 	/**
 	 * Test of getFirstName method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetFirstName() {
 		System.out.println("getFirstName");
 		Customer instance = null;
@@ -97,7 +97,7 @@ public class CustomerTest {
 	/**
 	 * Test of getLastName method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetLastName() {
 		System.out.println("getLastName");
 		Customer instance = null;
@@ -111,7 +111,7 @@ public class CustomerTest {
 	/**
 	 * Test of getPhoneNumber method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetPhoneNumber() {
 		System.out.println("getPhoneNumber");
 		Customer instance = null;
@@ -125,7 +125,7 @@ public class CustomerTest {
 	/**
 	 * Test of getMobilePhoneNumber method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetMobilePhoneNumber() {
 		System.out.println("getMobilePhoneNumber");
 		Customer instance = null;
@@ -139,7 +139,7 @@ public class CustomerTest {
 	/**
 	 * Test of getAddress method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAddress() {
 		System.out.println("getAddress");
 		Customer instance = null;
@@ -153,7 +153,7 @@ public class CustomerTest {
 	/**
 	 * Test of getPostalCode method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetPostalCode() {
 		System.out.println("getPostalCode");
 		Customer instance = null;
@@ -167,7 +167,7 @@ public class CustomerTest {
 	/**
 	 * Test of getCity method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCity() {
 		System.out.println("getCity");
 		Customer instance = null;
@@ -181,7 +181,7 @@ public class CustomerTest {
 	/**
 	 * Test of getCountry method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCountry() {
 		System.out.println("getCountry");
 		Customer instance = null;
@@ -195,7 +195,7 @@ public class CustomerTest {
 	/**
 	 * Test of getShoppingBaskets method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetShoppingBaskets() {
 		System.out.println("getShoppingBaskets");
 		Customer instance = null;
@@ -209,7 +209,7 @@ public class CustomerTest {
 	/**
 	 * Test of getFirstShoppingBasket method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetFirstShoppingBasket() {
 		System.out.println("getFirstShoppingBasket");
 		Customer instance = null;
@@ -223,7 +223,7 @@ public class CustomerTest {
 	/**
 	 * Test of isRegisted method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testIsRegisted() {
 		System.out.println("isRegisted");
 		Customer instance = null;
@@ -237,7 +237,7 @@ public class CustomerTest {
 	/**
 	 * Test of getShoppingBasket method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetShoppingBasket() {
 		System.out.println("getShoppingBasket");
 		int basketId = 0;
@@ -252,7 +252,7 @@ public class CustomerTest {
 	/**
 	 * Test of removeShoppingBasket method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testRemoveShoppingBasket() {
 		System.out.println("removeShoppingBasket");
 		ShoppingBasket shoppingBasket = null;
@@ -265,7 +265,7 @@ public class CustomerTest {
 	/**
 	 * Test of checkOut method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCheckOut_0args() {
 		System.out.println("checkOut");
 		Customer instance = null;
@@ -279,7 +279,7 @@ public class CustomerTest {
 	/**
 	 * Test of checkOut method, of class Customer.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCheckOut_ShoppingBasket() {
 		System.out.println("checkOut");
 		ShoppingBasket shoppingBasket = null;

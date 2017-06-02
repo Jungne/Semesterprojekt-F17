@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class EditProductTest {
 	
@@ -41,7 +41,7 @@ public class EditProductTest {
 	/**
 	 * Test of createProduct method, of class EditProduct.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateProduct() {
 		System.out.println("createProduct");
 		String name = "";
@@ -59,7 +59,7 @@ public class EditProductTest {
 	/**
 	 * Test of editProduct method, of class EditProduct.
 	 */
-	@Test
+	@org.junit.Test
 	public void testEditProduct() {
 		System.out.println("editProduct");
 		int id = 0;

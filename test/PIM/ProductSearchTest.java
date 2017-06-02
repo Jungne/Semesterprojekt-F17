@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class ProductSearchTest {
 	
@@ -41,7 +41,7 @@ public class ProductSearchTest {
 	/**
 	 * Test of getAllProducts method, of class ProductSearch.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllProducts() {
 		System.out.println("getAllProducts");
 		ArrayList<PIMProduct> expResult = null;

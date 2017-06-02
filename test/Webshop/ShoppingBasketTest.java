@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class ShoppingBasketTest {
 	
@@ -41,7 +41,7 @@ public class ShoppingBasketTest {
 	/**
 	 * Test of getId method, of class ShoppingBasket.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetId() {
 		System.out.println("getId");
 		ShoppingBasket instance = new ShoppingBasket();
@@ -55,7 +55,7 @@ public class ShoppingBasketTest {
 	/**
 	 * Test of getOrderLines method, of class ShoppingBasket.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetOrderLines() {
 		System.out.println("getOrderLines");
 		ShoppingBasket instance = new ShoppingBasket();
@@ -69,7 +69,7 @@ public class ShoppingBasketTest {
 	/**
 	 * Test of addProduct method, of class ShoppingBasket.
 	 */
-	@Test
+	@org.junit.Test
 	public void testAddProduct_Product_int() {
 		System.out.println("addProduct");
 		Product product = null;
@@ -85,7 +85,7 @@ public class ShoppingBasketTest {
 	/**
 	 * Test of addProduct method, of class ShoppingBasket.
 	 */
-	@Test
+	@org.junit.Test
 	public void testAddProduct_OrderLine() {
 		System.out.println("addProduct");
 		OrderLine orderLine = null;
@@ -100,7 +100,7 @@ public class ShoppingBasketTest {
 	/**
 	 * Test of setProductAmount method, of class ShoppingBasket.
 	 */
-	@Test
+	@org.junit.Test
 	public void testSetProductAmount() {
 		System.out.println("setProductAmount");
 		Product product = null;
@@ -116,7 +116,7 @@ public class ShoppingBasketTest {
 	/**
 	 * Test of removeProduct method, of class ShoppingBasket.
 	 */
-	@Test
+	@org.junit.Test
 	public void testRemoveProduct() {
 		System.out.println("removeProduct");
 		Product product = null;
@@ -129,7 +129,7 @@ public class ShoppingBasketTest {
 	/**
 	 * Test of empty method, of class ShoppingBasket.
 	 */
-	@Test
+	@org.junit.Test
 	public void testEmpty() {
 		System.out.println("empty");
 		ShoppingBasket instance = new ShoppingBasket();
@@ -141,7 +141,7 @@ public class ShoppingBasketTest {
 	/**
 	 * Test of isEmpty method, of class ShoppingBasket.
 	 */
-	@Test
+	@org.junit.Test
 	public void testIsEmpty() {
 		System.out.println("isEmpty");
 		ShoppingBasket instance = new ShoppingBasket();
@@ -155,7 +155,7 @@ public class ShoppingBasketTest {
 	/**
 	 * Test of getTotalPrice method, of class ShoppingBasket.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetTotalPrice() {
 		System.out.println("getTotalPrice");
 		ShoppingBasket instance = new ShoppingBasket();
@@ -169,7 +169,7 @@ public class ShoppingBasketTest {
 	/**
 	 * Test of equals method, of class ShoppingBasket.
 	 */
-	@Test
+	@org.junit.Test
 	public void testEquals() {
 		System.out.println("equals");
 		ShoppingBasket shoppingBasket = null;

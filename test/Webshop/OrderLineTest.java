@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class OrderLineTest {
 	
@@ -40,7 +40,7 @@ public class OrderLineTest {
 	/**
 	 * Test of getProduct method, of class OrderLine.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetProduct() {
 		System.out.println("getProduct");
 		OrderLine instance = null;
@@ -54,7 +54,7 @@ public class OrderLineTest {
 	/**
 	 * Test of getAmount method, of class OrderLine.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAmount() {
 		System.out.println("getAmount");
 		OrderLine instance = null;
@@ -68,7 +68,7 @@ public class OrderLineTest {
 	/**
 	 * Test of setAmount method, of class OrderLine.
 	 */
-	@Test
+	@org.junit.Test
 	public void testSetAmount() {
 		System.out.println("setAmount");
 		int amount = 0;

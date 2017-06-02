@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class DAMImageTest {
 	
@@ -40,7 +40,7 @@ public class DAMImageTest {
 	/**
 	 * Test of getId method, of class DAMImage.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetId() {
 		System.out.println("getId");
 		DAMImage instance = null;
@@ -54,7 +54,7 @@ public class DAMImageTest {
 	/**
 	 * Test of getName method, of class DAMImage.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetName() {
 		System.out.println("getName");
 		DAMImage instance = null;
@@ -68,7 +68,7 @@ public class DAMImageTest {
 	/**
 	 * Test of getCategory method, of class DAMImage.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCategory() {
 		System.out.println("getCategory");
 		DAMImage instance = null;
@@ -82,7 +82,7 @@ public class DAMImageTest {
 	/**
 	 * Test of getImageFile method, of class DAMImage.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetImageFile() {
 		System.out.println("getImageFile");
 		DAMImage instance = null;

@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class WebshopInterfaceTest {
 	
@@ -42,7 +42,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of getProduct method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetProduct() {
 		System.out.println("getProduct");
 		int id = 0;
@@ -57,7 +57,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of getAllProduct method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllProduct() {
 		System.out.println("getAllProduct");
 		WebshopInterface instance = new WebshopInterfaceImpl();
@@ -71,7 +71,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of getAllEnrichedProducts method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllEnrichedProducts() {
 		System.out.println("getAllEnrichedProducts");
 		WebshopInterface instance = new WebshopInterfaceImpl();
@@ -85,7 +85,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of findProducts method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testFindProducts() {
 		System.out.println("findProducts");
 		String query = "";
@@ -101,7 +101,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of getCategories method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCategories() {
 		System.out.println("getCategories");
 		WebshopInterface instance = new WebshopInterfaceImpl();
@@ -115,7 +115,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of signUp method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testSignUp() {
 		System.out.println("signUp");
 		String email = "";
@@ -140,7 +140,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of login method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testLogin() {
 		System.out.println("login");
 		String email = "";
@@ -156,7 +156,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of logOut method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testLogOut() {
 		System.out.println("logOut");
 		WebshopInterface instance = new WebshopInterfaceImpl();
@@ -170,7 +170,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of getCustomer method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCustomer() {
 		System.out.println("getCustomer");
 		WebshopInterface instance = new WebshopInterfaceImpl();
@@ -184,7 +184,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of getShoppingBaskets method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetShoppingBaskets() {
 		System.out.println("getShoppingBaskets");
 		WebshopInterface instance = new WebshopInterfaceImpl();
@@ -198,7 +198,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of createBasket method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateBasket() {
 		System.out.println("createBasket");
 		WebshopInterface instance = new WebshopInterfaceImpl();
@@ -210,7 +210,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of removeBasket method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testRemoveBasket() {
 		System.out.println("removeBasket");
 		int basketId = 0;
@@ -223,7 +223,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of addProductToBasket method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testAddProductToBasket() {
 		System.out.println("addProductToBasket");
 		int basketId = 0;
@@ -240,7 +240,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of setProductAmount method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testSetProductAmount() {
 		System.out.println("setProductAmount");
 		int basketId = 0;
@@ -257,7 +257,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of removeProduct method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testRemoveProduct() {
 		System.out.println("removeProduct");
 		int basketId = 0;
@@ -273,7 +273,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of emptyShoppingBasket method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testEmptyShoppingBasket() {
 		System.out.println("emptyShoppingBasket");
 		int basketId = 0;
@@ -286,7 +286,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of getLatestOrder method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetLatestOrder() {
 		System.out.println("getLatestOrder");
 		WebshopInterface instance = new WebshopInterfaceImpl();
@@ -300,7 +300,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of checkOut method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCheckOut_10args() {
 		System.out.println("checkOut");
 		String email = "";
@@ -324,7 +324,7 @@ public class WebshopInterfaceTest {
 	/**
 	 * Test of checkOut method, of class WebshopInterface.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCheckOut_int() {
 		System.out.println("checkOut");
 		int basketId = 0;

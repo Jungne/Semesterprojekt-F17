@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class NewProductWindowControllerTest {
 	
@@ -43,7 +43,7 @@ public class NewProductWindowControllerTest {
 	/**
 	 * Test of initialize method, of class NewProductWindowController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testInitialize() {
 		System.out.println("initialize");
 		URL url = null;
@@ -57,7 +57,7 @@ public class NewProductWindowControllerTest {
 	/**
 	 * Test of handleAddImageButton method, of class NewProductWindowController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testHandleAddImageButton() {
 		System.out.println("handleAddImageButton");
 		ActionEvent event = null;
@@ -70,7 +70,7 @@ public class NewProductWindowControllerTest {
 	/**
 	 * Test of handleRemoveImageButton method, of class NewProductWindowController.
 	 */
-	@Test
+	@org.junit.Test
 	public void testHandleRemoveImageButton() {
 		System.out.println("handleRemoveImageButton");
 		ActionEvent event = null;

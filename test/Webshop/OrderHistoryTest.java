@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class OrderHistoryTest {
 	
@@ -40,7 +40,7 @@ public class OrderHistoryTest {
 	/**
 	 * Test of createOrder method, of class OrderHistory.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateOrder() {
 		System.out.println("createOrder");
 		Customer customer = null;
@@ -55,7 +55,7 @@ public class OrderHistoryTest {
 	/**
 	 * Test of getLatestOrder method, of class OrderHistory.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetLatestOrder() {
 		System.out.println("getLatestOrder");
 		Customer customer = null;

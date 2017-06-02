@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class ProductHBoxCellTest {
 	
@@ -40,7 +40,7 @@ public class ProductHBoxCellTest {
 	/**
 	 * Test of getProductId method, of class ProductHBoxCell.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetProductId() {
 		System.out.println("getProductId");
 		ProductHBoxCell instance = null;
@@ -54,7 +54,7 @@ public class ProductHBoxCellTest {
 	/**
 	 * Test of getImageId method, of class ProductHBoxCell.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetImageId() {
 		System.out.println("getImageId");
 		ProductHBoxCell instance = null;
@@ -68,7 +68,7 @@ public class ProductHBoxCellTest {
 	/**
 	 * Test of toString method, of class ProductHBoxCell.
 	 */
-	@Test
+	@org.junit.Test
 	public void testToString() {
 		System.out.println("toString");
 		ProductHBoxCell instance = null;

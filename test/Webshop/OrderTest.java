@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class OrderTest {
 	
@@ -41,7 +41,7 @@ public class OrderTest {
 	/**
 	 * Test of getId method, of class Order.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetId() {
 		System.out.println("getId");
 		Order instance = null;
@@ -55,7 +55,7 @@ public class OrderTest {
 	/**
 	 * Test of getCustomer method, of class Order.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCustomer() {
 		System.out.println("getCustomer");
 		Order instance = null;
@@ -69,7 +69,7 @@ public class OrderTest {
 	/**
 	 * Test of setCustomer method, of class Order.
 	 */
-	@Test
+	@org.junit.Test
 	public void testSetCustomer() {
 		System.out.println("setCustomer");
 		Customer customer = null;
@@ -82,7 +82,7 @@ public class OrderTest {
 	/**
 	 * Test of getDate method, of class Order.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetDate() {
 		System.out.println("getDate");
 		Order instance = null;
@@ -96,7 +96,7 @@ public class OrderTest {
 	/**
 	 * Test of getOrderStatus method, of class Order.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetOrderStatus() {
 		System.out.println("getOrderStatus");
 		Order instance = null;
@@ -110,7 +110,7 @@ public class OrderTest {
 	/**
 	 * Test of getShoppingBasket method, of class Order.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetShoppingBasket() {
 		System.out.println("getShoppingBasket");
 		Order instance = null;
@@ -124,7 +124,7 @@ public class OrderTest {
 	/**
 	 * Test of getTotalPrice method, of class Order.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetTotalPrice() {
 		System.out.println("getTotalPrice");
 		Order instance = null;

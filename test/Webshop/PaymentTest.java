@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class PaymentTest {
 	
@@ -40,7 +40,7 @@ public class PaymentTest {
 	/**
 	 * Test of pay method, of class Payment.
 	 */
-	@Test
+	@org.junit.Test
 	public void testPay() {
 		System.out.println("pay");
 		Order order = null;

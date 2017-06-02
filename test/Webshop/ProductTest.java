@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class ProductTest {
 	
@@ -41,7 +41,7 @@ public class ProductTest {
 	/**
 	 * Test of getId method, of class Product.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetId() {
 		System.out.println("getId");
 		Product instance = null;
@@ -55,7 +55,7 @@ public class ProductTest {
 	/**
 	 * Test of getName method, of class Product.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetName() {
 		System.out.println("getName");
 		Product instance = null;
@@ -69,7 +69,7 @@ public class ProductTest {
 	/**
 	 * Test of getCategory method, of class Product.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetCategory() {
 		System.out.println("getCategory");
 		Product instance = null;
@@ -83,7 +83,7 @@ public class ProductTest {
 	/**
 	 * Test of getDescription method, of class Product.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetDescription() {
 		System.out.println("getDescription");
 		Product instance = null;
@@ -97,7 +97,7 @@ public class ProductTest {
 	/**
 	 * Test of getPrice method, of class Product.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetPrice() {
 		System.out.println("getPrice");
 		Product instance = null;
@@ -111,7 +111,7 @@ public class ProductTest {
 	/**
 	 * Test of getImageFiles method, of class Product.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetImageFiles() {
 		System.out.println("getImageFiles");
 		Product instance = null;
@@ -125,7 +125,7 @@ public class ProductTest {
 	/**
 	 * Test of addImageFile method, of class Product.
 	 */
-	@Test
+	@org.junit.Test
 	public void testAddImageFile() {
 		System.out.println("addImageFile");
 		byte[] imageFile = null;

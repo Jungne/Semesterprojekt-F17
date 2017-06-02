@@ -5,34 +5,30 @@
  */
 package Webshop;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({Webshop.CustomerTest.class, Webshop.ShoppingBasketTest.class, Webshop.WebshopControllerTest.class, Webshop.ConverterTest.class, Webshop.OrderHistoryTest.class, Webshop.ProductTest.class, Webshop.OrderStatusTest.class, Webshop.PaymentTest.class, Webshop.WebshopInterfaceTest.class, Webshop.OrderLineTest.class, Webshop.ProductCategoryTest.class, Webshop.CatalogTest.class, Webshop.OrderTest.class})
+@org.junit.runner.RunWith(org.junit.runners.Suite.class)
+@org.junit.runners.Suite.SuiteClasses({OrderLineTest.class, ProductTest.class, PaymentTest.class, OrderTest.class, WebshopInterfaceTest.class, OrderHistoryTest.class, CustomerTest.class, ConverterTest.class, ShoppingBasketTest.class, CatalogTest.class, OrderStatusTest.class, ProductCategoryTest.class, WebshopControllerTest.class})
 public class WebshopSuite {
 
-	@BeforeClass
+	@org.junit.BeforeClass
 	public static void setUpClass() throws Exception {
 	}
 
-	@AfterClass
+	@org.junit.AfterClass
 	public static void tearDownClass() throws Exception {
 	}
 
-	@Before
+	@org.junit.Before
 	public void setUp() throws Exception {
 	}
 
-	@After
+	@org.junit.After
 	public void tearDown() throws Exception {
 	}
 	

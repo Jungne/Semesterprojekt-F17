@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class DAMManagerTest {
 	
@@ -41,7 +41,7 @@ public class DAMManagerTest {
 	/**
 	 * Test of createImage method, of class DAMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateImage() {
 		System.out.println("createImage");
 		String name = "";
@@ -58,7 +58,7 @@ public class DAMManagerTest {
 	/**
 	 * Test of getDAMImages method, of class DAMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetDAMImages() {
 		System.out.println("getDAMImages");
 		DAMManager instance = new DAMManager();
@@ -72,7 +72,7 @@ public class DAMManagerTest {
 	/**
 	 * Test of deleteImage method, of class DAMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testDeleteImage() {
 		System.out.println("deleteImage");
 		int imageId = 0;

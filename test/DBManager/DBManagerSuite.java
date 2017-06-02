@@ -5,34 +5,30 @@
  */
 package DBManager;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({DatabaseInterfaceTest.class, OrderHandlerTest.class, ImageHandlerTest.class, DataTest.class, ProductHandlerTest.class, DBManagerTest.class})
+@org.junit.runner.RunWith(org.junit.runners.Suite.class)
+@org.junit.runners.Suite.SuiteClasses({DataTest.class, ProductHandlerTest.class, OrderHandlerTest.class, DatabaseInterfaceTest.class, ImageHandlerTest.class, DBManagerTest.class})
 public class DBManagerSuite {
 
-	@BeforeClass
+	@org.junit.BeforeClass
 	public static void setUpClass() throws Exception {
 	}
 
-	@AfterClass
+	@org.junit.AfterClass
 	public static void tearDownClass() throws Exception {
 	}
 
-	@Before
+	@org.junit.Before
 	public void setUp() throws Exception {
 	}
 
-	@After
+	@org.junit.After
 	public void tearDown() throws Exception {
 	}
 	

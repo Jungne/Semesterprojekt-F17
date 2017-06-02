@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class OrderHandlerTest {
 	
@@ -42,7 +42,7 @@ public class OrderHandlerTest {
 	/**
 	 * Test of getLatestOrder method, of class OrderHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetLatestOrder() {
 		System.out.println("getLatestOrder");
 		int customerId = 0;
@@ -57,7 +57,7 @@ public class OrderHandlerTest {
 	/**
 	 * Test of getOrdersOrderLines method, of class OrderHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetOrdersOrderLines() {
 		System.out.println("getOrdersOrderLines");
 		int orderId = 0;
@@ -72,7 +72,7 @@ public class OrderHandlerTest {
 	/**
 	 * Test of createOrder method, of class OrderHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateOrder() {
 		System.out.println("createOrder");
 		int customerId = 0;
@@ -88,7 +88,7 @@ public class OrderHandlerTest {
 	/**
 	 * Test of addProductToOrder method, of class OrderHandler.
 	 */
-	@Test
+	@org.junit.Test
 	public void testAddProductToOrder() {
 		System.out.println("addProductToOrder");
 		int orderId = 0;

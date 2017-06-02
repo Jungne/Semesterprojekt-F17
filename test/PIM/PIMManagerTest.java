@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class PIMManagerTest {
 	
@@ -41,7 +41,7 @@ public class PIMManagerTest {
 	/**
 	 * Test of getInstance method, of class PIMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetInstance() {
 		System.out.println("getInstance");
 		PIMManager expResult = null;
@@ -54,7 +54,7 @@ public class PIMManagerTest {
 	/**
 	 * Test of getAllProducts method, of class PIMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetAllProducts() {
 		System.out.println("getAllProducts");
 		PIMManager instance = null;
@@ -68,7 +68,7 @@ public class PIMManagerTest {
 	/**
 	 * Test of createProduct method, of class PIMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreateProduct() {
 		System.out.println("createProduct");
 		String name = "";
@@ -87,7 +87,7 @@ public class PIMManagerTest {
 	/**
 	 * Test of editProduct method, of class PIMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testEditProduct() {
 		System.out.println("editProduct");
 		int productID = 0;
@@ -107,7 +107,7 @@ public class PIMManagerTest {
 	/**
 	 * Test of getUnassignedPIMages method, of class PIMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetUnassignedPIMages() {
 		System.out.println("getUnassignedPIMages");
 		PIMManager instance = null;
@@ -121,7 +121,7 @@ public class PIMManagerTest {
 	/**
 	 * Test of getPImages method, of class PIMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetPImages() {
 		System.out.println("getPImages");
 		int productID = 0;
@@ -136,7 +136,7 @@ public class PIMManagerTest {
 	/**
 	 * Test of setProductToEdit method, of class PIMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testSetProductToEdit() {
 		System.out.println("setProductToEdit");
 		int productID = 0;
@@ -149,7 +149,7 @@ public class PIMManagerTest {
 	/**
 	 * Test of getProductToEdit method, of class PIMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testGetProductToEdit() {
 		System.out.println("getProductToEdit");
 		PIMManager instance = null;
@@ -163,7 +163,7 @@ public class PIMManagerTest {
 	/**
 	 * Test of isEditingProduct method, of class PIMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testIsEditingProduct() {
 		System.out.println("isEditingProduct");
 		PIMManager instance = null;
@@ -177,7 +177,7 @@ public class PIMManagerTest {
 	/**
 	 * Test of setEditingProduct method, of class PIMManager.
 	 */
-	@Test
+	@org.junit.Test
 	public void testSetEditingProduct() {
 		System.out.println("setEditingProduct");
 		boolean editingProduct = false;

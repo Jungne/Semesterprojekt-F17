@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class ConverterTest {
 	
@@ -43,7 +43,7 @@ public class ConverterTest {
 	/**
 	 * Test of createPIMProduct method, of class Converter.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreatePIMProduct() {
 		System.out.println("createPIMProduct");
 		HashMap<String, String> productMap = null;
@@ -57,7 +57,7 @@ public class ConverterTest {
 	/**
 	 * Test of createPIMProducts method, of class Converter.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreatePIMProducts() {
 		System.out.println("createPIMProducts");
 		LinkedList<HashMap<String, String>> productsMapList = null;
@@ -71,7 +71,7 @@ public class ConverterTest {
 	/**
 	 * Test of createPIMage method, of class Converter.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreatePIMage() {
 		System.out.println("createPIMage");
 		HashMap<String, String> pimImageMap = null;
@@ -85,7 +85,7 @@ public class ConverterTest {
 	/**
 	 * Test of createPIMages method, of class Converter.
 	 */
-	@Test
+	@org.junit.Test
 	public void testCreatePIMages() {
 		System.out.println("createPIMages");
 		LinkedList<HashMap<String, String>> pimImageMapList = null;

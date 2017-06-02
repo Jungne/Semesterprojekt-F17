@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class OrderStatusTest {
 	
@@ -40,7 +40,7 @@ public class OrderStatusTest {
 	/**
 	 * Test of values method, of class OrderStatus.
 	 */
-	@Test
+	@org.junit.Test
 	public void testValues() {
 		System.out.println("values");
 		OrderStatus[] expResult = null;
@@ -53,7 +53,7 @@ public class OrderStatusTest {
 	/**
 	 * Test of valueOf method, of class OrderStatus.
 	 */
-	@Test
+	@org.junit.Test
 	public void testValueOf() {
 		System.out.println("valueOf");
 		String name = "";
@@ -67,7 +67,7 @@ public class OrderStatusTest {
 	/**
 	 * Test of toString method, of class OrderStatus.
 	 */
-	@Test
+	@org.junit.Test
 	public void testToString() {
 		System.out.println("toString");
 		OrderStatus instance = null;
@@ -81,7 +81,7 @@ public class OrderStatusTest {
 	/**
 	 * Test of toOrderStaus method, of class OrderStatus.
 	 */
-	@Test
+	@org.junit.Test
 	public void testToOrderStaus() {
 		System.out.println("toOrderStaus");
 		String orderStatusString = "";

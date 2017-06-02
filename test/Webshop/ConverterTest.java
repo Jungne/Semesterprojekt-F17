@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Kongen
+ * @author Daniel
  */
 public class ConverterTest {
 	
@@ -41,7 +41,7 @@ public class ConverterTest {
 	/**
 	 * Test of toCustomer method, of class Converter.
 	 */
-	@Test
+	@org.junit.Test
 	public void testToCustomer() {
 		System.out.println("toCustomer");
 		HashMap<String, String> customerMap = null;
@@ -55,7 +55,7 @@ public class ConverterTest {
 	/**
 	 * Test of toOrder method, of class Converter.
 	 */
-	@Test
+	@org.junit.Test
 	public void testToOrder() {
 		System.out.println("toOrder");
 		HashMap<String, String> orderMap = null;
@@ -69,7 +69,7 @@ public class ConverterTest {
 	/**
 	 * Test of toProduct method, of class Converter.
 	 */
-	@Test
+	@org.junit.Test
 	public void testToProduct() {
 		System.out.println("toProduct");
 		HashMap<String, String> productMap = null;
