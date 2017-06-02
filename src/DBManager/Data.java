@@ -124,7 +124,7 @@ public class Data {
 					+ "('Computer'), "
 					+ "('Videogame'), "
 					+ "('LEGO'), "
-					+ "('Phone') "
+					+ "('Phone'), "
 					+ "('Bicycle')";
 
 	private static String insertProducts
