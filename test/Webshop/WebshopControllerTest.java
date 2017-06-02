@@ -409,16 +409,22 @@ public class WebshopControllerTest {
 		String country = "Danmark";
 		ShoppingBasket basket = new ShoppingBasket();
 
+		double totalPrice = 0;
+						
 		//Test orderline #1
 		Product product = instance.getProduct(1);
 		OrderLine orderLineOne = new OrderLine(product, 2);
 		basket.addProduct(orderLineOne);
+		
+		totalPrice += product.getPrice() * 2;
 
 		//Test orderline #2
 		product = instance.getProduct(2);
 		OrderLine orderLineTwo = new OrderLine(product, 3);
 		basket.addProduct(orderLineTwo);
 
+		totalPrice += product.getPrice() * 3;
+		
 		ArrayList<ShoppingBasket> baskets = new ArrayList<>();
 		baskets.add(basket);
 		Customer customer = new Customer(-1, email, "1234", firstName, lastName, phoneNumber, mobilePhoneNumber, address, postalCode, city, country, baskets);
@@ -428,6 +434,8 @@ public class WebshopControllerTest {
 		System.out.println("expr: " + expResult.getCustomer().getFirstName());
 		System.out.println("r: " + result.getCustomer().getFirstName());
 		assertEquals(expResult.getCustomer().getFirstName(), result.getCustomer().getFirstName());
+		assertEquals(expResult.getCustomer().getLastName(), result.getCustomer().getLastName());
+		assertTrue(totalPrice == result.getTotalPrice());
 	}
 
 	/**
