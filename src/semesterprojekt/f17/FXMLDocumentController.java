@@ -637,9 +637,8 @@ public class FXMLDocumentController implements Initializable {
 	private void handle_WebshopPane_SignUpTab_Buttons(ActionEvent event) {
 		Button source = (Button) event.getSource();
 		if (source.equals(WebshopPane_SignUpTab_RegisterButton)) {
-			boolean isRegistered;
 			try {
-				isRegistered = webshopController.signUp(
+				isLoggedIn = webshopController.signUp(
 								WebshopPane_SignUpTab_EmailTextField.getText(),
 								WebshopPane_SignUpTab_PasswordTextField.getText(),
 								WebshopPane_SignUpTab_FirstNameTextField.getText(),
@@ -652,10 +651,10 @@ public class FXMLDocumentController implements Initializable {
 								WebshopPane_SignUpTab_CountryTextField.getText(),
 								guestBasket);
 			} catch (NumberFormatException e) {
-				isRegistered = false;
+				isLoggedIn = false;
 			}
 
-			if (!isRegistered) {
+			if (!isLoggedIn) {
 				resetWebshopPaneItems();
 				WebshopPane_LogInOutButton.setDisable(false);
 				WebshopPane_LogInOutButton.fire();

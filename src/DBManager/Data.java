@@ -124,7 +124,7 @@ public class Data {
 					+ "('Computer'), "
 					+ "('Videogame'), "
 					+ "('LEGO'), "
-					+ "('Phone') "
+					+ "('Phone'), "
 					+ "('Bicycle')";
 
 	private static String insertProducts
@@ -134,17 +134,17 @@ public class Data {
 					+ "('Samsung UE65KS8005', 2, 'LED, 4K UHD (3830x2160 pixel), 2300 Hz / Smart TV', 13299.00), "
 					+ "('Philips LED TV 24PHT4000', 2, 'LED TV med Digital Crystal Clear og 100 PMR Hz', 1299.00), "
 					+ "('LG Ultra HD 65UH6157', 2, 'Bare et TV', 7777.77), "
-					+ "('name', 3, 'description', price), "
-					+ "('name', 3, 'description', price), "
-					+ "('name', 3, 'description', price), "
-					+ "('name', 4, 'description', price), "
-					+ "('name', 4, 'description', price), "
-					+ "('name', 4, 'description', price), "
-					+ "('name', 4, 'description', price), "
-					+ "('name', 5, 'description', price), "
-					+ "('name', 6, 'description', price), "
-					+ "('name', 7, 'description', price), "
-					+ "('name', 7, 'description', price)";
+					+ "('Komplett Gamer Premium i35', 3, 'Er du træt af at have en gaming-pc, som giver dårlig FPS ved lave grafikindstillinger?', 8999.00), "
+					+ "('First Gaming Computer', 3, 'Der er tale om en god, billig gaming computer, der er velegnet til folk som ønsker at stifte bekendtskab med populære spil som CSGO, Minecraft o.l.', 3995.00), "
+					+ "('HP Z240 TWR', 3, 'Kraftfuld nok til at håndtere alle udfordringer', 8999.00), "
+					+ "('Counter-Strike: Global Offensive', 4, 'Den seneste fra den klassiske Counter-Strike serie. Over 1 million tilfredse kunder.', 85.95), "
+					+ "('Overwatch (Origins Edition)', 4, 'Overwatch er et 6 mod 6 skydespil som udspiller sig i en nær fremtid på jorden.', 259.99), "
+					+ "('GTA 5', 4, 'Udfør kup og missioner som garvede kriminelle.', 299.00), "
+					+ "('The Sims 4 (DK)', 4, 'The Sims 4 er et livssimulationsspil', 309.50), "
+					+ "('Taj Mahal - 10189', 5, 'Advancert model', 8199.00), "
+					+ "('Huawei Y6', 6, '8 megapixel kamera.', 1375.00), "
+					+ "('Micado Sport Disc - Citybike', 7, 'Micado Sport Disc er en utrolig let citybike til herrer.', 4239.00), "
+					+ "('Kross Trans Siberian - Citybike', 7, 'Denne Kross Trans Siberian er en god og funktionel damecykel, som er perfekt til bykørsel.', 3999.00)";
 
 	protected static String[] insertIntoQueries = {
 		insertCategories,
